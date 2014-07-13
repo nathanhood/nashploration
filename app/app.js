@@ -24,7 +24,11 @@ app.use(initRoutes);
 app.use(morgan({format: 'dev'}));
 app.use(express.static(__dirname + '/static'));
 app.use('/less', less(__dirname + '/less'));
-app.use(bodyParser());
+// app.use(bodyParser());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(bodyParser.json());
 app.use(methodOverride());
 app.use(cookieSession({keys:['SEC123', '321CES']}));
 
