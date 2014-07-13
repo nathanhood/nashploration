@@ -31,7 +31,9 @@
     "cookie-session":  "*",
     "cookies":         "*",
     "async":           "*",
-    "request":         "*"
+    "request":         "*",
+    "multiparty":      "*",
+    "needle":          "*"
   },
   "devDependencies": {
     "grunt":                "*",
