@@ -1,0 +1,54 @@
+{
+  "name": "server-template",
+  "repository" : {
+    "type" : "git",
+    "url"  : "https://github.com/nss-cohort-2014-04-07/server-template"
+  },
+  "version": "0.0.1",
+  "private": true,
+  "bin": {"coveralls" : "./node_modules/coveralls/bin/coveralls.js"},
+  "scripts":{
+    "start"     : "node app/app.js;",
+    "traceur"   : "git clone https://github.com/google/traceur-compiler tools/traceur-compiler;cd tools/traceur-compiler;npm install;make clean;make;rm ../../app/static/js/vendor/traceur.js;cp bin/traceur.js ../../app/static/js/vendor;",
+    "nss"       : "npm install;npm run traceur;",
+    "test"      : "mocha test/types --recursive -R spec -t 5000",
+    "watch"     : "mocha test/types --recursive -R spec -t 5000 --watch",
+    "coveralls" : "./node_modules/mocha/bin/mocha test/types --recursive -r blanket -R mocha-lcov-reporter | coveralls"
+  },
+  "dependencies": {
+    "express":         "*",
+    "lodash":          "*",
+    "moment":          "*",
+    "mongodb":         "*",
+    "jade":            "*",
+    "express-less":    "*",
+    "body-parser":     "*",
+    "morgan":          "*",
+    "method-override": "*",
+    "traceur":         "*",
+    "socket.io":       "*",
+    "bcrypt":          "*",
+    "cookie-session":  "*",
+    "cookies":         "*",
+    "async":           "*",
+    "request":         "*"
+  },
+  "devDependencies": {
+    "grunt":                "*",
+    "grunt-contrib-jshint": "*",
+    "jshint-stylish":       "*",
+    "grunt-contrib-watch":  "*",
+    "mocha":                "*",
+    "chai" :                "*",
+    "superagent":           "*",
+    "supertest":            "*",
+    "coveralls":            "*",
+    "mocha-lcov-reporter":  "*",
+    "blanket":              "*"
+  },
+  "config": {
+    "blanket": {
+      "pattern": "/app/"
+    }
+  }
+}
