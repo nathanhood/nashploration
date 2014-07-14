@@ -16,7 +16,7 @@
     $.ajax('/getLocations').done(function(data){
       initMap();
       data.forEach(d=>{
-        placeMarkers(d.gis, d.name);
+        placeMarkers(d.gis, d.name, d.description);
       });
     });
   }
@@ -26,7 +26,7 @@
   function initMap() {
     var startLatLng = new google.maps.LatLng(36.1667, -86.7833);
     var mapOptions = {
-      zoom: 11,
+      zoom: 14,
       center: startLatLng,
       draggableCursor: 'crosshair'
     };
@@ -35,28 +35,32 @@
 
 //====adds all historical markers to the map: Richmond
   var markers = []; //set as global so that markers can easily be cleared
-  var marker;
-  function placeMarkers(coords, locName){
+  function placeMarkers(coords, locName, locDesc){
     var latLng = new google.maps.LatLng(coords[0], coords[1]);
-      latLng = new google.maps.Marker({
+      latLng = new google.maps.Marker({  //latlng is the marker variable name so that each marker has a unique variable(makes infowindows show in correct location)
        position: latLng,
        map: map,
        animation: google.maps.Animation.DROP
-    });
-    markers.push(marker);
-
-    infoWindows(locName, latLng);
+      });
+      markers.push(latLng);
+      infoWindows(locName, latLng, locDesc);
   }
 
+//====sets and opens infowindows: Richmond
+  var infowindow; //set to global so that only one infowindow can be open at a time
+  function infoWindows(siteName, windowLoc, locDesc){
+    var content = '<h3>' + siteName + '</h3>'+
+    '<p>' + locDesc + '</p>';
 
-function infoWindows(name, coords){
-  var infowindow = new google.maps.InfoWindow();
-    infowindow.setContent(name);
-    // infowindow.open(favLocMap, favCoords);
-    google.maps.event.addListener(coords, 'click', function() {
-    infowindow.open(map, coords);
-  });
-}
+      infowindow = new google.maps.InfoWindow();
+      infowindow.setContent(content);
+      // infowindow.open(favLocMap, favCoords);
+      google.maps.event.addListener(windowLoc, 'click', function() {
+        infowindow.close();
+        infowindow.open(map, windowLoc);
+    });
+  }
+
 
 
 
