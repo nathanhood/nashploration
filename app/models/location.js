@@ -30,7 +30,7 @@ class Location{
           var newLocation = {
               name: markers[i].title,
               address: markers[i].location,
-              gis: [markers[i].mapped_location.latitude,markers[i].mapped_location.longitude],
+              gis: {long: markers[i].mapped_location.longitude, lat: markers[i].mapped_location.latitude},
               description: markers[i].marker_text, //.replace(/s{2,}/g,' '),
               class: 'history',
               number: markers[i].number * 1,

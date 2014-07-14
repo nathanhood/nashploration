@@ -15,6 +15,7 @@
   function fetchLocations() {
     $.ajax('/getLocations').done(function(data){
       initMap();
+
       data.forEach(d=>{
         placeMarkers(d.gis, d.name, d.description);
       });
@@ -36,7 +37,7 @@
 //====adds all historical markers to the map: Richmond
   var markers = []; //set as global so that markers can easily be cleared
   function placeMarkers(coords, locName, locDesc){
-    var latLng = new google.maps.LatLng(coords[0], coords[1]);
+    var latLng = new google.maps.LatLng(coords.lat, coords.long);
       latLng = new google.maps.Marker({  //latlng is the marker variable name so that each marker has a unique variable(makes infowindows show in correct location)
        position: latLng,
        map: map,
