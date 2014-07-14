@@ -16,7 +16,7 @@
     $.ajax('/getLocations').done(function(data){
       initMap();
       data.forEach(d=>{
-        placeMarkers(d.gis);
+        placeMarkers(d.gis, d.name);
       });
     });
   }
@@ -26,7 +26,7 @@
   function initMap() {
     var startLatLng = new google.maps.LatLng(36.1667, -86.7833);
     var mapOptions = {
-      zoom: 9,
+      zoom: 11,
       center: startLatLng,
       draggableCursor: 'crosshair'
     };
@@ -35,18 +35,28 @@
 
 //====adds all historical markers to the map: Richmond
   var markers = []; //set as global so that markers can easily be cleared
-  function placeMarkers(coords){
-    var eachLocLatLng = new google.maps.LatLng(coords[0], coords[1]);
-    var marker = new google.maps.Marker({
-       position: eachLocLatLng,
+  var marker;
+  function placeMarkers(coords, locName){
+    var latLng = new google.maps.LatLng(coords[0], coords[1]);
+      latLng = new google.maps.Marker({
+       position: latLng,
        map: map,
        animation: google.maps.Animation.DROP
     });
-
     markers.push(marker);
+
+    infoWindows(locName, latLng);
   }
 
-  
+
+function infoWindows(name, coords){
+  var infowindow = new google.maps.InfoWindow();
+    infowindow.setContent(name);
+    // infowindow.open(favLocMap, favCoords);
+    google.maps.event.addListener(coords, 'click', function() {
+    infowindow.open(map, coords);
+  });
+}
 
 
 
