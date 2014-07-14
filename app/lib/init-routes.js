@@ -19,6 +19,8 @@ function load(app, fn){
 
   app.get('/', dbg, home.index);
 
+  app.get('/allLocations', dbg, locations.index);
+  app.get('/getLocations', dbg, locations.getLocations); //ajax call to get locations from db
   app.post('/addHistory', dbg, locations.addHistory);
 
   console.log('Routes Loaded');

@@ -14,9 +14,16 @@ exports.addHistory = (req, res)=>{
   });
 };
 
+exports.index = (req, res)=>{
+  res.render('locations/index');
+};
 
-exports.getAllLocations = (req, res)=>{
-  locationCollection.find().toArray(function(err, docs) {
-    res.send(docs);
+
+exports.getLocations = (req, res)=>{
+  Location.findAll((locations)=>{
+    res.send(locations);
   });
+  // locationCollection.find().toArray(function(err, docs) {
+  //   res.send(docs);
+  // });
 };

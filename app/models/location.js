@@ -1,3 +1,6 @@
+/* jshint camelcase: false */
+/* jshint unused: false */
+
 'use strict';
 
 var locations = global.nss.db.collection('locations');
