@@ -23,7 +23,4 @@ exports.getLocations = (req, res)=>{
   Location.findAll((locations)=>{
     res.send(locations);
   });
-  // locationCollection.find().toArray(function(err, docs) {
-  //   res.send(docs);
-  // });
 };
