@@ -47,10 +47,15 @@
   }
 
 //====sets and opens infowindows: Richmond
-  // var infowindow; //set to global so that only one infowindow can be open at a time
+  // var infowindow; //set to global so that only one infowindow can be open at a time -- close them using forEach in google listener function below
   var allInfoWindows = [];
   function infoWindows(siteName, windowLoc, locDesc){
     var siteURL = siteName.toLowerCase().split(' ').join('-');
+
+    if(locDesc === null){
+      locDesc = 'There is no description for this site.';
+    }
+
     var content = '<h3>' + siteName + '</h3>'+
     '<p>' + locDesc + '</p>'+
     '<a href=/show/'+siteURL+'>Show More</a>';
