@@ -47,19 +47,25 @@
   }
 
 //====sets and opens infowindows: Richmond
-  var infowindow; //set to global so that only one infowindow can be open at a time
+  // var infowindow; //set to global so that only one infowindow can be open at a time
+  var allInfoWindows = [];
   function infoWindows(siteName, windowLoc, locDesc){
     var content = '<h3>' + siteName + '</h3>'+
-    '<p>' + locDesc + '</p>';
+    '<p>' + locDesc + '</p>'+
+    '<a href=/show/'+siteName+'>Show More</a>';
 
-      infowindow = new google.maps.InfoWindow();
-      infowindow.setContent(content);
-      // infowindow.open(favLocMap, favCoords);
+      siteName = new google.maps.InfoWindow();
+      siteName.setContent(content);
+      allInfoWindows.push(siteName); //since all windows have diff variable names, they are pushed into an array so they can be closed on the opening of another window
+
       google.maps.event.addListener(windowLoc, 'click', function() {
-        infowindow.close();
-        infowindow.open(map, windowLoc);
+        allInfoWindows.forEach(w=>{
+          w.close();
+        });
+        siteName.open(map, windowLoc);
     });
   }
+
 
 
 
