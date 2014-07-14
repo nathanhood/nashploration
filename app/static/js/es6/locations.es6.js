@@ -50,9 +50,10 @@
   // var infowindow; //set to global so that only one infowindow can be open at a time
   var allInfoWindows = [];
   function infoWindows(siteName, windowLoc, locDesc){
+    var siteURL = siteName.toLowerCase().split(' ').join('-');
     var content = '<h3>' + siteName + '</h3>'+
     '<p>' + locDesc + '</p>'+
-    '<a href=/show/'+siteName+'>Show More</a>';
+    '<a href=/show/'+siteURL+'>Show More</a>';
 
       siteName = new google.maps.InfoWindow();
       siteName.setContent(content);
@@ -63,11 +64,19 @@
           w.close();
         });
         siteName.open(map, windowLoc);
+
     });
   }
 
-
-
+  // function wikiTest(place) {
+  //   console.log(place);
+  //   var np = place.toLowerCase().split(' ').join('_');
+  //   console.log(np);
+  //   $.getJSON(`http://en.wikipedia.org/w/api.php?action=parse&format=json&page=${np}&callback=?`).done(function(data){
+  //     console.log(data);
+  //   });
+  // }
+  //
 
 
 
