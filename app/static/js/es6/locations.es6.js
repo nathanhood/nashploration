@@ -9,7 +9,14 @@
   function init(){
     fetchLocations();
     $('#map-filter select').on('change', filterLocations);
+    $('body').on('click', '.info-window', showStreetView);
   }
+
+
+function showStreetView (){
+  alert('wooo');
+  console.log(this);
+}
 
 
 //=======ajax call to fetch locations from the database: Richmond
@@ -80,22 +87,23 @@
       //  animation: google.maps.Animation.DROP
       });
       markers.push(latLng);
-      infoWindows(locName, latLng, locDesc);
+      infoWindows(locName, latLng, locDesc, coords); //passing in coords because latLng is now a google Marker Object..coords is used to set the data of the infowindow "Show More" link
   }
 
 //====sets and opens infowindows: Richmond
   // var infowindow; //set to global so that only one infowindow can be open at a time -- close them using forEach in google listener function below
   var allInfoWindows = [];
-  function infoWindows(siteName, windowLoc, locDesc){
+  function infoWindows(siteName, windowLoc, locDesc, coords){
+    var lat = coords.lat;
+    var long = coords.long;
     var siteURL = siteName.toLowerCase().split(' ').join('-');
-
     if(locDesc === null){
       locDesc = 'There is no description for this site.';
     }
 
     var content = '<h3>' + siteName + '</h3>'+
     '<p>' + locDesc + '</p>'+
-    '<a href=/show/'+siteURL+'>Show More</a>';
+    '<a href="#", class="info-window", data-lat="'+lat+'", data-long="'+long+'">Show More</a>';
 
       siteName = new google.maps.InfoWindow();
       siteName.setContent(content);
