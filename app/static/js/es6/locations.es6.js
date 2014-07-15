@@ -17,6 +17,7 @@
       initMap();
 
       data.forEach(d=>{
+        
         placeMarkers(d.gis, d.name, d.description);
       });
     });

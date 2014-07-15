@@ -30,7 +30,7 @@ class Location{
           var newLocation = {
               name: markers[i].title,
               address: markers[i].location,
-              gis: {long: markers[i].mapped_location.longitude, lat: markers[i].mapped_location.latitude},
+              gis: {long: markers[i].mapped_location.longitude, lat: markers[i].mapped_location.latitude}, //saved w/ long first so we can use mongo geospatial functions
               description: markers[i].marker_text, //.replace(/s{2,}/g,' '),
               class: 'history',
               number: markers[i].number * 1,
