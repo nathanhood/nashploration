@@ -8,19 +8,54 @@
 
   function init(){
     fetchLocations();
+    $('#map-filter select').on('change', filterLocations);
   }
 
 
 //=======ajax call to fetch locations from the database: Richmond
   function fetchLocations() {
-    $.ajax('/getLocations').done(function(data){
+    $.ajax('/getAllLocations').done(function(data){
       initMap();
 
       data.forEach(d=>{
-        
         placeMarkers(d.gis, d.name, d.description);
       });
     });
+  }
+
+//===========filtering map :Nathan
+  function filterLocations() {
+    var filter = $('#map-filter').find('option:selected').text();
+    switch(filter) {
+      case 'All':
+        $.ajax('/getAllLocations').done(function(data){
+          clearMap();
+          data.forEach(d=>{
+            placeMarkers(d.gis, d.name, d.description);
+          });
+        });
+        break;
+      case 'Civil War Sites':
+        $.ajax('/getCivilWarLocations').done(function(data){
+          clearMap();
+          data.forEach(d=>{
+            placeMarkers(d.gis, d.name, d.description);
+          });
+        });
+        break;
+    }
+  }
+
+
+//========== methods to clear markers from map: Nathan
+  function setAllMap(map) {
+    for (var i = 0; i < markers.length; i++) {
+      markers[i].setMap(map);
+    }
+  }
+
+  function clearMap() {
+    setAllMap(null);
   }
 
 //======initialize main map: Richmond
@@ -36,13 +71,13 @@
   }
 
 //====adds all historical markers to the map: Richmond
-  var markers = []; //set as global so that markers can easily be cleared
+  var markers = []; // made markers global for deletion
   function placeMarkers(coords, locName, locDesc){
     var latLng = new google.maps.LatLng(coords.lat, coords.long);
       latLng = new google.maps.Marker({  //latlng is the marker variable name so that each marker has a unique variable(makes infowindows show in correct location)
        position: latLng,
-       map: map,
-       animation: google.maps.Animation.DROP
+       map: map
+      //  animation: google.maps.Animation.DROP
       });
       markers.push(latLng);
       infoWindows(locName, latLng, locDesc);

@@ -44,6 +44,18 @@ class Location{
     });
   }
 
+  static filterCivilWarLocations(fn) {
+    locations.find({}).toArray((err, loc)=>{
+      var array = [];
+      loc.map(location=>{
+        if (location.isCivilWar) {
+          array.push(location);
+        }
+      });
+      fn(array);
+    });
+  }
+
   static findAll(fn){
     locations.find({}).toArray((err, loc)=>{
       fn(loc);

@@ -4,7 +4,7 @@
 
 var traceur = require('traceur');
 var Location = traceur.require(__dirname + '/../models/location.js');
-var locationCollection = global.nss.db.collection('locations');
+
 
 
 exports.addHistory = (req, res)=>{
@@ -21,6 +21,12 @@ exports.index = (req, res)=>{
 
 exports.getLocations = (req, res)=>{
   Location.findAll((locations)=>{
+    res.send(locations);
+  });
+};
+
+exports.getCivilWarLocations = (req, res)=>{
+  Location.filterCivilWarLocations((locations)=>{
     res.send(locations);
   });
 };
