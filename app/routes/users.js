@@ -48,7 +48,6 @@ exports.login = (req, res)=>{
 exports.lookup = (req, res, next)=>{
   User.findById(req.session.userId, (err, u)=>{
     res.locals.user = u;
-    console.log(res.locals.user);
     next();
   });
 };
