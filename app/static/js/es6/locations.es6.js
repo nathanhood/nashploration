@@ -29,6 +29,7 @@ function showStreetView (){
       data.forEach(d=>{
         placeMarkers(d.gis, d.name, d.description);
       });
+      resizeMap();
     });
   }
 
@@ -42,6 +43,7 @@ function showStreetView (){
           data.forEach(d=>{
             placeMarkers(d.gis, d.name, d.description);
           });
+          resizeMap();
         });
         break;
       case 'Civil War Sites':
@@ -50,6 +52,7 @@ function showStreetView (){
           data.forEach(d=>{
             placeMarkers(d.gis, d.name, d.description);
           });
+          resizeMap();
         });
         break;
       case 'Andrew Jackson':
@@ -58,6 +61,7 @@ function showStreetView (){
           data.forEach(d=>{
             placeMarkers(d.gis, d.name, d.description);
           });
+          resizeMap();
         });
         break;
     }
@@ -72,6 +76,7 @@ function showStreetView (){
   }
 
   function clearMap() {
+    coordinates = []; //clears coordinates so that the latlngbounds variable can be reset in the resize function
     setAllMap(null);
   }
 
@@ -89,8 +94,10 @@ function showStreetView (){
 
 //====adds all historical markers to the map: Richmond
   var markers = []; // made markers global for deletion
+  var coordinates = []; // made coordinates global so the map can be resized each time its filtered
   function placeMarkers(coords, locName, locDesc){
     var latLng = new google.maps.LatLng(coords.lat, coords.long);
+      coordinates.push(latLng);
       latLng = new google.maps.Marker({  //latlng is the marker variable name so that each marker has a unique variable(makes infowindows show in correct location)
        position: latLng,
        map: map
@@ -98,7 +105,19 @@ function showStreetView (){
       });
       markers.push(latLng);
       infoWindows(locName, latLng, locDesc, coords); //passing in coords because latLng is now a google Marker Object..coords is used to set the data of the infowindow "Show More" link
+
   }
+
+//======resizes the map to to just fit the available markers: Richmond
+  function resizeMap(){
+    var latlngbounds = new google.maps.LatLngBounds();
+    map.setZoom(20);
+    for (var i = 0; i < coordinates.length; i++) {
+        latlngbounds.extend(coordinates[i]);
+    }
+    map.fitBounds(latlngbounds);
+  }
+
 
 //====sets and opens infowindows: Richmond
   // var infowindow; //set to global so that only one infowindow can be open at a time -- close them using forEach in google listener function below
