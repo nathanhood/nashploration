@@ -23,6 +23,7 @@ function load(app, fn){
   app.get('/allLocations', dbg, locations.index);
   app.get('/getAllLocations', dbg, locations.getLocations); //ajax call to get locations from db
   app.get('/getCivilWarLocations', dbg, locations.getCivilWarLocations); //ajax call to get locations from db
+  app.get('/getAndrewJacksonLocations', dbg, locations.getAndrewJacksonLocations); 
   app.post('/addHistory', dbg, locations.addHistory);
 
   app.get('/users/home', dbg, users.index);

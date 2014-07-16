@@ -45,14 +45,14 @@ class Location{
   }
 
   static filterCivilWarLocations(fn) {
-    locations.find({}).toArray((err, loc)=>{
-      var array = [];
-      loc.map(location=>{
-        if (location.isCivilWar) {
-          array.push(location);
-        }
-      });
-      fn(array);
+    locations.find({isCivilWar: 'X'}).toArray((err, loc)=>{
+      fn(loc);
+    });
+  }
+
+  static filterAndrewJacksonLocations(fn) {
+    locations.find({ description: { $regex: 'Andrew Jackson', $options: 'i' } }).toArray((err, loc)=>{
+      fn(loc);
     });
   }
 

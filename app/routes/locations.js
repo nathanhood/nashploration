@@ -30,3 +30,9 @@ exports.getCivilWarLocations = (req, res)=>{
     res.send(locations);
   });
 };
+
+exports.getAndrewJacksonLocations = (req, res)=>{
+  Location.filterAndrewJacksonLocations((locations)=>{
+    res.send(locations);
+  });
+};

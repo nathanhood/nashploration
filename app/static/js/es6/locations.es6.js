@@ -52,6 +52,14 @@ function showStreetView (){
           });
         });
         break;
+      case 'Andrew Jackson':
+        $.ajax('/getAndrewJacksonLocations').done(function(data){
+          clearMap();
+          data.forEach(d=>{
+            placeMarkers(d.gis, d.name, d.description);
+          });
+        });
+        break;
     }
   }
 
