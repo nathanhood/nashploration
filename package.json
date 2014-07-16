@@ -33,7 +33,9 @@
     "async":           "*",
     "request":         "*",
     "multiparty":      "*",
-    "needle":          "*"
+    "needle":          "*",
+    "crypto":          "*",
+    "mkdirp":          "*"
   },
   "devDependencies": {
     "grunt":                "*",

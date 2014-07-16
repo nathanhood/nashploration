@@ -12,15 +12,6 @@
     $('body').on('click', '.info-window', showStreetView);
   }
 
-
-function showStreetView (){
-  var lat = $(this).attr('data-lat');
-  var long = $(this).attr('data-long');
-  console.log(lat);
-  console.log(long);
-}
-
-
 //=======ajax call to fetch locations from the database: Richmond
   function fetchLocations() {
     $.ajax('/getAllLocations').done(function(data){
@@ -29,6 +20,7 @@ function showStreetView (){
       data.forEach(d=>{
         placeMarkers(d.gis, d.name, d.description);
       });
+      resizeMap();
     });
   }
 
@@ -42,22 +34,25 @@ function showStreetView (){
           data.forEach(d=>{
             placeMarkers(d.gis, d.name, d.description);
           });
+          resizeMap();
         });
         break;
       case 'Civil War Sites':
         $.ajax('/getCivilWarLocations').done(function(data){
           clearMap();
           data.forEach(d=>{
-            placeMarkers(d.gis, d.name, d.description);
+            placeMarkers(d.gis, d.name, d.description, google.maps.Animation.BOUNCE);
           });
+          resizeMap();
         });
         break;
       case 'Andrew Jackson':
         $.ajax('/getAndrewJacksonLocations').done(function(data){
           clearMap();
           data.forEach(d=>{
-            placeMarkers(d.gis, d.name, d.description);
+            placeMarkers(d.gis, d.name, d.description, google.maps.Animation.BOUNCE);
           });
+          resizeMap();
         });
         break;
     }
@@ -72,6 +67,7 @@ function showStreetView (){
   }
 
   function clearMap() {
+    coordinates = []; //clears coordinates so that the latlngbounds variable can be reset in the resize function
     setAllMap(null);
   }
 
@@ -89,16 +85,29 @@ function showStreetView (){
 
 //====adds all historical markers to the map: Richmond
   var markers = []; // made markers global for deletion
-  function placeMarkers(coords, locName, locDesc){
+  var coordinates = []; // made coordinates global so the map can be resized each time its filtered
+  function placeMarkers(coords, locName, locDesc, animation){
     var latLng = new google.maps.LatLng(coords.lat, coords.long);
+      coordinates.push(latLng);
       latLng = new google.maps.Marker({  //latlng is the marker variable name so that each marker has a unique variable(makes infowindows show in correct location)
        position: latLng,
-       map: map
-      //  animation: google.maps.Animation.DROP
+       map: map,
+       animation: animation
       });
       markers.push(latLng);
       infoWindows(locName, latLng, locDesc, coords); //passing in coords because latLng is now a google Marker Object..coords is used to set the data of the infowindow "Show More" link
+
   }
+
+//======resizes the map to to just fit the available markers: Richmond
+  function resizeMap(){
+    var latlngbounds = new google.maps.LatLngBounds();
+    for (var i = 0; i < coordinates.length; i++) {
+        latlngbounds.extend(coordinates[i]);
+    }
+    map.fitBounds(latlngbounds);
+  }
+
 
 //====sets and opens infowindows: Richmond
   // var infowindow; //set to global so that only one infowindow can be open at a time -- close them using forEach in google listener function below
@@ -125,6 +134,29 @@ function showStreetView (){
         });
         siteName.open(map, windowLoc);
     });
+  }
+
+//===== pulls up for the street view when show more is click in an info window: Richmond
+  function showStreetView (){
+    var lat = $(this).attr('data-lat'); //grabs the coordinate data which is stored in the show more link of each infowindow
+    var long = $(this).attr('data-long');
+    var streetLatLng = new google.maps.LatLng(lat, long);
+
+    var panoOptions = {
+      position: streetLatLng,
+      addressControlOptions: {
+        position: google.maps.ControlPosition.BOTTOM_CENTER
+      },
+      linksControl: false,
+      panControl: false,
+      zoomControlOptions: {
+        style: google.maps.ZoomControlStyle.SMALL
+      },
+      enableCloseButton: false
+    };
+
+    var streetView = new google.maps.StreetViewPanorama(
+      document.getElementById('street-view'), panoOptions);
   }
 
   // function wikiTest(place) {
