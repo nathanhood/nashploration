@@ -1,12 +1,17 @@
 'use strict';
 
 var users = global.nss.db.collection('users');
-var Mongo = require('mongodb');
+var traceur = require('traceur');
+var Base = traceur.require(__dirname + '/../models/base.js');
 var _ = require('lodash');
 var bcrypt = require('bcrypt');
+var crypto = require('crypto');
+var path = require('path');
+var fs = require('fs');
+
 
 class User{
-  constructor(fields, files, userName){
+  constructor(fields, userName, fn){
     this.email = fields.email[0];
     this.password = fields.password[0];
     this.userName = userName;
@@ -14,49 +19,76 @@ class User{
     this.badges = []; // Object IDs
     this.level = 'Explorer';
     this.groups = []; // Object IDs
-    this.image = files.image[0].originalFilename; // add entire normalized file path
+    this.photo = null; // add photo object from processPhoto
     this.checkIns = []; // Object IDs
     this.createdQuests = []; // Object IDs
     this.activeQuests = []; // Object IDs
     this.completedQuests = []; // Object IDs
     // this.streetViewQuizzes = []; // Object IDs
-}
-
-  register(fn){
-    users.findOne({email:this.email}, (err, u)=>{
-      users.findOne({userName:this.userName}, (err, u2)=>{
-        if(u || u2){//if user email or username exists,
-          fn(null);
-
-        }else{
-          this.password = bcrypt.hashSync(this.password, 8); //hashed/encrypted version of password
-          users.save(this, (err, u)=>{
-            fn(u);
-          });
-
-        }
-
-      });
-    });
   }
 
-  login(user, fn){
-    var isMatch = bcrypt.compareSync(user.password, this.password); //(entered password, db password)
-    if(isMatch){
-      fn(this);
-    }else{
+
+  processPhoto(photo, fn) {
+    if(photo.size) {
+      var name = crypto.randomBytes(12).toString('hex') + path.extname(photo.originalFilename).toLowerCase();
+      var file = `/img/${this._id}/${name}`;
+
+      var newPhoto = {};
+      newPhoto.fileName = name;
+      newPhoto.filePath = file;
+      newPhoto.origFileName = photo.originalFilename;
+
+      var userDir = `${__dirname}/../static/img/${this._id}`;
+      var fullDir = `${userDir}/${name}`;
+
+      if(!fs.existsSync(userDir)){fs.mkdirSync(userDir);}
+      fs.renameSync(photo.path, fullDir);
+      fn(newPhoto);
+    } else {
       fn(null);
     }
   }
 
-  static findByUserId(userId, fn){
-    var id = Mongo.ObjectID(userId);
-    console.log('ID ID ID');
-    console.log(id);
-    users.findOne({_id:id}, (err, user)=>{
-      user = _.create(User.prototype, user);
-      fn(user);
+  save(fn){
+    users.save(this, ()=>{
+      _.create(User.prototype, this);
+      fn();
     });
+  }
+
+  static register(fields, userName, fn){
+    users.findOne({email:fields.email[0]}, (err, u)=>{
+      users.findOne({userName:userName}, (err, u2)=>{
+        if(u || u2){//if user email or username exists,
+          fn(null); // need error message to display
+        }else{
+          var user = new User(fields, userName);
+          user.password = bcrypt.hashSync(user.password, 8); //hashed/encrypted version of password
+          user.save(()=>{
+            fn(user);
+          });
+        }
+      });
+    });
+  }
+
+  static login(obj, fn) {
+    users.findOne({userName:obj.userName}, (e,u)=> {
+      if (u) {
+        var isMatch = bcrypt.compareSync(obj.password, u.password);
+        if (isMatch) {
+          fn(u);
+        } else {
+          fn(null);
+        }
+      } else {
+        fn(null);
+      }
+    });
+  }
+
+  static findById(id, fn){
+    Base.findById(id, users, User, fn);
   }
 
   static findByUserName(userName, fn){
