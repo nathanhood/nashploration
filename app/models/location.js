@@ -56,6 +56,12 @@ class Location{
     });
   }
 
+  static filterAndrewJacksonLocations(fn) {
+    locations.find({ description: { $regex: 'Andrew Jackson', $options: 'i' } }).toArray((err, loc)=>{
+      fn(loc);
+    });
+  }
+
   static findAll(fn){
     locations.find({}).toArray((err, loc)=>{
       fn(loc);
