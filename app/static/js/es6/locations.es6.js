@@ -14,8 +14,10 @@
 
 
 function showStreetView (){
-  alert('wooo');
-  console.log(this);
+  var lat = $(this).attr('data-lat');
+  var long = $(this).attr('data-long');
+  console.log(lat);
+  console.log(long);
 }
 
 
@@ -114,7 +116,6 @@ function showStreetView (){
           w.close();
         });
         siteName.open(map, windowLoc);
-
     });
   }
 
