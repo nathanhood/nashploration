@@ -16,7 +16,8 @@ class Location{
     this.category = obj.class;
     this.number = obj.number;
     this.pov = {}; // {pitch: , heading: }
-    this.comments = []; // {text: , userId: }
+    this.infoEdits = []; // {text: , userId: }
+    this.checkIns = []; // {userId: , coordinates: , comment: }
     this.isCivilWar = obj.isCivilWar;
     locations.save(this, ()=>{});
   }
