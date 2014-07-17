@@ -36,3 +36,10 @@ exports.getAndrewJacksonLocations = (req, res)=>{
     res.send(locations);
   });
 };
+
+
+exports.locationDetails = (req, res)=>{
+  Location.findCoordinates(req.params, location=>{
+    res.render('locations/detail', {title: `${location.name}`, location: location});
+  });
+};

@@ -1,0 +1,12 @@
+extends ../shared/template
+
+block content
+  h3= location.name
+
+  #street-view
+
+  div(id='coords', data-lat='#{location.gis.lat}', data-long='#{location.gis.long}')
+
+block scripts
+  script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyArPvnhx4BUiKnrYG6cyNX-YZL21LruNAQ&sensor=false')
+  script(src='/js/es6/compiled/location-details.js')

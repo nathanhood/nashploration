@@ -33,6 +33,8 @@ function load(app, fn){
   app.get('/getAndrewJacksonLocations', dbg, locations.getAndrewJacksonLocations);
   app.post('/addHistory', dbg, locations.addHistory);
 
+  app.get('/locations/:location', dbg, locations.locationDetails);
+
   app.all('*', users.bounce);
 
   /* ------ Secure Requests Below This Point ---- */

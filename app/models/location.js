@@ -61,7 +61,15 @@ class Location{
       fn(loc);
     });
   }
-}
+
+  static findCoordinates(locName, fn){
+    var name = locName.location.toUpperCase().split('-').join(' ').toString();
+    locations.findOne({name: {$regex: name, $options: 'i'} }, (err, location)=>{
+      fn(location);
+    });
+  }
+
+}//end of Class
 
 
 module.exports = Location;

@@ -41,7 +41,7 @@
         $.ajax('/getCivilWarLocations').done(function(data){
           clearMap();
           data.forEach(d=>{
-            placeMarkers(d.gis, d.name, d.description, google.maps.Animation.BOUNCE);
+            placeMarkers(d.gis, d.name, d.description);
           });
           resizeMap();
         });
@@ -50,7 +50,7 @@
         $.ajax('/getAndrewJacksonLocations').done(function(data){
           clearMap();
           data.forEach(d=>{
-            placeMarkers(d.gis, d.name, d.description, google.maps.Animation.BOUNCE);
+            placeMarkers(d.gis, d.name, d.description);
           });
           resizeMap();
         });
@@ -91,8 +91,7 @@
       coordinates.push(latLng);
       latLng = new google.maps.Marker({  //latlng is the marker variable name so that each marker has a unique variable(makes infowindows show in correct location)
        position: latLng,
-       map: map,
-       animation: animation
+       map: map
       });
       markers.push(latLng);
       infoWindows(locName, latLng, locDesc, coords); //passing in coords because latLng is now a google Marker Object..coords is used to set the data of the infowindow "Show More" link
@@ -122,7 +121,7 @@
 
     var content = '<h3>' + siteName + '</h3>'+
     '<p>' + locDesc + '</p>'+
-    '<a href="#", class="info-window", data-lat="'+lat+'", data-long="'+long+'">Show More</a>';
+    '<a href="/locations/'+siteURL+'", class="info-window">Show More</a>';
 
       siteName = new google.maps.InfoWindow();
       siteName.setContent(content);
@@ -158,6 +157,8 @@
     var streetView = new google.maps.StreetViewPanorama(
       document.getElementById('street-view'), panoOptions);
   }
+
+
 
   // function wikiTest(place) {
   //   console.log(place);
