@@ -2,9 +2,10 @@ extends ../shared/template
 
 block content
   h3= location.name
-
+  p= location.description
   #street-view
 
+  #wiki
   div(id='coords', data-lat='#{location.gis.lat}', data-long='#{location.gis.long}')
 
 block scripts

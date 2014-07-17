@@ -15,7 +15,6 @@
   function showStreetView (){
     var lat = $('#coords').attr('data-lat'); //grabs the coordinate data which is stored in the show more link of each infowindow
     var long = $('#coords').attr('data-long');
-    console.log(lat, long);
     var streetLatLng = new google.maps.LatLng(lat, long);
 
     var panoOptions = {
@@ -33,19 +32,18 @@
 
     var streetView = new google.maps.StreetViewPanorama(
       document.getElementById('street-view'), panoOptions);
+      wikiTest();
   }
 
 
 
-  // function wikiTest(place) {
-  //   console.log(place);
-  //   var np = place.toLowerCase().split(' ').join('_');
-  //   console.log(np);
-  //   $.getJSON(`http://en.wikipedia.org/w/api.php?action=parse&format=json&page=${np}&callback=?`).done(function(data){
-  //     console.log(data);
-  //   });
-  // }
-  //
+  function wikiTest() {
+    $.getJSON(`http://en.wikipedia.org/w/api.php?action=parse&format=json&page=Tennessee&callback=?`).done(function(data){
+      var stuff = data.parse.text;
+      $('#wiki').append(stuff["*"]);
+    });
+  }
+
 
 
 
