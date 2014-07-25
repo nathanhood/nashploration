@@ -30,7 +30,6 @@ class Location{
           var locArray = [];
               locArray[0] = markers[i].mapped_location.longitude * 1;
               locArray[1] = markers[i].mapped_location.latitude * 1;
-              console.log(locArray);
           var newLocation = {
               name: markers[i].title,
               address: markers[i].location,
@@ -77,12 +76,12 @@ class Location{
   }
 
   static radialSearch(coords, fn){
+    console.log(coords);
     var lat = coords.lat * 1;
     var long = coords.long * 1;
     var currentLoc = [long, lat];
       // puts the users current location coordiantes as the center and returns locations that are with 103 feet... # /3959 converts to radians which mongo needs: Richmond
       locations.find({loc: {$geoWithin: {$centerSphere: [currentLoc,  10 / 3959]}}}).toArray((err, locs)=>{
-        console.log(locs);
         fn(locs);
       });
   }

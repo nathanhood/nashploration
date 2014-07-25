@@ -35,7 +35,7 @@ function load(app, fn){
 
   app.get('/locations/:location', dbg, locations.locationDetails);
 
-  app.get('/getCloseLocs', dbg, locations.findCloseLocs);
+  app.get('/getCloseLocs/:lat/:long', dbg, locations.findCloseLocs); //ajax call for finding locations around users current location
 
   app.all('*', users.bounce);
 

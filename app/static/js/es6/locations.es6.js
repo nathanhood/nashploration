@@ -206,14 +206,11 @@ function handleNoGeolocation(errorFlag) {
 
 //TODO pass in pos once mongo geo spatial is working
 function checkCloseLocs(){
-  var latLng = {};
-      latLng.lat = 36.1667;     // pos.k;
-      latLng.long =  -86.7833;         //pos.B;
-
-  ajax(`/getCloseLocs`, 'GET', latLng, res=>{
-    console.log(res);
-  });
-
+  var lat = 36.1667;
+  var long = -86.7833;
+  $.ajax(`/getCloseLocs/${lat}/${long}`).done(function(data){
+  console.log(data[0].loc);
+});
 }
 
 function ajax(url, type, data={}, success=r=>console.log(r), dataType='html'){
