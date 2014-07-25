@@ -40,7 +40,7 @@
   function wikiTest() {
     $.getJSON(`http://en.wikipedia.org/w/api.php?action=parse&format=json&page=Tennessee&callback=?`).done(function(data){
       var stuff = data.parse.text;
-      $('#wiki').append(stuff["*"]);
+      $('#wiki').append(stuff['*']);
     });
   }
 

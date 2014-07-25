@@ -10,6 +10,8 @@
     fetchLocations();
     $('#map-filter select').on('change', filterLocations);
     $('body').on('click', '.info-window', showStreetView);
+    // findLocation();
+    checkCloseLocs();
   }
 
 //=======ajax call to fetch locations from the database: Richmond
@@ -18,7 +20,7 @@
       initMap();
 
       data.forEach(d=>{
-        placeMarkers(d.gis, d.name, d.description);
+        placeMarkers(d.loc, d.name, d.description);
       });
       resizeMap();
     });
@@ -32,7 +34,7 @@
         $.ajax('/getAllLocations').done(function(data){
           clearMap();
           data.forEach(d=>{
-            placeMarkers(d.gis, d.name, d.description);
+            placeMarkers(d.loc, d.name, d.description);
           });
           resizeMap();
         });
@@ -41,7 +43,7 @@
         $.ajax('/getCivilWarLocations').done(function(data){
           clearMap();
           data.forEach(d=>{
-            placeMarkers(d.gis, d.name, d.description);
+            placeMarkers(d.loc, d.name, d.description);
           });
           resizeMap();
         });
@@ -50,7 +52,7 @@
         $.ajax('/getAndrewJacksonLocations').done(function(data){
           clearMap();
           data.forEach(d=>{
-            placeMarkers(d.gis, d.name, d.description);
+            placeMarkers(d.loc, d.name, d.description);
           });
           resizeMap();
         });
@@ -87,7 +89,7 @@
   var markers = []; // made markers global for deletion
   var coordinates = []; // made coordinates global so the map can be resized each time its filtered
   function placeMarkers(coords, locName, locDesc, animation){
-    var latLng = new google.maps.LatLng(coords.lat, coords.long);
+    var latLng = new google.maps.LatLng(coords[1], coords[0]);
       coordinates.push(latLng);
       latLng = new google.maps.Marker({  //latlng is the marker variable name so that each marker has a unique variable(makes infowindows show in correct location)
        position: latLng,
@@ -159,16 +161,64 @@
   }
 
 
+//========Used to find users current location: Richmond
+  function findLocation(){
+  if(navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var pos = new google.maps.LatLng(position.coords.latitude,
+                                       position.coords.longitude);
 
-  // function wikiTest(place) {
-  //   console.log(place);
-  //   var np = place.toLowerCase().split(' ').join('_');
-  //   console.log(np);
-  //   $.getJSON(`http://en.wikipedia.org/w/api.php?action=parse&format=json&page=${np}&callback=?`).done(function(data){
-  //     console.log(data);
-  //   });
-  // }
-  //
+      var marker = new google.maps.InfoWindow({
+        map: map,
+        position: pos
+      });
+
+      map.setCenter(pos);
+    }, function() {
+      handleNoGeolocation(true);
+    });
+  } else {
+    // Browser doesn't support Geolocation
+    handleNoGeolocation(false);
+  }
+
+  checkCloseLocs(pos);
+}
+
+function handleNoGeolocation(errorFlag) {
+  var content;
+  if (errorFlag) {
+     content = 'Error: The Geolocation service failed.';
+  } else {
+     content = 'Error: Your browser doesn\'t support geolocation.';
+  }
+
+  var options = {
+    map: map,
+    position: new google.maps.LatLng(60, 105),
+    content: content
+  };
+
+  var infowindow = new google.maps.InfoWindow(options);
+  map.setCenter(options.position);
+}
+
+
+//TODO pass in pos once mongo geo spatial is working
+function checkCloseLocs(){
+  var latLng = {};
+      latLng.lat = 36.1667;     // pos.k;
+      latLng.long =  -86.7833;         //pos.B;
+
+  ajax(`/getCloseLocs`, 'GET', latLng, res=>{
+    console.log(res);
+  });
+
+}
+
+function ajax(url, type, data={}, success=r=>console.log(r), dataType='html'){
+$.ajax({url:url, type:type, dataType:dataType, data:data, success:success});
+}
 
 
 

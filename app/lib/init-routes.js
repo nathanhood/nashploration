@@ -35,6 +35,8 @@ function load(app, fn){
 
   app.get('/locations/:location', dbg, locations.locationDetails);
 
+  app.get('/getCloseLocs', dbg, locations.findCloseLocs);
+
   app.all('*', users.bounce);
 
   /* ------ Secure Requests Below This Point ---- */

@@ -43,3 +43,10 @@ exports.locationDetails = (req, res)=>{
     res.render('locations/detail', {title: `${location.name}`, location: location});
   });
 };
+
+exports.findCloseLocs = (req, res)=>{
+  Location.radialSearch(req.query, locations=>{
+    console.log(locations);
+    res.send(locations);
+  });
+};
