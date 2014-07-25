@@ -46,7 +46,6 @@ exports.locationDetails = (req, res)=>{
 
 exports.findCloseLocs = (req, res)=>{
   Location.radialSearch(req.params, locations=>{
-    console.log(locations);
     res.send(locations);
   });
 };

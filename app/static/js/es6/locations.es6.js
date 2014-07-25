@@ -203,6 +203,10 @@ function handleNoGeolocation(errorFlag) {
   map.setCenter(options.position);
 }
 
+//TODO change timed function to findLocation()
+//   window.setInterval(function(){
+//   checkCloseLocs();
+// }, 10000);
 
 //TODO pass in pos once mongo geo spatial is working
 function checkCloseLocs(){
