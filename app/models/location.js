@@ -80,7 +80,7 @@ class Location{
     var lat = coords.lat * 1;
     var long = coords.long * 1;
     var currentLoc = [long, lat];
-      // puts the users current location coordiantes as the center and returns locations that are with 103 feet... # /3959 converts to radians which mongo needs: Richmond
+      // # /3959 converts to radians which mongo needs: Richmond
       //the numerator is in miles
       locations.find({loc: {$geoWithin: {$centerSphere: [currentLoc,  1 / 3959]}}}).toArray((err, locs)=>{
         console.log(locs.length);

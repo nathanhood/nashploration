@@ -10,7 +10,7 @@
     fetchLocations();
     $('#map-filter select').on('change', filterLocations);
     $('body').on('click', '.info-window', showStreetView);
-    findLocation();
+    // findLocation();
     // checkCloseLocs();
   }
 
@@ -83,6 +83,10 @@
       draggableCursor: 'crosshair'
     };
       map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+      google.maps.event.addListener(map, 'click', function(event) {
+         checkCloseLocs(event.latLng);
+      });
   }
 
 //====adds all historical markers to the map: Richmond
@@ -163,45 +167,45 @@
     scale: 5
   };
 //========Used to find users current location: Richmond
-  function findLocation(){
-  if(navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-      var marker = new google.maps.Marker({
-        map: map,
-        position: pos,
-        icon: currLocMarker
-      });
-
-      map.setCenter(pos);
-      checkCloseLocs(pos);
-    }, function() {
-      handleNoGeolocation(true);
-    });
-  } else {
-    // Browser doesn't support Geolocation
-    handleNoGeolocation(false);
-  }
-
-}
-
-function handleNoGeolocation(errorFlag) {
-  var content;
-  if (errorFlag) {
-     content = 'Error: The Geolocation service failed.';
-  } else {
-     content = 'Error: Your browser doesn\'t support geolocation.';
-  }
-
-  var options = {
-    map: map,
-    position: new google.maps.LatLng(60, 105),
-    content: content
-  };
-
-  var infowindow = new google.maps.InfoWindow(options);
-  map.setCenter(options.position);
-}
+//   function findLocation(){
+//   if(navigator.geolocation) {
+//     navigator.geolocation.getCurrentPosition(function(position) {
+//       var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+//       var marker = new google.maps.Marker({
+//         map: map,
+//         position: pos,
+//         icon: currLocMarker
+//       });
+//
+//       map.setCenter(pos);
+//       checkCloseLocs(pos);
+//     }, function() {
+//       handleNoGeolocation(true);
+//     });
+//   } else {
+//     // Browser doesn't support Geolocation
+//     handleNoGeolocation(false);
+//   }
+//
+// }
+//
+// function handleNoGeolocation(errorFlag) {
+//   var content;
+//   if (errorFlag) {
+//      content = 'Error: The Geolocation service failed.';
+//   } else {
+//      content = 'Error: Your browser doesn\'t support geolocation.';
+//   }
+//
+//   var options = {
+//     map: map,
+//     position: new google.maps.LatLng(60, 105),
+//     content: content
+//   };
+//
+//   var infowindow = new google.maps.InfoWindow(options);
+//   map.setCenter(options.position);
+// }
 
 //TODO change timed function to findLocation()
 //   window.setInterval(function(){
@@ -210,9 +214,11 @@ function handleNoGeolocation(errorFlag) {
 
 //TODO pass in pos once mongo geo spatial is working
 //sends an ajax call to find all of the locations that the user is within a close enough range to check into: Richmond
+
+
 function checkCloseLocs(pos){
-  var lat =  36.1667;       //pos.k;
-  var long = -86.7833;      //pos.B;
+  var lat = pos.k; // 36.1667;
+  var long = pos.B; //-86.7833;
   $.ajax(`/getCloseLocs/${lat}/${long}`).done(function(data){
     data.forEach(i=>{
       addCheckInMarkers(i.loc);
@@ -236,6 +242,7 @@ function addCheckInMarkers(coords){
 
 }
 //==== adds "Check In" buttons to info windows that are within range of checkin: Richmond
+var closeLocsWindows = [];
 function addCheckInButton(windowName, description){
   allInfoWindows.forEach(w=>{   //loops through the global arraay of info windows looking for a match on the site name. If it finds a match it adds a checkin button to the window
     var siteURL = windowName.toLowerCase().split(' ').join('-');
@@ -248,9 +255,10 @@ function addCheckInButton(windowName, description){
       '<p>'+description+'</p>'+
       '<a href="/locations/'+siteURL+'", class="info-window">Show More</a>'+
       '<button>Check In</button>';
-
       w.setContent(content);
     }
+
+    closeLocsWindows.push(w);
   });
 }
 
