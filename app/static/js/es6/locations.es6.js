@@ -10,8 +10,8 @@
     fetchLocations();
     $('#map-filter select').on('change', filterLocations);
     $('body').on('click', '.info-window', showStreetView);
-    // findLocation();
-    checkCloseLocs();
+    findLocation();
+    // checkCloseLocs();
   }
 
 //=======ajax call to fetch locations from the database: Richmond
@@ -157,19 +157,24 @@
       document.getElementById('street-view'), panoOptions);
   }
 
-
+  var currLocMarker = {
+    path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+    strokeColor: 'darkgreen',
+    scale: 5
+  };
 //========Used to find users current location: Richmond
   function findLocation(){
   if(navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
       var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
-      var marker = new google.maps.InfoWindow({
+      var marker = new google.maps.Marker({
         map: map,
-        position: pos
+        position: pos,
+        icon: currLocMarker
       });
 
       map.setCenter(pos);
+      checkCloseLocs(pos);
     }, function() {
       handleNoGeolocation(true);
     });
@@ -178,7 +183,6 @@
     handleNoGeolocation(false);
   }
 
-  checkCloseLocs(pos);
 }
 
 function handleNoGeolocation(errorFlag) {
@@ -205,43 +209,49 @@ function handleNoGeolocation(errorFlag) {
 // }, 10000);
 
 //TODO pass in pos once mongo geo spatial is working
-function checkCloseLocs(){
-  var lat = 36.1667;
-  var long = -86.7833;
+//sends an ajax call to find all of the locations that the user is within a close enough range to check into: Richmond
+function checkCloseLocs(pos){
+  var lat =  36.1667;       //pos.k;
+  var long = -86.7833;      //pos.B;
   $.ajax(`/getCloseLocs/${lat}/${long}`).done(function(data){
     data.forEach(i=>{
-      addCheckInMarkers(i.name, i.loc);
+      addCheckInMarkers(i.loc);
+      addCheckInButton(i.name, i.description);
     });
   });
 }
 
-
-
-var closeLocsMarkers = [];
 var checkInIcon = {
-    url: '/img/pin-filled.svg',
+    url: '/img/pin-dot.svg',
     scaledSize: new google.maps.Size(40,40)
   };
-function addCheckInMarkers(windowName, coords){
-  allInfoWindows.forEach(w=>{
+
+//==== changes the icons for the markers that are within range of checkin: Richmond
+function addCheckInMarkers(coords){
+    markers.forEach(m=>{ // loops thourgh the global array of markers and matches on the site coordinates. When it finds a match it changes the marker icon.
+      if(m.position.k.toFixed(6) === coords[1].toFixed(6) && m.position.B.toFixed(6) === coords[0].toFixed(6)){
+        m.setIcon(checkInIcon);
+      }
+    });
+
+}
+//==== adds "Check In" buttons to info windows that are within range of checkin: Richmond
+function addCheckInButton(windowName, description){
+  allInfoWindows.forEach(w=>{   //loops through the global arraay of info windows looking for a match on the site name. If it finds a match it adds a checkin button to the window
+    var siteURL = windowName.toLowerCase().split(' ').join('-');
+    if(description === null){
+      description = 'There is no description for this site.';
+    }
+
     if(w.content.match(windowName)){
-      var content = '<h3>'+ w.name+'</h3>'+
-      '<p>'+w.content+'</p>'+
+      var content = '<h3>'+windowName+'</h3>'+
+      '<p>'+description+'</p>'+
+      '<a href="/locations/'+siteURL+'", class="info-window">Show More</a>'+
       '<button>Check In</button>';
+
       w.setContent(content);
     }
   });
-    console.log(markers);
-
-  // var latLng = new google.maps.LatLng(coords[1], coords[0]);
-  //
-  // latLng = new google.maps.Marker({
-  //   position: latLng,
-  //   map: map,
-  //   icon:checkInIcon
-  // });
-  // closeLocsMarkers.push(latLng);
-
 }
 
 
