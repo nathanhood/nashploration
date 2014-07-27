@@ -96,7 +96,7 @@
        map: map
       });
       markers.push(latLng);
-      infoWindows(locName, latLng, locDesc, coords); //passing in coords because latLng is now a google Marker Object..coords is used to set the data of the infowindow "Show More" link
+      infoWindows(locName, latLng, locDesc); //passing in coords because latLng is now a google Marker Object..coords is used to set the data of the infowindow "Show More" link
 
   }
 
@@ -113,9 +113,7 @@
 //====sets and opens infowindows: Richmond
   // var infowindow; //set to global so that only one infowindow can be open at a time -- close them using forEach in google listener function below
   var allInfoWindows = [];
-  function infoWindows(siteName, windowLoc, locDesc, coords){
-    var lat = coords.lat;
-    var long = coords.long;
+  function infoWindows(siteName, windowLoc, locDesc){
     var siteURL = siteName.toLowerCase().split(' ').join('-');
     if(locDesc === null){
       locDesc = 'There is no description for this site.';
@@ -124,7 +122,6 @@
     var content = '<h3>' + siteName + '</h3>'+
     '<p>' + locDesc + '</p>'+
     '<a href="/locations/'+siteURL+'", class="info-window">Show More</a>';
-
       siteName = new google.maps.InfoWindow();
       siteName.setContent(content);
       allInfoWindows.push(siteName); //since all windows have diff variable names, they are pushed into an array so they can be closed on the opening of another window
@@ -165,8 +162,7 @@
   function findLocation(){
   if(navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
-      var pos = new google.maps.LatLng(position.coords.latitude,
-                                       position.coords.longitude);
+      var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
       var marker = new google.maps.InfoWindow({
         map: map,
@@ -213,9 +209,41 @@ function checkCloseLocs(){
   var lat = 36.1667;
   var long = -86.7833;
   $.ajax(`/getCloseLocs/${lat}/${long}`).done(function(data){
-  console.log(data[0].loc);
-});
+    data.forEach(i=>{
+      addCheckInMarkers(i.name, i.loc);
+    });
+  });
 }
+
+
+
+var closeLocsMarkers = [];
+var checkInIcon = {
+    url: '/img/pin-filled.svg',
+    scaledSize: new google.maps.Size(40,40)
+  };
+function addCheckInMarkers(windowName, coords){
+  allInfoWindows.forEach(w=>{
+    if(w.content.match(windowName)){
+      var content = '<h3>'+ w.name+'</h3>'+
+      '<p>'+w.content+'</p>'+
+      '<button>Check In</button>';
+      w.setContent(content);
+    }
+  });
+    console.log(markers);
+
+  // var latLng = new google.maps.LatLng(coords[1], coords[0]);
+  //
+  // latLng = new google.maps.Marker({
+  //   position: latLng,
+  //   map: map,
+  //   icon:checkInIcon
+  // });
+  // closeLocsMarkers.push(latLng);
+
+}
+
 
 function ajax(url, type, data={}, success=r=>console.log(r), dataType='html'){
 $.ajax({url:url, type:type, dataType:dataType, data:data, success:success});
