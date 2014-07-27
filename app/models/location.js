@@ -82,7 +82,7 @@ class Location{
     var currentLoc = [long, lat];
       // # /3959 converts to radians which mongo needs: Richmond
       //the numerator is in miles
-      locations.find({loc: {$geoWithin: {$centerSphere: [currentLoc,  1 / 3959]}}}).toArray((err, locs)=>{
+      locations.find({loc: {$geoWithin: {$centerSphere: [currentLoc,  0.1 / 3959]}}}).toArray((err, locs)=>{
         console.log(locs.length);
         fn(locs);
       });

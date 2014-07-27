@@ -219,10 +219,16 @@
 function checkCloseLocs(pos){
   var lat = pos.k; // 36.1667;
   var long = pos.B; //-86.7833;
-  $.ajax(`/getCloseLocs/${lat}/${long}`).done(function(data){
-    data.forEach(i=>{
-      addCheckInMarkers(i.loc);
-      addCheckInButton(i.name, i.description);
+  $.ajax('/getAllLocations').done(function(data){
+    clearMap();
+    data.forEach(d=>{
+      placeMarkers(d.loc, d.name, d.description);
+    });
+    $.ajax(`/getCloseLocs/${lat}/${long}`).done(function(data){
+      data.forEach(i=>{
+        addCheckInMarkers(i.loc);
+        addCheckInButton(i.name, i.description);
+      });
     });
   });
 }
@@ -258,7 +264,7 @@ function addCheckInButton(windowName, description){
       w.setContent(content);
     }
 
-    closeLocsWindows.push(w);
+    closeLocsWindows.push(windowName);
   });
 }
 
