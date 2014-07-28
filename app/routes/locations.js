@@ -46,6 +46,14 @@ exports.locationDetails = (req, res)=>{
 
 exports.findCloseLocs = (req, res)=>{
   Location.radialSearch(req.params, locations=>{
+    console.log(locations);
     res.send(locations);
   });
+};
+
+exports.resetLocations = (req, res)=>{
+  var closeLocs = req.params.closeLocations.split(',');
+    Location.resetCloseLocations(closeLocs, locations=>{
+      res.send(locations);
+    });
 };

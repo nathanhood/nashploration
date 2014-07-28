@@ -36,7 +36,8 @@ function load(app, fn){
   app.get('/locations/:location', dbg, locations.locationDetails);
 
   app.get('/getCloseLocs/:lat/:long', dbg, locations.findCloseLocs); //ajax call for finding locations around users current location
-
+  app.get('/resetCloseLocations/:closeLocations', dbg, locations.resetLocations);
+  
   app.all('*', users.bounce);
 
   /* ------ Secure Requests Below This Point ---- */

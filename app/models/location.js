@@ -5,7 +5,7 @@
 
 var locations = global.nss.db.collection('locations');
 var needle = require('needle');
-
+var async = require('async');
 
 class Location{
   constructor(obj){ // 'number' will need to be added in route
@@ -76,19 +76,29 @@ class Location{
   }
 
   static radialSearch(coords, fn){
-    console.log(coords);
     var lat = coords.lat * 1;
     var long = coords.long * 1;
     var currentLoc = [long, lat];
       // # /3959 converts to radians which mongo needs: Richmond
       //the numerator is in miles
       locations.find({loc: {$geoWithin: {$centerSphere: [currentLoc,  0.1 / 3959]}}}).toArray((err, locs)=>{
-        console.log(locs.length);
         fn(locs);
       });
   }
 
+  static resetCloseLocations(locNames, fn){
+    async.map(locNames, findCloseLocs, (e, locs)=>{
+      fn(locs);
+    });
+  }
+
+
 }//end of Class
 
+function findCloseLocs(locName, fn){
+  locations.findOne({name: {$regex: locName, $options: 'i'}}, (err, location)=>{
+    fn(null, location);
+  });
+}
 
 module.exports = Location;

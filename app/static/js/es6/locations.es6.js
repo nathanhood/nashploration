@@ -215,23 +215,41 @@
 //TODO pass in pos once mongo geo spatial is working
 //sends an ajax call to find all of the locations that the user is within a close enough range to check into: Richmond
 
-
+//checks for nearby locations and resets markers on previous nearby locations that are no long in range: Richmond
 function checkCloseLocs(pos){
   var lat = pos.k; // 36.1667;
   var long = pos.B; //-86.7833;
-  $.ajax('/getAllLocations').done(function(data){
-    clearMap();
-    data.forEach(d=>{
-      placeMarkers(d.loc, d.name, d.description);
+
+  if(closeMarkers.length){
+    resetMarkers();
+  }
+
+  if(closeLocations.length){  //if there are nearby locations currently displaying and the user moves this call resets markers that are no longer in range of user and sets ones that are: Richmond
+    $.ajax(`/resetCloseLocations/${closeLocations}`).done(function(data){
+      data.forEach(d=>{
+        if(d){  //if database returns null, it throws an error and does not revord until page refresh..this prevents that
+        placeMarkers(d.loc, d.name, d.description);
+      }
+      });
+
+      $.ajax(`/getCloseLocs/${lat}/${long}`).done(function(data){
+        data.forEach(i=>{
+          addCheckInMarkers(i.loc);
+          addCheckInButton(i.name, i.description);
+        });
+      });
     });
+  } else {
     $.ajax(`/getCloseLocs/${lat}/${long}`).done(function(data){
       data.forEach(i=>{
         addCheckInMarkers(i.loc);
         addCheckInButton(i.name, i.description);
       });
     });
-  });
+  }
+closeLocations = [];
 }
+
 
 var checkInIcon = {
     url: '/img/pin-dot.svg',
@@ -239,16 +257,18 @@ var checkInIcon = {
   };
 
 //==== changes the icons for the markers that are within range of checkin: Richmond
+var closeMarkers = [];
 function addCheckInMarkers(coords){
     markers.forEach(m=>{ // loops thourgh the global array of markers and matches on the site coordinates. When it finds a match it changes the marker icon.
       if(m.position.k.toFixed(6) === coords[1].toFixed(6) && m.position.B.toFixed(6) === coords[0].toFixed(6)){
         m.setIcon(checkInIcon);
+        closeMarkers.push(m);
       }
     });
 
 }
 //==== adds "Check In" buttons to info windows that are within range of checkin: Richmond
-var closeLocsWindows = [];
+var closeLocations = [];
 function addCheckInButton(windowName, description){
   allInfoWindows.forEach(w=>{   //loops through the global arraay of info windows looking for a match on the site name. If it finds a match it adds a checkin button to the window
     var siteURL = windowName.toLowerCase().split(' ').join('-');
@@ -263,11 +283,16 @@ function addCheckInButton(windowName, description){
       '<button>Check In</button>';
       w.setContent(content);
     }
-
-    closeLocsWindows.push(windowName);
   });
+  closeLocations.push(windowName);
 }
 
+function resetMarkers(){
+  closeMarkers.forEach(i=>{
+    i.setMap(null);
+  });
+  closeMarkers = [];
+}
 
 function ajax(url, type, data={}, success=r=>console.log(r), dataType='html'){
 $.ajax({url:url, type:type, dataType:dataType, data:data, success:success});
