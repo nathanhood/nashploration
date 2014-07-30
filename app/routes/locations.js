@@ -36,3 +36,24 @@ exports.getAndrewJacksonLocations = (req, res)=>{
     res.send(locations);
   });
 };
+
+
+exports.locationDetails = (req, res)=>{
+  Location.findCoordinates(req.params, location=>{
+    res.render('locations/detail', {title: `${location.name}`, location: location});
+  });
+};
+
+exports.findCloseLocs = (req, res)=>{
+  Location.radialSearch(req.params, locations=>{
+    console.log(locations);
+    res.send(locations);
+  });
+};
+
+exports.resetLocations = (req, res)=>{
+  var closeLocs = req.params.closeLocations.split(',');
+    Location.resetCloseLocations(closeLocs, locations=>{
+      res.send(locations);
+    });
+};

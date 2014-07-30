@@ -10,6 +10,8 @@
     fetchLocations();
     $('#map-filter select').on('change', filterLocations);
     $('body').on('click', '.info-window', showStreetView);
+    // findLocation();
+    // checkCloseLocs();
   }
 
 //=======ajax call to fetch locations from the database: Richmond
@@ -18,7 +20,7 @@
       initMap();
 
       data.forEach(d=>{
-        placeMarkers(d.gis, d.name, d.description);
+        placeMarkers(d.loc, d.name, d.description);
       });
       resizeMap();
     });
@@ -32,7 +34,7 @@
         $.ajax('/getAllLocations').done(function(data){
           clearMap();
           data.forEach(d=>{
-            placeMarkers(d.gis, d.name, d.description);
+            placeMarkers(d.loc, d.name, d.description);
           });
           resizeMap();
         });
@@ -41,7 +43,7 @@
         $.ajax('/getCivilWarLocations').done(function(data){
           clearMap();
           data.forEach(d=>{
-            placeMarkers(d.gis, d.name, d.description, google.maps.Animation.BOUNCE);
+            placeMarkers(d.loc, d.name, d.description);
           });
           resizeMap();
         });
@@ -50,7 +52,7 @@
         $.ajax('/getAndrewJacksonLocations').done(function(data){
           clearMap();
           data.forEach(d=>{
-            placeMarkers(d.gis, d.name, d.description, google.maps.Animation.BOUNCE);
+            placeMarkers(d.loc, d.name, d.description);
           });
           resizeMap();
         });
@@ -81,21 +83,24 @@
       draggableCursor: 'crosshair'
     };
       map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+      google.maps.event.addListener(map, 'click', function(event) { //TODO remove this after testing...this simulates the current location coordinates
+         checkCloseLocs(event.latLng);
+      });
   }
 
 //====adds all historical markers to the map: Richmond
   var markers = []; // made markers global for deletion
   var coordinates = []; // made coordinates global so the map can be resized each time its filtered
   function placeMarkers(coords, locName, locDesc, animation){
-    var latLng = new google.maps.LatLng(coords.lat, coords.long);
+    var latLng = new google.maps.LatLng(coords[1], coords[0]);
       coordinates.push(latLng);
       latLng = new google.maps.Marker({  //latlng is the marker variable name so that each marker has a unique variable(makes infowindows show in correct location)
        position: latLng,
-       map: map,
-       animation: animation
+       map: map
       });
       markers.push(latLng);
-      infoWindows(locName, latLng, locDesc, coords); //passing in coords because latLng is now a google Marker Object..coords is used to set the data of the infowindow "Show More" link
+      infoWindows(locName, latLng, locDesc); //passing in coords because latLng is now a google Marker Object..coords is used to set the data of the infowindow "Show More" link
 
   }
 
@@ -112,9 +117,7 @@
 //====sets and opens infowindows: Richmond
   // var infowindow; //set to global so that only one infowindow can be open at a time -- close them using forEach in google listener function below
   var allInfoWindows = [];
-  function infoWindows(siteName, windowLoc, locDesc, coords){
-    var lat = coords.lat;
-    var long = coords.long;
+  function infoWindows(siteName, windowLoc, locDesc){
     var siteURL = siteName.toLowerCase().split(' ').join('-');
     if(locDesc === null){
       locDesc = 'There is no description for this site.';
@@ -122,8 +125,7 @@
 
     var content = '<h3>' + siteName + '</h3>'+
     '<p>' + locDesc + '</p>'+
-    '<a href="#", class="info-window", data-lat="'+lat+'", data-long="'+long+'">Show More</a>';
-
+    '<a href="/locations/'+siteURL+'", class="info-window">Show More</a>';
       siteName = new google.maps.InfoWindow();
       siteName.setContent(content);
       allInfoWindows.push(siteName); //since all windows have diff variable names, they are pushed into an array so they can be closed on the opening of another window
@@ -159,15 +161,141 @@
       document.getElementById('street-view'), panoOptions);
   }
 
-  // function wikiTest(place) {
-  //   console.log(place);
-  //   var np = place.toLowerCase().split(' ').join('_');
-  //   console.log(np);
-  //   $.getJSON(`http://en.wikipedia.org/w/api.php?action=parse&format=json&page=${np}&callback=?`).done(function(data){
-  //     console.log(data);
-  //   });
-  // }
-  //
+  var currLocMarker = {
+    path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+    strokeColor: 'darkgreen',
+    scale: 5
+  };
+//========Used to find users current location: Richmond
+//   function findLocation(){
+//   if(navigator.geolocation) {
+//     navigator.geolocation.getCurrentPosition(function(position) {
+//       var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+//       var marker = new google.maps.Marker({
+//         map: map,
+//         position: pos,
+//         icon: currLocMarker
+//       });
+//
+//       map.setCenter(pos);
+//       checkCloseLocs(pos);
+//     }, function() {
+//       handleNoGeolocation(true);
+//     });
+//   } else {
+//     // Browser doesn't support Geolocation
+//     handleNoGeolocation(false);
+//   }
+//
+// }
+//
+// function handleNoGeolocation(errorFlag) {
+//   var content;
+//   if (errorFlag) {
+//      content = 'Error: The Geolocation service failed.';
+//   } else {
+//      content = 'Error: Your browser doesn\'t support geolocation.';
+//   }
+//
+//   var options = {
+//     map: map,
+//     position: new google.maps.LatLng(60, 105),
+//     content: content
+//   };
+//
+//   var infowindow = new google.maps.InfoWindow(options);
+//   map.setCenter(options.position);
+// }
+
+//TODO change timed function to findLocation()
+//   window.setInterval(function(){
+//   checkCloseLocs();
+// }, 10000);
+
+//TODO pass in pos once mongo geo spatial is working
+//sends an ajax call to find all of the locations that the user is within a close enough range to check into: Richmond
+
+//checks for nearby locations and resets markers on previous nearby locations that are no long in range: Richmond
+function checkCloseLocs(pos){
+  var lat = pos.k; // 36.1667;
+  var long = pos.B; //-86.7833;
+
+  if(closeMarkers.length){
+    resetMarkers();
+  }
+
+  if(closeLocations.length){  //if there are nearby locations currently displaying and the user moves this call resets markers that are no longer in range of user and sets ones that now are: Richmond
+    $.ajax(`/resetCloseLocations/${closeLocations}`).done(function(data){
+      data.forEach(d=>{
+        if(d){  //if database returns null, it throws an error and does not recover until page refresh..this prevents that
+        placeMarkers(d.loc, d.name, d.description);
+      }
+      });
+
+      $.ajax(`/getCloseLocs/${lat}/${long}`).done(function(data){
+        data.forEach(i=>{
+          addCheckInMarkers(i.loc);
+          addCheckInButton(i.name, i.description);
+        });
+      });
+    });
+  } else {
+    $.ajax(`/getCloseLocs/${lat}/${long}`).done(function(data){
+      data.forEach(i=>{
+        addCheckInMarkers(i.loc);
+        addCheckInButton(i.name, i.description);
+      });
+    });
+  }
+closeLocations = [];
+}
+
+
+var checkInIcon = {
+    url: '/img/pin-dot.svg',
+    scaledSize: new google.maps.Size(40,40)
+  };
+
+//==== changes the icons for the markers that are within range of checkin: Richmond
+var closeMarkers = [];
+function addCheckInMarkers(coords){
+    markers.forEach(m=>{ // loops thourgh the global array of markers and matches on the site coordinates. When it finds a match it changes the marker icon.
+      if(m.position.k.toFixed(6) === coords[1].toFixed(6) && m.position.B.toFixed(6) === coords[0].toFixed(6)){
+        m.setIcon(checkInIcon);
+        closeMarkers.push(m);
+      }
+    });
+}
+//==== adds "Check In" buttons to info windows that are within range of checkin: Richmond
+var closeLocations = [];
+function addCheckInButton(windowName, description){
+  allInfoWindows.forEach(w=>{   //loops through the global arraay of info windows looking for a match on the site name. If it finds a match it adds a checkin button to the window
+    var siteURL = windowName.toLowerCase().split(' ').join('-');
+    if(description === null){
+      description = 'There is no description for this site.';
+    }
+
+    if(w.content.match(windowName)){
+      var content = '<h3>'+windowName+'</h3>'+
+      '<p>'+description+'</p>'+
+      '<a href="/locations/'+siteURL+'", class="info-window">Show More</a>'+
+      '<button>Check In</button>';
+      w.setContent(content);
+    }
+  });
+  closeLocations.push(windowName);
+}
+
+function resetMarkers(){
+  closeMarkers.forEach(i=>{
+    i.setMap(null);
+  });
+  closeMarkers = [];
+}
+
+function ajax(url, type, data={}, success=r=>console.log(r), dataType='html'){
+$.ajax({url:url, type:type, dataType:dataType, data:data, success:success});
+}
 
 
 

@@ -6,6 +6,7 @@
 class Quest{
 //   constructor(){
 //     this.users = [];
+//     this.groupId = objectId;
 //     this.name = string;
 //     this.creator = objectId;
 //     this.checkIns = [objectId];
