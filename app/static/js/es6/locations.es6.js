@@ -12,6 +12,7 @@
     $('body').on('click', '.info-window', showStreetView);
     // findLocation();
     // checkCloseLocs();
+    // $('body').on('click', '.checkin-button', checkIn);
   }
 
 //=======ajax call to fetch locations from the database: Richmond
@@ -235,7 +236,7 @@ function checkCloseLocs(pos){
       $.ajax(`/getCloseLocs/${lat}/${long}`).done(function(data){
         data.forEach(i=>{
           addCheckInMarkers(i.loc);
-          addCheckInButton(i.name, i.description);
+          addCheckInButton(i.name, i.description, i._id);
         });
       });
     });
@@ -243,7 +244,7 @@ function checkCloseLocs(pos){
     $.ajax(`/getCloseLocs/${lat}/${long}`).done(function(data){
       data.forEach(i=>{
         addCheckInMarkers(i.loc);
-        addCheckInButton(i.name, i.description);
+        addCheckInButton(i.name, i.description, i._id);
       });
     });
   }
@@ -268,7 +269,7 @@ function addCheckInMarkers(coords){
 }
 //==== adds "Check In" buttons to info windows that are within range of checkin: Richmond
 var closeLocations = [];
-function addCheckInButton(windowName, description){
+function addCheckInButton(windowName, description, id){
   allInfoWindows.forEach(w=>{   //loops through the global arraay of info windows looking for a match on the site name. If it finds a match it adds a checkin button to the window
     var siteURL = windowName.toLowerCase().split(' ').join('-');
     if(description === null){
@@ -278,12 +279,23 @@ function addCheckInButton(windowName, description){
     if(w.content.match(windowName)){
       var content = '<h3>'+windowName+'</h3>'+
       '<p>'+description+'</p>'+
-      '<a href="/locations/'+siteURL+'", class="info-window">Show More</a>'+
-      '<button>Check In</button>';
+      '<a href="/locations/'+siteURL+'", class=info-window>Show More</a>'+ //id is the locations mongo id
+      '<button class="checkin-button", data-id='+id+'>Check In</button>'; //onclick="'+checkIn()+'"
+
+      google.maps.event.addListener(w, 'domready', function() {
+        $('body').on('click', '.checkin-button', checkIn);
+      });
       w.setContent(content);
     }
+
+
   });
   closeLocations.push(windowName);
+}
+
+function checkIn(){
+  var data = $(this).attr('data-id');
+  console.log(data);
 }
 
 function resetMarkers(){
