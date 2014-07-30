@@ -94,7 +94,6 @@ class Location{
 
 
 }//end of Class
-
 function findCloseLocs(locName, fn){
   locations.findOne({name: {$regex: locName, $options: 'i'}}, (err, location)=>{
     fn(null, location);

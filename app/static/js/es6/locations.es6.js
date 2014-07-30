@@ -84,7 +84,7 @@
     };
       map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-      google.maps.event.addListener(map, 'click', function(event) {
+      google.maps.event.addListener(map, 'click', function(event) { //TODO remove this after testing...this simulates the current location coordinates
          checkCloseLocs(event.latLng);
       });
   }
@@ -224,10 +224,10 @@ function checkCloseLocs(pos){
     resetMarkers();
   }
 
-  if(closeLocations.length){  //if there are nearby locations currently displaying and the user moves this call resets markers that are no longer in range of user and sets ones that are: Richmond
+  if(closeLocations.length){  //if there are nearby locations currently displaying and the user moves this call resets markers that are no longer in range of user and sets ones that now are: Richmond
     $.ajax(`/resetCloseLocations/${closeLocations}`).done(function(data){
       data.forEach(d=>{
-        if(d){  //if database returns null, it throws an error and does not revord until page refresh..this prevents that
+        if(d){  //if database returns null, it throws an error and does not recover until page refresh..this prevents that
         placeMarkers(d.loc, d.name, d.description);
       }
       });
@@ -265,7 +265,6 @@ function addCheckInMarkers(coords){
         closeMarkers.push(m);
       }
     });
-
 }
 //==== adds "Check In" buttons to info windows that are within range of checkin: Richmond
 var closeLocations = [];

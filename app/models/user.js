@@ -22,7 +22,8 @@ class User{
     this.photo = null; // add photo object from processPhoto
     this.checkIns = []; // Object IDs
     this.createdQuests = []; // Object IDs
-    this.activeQuests = []; // Object IDs
+    this.activeQuests = null; // Object IDs
+    this.myQuests = [];
     this.completedQuests = []; // Object IDs
     // this.streetViewQuizzes = []; // Object IDs
   }
