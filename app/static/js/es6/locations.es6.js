@@ -93,7 +93,7 @@
 //====adds all historical markers to the map: Richmond
   var markers = []; // made markers global for deletion
   var coordinates = []; // made coordinates global so the map can be resized each time its filtered
-  function placeMarkers(coords, locName, locDesc, animation){
+  function placeMarkers(coords, locName, locDesc){
     var latLng = new google.maps.LatLng(coords[1], coords[0]);
       coordinates.push(latLng);
       latLng = new google.maps.Marker({  //latlng is the marker variable name so that each marker has a unique variable(makes infowindows show in correct location)

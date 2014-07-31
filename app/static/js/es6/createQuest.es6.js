@@ -114,8 +114,7 @@
 
 
 //====sets and opens infowindows: Richmond
-  // var infowindow; //set to global so that only one infowindow can be open at a time -- close them using forEach in google listener function below
-  // var allInfoWindows = [];
+  var allInfoWindows = [];
   function infoWindows(siteName, windowLoc, locDesc, locationId){
     var siteURL = siteName.toLowerCase().split(' ').join('-');
     if(locDesc === null){
@@ -128,16 +127,16 @@
     '<button class=add-to-quest data-id='+locationId+'>Add To Quest</button>';
       siteName = new google.maps.InfoWindow();
       siteName.setContent(content);
-      //allInfoWindows.push(siteName); //since all windows have diff variable names, they are pushed into an array so they can be closed on the opening of another window
+      allInfoWindows.push(siteName); //since all windows have diff variable names, they are pushed into an array so they can be closed on the opening of another window
 
       google.maps.event.addDomListenerOnce(siteName, 'domready', function() {
         $('#create-quest-map').on('click', '.add-to-quest', addToQuest);
       });
 
       google.maps.event.addListener(windowLoc, 'click', function() {
-        // allInfoWindows.forEach(w=>{
-        //   w.close();
-        // });
+        allInfoWindows.forEach(w=>{
+          w.close();
+        });
         siteName.open(map, windowLoc);
     });
   }
@@ -147,10 +146,10 @@
 
   function addToQuest(){
     var data = $(this).data('id');
-
     console.log(data);
     questLocations.push(data);
     console.log(questLocations);
+    $('#create-quest-map').off('click', '.add-to-quest');
   }
 
 
