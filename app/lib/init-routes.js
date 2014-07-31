@@ -37,8 +37,14 @@ function load(app, fn){
 
   app.get('/getCloseLocs/:lat/:long', dbg, locations.findCloseLocs); //ajax call for finding locations around users current location
   app.get('/resetCloseLocations/:closeLocations', dbg, locations.resetLocations);
-  
+
   app.all('*', users.bounce);
+
+
+  app.get('/checkIn/:locationId', dbg, users.showCheckIn); //gets checkin page
+
+
+
 
   /* ------ Secure Requests Below This Point ---- */
   app.get('/users/home', dbg, users.index);

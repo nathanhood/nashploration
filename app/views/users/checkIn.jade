@@ -1,0 +1,8 @@
+extends ../shared/template
+
+block content
+   form(action='/users/quest', method='POST')
+     textarea(rows='5', columns='50')
+     button Check In
+
+   //- #{user.activeQuest.questId}/#{locationId}
