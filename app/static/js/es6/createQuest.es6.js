@@ -9,6 +9,8 @@
   function init(){
     fetchLocations();
     $('#map-filter select').on('change', filterLocations);
+    $('#create-quest-map').on('click', '.add-to-quest', addToQuest);
+    $('#create-quest-map').on('click', '.remove-from-quest', removeFromQuest);
     // findLocation();
   }
 
@@ -129,10 +131,6 @@
       siteName.setContent(content);
       allInfoWindows.push(siteName); //since all windows have diff variable names, they are pushed into an array so they can be closed on the opening of another window
 
-      google.maps.event.addDomListenerOnce(siteName, 'domready', function() {
-        $('#create-quest-map').on('click', '.add-to-quest', addToQuest);
-      });
-
       google.maps.event.addListener(windowLoc, 'click', function() {
         allInfoWindows.forEach(w=>{
           w.close();
@@ -140,7 +138,7 @@
         siteName.open(map, windowLoc);
     });
   }
-  var listenerHandle;
+
   //========== Adding Location Ids to Global Array
   var questLocations = [];
 
@@ -149,7 +147,23 @@
     console.log(data);
     questLocations.push(data);
     console.log(questLocations);
-    $('#create-quest-map').off('click', '.add-to-quest');
+    $(this).removeClass('add-to-quest');
+    $(this).text('Remove From Quest');
+    $(this).addClass('remove-from-quest');
+  }
+
+  function removeFromQuest(){
+    var data = $(this).data('id');
+    console.log(data);
+    questLocations = questLocations.filter((record)=>{
+      if (record !== data) {
+        return record;
+      }
+    });
+    $(this).removeClass('remove-from-quest');
+    $(this).text('Add To Quest');
+    $(this).addClass('add-to-quest');
+    console.log(questLocations);
   }
 
 
