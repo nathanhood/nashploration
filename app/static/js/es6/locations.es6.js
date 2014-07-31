@@ -280,11 +280,8 @@ function addCheckInButton(windowName, description, id){
       var content = '<h3>'+windowName+'</h3>'+
       '<p>'+description+'</p>'+
       '<a href="/locations/'+siteURL+'", class=info-window>Show More</a>'+ //id is the locations mongo id
-      '<button class="checkin-button", data-id='+id+'>Check In</button>'; //onclick="'+checkIn()+'"
+      '<a href="/checkIn/'+id+'", class="checkin-button"> <button>Check In</button></a>'; //onclick="'+checkIn()+'"
 
-      google.maps.event.addListener(w, 'domready', function() {
-        $('body').on('click', '.checkin-button', checkIn);
-      });
       w.setContent(content);
     }
 
@@ -293,10 +290,6 @@ function addCheckInButton(windowName, description, id){
   closeLocations.push(windowName);
 }
 
-function checkIn(){
-  var data = $(this).attr('data-id');
-  console.log(data);
-}
 
 function resetMarkers(){
   closeMarkers.forEach(i=>{

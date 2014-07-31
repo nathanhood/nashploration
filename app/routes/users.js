@@ -64,3 +64,7 @@ exports.logout = (req, res)=>{
   req.session.userId = null;
   res.redirect('/');
 };
+
+exports.showCheckIn = (req, res)=>{
+  res.render('users/checkIn', {title: 'Dashboard', locationId: req.params.locationId});
+};
