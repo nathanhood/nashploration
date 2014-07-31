@@ -17,6 +17,7 @@ function load(app, fn){
   var home = traceur.require(__dirname + '/../routes/home.js');
   var locations = traceur.require(__dirname + '/../routes/locations.js');
   var users = traceur.require(__dirname + '/../routes/users.js');
+  var quests = traceur.require(__dirname + '/../routes/quests.js');
 
   app.all('*', users.lookup);
 
@@ -41,14 +42,15 @@ function load(app, fn){
   app.all('*', users.bounce);
 
 
+  /* ------ Secure Requests Below This Point ---- */
   app.get('/checkIn/:locationId', dbg, users.showCheckIn); //gets checkin page
 
-
-
-
-  /* ------ Secure Requests Below This Point ---- */
+  /* ------------ Users ------------ */
   app.get('/users/home', dbg, users.index);
 
+
+  /* ----------- Quests ------------- */
+  app.get('/quests/new', dbg, quests.new);
 
   console.log('Routes Loaded');
   fn();

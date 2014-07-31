@@ -1,8 +1,8 @@
 'use strict';
 
 // var quests = global.nss.db.collection('quests');
-//
-//
+
+
 class Quest{
 //   constructor(){
 //     this.users = [];

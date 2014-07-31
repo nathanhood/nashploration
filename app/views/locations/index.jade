@@ -1,10 +1,7 @@
-doctype html
-html
-  head
-    script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyArPvnhx4BUiKnrYG6cyNX-YZL21LruNAQ&sensor=false')
-  body
-    #map-canvas
+extends ../shared/template
 
-  block scripts
-    script(src='/js/vendor/jquery-2.1.1.js')
-    script(src='/js/es6/compiled/locations.js')
+block content
+  #map-canvas
+
+block scripts
+  script(src='/js/es6/compiled/locations.js')
