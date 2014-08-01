@@ -51,6 +51,7 @@ function load(app, fn){
 
   /* ----------- Quests ------------- */
   app.get('/quests/new', dbg, quests.new);
+  app.post('/quests/create', dbg, quests.create);
 
   console.log('Routes Loaded');
   fn();

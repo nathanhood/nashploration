@@ -11,6 +11,7 @@
     $('#map-filter select').on('change', filterLocations);
     $('#create-quest-map').on('click', '.add-to-quest', addToQuest);
     $('#create-quest-map').on('click', '.remove-from-quest', removeFromQuest);
+    $('#quest-list').on('click', 'button', removeFromQuest);
     // findLocation();
   }
 
@@ -126,7 +127,8 @@
     var content = '<h3>' + siteName + '</h3>'+
     '<p>' + locDesc + '</p>'+
     '<a href="/locations/'+siteURL+'", class="info-window">Show More</a>'+
-    '<button class=add-to-quest data-id='+locationId+'>Add To Quest</button>';
+    '<button class=add-to-quest data-id='+locationId+'>Add To Quest</button>'+
+    '<button class=remove-from-quest data-id='+locationId+'>Remove From Quest</button>';
       siteName = new google.maps.InfoWindow();
       siteName.setContent(content);
       allInfoWindows.push(siteName); //since all windows have diff variable names, they are pushed into an array so they can be closed on the opening of another window
@@ -143,29 +145,60 @@
   var questLocations = [];
 
   function addToQuest(){
-    var data = $(this).data('id');
-    console.log(data);
-    questLocations.push(data);
-    console.log(questLocations);
-    $(this).removeClass('add-to-quest');
-    $(this).text('Remove From Quest');
-    $(this).addClass('remove-from-quest');
+    var id = $(this).data('id');
+    var title = $(this).siblings('h3').text();
+    if (!isLocationInQuest(id)) {
+      questLocations.push(id);
+      addToQuestList(title, id);
+      updateQuestForm();
+    }
   }
 
   function removeFromQuest(){
-    var data = $(this).data('id');
-    console.log(data);
+    var id = $(this).data('id');
+    var title;
+    if ($(this).parent().is('div')) {
+      title = $(this).siblings('h3').text();
+    } else {
+      title = $(this).parent('li').text();
+    }
     questLocations = questLocations.filter((record)=>{
-      if (record !== data) {
+      if (record !== id) {
         return record;
       }
     });
-    $(this).removeClass('remove-from-quest');
-    $(this).text('Add To Quest');
-    $(this).addClass('add-to-quest');
-    console.log(questLocations);
+    removeFromQuestList(title, id);
+    updateQuestForm();
   }
 
+  function addToQuestList(title, id){
+    var newLocation = $('<li>').text(title);
+    var button = $('<button>').text('X').data('id', id);
+    $(newLocation).append(button);
+    $('#quest-list ul').append(newLocation);
+  }
+
+  function removeFromQuestList(title, id){
+    var location = $('#quest-list').find('li:contains('+title+')');
+    $(location).remove();
+  }
+
+  function updateQuestForm(){
+    $('#location-ids').val(questLocations);
+  }
+
+  function isLocationInQuest(id){
+    var questLocation = questLocations.filter((record)=>{
+      if (record === id) {
+        return record;
+      }
+    });
+    if (questLocation.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
 
   function ajax(url, type, data={}, success=r=>console.log(r), dataType='html'){

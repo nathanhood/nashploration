@@ -1,11 +1,10 @@
-extends ../shared/template
 
 block content
   include ../locations/index.jade
 
   form(method='POST', action='/logout')
     button Logout
-    
+
   #map-filter
     select
       option Filter

@@ -3,7 +3,12 @@ extends ../shared/template
 block content
   h1 Create Quest
   #create-quest-map
-  
+  #quest-list
+    ul
+
+  form(action='/quests/create', method='POST')
+    input#location-ids(type='text', name='locations')
+    button Create Quest
 
 block scripts
   script(src='/js/es6/compiled/createQuest.js')
