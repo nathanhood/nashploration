@@ -11,4 +11,5 @@ exports.new = (req, res)=>{
 
 exports.create = (req, res)=>{
   var locations = req.body.locations;
+  
 };
