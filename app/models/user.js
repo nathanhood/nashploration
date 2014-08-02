@@ -21,6 +21,7 @@ class User{
     this.groups = []; // Object IDs
     this.photo = null; // add photo object from processPhoto
     this.checkIns = []; // Object IDs
+    this.createdGroups = []; //Object IDs
     this.createdQuests = []; // Object IDs
     this.activeQuest = null; // Object IDs
     this.myQuests = [];

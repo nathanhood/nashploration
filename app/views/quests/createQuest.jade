@@ -3,12 +3,25 @@ extends ../shared/template
 block content
   h1 Create Quest
   #create-quest-map
+
+  button#add-group-to-quest Add Group(s)
+  button(hidden=true)#cancel-group-to-quest Cancel Group
+  button(hidden=true)#confirm-group-to-quest Confirm Group(s)
+  button(hidden=true)#clear-group-to-quest Clear Group(s)
+  .group-quest-options(hidden=true)
+    if(groups.length > 0)
+      each group in groups
+        label(for='#{group._id}')= group.name
+        input(type="checkbox", id='#{group._id}', class='group-to-quest', value='#{group.name}')
+  ul#quest-groups-list
+
   #quest-list
     ul
-
   form(action='/quests/create', method='POST')
-    input#location-ids(type='text', name='locations')
-    button Create Quest
+    input(type='text', name='name', placeholder='Quest Name Here')
+    input#selected-groups(type='text', name='groupId', hidden=true)
+    input#location-ids(type='text', name='locations', hidden=true)
+    button Build Quest
 
 block scripts
   script(src='/js/es6/compiled/createQuest.js')

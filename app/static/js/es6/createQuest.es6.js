@@ -9,9 +9,18 @@
   function init(){
     fetchLocations();
     $('#map-filter select').on('change', filterLocations);
+
+    /* ----------- Add Location to Quest --------- */
     $('#create-quest-map').on('click', '.add-to-quest', addToQuest);
     $('#create-quest-map').on('click', '.remove-from-quest', removeFromQuest);
     $('#quest-list').on('click', 'button', removeFromQuest);
+
+    /* ------- Adding Group to Quest --------- */
+    $('#add-group-to-quest').click(showGroupOptions);
+    $('#cancel-group-to-quest').click(hideGroupOptions);
+    $('#confirm-group-to-quest').click(confirmGroup);
+    $('#clear-group-to-quest').click(clearGroupOptions);
+    // $('#quest-groups-list').on('click', '.quest-group-item', removeGroupFromQuest);
   }
 
 //=======ajax call to fetch locations from the database: Richmond
@@ -34,7 +43,6 @@
         $.ajax('/getAllLocations').done(function(data){
           clearMap();
           data.forEach(d=>{
-            console.log(d);
             placeMarkers(d.loc, d.name, d.description, d._id);
           });
           resizeMap();
@@ -142,7 +150,7 @@
     });
   }
 
-  //========== Adding Location Ids to Global Array
+  //========== Adding Location Ids to Quest List (questLocations array)
   var questLocations = [];
 
   function checkLocationInQuest(){
@@ -185,7 +193,7 @@
     });
     removeFromQuestList(title, id);
     updateQuestForm();
-    if ($(this).hasClass('.remove-from-quest')) {
+    if ($(this).hasClass('remove-from-quest') || $(this).hasClass('quest-listing')) {
       swapInfoWindowButtons(false);
     }
   }
@@ -195,13 +203,11 @@
     var button = $('<button class=quest-listing>').text('X').data('id', id);
     $(newLocation).append(button);
     $('#quest-list ul').append(newLocation);
-    console.log(questLocations);
   }
 
   function removeFromQuestList(title, id){
     var location = $(`#${id}`);
     $(location).remove();
-    console.log(questLocations);
   }
 
   function updateQuestForm(){
@@ -220,6 +226,69 @@
       return false;
     }
   }
+
+
+  //============ Add Group To Quest ===============
+
+  function showGroupOptions(){
+    $('.group-quest-options').show();
+    $('#cancel-group-to-quest, #confirm-group-to-quest').show();
+    $('#add-group-to-quest, #change-group-to-quest').hide();
+  }
+
+  function hideGroupOptions(){
+    $('.group-quest-options').hide();
+    $('#cancel-group-to-quest, #confirm-group-to-quest').hide();
+    $('#add-group-to-quest').show();
+    
+    $('.group-to-quest').each((i,input)=>{
+      $(input).attr('checked', false);
+    });
+  }
+
+  function clearGroupOptions(){
+    $('#selected-groups').val('');
+    $('#quest-groups-list').empty();
+    $('#clear-group-to-quest').hide();
+    $('#add-group-to-quest').show();
+
+    $('.group-to-quest').each((i,input)=>{
+      $(input).attr('checked', false);
+    });
+  }
+
+  function confirmGroup(){
+    var groupIds = [];
+    $('.group-to-quest:checked').each((i, input)=>{
+      var groupId = $(input).attr('id');
+      groupIds.push(groupId);
+      var groupName = $(input).val();
+      var listItem = `<li>${groupName}</li>`;
+      $('#quest-groups-list').append(listItem);
+    });
+    $('#selected-groups').val(groupIds);
+    var selected = $('#selected-groups').val();
+    console.log(selected);
+    showClearGroupOptions();
+  }
+
+  function showClearGroupOptions(){
+    $('.group-quest-options').hide();
+    $('#cancel-group-to-quest, #confirm-group-to-quest').hide();
+    $('#clear-group-to-quest').show();
+  }
+
+  // function removeGroupFromQuest(){
+  //   var idToRemove = $(this).data('id');
+  //   console.log(idToRemove);
+  //   var updatedList = $('#selected-groups').val().split(',').filter(groupId=>{
+  //     if (groupId !== idToRemove) {
+  //       return groupId;
+  //     }
+  //   });
+  //   $(this).parent('li').remove();
+  //   $('#selected-groups').val(updatedList);
+  // }
 
 
   function ajax(url, type, data={}, success=r=>console.log(r), dataType='html'){

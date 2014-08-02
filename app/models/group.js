@@ -1,11 +1,11 @@
-// 'use strict';
-//
-// var groups = global.nss.db.collection('groups');
-// var Mongo = require('mongodb');
-// var _ = require('lodash');
-//
-//
-// class Group{
+'use strict';
+
+var groups = global.nss.db.collection('groups');
+var Mongo = require('mongodb');
+var _ = require('lodash');
+
+
+class Group {
 //   constructor(ownerId, groupName, fn){
 //     this.name = groupName;
 //     this.groupCode = groupCode();
@@ -49,21 +49,28 @@
 //     });
 //   }
 //
-//   static findAll(fn){
-//     groups.find().toArray((err, groups)=>{
-//       fn(groups);
-//   });
-// }
-//
-// static findByGroupId(groupId, fn){
-//   var id = Mongo.ObjectID(groupId);
-//   groups.findOne({_id:id}, (err, group)=>{
-//     group = _.create(Group.prototype, group);
-//     fn(group);
-//   });
-// }
-//
-// }
+  static findAllByOwnerId(ownerId, fn){
+    groups.find({owner: ownerId}).toArray((err, groups)=>{
+      fn(groups);
+    });
+  }
+
+  static findAll(fn){
+    groups.find().toArray((err, groups)=>{
+      fn(groups);
+    });
+  }
+
+  static findByGroupId(groupId, fn){
+    var id = Mongo.ObjectID(groupId);
+    groups.findOne({_id:id}, (err, group)=>{
+      group = _.create(Group.prototype, group);
+      fn(group);
+    });
+  }
+
+}
+
 // function groupCode(){
 //   var text='';
 //   var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -71,10 +78,7 @@
 //       text += possible.charAt(Math.floor(Math.random() * possible.length));
 //     }
 //   return text;
-//
 // }
-//
-//
-// //
-// //
-// module.exports = Group; //exporting Class out
+
+
+module.exports = Group;
