@@ -18,9 +18,9 @@ block content
   #quest-list
     ul
   form(action='/quests/create', method='POST')
-    input(type='text', name='name', placeholder='Quest Name Here')
-    input#selected-groups(type='text', name='groupId', hidden=true)
-    input#location-ids(type='text', name='locations', hidden=true)
+    input(type='text', name='name', placeholder='Quest Name Here', required=true)
+    input#selected-groups(type='text', name='groupIds', hidden=true, required=true)
+    input#location-ids(type='text', name='locations', hidden=true, required=true)
     button Build Quest
 
 block scripts

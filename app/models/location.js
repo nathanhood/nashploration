@@ -6,6 +6,7 @@
 var locations = global.nss.db.collection('locations');
 var needle = require('needle');
 var async = require('async');
+var Mongo = require('mongodb');
 
 class Location{
   constructor(obj){ // 'number' will need to be added in route
@@ -91,6 +92,28 @@ class Location{
     async.map(locNames, findCloseLocs, (e, locs)=>{
       fn(locs);
     });
+  }
+
+  static findManyById(locationIds, fn){
+    if (typeof locationIds === 'string' && locationIds.length >= 24) {
+      locationIds = locationIds.split(',');
+      var objIds = locationIds.map(id=>{
+        return Mongo.ObjectID(id);
+      });
+      locations.find({_id: { $in: objIds } }).toArray((err, locations)=>{
+        fn(locations);
+      });
+    } else {
+      fn(null);
+    }
+  }
+
+  static accumulateLocationIds(locations, fn){
+    var ids = [];
+    locations.forEach(location=>{
+      ids.push(location._id);
+    });
+    fn(ids);
   }
 
 

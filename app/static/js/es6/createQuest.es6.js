@@ -240,7 +240,7 @@
     $('.group-quest-options').hide();
     $('#cancel-group-to-quest, #confirm-group-to-quest').hide();
     $('#add-group-to-quest').show();
-    
+
     $('.group-to-quest').each((i,input)=>{
       $(input).attr('checked', false);
     });
@@ -268,7 +268,6 @@
     });
     $('#selected-groups').val(groupIds);
     var selected = $('#selected-groups').val();
-    console.log(selected);
     showClearGroupOptions();
   }
 

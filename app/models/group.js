@@ -69,6 +69,45 @@ class Group {
     });
   }
 
+  static findManyById(groupIds, fn){
+    if (typeof groupIds === 'string' && groupIds.length >= 24) {
+      groupIds = groupIds.split(',');
+      var objIds = groupIds.map(id=>{
+        return Mongo.ObjectID(id);
+      });
+      groups.find({_id: { $in: objIds } }).toArray((err, groups)=>{
+        fn(groups);
+      });
+    } else {
+      fn(null);
+    }
+  }
+
+  static accumulateUsersFromGroups(groups){
+    var users = [];
+    groups.forEach(group=>{
+      group.members.forEach(user=>{
+        user = user.toString();
+        console.log(user);
+        users.push(user);
+      });
+    });
+    users = _.unique(users);
+    users = users.map(user=>{
+      user = Mongo.ObjectID(user);
+      return user;
+    });
+    return users;
+  }
+
+  static accumulateGroupIds(groups){
+    var ids = [];
+    groups.forEach(group=>{
+      ids.push(group._id);
+    });
+    return ids;
+  }
+
 }
 
 // function groupCode(){
