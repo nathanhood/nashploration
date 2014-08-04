@@ -8,12 +8,17 @@
 
   function init(){
     fetchLocations();
+    $( '.selectable' ).selectable();
+
     $('#map-filter select').on('change', filterLocations);
+    $('#view-quest-map').click(toggleMapAndList);
+    $('#view-quest-list').click(toggleMapAndList);
 
     /* ----------- Add Location to Quest --------- */
     $('#create-quest-map').on('click', '.add-to-quest', addToQuest);
     $('#create-quest-map').on('click', '.remove-from-quest', removeFromQuest);
     $('#quest-list').on('click', 'button', removeFromQuest);
+    $('#add-location-to-quest').click(addToQuestFromList);
 
     /* ------- Adding Group to Quest --------- */
     $('#add-group-to-quest').click(showGroupOptions);
@@ -30,9 +35,22 @@
 
       data.forEach(d=>{
         placeMarkers(d.loc, d.name, d.description, d._id);
+        buildLocationsListing(d);
       });
       resizeMap();
     });
+  }
+
+
+//============= building locations listing
+
+  function buildLocationsListing(location){
+    var description = 'no description';
+    if (location.description !== null) {
+      description = `${location.description.substr(0, 40)}...`;
+    }
+    var listing = `<li class="location-listing", data-id=${location._id}>${location.name}<br><p>${description}</p></li>`;
+    $('#quest-locations-listing').append(listing);
   }
 
 //===========filtering map :Nathan
@@ -153,6 +171,22 @@
   //========== Adding Location Ids to Quest List (questLocations array)
   var questLocations = [];
 
+  function toggleMapAndList(){
+    var button = $(this).attr('id');
+    var list = $('#quest-locations-listing');
+    var map = $('#create-quest-map');
+    $(this).hide();
+    if (button === 'view-quest-map') {
+      list.hide();
+      map.slideToggle();
+      $('#view-quest-list').show();
+    } else if (button === 'view-quest-list'){
+      map.hide();
+      list.slideToggle();
+      $('#view-quest-map').show();
+    }
+  }
+
   function checkLocationInQuest(){
     var locationId = $('.add-to-quest').data('id');
     if (isLocationInQuest(locationId)) {
@@ -169,6 +203,19 @@
     } else if (boolean === false) {
       $('.remove-from-quest').hide();
       $('.add-to-quest').show();
+    }
+  }
+
+  function addToQuestFromList(){
+    var id = $('.ui-selected').data('id');
+    var title = $('.ui-selected').text();
+    var description = $('.ui-selected > p').text();
+    title = title.replace(description, '');
+    if (!isLocationInQuest(id)) {
+      questLocations.push(id);
+      addToQuestList(title, id);
+      updateQuestForm();
+      swapInfoWindowButtons(true);
     }
   }
 

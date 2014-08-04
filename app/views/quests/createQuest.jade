@@ -1,13 +1,23 @@
 extends ../shared/template
 
+
 block content
   h1 Create Quest
-  #create-quest-map
 
+  form(action='/quests/create', method='POST')
+    input(type='text', name='name', placeholder='Quest Name Here', required=true)
+    input#selected-groups(type='text', name='groupIds', hidden=true, required=true)
+    input#location-ids(type='text', name='locations', hidden=true, required=true)
+    button Build Quest
+
+  button#add-location-to-quest Add Location
   button#add-group-to-quest Add Group(s)
   button(hidden=true)#cancel-group-to-quest Cancel Group
   button(hidden=true)#confirm-group-to-quest Confirm Group(s)
   button(hidden=true)#clear-group-to-quest Clear Group(s)
+  br
+  button(hidden=true)#view-quest-map View Map
+  button#view-quest-list View List
   .group-quest-options(hidden=true)
     if(groups.length > 0)
       each group in groups
@@ -17,11 +27,12 @@ block content
 
   #quest-list
     ul
-  form(action='/quests/create', method='POST')
-    input(type='text', name='name', placeholder='Quest Name Here', required=true)
-    input#selected-groups(type='text', name='groupIds', hidden=true, required=true)
-    input#location-ids(type='text', name='locations', hidden=true, required=true)
-    button Build Quest
+
+
+  ol#quest-locations-listing.selectable
+
+  #create-quest-map
 
 block scripts
+  script(src="//code.jquery.com/ui/1.11.0/jquery-ui.js")
   script(src='/js/es6/compiled/createQuest.js')
