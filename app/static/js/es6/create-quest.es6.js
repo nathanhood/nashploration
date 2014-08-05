@@ -8,17 +8,19 @@
 
   function init(){
     fetchLocations();
-    $( '.selectable' ).selectable();
 
     $('#map-filter select').on('change', filterLocations);
     $('#view-quest-map').click(toggleMapAndList);
     $('#view-quest-list').click(toggleMapAndList);
+    $('#add-location').click(viewAddLocationsToQuest);
+    $('#view-current-quest').click(showQuestAndGroups);
 
     /* ----------- Add Location to Quest --------- */
-    $('#create-quest-map').on('click', '.add-to-quest', addToQuest);
+    $('#create-quest-map').on('click', '.add-to-quest', addToQuestFromMap);
     $('#create-quest-map').on('click', '.remove-from-quest', removeFromQuest);
     $('#quest-list').on('click', 'button', removeFromQuest);
-    $('#add-location-to-quest').click(addToQuestFromList);
+    $('#quest-locations-listing').on('click', '.add-location-button', addToQuestFromList);
+
 
     /* ------- Adding Group to Quest --------- */
     $('#add-group-to-quest').click(showGroupOptions);
@@ -49,7 +51,14 @@
     if (location.description !== null) {
       description = `${location.description.substr(0, 40)}...`;
     }
-    var listing = `<li class="location-listing", data-id=${location._id}>${location.name}<br><p>${description}</p></li>`;
+    var listing = `<li class="location-listing">
+                  ${location.name}<br>
+                  <p>${description}</p>
+                  <button class="add-location-button", data-id=${location._id}>
+                  Add To List
+                  </button>
+                  <span class="location-in-quest", hidden=true>In Quest</span>
+                  </li>`;
     $('#quest-locations-listing').append(listing);
   }
 
@@ -168,65 +177,64 @@
     });
   }
 
-  //========== Adding Location Ids to Quest List (questLocations array)
+
+//============= Viewing Locations vs Quest Information
+
+  function viewAddLocationsToQuest(){
+    $('#create-quest-map').fadeIn('slow');
+    $('#view-quest-list').fadeIn('slow');
+    $('#quest-list').fadeOut();
+    $('#quest-groups-list').fadeOut();
+
+    $('#add-group-to-quest').hide();
+    $('#cancel-group-to-quest').hide();
+    $('#confirm-group-to-quest').hide();
+    $('#clear-group-to-quest').hide();
+    $('.group-quest-options').hide();
+
+    $('#view-current-quest').show();
+    $('#add-location').hide();
+  }
+
+  function showQuestAndGroups(){
+    $('#create-quest-map').fadeOut('slow');
+    $('#quest-locations-listing').fadeOut('slow');
+    $('#view-quest-list').fadeOut('slow');
+    $('#quest-list').fadeIn('slow');
+    $('#quest-groups-list').fadeIn('slow');
+
+    $('#view-quest-map').hide();
+    $('#add-group-to-quest').show();
+    $('#view-current-quest').hide();
+    $('#add-location').show();
+  }
+
+//========== Adding Locations to Quest List And Hidden Form (questLocations array)
+
   var questLocations = [];
 
-  function toggleMapAndList(){
-    var button = $(this).attr('id');
-    var list = $('#quest-locations-listing');
-    var map = $('#create-quest-map');
-    $(this).hide();
-    if (button === 'view-quest-map') {
-      list.hide();
-      map.slideToggle();
-      $('#view-quest-list').show();
-    } else if (button === 'view-quest-list'){
-      map.hide();
-      list.slideToggle();
-      $('#view-quest-map').show();
-    }
-  }
-
-  function checkLocationInQuest(){
-    var locationId = $('.add-to-quest').data('id');
-    if (isLocationInQuest(locationId)) {
-      $('.add-to-quest').hide();
-    } else {
-      $('.remove-from-quest').hide();
-    }
-  }
-
-  function swapInfoWindowButtons(boolean){
-    if (boolean === true) {
-      $('.add-to-quest').hide();
-      $('.remove-from-quest').show();
-    } else if (boolean === false) {
-      $('.remove-from-quest').hide();
-      $('.add-to-quest').show();
-    }
-  }
-
   function addToQuestFromList(){
-    var id = $('.ui-selected').data('id');
-    var title = $('.ui-selected').text();
-    var description = $('.ui-selected > p').text();
-    title = title.replace(description, '');
-    if (!isLocationInQuest(id)) {
-      questLocations.push(id);
-      addToQuestList(title, id);
+    var locationId = $(this).data('id');
+    var title = $(this).closest('.location-listing').text();
+    if (!isLocationInQuest(locationId)) {
+      questLocations.push(locationId);
+      addToQuestList(title, locationId);
       updateQuestForm();
+      $(this).hide();
       swapInfoWindowButtons(true);
+      updateAddToQuestList(locationId);
     }
   }
 
-  function addToQuest(){
-    var id = $(this).data('id');
+  function addToQuestFromMap(){
+    var locationId = $(this).data('id');
     var title = $(this).siblings('h3').text();
-    if (!isLocationInQuest(id)) {
-      questLocations.push(id);
-      addToQuestList(title, id);
+    if (!isLocationInQuest(locationId)) {
+      questLocations.push(locationId);
+      addToQuestList(title, locationId);
       updateQuestForm();
       swapInfoWindowButtons(true);
+      updateAddToQuestList(locationId);
     }
   }
 
@@ -238,21 +246,18 @@
         return record;
       }
     });
-    removeFromQuestList(title, id);
+    removeFromQuestList(id);
     updateQuestForm();
+
     if ($(this).hasClass('remove-from-quest') || $(this).hasClass('quest-listing')) {
       swapInfoWindowButtons(false);
+      var listingButton = $('.location-listing').children(`button[data-id=${id}]`);
+      listingButton.show();
+      listingButton.siblings('.location-in-quest').hide();
     }
   }
 
-  function addToQuestList(title, id){
-    var newLocation = $('<li>').text(title).attr('id', id);
-    var button = $('<button class=quest-listing>').text('X').data('id', id);
-    $(newLocation).append(button);
-    $('#quest-list ul').append(newLocation);
-  }
-
-  function removeFromQuestList(title, id){
+  function removeFromQuestList(id){
     var location = $(`#${id}`);
     $(location).remove();
   }
@@ -272,6 +277,62 @@
     } else {
       return false;
     }
+  }
+
+//=============== MAP VS LIST VIEWING
+
+  function toggleMapAndList(){
+    var button = $(this).attr('id');
+    var list = $('#quest-locations-listing');
+    var map = $('#create-quest-map');
+    $(this).hide();
+    if (button === 'view-quest-map') {
+      list.fadeOut();
+      map.fadeIn();
+      $('#view-quest-list').show();
+    } else if (button === 'view-quest-list'){
+      map.fadeOut();
+      list.fadeIn();
+      $('#view-quest-map').show();
+    }
+  }
+
+  function checkLocationInQuest(){
+    var locationId = $('.add-to-quest').data('id');
+    if (isLocationInQuest(locationId)) {
+      $('.add-to-quest').hide();
+    } else {
+      $('.remove-from-quest').hide();
+    }
+  }
+
+  function swapInfoWindowButtons(locationInQuest){
+    if (locationInQuest === true) {
+      $('.add-to-quest').hide();
+      $('.remove-from-quest').show();
+    } else if (locationInQuest === false) {
+      $('.remove-from-quest').hide();
+      $('.add-to-quest').show();
+    }
+  }
+
+  function updateAddToQuestList(locationId){
+    var locationListingButton = $('.location-listing').children(`button[data-id=${locationId}]`);
+    var locationListingNotification = $('.location-listing').children(`button[data-id=${locationId}]`).siblings('.location-in-quest');
+    if (isLocationInQuest(locationId)) {
+      locationListingButton.hide();
+      locationListingNotification.show();
+    } else {
+      locationListingButton.show();
+      locationListingNotification.hide();
+    }
+  }
+
+  function addToQuestList(title, id){
+    var newLocation = $('<li>').text(title).attr('id', id);
+    var button = $('<button class=quest-listing>').text('X').data('id', id);
+    $(newLocation).append(button);
+    $('#quest-list ul').append(newLocation);
   }
 
 
@@ -324,17 +385,8 @@
     $('#clear-group-to-quest').show();
   }
 
-  // function removeGroupFromQuest(){
-  //   var idToRemove = $(this).data('id');
-  //   console.log(idToRemove);
-  //   var updatedList = $('#selected-groups').val().split(',').filter(groupId=>{
-  //     if (groupId !== idToRemove) {
-  //       return groupId;
-  //     }
-  //   });
-  //   $(this).parent('li').remove();
-  //   $('#selected-groups').val(updatedList);
-  // }
+
+  
 
 
   function ajax(url, type, data={}, success=r=>console.log(r), dataType='html'){

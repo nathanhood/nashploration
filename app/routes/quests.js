@@ -10,7 +10,7 @@ var Location = traceur.require(__dirname + '/../models/location.js');
 exports.new = (req, res)=>{
   var userId = res.locals.user._id;
   Group.findAllByOwnerId(userId, groups=>{
-    res.render('quests/createQuest', {title: 'Create Quest', groups:groups});
+    res.render('quests/create-quest', {title: 'Create Quest', groups:groups});
   });
 };
 
@@ -32,4 +32,8 @@ exports.create = (req, res)=>{
       });
     });
   });
+};
+
+exports.questMap = (req, res)=>{
+  res.render('quests/quest-map');
 };

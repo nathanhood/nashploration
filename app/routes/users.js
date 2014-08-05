@@ -6,7 +6,7 @@ var multiparty = require('multiparty');
 
 
 exports.index = (req, res)=>{
-  res.render('users/index', {title: 'Dashboard'});
+  res.render('users/index', {title: 'Nashploration'});
 };
 
 exports.register = (req, res)=>{
@@ -23,7 +23,7 @@ exports.register = (req, res)=>{
           u.save(()=>{
             res.locals.user = u;
             req.session.userId = u._id;
-            res.redirect('/users/home');
+            res.redirect('/dashboard');
           });
         });
       } else {
@@ -38,7 +38,7 @@ exports.login = (req, res)=>{
     if (u) {
       res.locals.user = u;
       req.session.userId = u._id;
-      res.redirect('/users/home');
+      res.redirect('/dashboard');
     } else {
       res.redirect('/');
     }
@@ -66,5 +66,5 @@ exports.logout = (req, res)=>{
 };
 
 exports.showCheckIn = (req, res)=>{
-  res.render('users/checkIn', {title: 'Dashboard', locationId: req.params.locationId});
+  res.render('users/checkIn', {title: 'Nashploration', locationId: req.params.locationId});
 };

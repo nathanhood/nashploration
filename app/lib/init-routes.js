@@ -43,15 +43,17 @@ function load(app, fn){
 
 
   /* ------ Secure Requests Below This Point ---- */
+
   app.get('/checkIn/:locationId', dbg, users.showCheckIn); //gets checkin page
 
   /* ------------ Users ------------ */
-  app.get('/users/home', dbg, users.index);
+  app.get('/dashboard', dbg, users.index);
 
 
   /* ----------- Quests ------------- */
   app.get('/quests/new', dbg, quests.new);
   app.post('/quests/create', dbg, quests.create);
+  app.post('/quests/create-quest-map', dbg, quests.questMap);
 
   console.log('Routes Loaded');
   fn();
