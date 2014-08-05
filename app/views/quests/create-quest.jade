@@ -8,7 +8,6 @@ block content
     input(type='text', name='name', placeholder='Quest Name Here', required=true)
     input#selected-groups(type='text', name='groupIds', hidden=true, required=true)
     input#location-ids(type='text', name='locations', hidden=true, required=true)
-    button Build Quest
 
   button#add-location(hidden=true) Add Location
   button#view-current-quest View Quest
@@ -33,6 +32,8 @@ block content
   ol#quest-locations-listing(hidden=true)
 
   #create-quest-map
+
+  button#submit-quest-form Build Quest
 
 block scripts
   script(src='/js/es6/compiled/create-quest.js')

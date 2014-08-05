@@ -14,6 +14,7 @@
     $('#view-quest-list').click(toggleMapAndList);
     $('#add-location').click(viewAddLocationsToQuest);
     $('#view-current-quest').click(showQuestAndGroups);
+    $('#submit-quest-form').click(submitQuest);
 
     /* ----------- Add Location to Quest --------- */
     $('#create-quest-map').on('click', '.add-to-quest', addToQuestFromMap);
@@ -28,6 +29,10 @@
     $('#confirm-group-to-quest').click(confirmGroup);
     $('#clear-group-to-quest').click(clearGroupOptions);
     // $('#quest-groups-list').on('click', '.quest-group-item', removeGroupFromQuest);
+  }
+
+  function submitQuest(){
+    $('form').submit();
   }
 
 //=======ajax call to fetch locations from the database: Richmond
@@ -386,7 +391,7 @@
   }
 
 
-  
+
 
 
   function ajax(url, type, data={}, success=r=>console.log(r), dataType='html'){
