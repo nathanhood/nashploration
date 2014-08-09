@@ -18,6 +18,7 @@ function load(app, fn){
   var locations = traceur.require(__dirname + '/../routes/locations.js');
   var users = traceur.require(__dirname + '/../routes/users.js');
   var quests = traceur.require(__dirname + '/../routes/quests.js');
+  var groups = traceur.require(__dirname + '/../routes/groups.js');
 
   app.all('*', users.lookup);
 
@@ -54,6 +55,9 @@ function load(app, fn){
   app.get('/quests/new', dbg, quests.new);
   app.post('/quests/create', dbg, quests.create);
   app.post('/quests/create-quest-map', dbg, quests.questMap);
+
+  /* ----------- Groups ------------- */
+  app.get('/groups/new', dbg, groups.new);
 
   console.log('Routes Loaded');
   fn();
