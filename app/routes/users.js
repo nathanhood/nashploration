@@ -2,6 +2,9 @@
 
 var traceur = require('traceur');
 var User = traceur.require(__dirname + '/../models/user.js');
+var Location = traceur.require(__dirname + '/../models/location.js');
+var Quest = traceur.require(__dirname + '/../models/quest.js');
+
 var multiparty = require('multiparty');
 
 
@@ -66,5 +69,23 @@ exports.logout = (req, res)=>{
 };
 
 exports.showCheckIn = (req, res)=>{
-  res.render('users/checkIn', {title: 'Nashploration', locationId: req.params.locationId});
+  res.render('users/checkIn', {title: 'Nashploration', locationId: req.params.locationId, lat: req.query.lat, lng: req.query.lng});
+};
+
+exports.checkIn = (req, res)=>{
+  var currLoc = {lat: req.query.lat, lng: req.query.lng};
+
+  Location.findById(req.params.locationId, (err, location)=>{
+    location.saveComment(req.body.comment, currLoc, res.locals.user._id, ()=>{
+      Quest.findById(res.locals.user.activeQuest.questId, (err,quest)=>{
+        res.locals.user.saveCheckIn(quest.checkIns, req.params.locationId, ()=>{
+          res.locals.user.save(()=>{
+            location.save(()=>{
+            res.redirect('/dashboard');
+            });
+          });
+        });
+      });
+    });
+  });
 };

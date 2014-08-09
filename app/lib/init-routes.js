@@ -48,12 +48,15 @@ function load(app, fn){
 
   /* ------------ Users ------------ */
   app.get('/dashboard', dbg, users.index);
+  app.post('/users/checkin/:locationId', dbg, users.checkIn);
 
 
   /* ----------- Quests ------------- */
   app.get('/quests/new', dbg, quests.new);
   app.post('/quests/create', dbg, quests.create);
   app.post('/quests/create-quest-map', dbg, quests.questMap);
+
+
 
   console.log('Routes Loaded');
   fn();

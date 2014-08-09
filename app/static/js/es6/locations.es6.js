@@ -12,7 +12,6 @@
     $('body').on('click', '.info-window', showStreetView);
     // findLocation();
     // checkCloseLocs();
-    // $('body').on('click', '.checkin-button', checkIn);
   }
 
 //=======ajax call to fetch locations from the database: Richmond
@@ -217,7 +216,11 @@
 //sends an ajax call to find all of the locations that the user is within a close enough range to check into: Richmond
 
 //checks for nearby locations and resets markers on previous nearby locations that are no long in range: Richmond
+var currentLat;
+var currentLong;
 function checkCloseLocs(pos){
+  currentLat= pos.k;
+  currentLong = pos.B;
   var lat = pos.k; // 36.1667;
   var long = pos.B; //-86.7833;
 
@@ -280,7 +283,7 @@ function addCheckInButton(windowName, description, id){
       var content = '<h3>'+windowName+'</h3>'+
       '<p>'+description+'</p>'+
       '<a href="/locations/'+siteURL+'", class=info-window>Show More</a>'+ //id is the locations mongo id
-      '<a href="/checkIn/'+id+'", class="checkin-button"> <button>Check In</button></a>'; //onclick="'+checkIn()+'"
+      '<a href="/checkIn/'+id+'/?lat='+currentLat+'&lng='+currentLong+'", class="checkin-button"> <button>Check In</button></a>'; //onclick="'+checkIn()+'"
 
       w.setContent(content);
     }
@@ -289,6 +292,7 @@ function addCheckInButton(windowName, description, id){
   });
   closeLocations.push(windowName);
 }
+
 
 
 function resetMarkers(){

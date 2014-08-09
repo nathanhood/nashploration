@@ -8,6 +8,7 @@ var bcrypt = require('bcrypt');
 var crypto = require('crypto');
 var path = require('path');
 var fs = require('fs');
+var Mongo = require('mongodb');
 
 
 class User{
@@ -20,7 +21,7 @@ class User{
     this.level = 'Explorer';
     this.groups = []; // Object IDs
     this.photo = null; // add photo object from processPhoto
-    this.checkIns = []; // Object IDs
+    this.checkIns = []; // Location IDs
     this.createdGroups = []; //Object IDs
     this.createdQuests = []; // Object IDs
     this.activeQuest = null; // Object IDs
@@ -29,6 +30,32 @@ class User{
     // this.streetViewQuizzes = []; // Object IDs
   }
 
+  saveCheckIn(questCheckIns, locationId, fn){
+    locationId = Mongo.ObjectID(locationId);
+
+    var isInQuestArray = questCheckIns.some(checkInId=> {
+      return checkInId.equals(locationId);
+    });
+
+    var isInActiveQuestArray = this.activeQuest.questLocs.some(locId=> {
+      return locId.equals(locationId);
+    });
+
+    if(isInQuestArray === true && isInActiveQuestArray === false){
+      this.activeQuest.questLocs.push(locationId);
+    }
+
+    var isInCheckInsArray = this.checkIns.some(checkInId=>{
+      return checkInId.equals(locationId);
+    });
+
+    console.log(isInCheckInsArray);
+    if(isInCheckInsArray === false){
+      this.checkIns.push(locationId);
+    }
+
+    fn();
+  }
 
   processPhoto(photo, fn) {
     if(photo.size) {

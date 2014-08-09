@@ -4,9 +4,13 @@
 'use strict';
 
 var locations = global.nss.db.collection('locations');
+var traceur = require('traceur');
+var Base = traceur.require(__dirname + '/../models/base.js');
 var needle = require('needle');
 var async = require('async');
 var Mongo = require('mongodb');
+var _ = require('lodash');
+
 
 class Location{
   constructor(obj){ // 'number' will need to be added in route
@@ -21,6 +25,21 @@ class Location{
     this.checkIns = []; // {userId: , coordinates: , comment: }
     this.isCivilWar = obj.isCivilWar;
     locations.save(this, ()=>{});
+  }
+
+  saveComment(comment, coords, userId, fn){
+    var checkIn = {userId: userId, coordinates: coords, comment: comment};
+    this.checkIns.push(checkIn);
+    console.log('CHECKING THE PUSH');
+    console.log(this);
+    fn();
+  }
+
+  save(fn){
+    locations.save(this, ()=>{
+      _.create(Location.prototype, this);
+      fn();
+    });
   }
 
   static addHistory(fn){
@@ -68,6 +87,10 @@ class Location{
     locations.find({}).toArray((err, loc)=>{
       fn(loc);
     });
+  }
+
+  static findById(id, fn){
+    Base.findById(id, locations, Location, fn);
   }
 
   static findCoordinates(locName, fn){
