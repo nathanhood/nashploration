@@ -1,5 +1,9 @@
 
 block content
+  if (questConfirm)
+    #quest-confirmation
+      include ../quests/quest-confirmation.jade
+
   include ../locations/index.jade
 
   form(method='POST', action='/logout')
@@ -14,3 +18,4 @@ block content
       option Andrew Jackson
 
 block scripts
+  script(src='/js/es6/compiled/dashboard.js')
