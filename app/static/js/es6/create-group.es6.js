@@ -8,7 +8,42 @@
     $('#add-group-member').on('click', 'button', showMemberForm);
     $('#close-member-button').click(hideMemberForm);
     $('#add-member-button').click(addMember);
+    $('#build-group').click(submitForm);
   }
+
+  function submitForm(){
+    $('.error-messages').empty();
+
+    var names = $('#new-group-from').children('input[name="names"]').val();
+    var emails = $('#new-group-form').children('input[name="emails"]').val();
+    var title = $('#new-group-form').children('input[name="title"]').val();
+    if (!names || !emails) {
+      noMembersAlert();
+    }
+    if (!title) {
+      noTitleAlert();
+    }
+    if (names && emails && title) {
+      $('form').submit();
+    }
+  }
+
+// ================ Error Handling ============
+  function noMembersAlert(){
+    var message = `<div class="error-message">
+                   <p>Please add at least one member to your group</p>
+                   </div>`;
+    $('.error-messages').append(message);
+  }
+
+  function noTitleAlert(){
+    var message = `<div class="error-message">
+                   <p>Please give your group a name</p>
+                   </div>`;
+    $('.error-messages').append(message);
+  }
+
+
 
   var names = [];
   var emails = [];

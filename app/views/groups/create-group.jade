@@ -3,11 +3,13 @@ extends ../shared/template
 block content
   h1 New Group
 
+  .error-messages
 
   form#new-group-form(action='/groups/create', method='POST')
     input(type='text', name='title', placeholder='Group Name Here')
     input(type='text', name='names', hidden=true)
     input(type='text', name='emails', hidden=true)
+    input(type='text', name='code', hidden=true)
 
   span#group-code Group Code: #{groupCode}
   span#total-group-members Members: 0
@@ -23,7 +25,7 @@ block content
     span Group Members
     button + Add a Member
   br
-  button Build Group
+  button#build-group Build Group
 
 block scripts
   script(src='/js/es6/compiled/create-group.js')

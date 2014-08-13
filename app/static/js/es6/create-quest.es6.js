@@ -32,6 +32,8 @@
   }
 
   function submitQuest(){
+    $('.error-messages').empty();
+
     var questTitle = $('#quest-title').val();
     var groups = $('#selected-groups').val();
     var locations = $('#location-ids').val();
@@ -58,16 +60,16 @@
     $('.error-messages').append(message);
   }
 
-  function noTitleAlert(){
+  function noLocationsAlert(){
     var message = `<div class="error-message">
                    <p>Please add at least one location to your quest</p>
                    </div>`;
     $('.error-messages').append(message);
   }
 
-  function noLocationsAlert(){
+  function noTitleAlert(){
     var message = `<div class="error-message">
-                   <p>Please add a title</p>
+                   <p>Please add a title to your quest</p>
                    </div>`;
     $('.error-messages').append(message);
   }
