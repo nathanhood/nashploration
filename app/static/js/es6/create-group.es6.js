@@ -14,14 +14,41 @@
   var emails = [];
 
   function addMember(){
-    var name = $('#add-member-form').children('input[name="name"]');
-    var email = $('#add-member-form').children('input[name="email"]');
-    names.push(name.val().trim());
-    emails.push(email.val().trim().toLowerCase());
-    $('#new-group-form').children('input[name="names"]').val(names);
-    $('#new-group-form').children('input[name="emails"]').val(emails);
-    name.val('');
-    email.val('');
+    var nameForm = $('#add-member-form').children('input[name="name"]');
+    var emailForm = $('#add-member-form').children('input[name="email"]');
+    var name = nameForm.val().trim();
+    var email = emailForm.val().trim().toLowerCase();
+    if (nameIsValid(name) > 0 && emailIsValid(email)) {
+      names.push(name);
+      emails.push(email);
+      $('#new-group-form').children('input[name="names"]').val(names);
+      $('#new-group-form').children('input[name="emails"]').val(emails);
+      nameForm.val('');
+      emailForm.val('');
+
+      $('#total-group-members').text(`Members: ${names.length}`);
+    }
+  }
+
+  function nameIsValid(name){
+    var status = false;
+    if (name.length > 0) {
+      status = true;
+    } else {
+      alert('Please enter a name');
+    }
+    return status;
+  }
+
+  function emailIsValid(email){
+    var status = false;
+    var emailRegEx = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+    if (email.search(emailRegEx) === -1) {
+      alert('Please enter a valid email address.');
+    } else {
+      status = true;
+    }
+    return status;
   }
 
   function showMemberForm(){
