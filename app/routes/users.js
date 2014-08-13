@@ -9,7 +9,13 @@ var multiparty = require('multiparty');
 
 
 exports.index = (req, res)=>{
-  res.render('users/index', {title: 'Nashploration'});
+  if (req.session.questConfirm) {
+    var questConfirm = req.session.questConfirm;
+    req.session.questConfirm = false;
+    res.render('users/index', {title: 'Nashploration', questConfirm:questConfirm});
+  } else {
+    res.render('users/index', {title: 'Nashploration'});
+  }
 };
 
 exports.register = (req, res)=>{

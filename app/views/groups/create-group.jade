@@ -1,0 +1,29 @@
+extends ../shared/template
+
+block content
+  h1 New Group
+
+
+  form#new-group-form(action='/groups/create', method='POST')
+    input(type='text', name='title', placeholder='Group Name Here')
+    input(type='text', name='names', hidden=true)
+    input(type='text', name='emails', hidden=true)
+
+  span#group-code Group Code: #{groupCode}
+  span 0 Members
+  #add-member-form(hidden=true)
+    input(type='text', name='email', placeholder='Member Email')
+    input(type='text', name='name', placeholder='Member Name')
+    br
+    button#close-member-button Close
+    button#add-member-button Add
+  br
+
+  #add-group-member
+    span Group Members
+    button + Add a Member
+  br
+  button Build Group
+
+block scripts
+  script(src='/js/es6/compiled/create-group.js')

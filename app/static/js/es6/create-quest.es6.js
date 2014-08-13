@@ -14,6 +14,7 @@
     $('#view-quest-list').click(toggleMapAndList);
     $('#add-location').click(viewAddLocationsToQuest);
     $('#view-current-quest').click(showQuestAndGroups);
+
     $('#submit-quest-form').click(submitQuest);
 
     /* ----------- Add Location to Quest --------- */
@@ -28,12 +29,49 @@
     $('#cancel-group-to-quest').click(hideGroupOptions);
     $('#confirm-group-to-quest').click(confirmGroup);
     $('#clear-group-to-quest').click(clearGroupOptions);
-    // $('#quest-groups-list').on('click', '.quest-group-item', removeGroupFromQuest);
   }
 
   function submitQuest(){
-    $('form').submit();
+    var questTitle = $('#quest-title').val();
+    var groups = $('#selected-groups').val();
+    var locations = $('#location-ids').val();
+    if (!questTitle) {
+      noTitleAlert();
+    }
+    if (!groups) {
+      noGroupsAlert();
+    }
+    if (!locations) {
+      noLocationsAlert();
+    }
+    if (questTitle && groups && locations) {
+      $('form').submit();
+    }
   }
+
+
+// ================ Error Handling ============
+  function noGroupsAlert(){
+    var message = `<div class="error-message">
+                   <p>Please add at least one group to your quest</p>
+                   </div>`;
+    $('.error-messages').append(message);
+  }
+
+  function noTitleAlert(){
+    var message = `<div class="error-message">
+                   <p>Please add at least one location to your quest</p>
+                   </div>`;
+    $('.error-messages').append(message);
+  }
+
+  function noLocationsAlert(){
+    var message = `<div class="error-message">
+                   <p>Please add a title</p>
+                   </div>`;
+    $('.error-messages').append(message);
+  }
+
 
 //=======ajax call to fetch locations from the database: Richmond
   function fetchLocations() {

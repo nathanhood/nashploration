@@ -4,10 +4,12 @@ extends ../shared/template
 block content
   h1 Create Quest
 
+  .error-messages
+
   form(action='/quests/create', method='POST')
-    input(type='text', name='name', placeholder='Quest Name Here', required=true)
-    input#selected-groups(type='text', name='groupIds', hidden=true, required=true)
-    input#location-ids(type='text', name='locations', hidden=true, required=true)
+    input#quest-title(type='text', name='name', placeholder='Quest Name Here')
+    input#selected-groups(type='text', name='groupIds', hidden=true)
+    input#location-ids(type='text', name='locations', hidden=true)
 
   button#add-location(hidden=true) Add Location
   button#view-current-quest View Quest

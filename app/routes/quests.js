@@ -27,6 +27,7 @@ exports.create = (req, res)=>{
       Location.accumulateLocationIds(locations, locationIds=>{
         var quest = new Quest(userId, locationIds, req.body.name, groupUsers, groupIds);
         quest.save(()=>{
+          req.session.questConfirm = true;
           res.redirect('/dashboard');
         });
       });

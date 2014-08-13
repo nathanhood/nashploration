@@ -24,7 +24,6 @@ app.use(initRoutes);
 app.use(morgan('dev', {}));
 app.use(express.static(__dirname + '/static'));
 app.use('/less', less(__dirname + '/less'));
-// app.use(bodyParser());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
