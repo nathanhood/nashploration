@@ -42,6 +42,7 @@ function load(app, fn){
 
   app.all('*', users.bounce);
 
+  app.get('/getActiveQuestLocations', dbg, users.getActiveQuestLocations);
 
   /* ------ Secure Requests Below This Point ---- */
 

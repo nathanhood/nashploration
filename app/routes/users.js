@@ -95,3 +95,11 @@ exports.checkIn = (req, res)=>{
     });
   });
 };
+
+exports.getActiveQuestLocations = (req, res)=>{
+  Quest.findById(res.locals.user.activeQuest.questId, (err, quest)=>{
+    Location.findActiveQuestLocations(quest.checkIns, (locations)=>{
+      res.send(locations);
+    });
+  });
+};

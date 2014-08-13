@@ -10,19 +10,54 @@
     fetchLocations();
     $('#map-filter select').on('change', filterLocations);
     $('body').on('click', '.info-window', showStreetView);
+    // fetchCurrentQuest();
     // findLocation();
     // checkCloseLocs();
   }
 
 //=======ajax call to fetch locations from the database: Richmond
   function fetchLocations() {
-    $.ajax('/getAllLocations').done(function(data){
+    $.ajax('/getAllLocations').done(function(allLocs){
       initMap();
 
-      data.forEach(d=>{
-        placeMarkers(d.loc, d.name, d.description);
+      $.ajax('/getActiveQuestLocations').done(function(questData){
+        questData.forEach(d=>{
+          placeQuetMarkers(d.loc, d.name, d.description);
+        });
+
+        var newArray = checkIfQuest(allLocs, questData);
+
+        newArray.forEach(c=>{
+          placeMarkers(c.loc, c.name, c.description);
+        });
+
+        resizeMap();
       });
-      resizeMap();
+    });
+  }
+
+
+  function checkIfQuest(all, quest){
+    quest.forEach(q=>{
+      all.push(q);
+    });
+
+    for(var i = 0; i < all.length; i++){
+      for(var j = i+1; j < all.length; j++){
+        if(all[j]._id === all[i]._id){
+          all.splice(j,1);
+          all.splice(i,1);
+        }
+      }
+    }
+    return all;
+  }
+
+  function fetchCurrentQuest(){
+    $.ajax('/getActiveQuestLocations').done(function(data){
+      data.forEach(d=>{
+        placeQuetMarkers(d.loc);
+      });
     });
   }
 
@@ -31,13 +66,7 @@
     var filter = $('#map-filter').find('option:selected').text();
     switch(filter) {
       case 'All':
-        $.ajax('/getAllLocations').done(function(data){
-          clearMap();
-          data.forEach(d=>{
-            placeMarkers(d.loc, d.name, d.description);
-          });
-          resizeMap();
-        });
+        fetchLocations();
         break;
       case 'Civil War Sites':
         $.ajax('/getCivilWarLocations').done(function(data){
@@ -65,6 +94,10 @@
   function setAllMap(map) {
     for (var i = 0; i < markers.length; i++) {
       markers[i].setMap(map);
+    }
+
+    for (var j = 0; j < questMarkers.length; j++){
+      questMarkers[j].setMap(map);
     }
   }
 
@@ -102,6 +135,25 @@
       markers.push(latLng);
       infoWindows(locName, latLng, locDesc); //passing in coords because latLng is now a google Marker Object..coords is used to set the data of the infowindow "Show More" link
 
+  }
+
+  var questIcon = {
+      url: '/img/pin-filled.svg',
+      scaledSize: new google.maps.Size(40,40)
+    };
+
+  var questMarkers = [];
+  function placeQuetMarkers(coords, locName, locDesc){
+    var latLng = new google.maps.LatLng(coords[1], coords[0]);
+
+      latLng = new google.maps.Marker({
+        position: latLng,
+        map: map,
+        icon: questIcon
+      });
+
+      questMarkers.push(latLng);
+      infoWindows(locName, latLng, locDesc);
   }
 
 //======resizes the map to to just fit the available markers: Richmond
@@ -219,7 +271,6 @@
 var currentLat;
 var currentLong;
 function checkCloseLocs(pos){
-  console.log(pos);
   currentLat= pos.k;
   currentLong = pos.A;
   var lat = pos.k; // 36.1667;
