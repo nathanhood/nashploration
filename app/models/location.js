@@ -30,7 +30,6 @@ class Location{
   saveComment(comment, coords, userId, fn){
     var checkIn = {userId: userId, coordinates: coords, comment: comment};
     this.checkIns.push(checkIn);
-    console.log('CHECKING THE PUSH');
     console.log(this);
     fn();
   }

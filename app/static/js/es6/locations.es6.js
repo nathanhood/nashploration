@@ -219,10 +219,11 @@
 var currentLat;
 var currentLong;
 function checkCloseLocs(pos){
+  console.log(pos);
   currentLat= pos.k;
-  currentLong = pos.B;
+  currentLong = pos.A;
   var lat = pos.k; // 36.1667;
-  var long = pos.B; //-86.7833;
+  var long = pos.A; //-86.7833;
 
   if(closeMarkers.length){
     resetMarkers();
@@ -264,7 +265,7 @@ var checkInIcon = {
 var closeMarkers = [];
 function addCheckInMarkers(coords){
     markers.forEach(m=>{ // loops thourgh the global array of markers and matches on the site coordinates. When it finds a match it changes the marker icon.
-      if(m.position.k.toFixed(6) === coords[1].toFixed(6) && m.position.B.toFixed(6) === coords[0].toFixed(6)){
+      if(m.position.k.toFixed(6) === coords[1].toFixed(6) && m.position.A.toFixed(6) === coords[0].toFixed(6)){
         m.setIcon(checkInIcon);
         closeMarkers.push(m);
       }
