@@ -14,7 +14,7 @@
   function submitForm(){
     $('.error-messages').empty();
 
-    var names = $('#new-group-from').children('input[name="names"]').val();
+    var names = $('#new-group-form').children('input[name="names"]').val();
     var emails = $('#new-group-form').children('input[name="emails"]').val();
     var title = $('#new-group-form').children('input[name="title"]').val();
     if (!names || !emails) {

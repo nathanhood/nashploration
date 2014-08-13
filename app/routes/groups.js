@@ -8,3 +8,9 @@ exports.new = (req, res)=>{
   var code = Group.groupCode();
   res.render('groups/create-group.jade', {title: 'Nashploration', groupCode:code});
 };
+
+exports.create = (req, res)=>{
+  Group.inviteGroupMembers(req.body, ()=>{
+    
+  });
+};

@@ -9,7 +9,7 @@ block content
     input(type='text', name='title', placeholder='Group Name Here')
     input(type='text', name='names', hidden=true)
     input(type='text', name='emails', hidden=true)
-    input(type='text', name='code', hidden=true)
+    input(type='text', name='code', hidden=true, value='#{groupCode}')
 
   span#group-code Group Code: #{groupCode}
   span#total-group-members Members: 0
