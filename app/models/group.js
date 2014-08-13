@@ -3,7 +3,8 @@
 var groups = global.nss.db.collection('groups');
 var Mongo = require('mongodb');
 var _ = require('lodash');
-// var request = require('request');
+var request = require('request');
+var async = require('async');
 
 
 class Group {
@@ -118,41 +119,42 @@ class Group {
     return text;
   }
 
-  static inviteGroupMembers(body, fn){
+  static inviteGroupMembers(body, user, fn){
     var emails = body.emails.split(',');
     var names = body.names.split(',');
     var members = [];
     emails.forEach((email, i)=>{
       var message = {};
+      message.ownerName = user.nickName;
       message.email = email;
       message.name = names[i];
       message.code = body.code;
       message.groupTitle = body.title;
       members.push(message);
     });
+    async.map(members, sendVerificationEmail, ()=>fn());
   }
-// need to submit each message asynchronously
 // need to create group in routes
 // need to figure out how to transfer code through email and back through link/login
 }
 
-// function sendVerificationEmail(message, fn){
-//   var key = process.env.MAILGUN;
-//   var url = 'https://api:' + key + '@api.mailgun.net/v2/sandboxca5bcce9a29f4c5da3e715d4fa6b3ae2.mailgun.org/messages';
-//   var post = request.post(url, function(err, response, body){
-//     fn(message); //callback from static inviteGroupMembers function being called
-//   });
-//
-//   var form = post.form();
-//   form.append('from', 'admin@musecollective.com');
-//   form.append('to', message.email);
-//   form.append('subject', 'Muse[collective]: Collaboration Invite');
-//   form.append('html', `<p>You have been invited by ${message.inviteeName} to collaborate on a Muse[collectve] project.</p>
-//                       <br>
-//                       <h4>Message from ${message.inviteeName}:</h4>
-//                       <p>${message.personalMessage}</p>
-//                       <a href="http://localhost:3000/confirmInvite/${message.projId}">Click to Join Project</a>`);
-// }
+function sendVerificationEmail(message, fn){
+  var key = process.env.MAILGUN;
+  var url = 'https://api:' + key + '@api.mailgun.net/v2/sandboxca5bcce9a29f4c5da3e715d4fa6b3ae2.mailgun.org/messages';
+  var post = request.post(url, function(err, response, body){
+    fn(message); //callback from static inviteGroupMembers function being called
+  });
+
+  var form = post.form();
+  form.append('from', 'admin@nashploration.com');
+  form.append('to', message.email);
+  form.append('subject', 'Nashploration: Group Invitation');
+  form.append('html', `<p>${message.name},</p>
+                      <br>
+                      <p>You have been invited by ${message.ownerName} to join the Nashploration group ${message.groupTitle}.</p>
+                      <br>
+                      <a href="http://localhost:3000/groups/confirmation/${message.code}">Click to Join Project</a>`);
+}
 
 
 module.exports = Group;
