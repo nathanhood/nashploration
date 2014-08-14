@@ -29,10 +29,10 @@
         }else{
 
           var filteredQuests = checkForDups(questData);
-          var secondFilter = checkForDups(filteredQuests);
-          var thirdFilter = checkForDups(secondFilter);
+              filteredQuests = checkForDups(filteredQuests);
+              filteredQuests = checkForDups(filteredQuests);
 
-            thirdFilter.forEach(d=>{
+            filteredQuests.forEach(d=>{
               console.log(d);
               placeQuetMarkers(d.loc, d.name, d.description);
             });
