@@ -28,23 +28,22 @@
           resizeMap();
         }else{
 
-          var filteredQuests = checkForDups(questData);
-              filteredQuests = checkForDups(filteredQuests);
-              filteredQuests = checkForDups(filteredQuests);
+          var filteredQuests = removeAllDups(questData);
 
-            filteredQuests.forEach(d=>{
-              console.log(d);
-              placeQuetMarkers(d.loc, d.name, d.description);
-            });
+              filteredQuests.forEach(d=>{
+                console.log(d);
+                placeQuetMarkers(d.loc, d.name, d.description);
+              });
 
+              filteredQuests.forEach(q=>{
+                allLocs.push(q);
+              });
 
-          var newArray = checkIfQuest(allLocs, questData);
-              newArray = checkForDups(newArray);
-              newArray = checkForDups(newArray);
+          var allMinusQuest = removeAllDups(allLocs);
 
-            newArray.forEach(c=>{
-              placeMarkers(c.loc, c.name, c.description);
-            });
+              allMinusQuest.forEach(c=>{
+                placeMarkers(c.loc, c.name, c.description);
+              });
 
             resizeMap();
        }
@@ -52,34 +51,23 @@
     });
   }
 
-  function checkForDups(questData){
-    for(var i = 0; i < questData.length; i++){
-      for(var j = i+1; j < questData.length; j++){
-        if(questData[j].number === questData[i].number){
-          questData.splice(j,1);
-          questData.splice(i,1);
+  function removeAllDups(data) {
+    for (var i = 0; i < data.length; i++) {
+        var found = false,
+            num = data[i].number;
+        for (var j = i+1; j < data.length; j++) {
+            if (data[j].number === num) {
+                found = true;
+                data.splice(j--, 1);
+            }
         }
-      }
-    }
-    return questData;
-  }
-
-
-  function checkIfQuest(all, quest){
-    quest.forEach(q=>{
-      all.push(q);
-    });
-
-    for(var i = 0; i < all.length; i++){
-      for(var j = i+1; j < all.length; j++){
-        if(all[j].number === all[i].number){
-          all.splice(j,1);
-          all.splice(i,1);
+        if (found) {
+            data.splice(i--, 1);
         }
-      }
     }
-    return all;
-  }
+    return data;
+}
+
 
   function fetchCurrentQuest(){
     $.ajax('/getActiveQuestLocations').done(function(data){
