@@ -21,9 +21,11 @@
       initMap();
 
       $.ajax('/getActiveQuestLocations').done(function(questData){
+
         questData.forEach(d=>{
           placeQuetMarkers(d.loc, d.name, d.description);
         });
+
 
         var newArray = checkIfQuest(allLocs, questData);
 
@@ -44,7 +46,7 @@
 
     for(var i = 0; i < all.length; i++){
       for(var j = i+1; j < all.length; j++){
-        if(all[j]._id === all[i]._id){
+        if(all[j].name === all[i].name){
           all.splice(j,1);
           all.splice(i,1);
         }

@@ -116,8 +116,16 @@ class Location{
     });
   }
 
-  static findActiveQuestLocations(locIds,  fn){
-    async.map(locIds, findQuestLocsById, (e, locs)=>{
+  static findActiveQuestLocations(questLocs, userLocs,  fn){
+    userLocs.forEach(q=>{
+      questLocs.push(q);
+    });
+
+    var filteredLocs = removeDuplicates(questLocs);
+
+        filteredLocs = removeDuplicates(filteredLocs); //TODO find out why it has to be filtered twice
+
+    async.map(filteredLocs, findQuestLocsById, (e, locs)=>{
       fn(locs);
     });
   }
@@ -129,7 +137,6 @@ class Location{
         return Mongo.ObjectID(id);
       });
       locations.find({_id: { $in: objIds } }).toArray((err, locations)=>{
-        fn(locations);
       });
     } else {
       fn(null);
@@ -156,17 +163,17 @@ function findQuestLocsById(locId, fn){
   Base.findById(locId, locations, Location, fn);
 }
 
-// function removeDuplicates(ids){
-//   for(var i = 0; i < ids.length; i++){
-//     for(var j = i+1; j < ids.length; j++){
-//       if(ids[j].equals(ids[i])){
-//         ids.splice(j,1);
-//         ids.splice(i,1);
-//       }
-//     }
-//   }
-//   return ids;
-// }
+function removeDuplicates(questLocs){
+  for(var i = 0; i < questLocs.length + 1; i++){
+    for(var j = i+1; j < questLocs.length; j++){
+      if(questLocs[i].equals(questLocs[j])){
+        questLocs.splice(j,1);
+        questLocs.splice(i,1);
+      }
+    }
+  }
+  return questLocs;
+}
 
 
 

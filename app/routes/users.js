@@ -98,7 +98,7 @@ exports.checkIn = (req, res)=>{
 
 exports.getActiveQuestLocations = (req, res)=>{
   Quest.findById(res.locals.user.activeQuest.questId, (err, quest)=>{
-    Location.findActiveQuestLocations(quest.checkIns, (locations)=>{
+    Location.findActiveQuestLocations(quest.checkIns, res.locals.user.activeQuest.questLocs, (locations)=>{
       res.send(locations);
     });
   });
