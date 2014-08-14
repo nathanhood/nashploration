@@ -117,9 +117,7 @@ class Location{
   }
 
   static findActiveQuestLocations(questLocs, userLocs,  fn){
-    if(questLocs.length === userLocs.length){
-      return null;
-    }
+    
     userLocs.forEach(q=>{
       questLocs.push(q);
     });

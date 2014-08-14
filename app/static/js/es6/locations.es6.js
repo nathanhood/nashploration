@@ -29,8 +29,9 @@
         }else{
 
         var filteredQuests = checkForDups(questData);
-        var whatever = checkForDups(filteredQuests);
-        whatever.forEach(d=>{
+        var secondFilter = checkForDups(filteredQuests);
+        var thirdFilter = checkForDups(secondFilter);
+        thirdFilter.forEach(d=>{
           console.log(d);
           placeQuetMarkers(d.loc, d.name, d.description);
         });
@@ -49,7 +50,7 @@
   }
 
   function checkForDups(questData){
-    questData.sort();
+    // questData.sort();
     for(var i = 0; i < questData.length; i++){
       for(var j = i+1; j < questData.length; j++){
         if(questData[j].number === questData[i].number){
