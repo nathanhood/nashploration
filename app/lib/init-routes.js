@@ -23,6 +23,7 @@ function load(app, fn){
   app.all('*', users.lookup);
 
   app.get('/', dbg, home.index);
+  app.get('/groups/confirmation/:groupCode', dbg, home.confirmation);
 
   app.post('/register', dbg, users.register);
   app.post('/login', dbg, users.login);
@@ -49,6 +50,7 @@ function load(app, fn){
 
   /* ------------ Users ------------ */
   app.get('/dashboard', dbg, users.index);
+  app.get('/users/:userName', dbg, users.profile);
   app.post('/users/checkin/:locationId', dbg, users.checkIn);
 
 

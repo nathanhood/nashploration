@@ -8,41 +8,30 @@ var async = require('async');
 
 
 class Group {
-//   constructor(ownerId, groupName, fn){
-//     this.name = groupName;
-//     this.groupCode = groupCode();
-//     this.owner = ownerId;
-//     this.members = [];
-//     this.isLocked = false;
-//     this.quests = [];
-//     this.description =
-//   }
-//
-//   joinGroup(user){
-//     this.members.push(user);
-//     console.log('THIS IS THE USER');
-//     console.log(user);
-//     console.log('THIS GROUPS MEMBERs');
-//     console.log(this.members);
-//
-//   }
-//
-//
-//
-//     save(fn){
-//     groups.save(this, ()=>fn());
-//   }
-//
-//    isMember(userId){
-//      groups.findOne({members: userId}, (err, user)=>{
-//        if(user){
-//          return true;
-//        }else{
-//          return false;
-//        }
-//
-//      });
-//
+  constructor(ownerId, obj){
+    this.name = obj.title;
+    this.groupCode = obj.code;
+    this.owner = ownerId;
+    this.members = [];
+    this.isLocked = false;
+    this.quests = [];
+    this.description = obj.description;
+  }
+
+  joinGroup(user){
+    var exists = this.members.some(member=>{
+      return (member.toHexString() === user._id.toHexString());
+    });
+    if (!exists) {
+      this.members.push(user._id);
+      user.groups.push(this._id);
+    }
+  }
+
+  save(fn){
+    groups.save(this, ()=>fn());
+  }
+
 //    }
 //
 //   static isOwner(userId, fn){
@@ -51,6 +40,13 @@ class Group {
 //     });
 //   }
 //
+  static findByGroupCode(code, fn){
+    groups.findOne({groupCode:code}, (err, group)=>{
+    group = _.create(Group.prototype, group);
+      fn(group);
+    });
+  }
+
   static findAllByOwnerId(ownerId, fn){
     groups.find({owner: ownerId}).toArray((err, groups)=>{
       fn(groups);
@@ -130,12 +126,12 @@ class Group {
       message.name = names[i];
       message.code = body.code;
       message.groupTitle = body.title;
+      message.description = body.description;
       members.push(message);
     });
     async.map(members, sendVerificationEmail, ()=>fn());
   }
-// need to create group in routes
-// need to figure out how to transfer code through email and back through link/login
+
 }
 
 function sendVerificationEmail(message, fn){
@@ -149,11 +145,15 @@ function sendVerificationEmail(message, fn){
   form.append('from', 'admin@nashploration.com');
   form.append('to', message.email);
   form.append('subject', 'Nashploration: Group Invitation');
-  form.append('html', `<p>${message.name},</p>
-                      <br>
-                      <p>You have been invited by ${message.ownerName} to join the Nashploration group ${message.groupTitle}.</p>
-                      <br>
-                      <a href="http://localhost:3000/groups/confirmation/${message.code}">Click to Join Project</a>`);
+  form.append('html', `<p>${message.name},\n
+                        You have been invited by ${message.ownerName} to join a Nashploration group.
+                      </p>
+                      <p><b>Group Code</b>: ${message.code}</p>
+                      <p><b>Group Name</b>: ${message.groupTitle}</p>
+                      <p><b>Description</b>: ${message.description}</p>
+                      <p><a href="http://localhost:3000/groups/confirmation/${message.code}">Click to Join Project</a>
+                      or visit <a href="http://localhost:3000/">nashploration.com</a> to learn more!!
+                      </p>`);
 }
 
 

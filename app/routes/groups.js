@@ -11,7 +11,10 @@ exports.new = (req, res)=>{
 
 exports.create = (req, res)=>{
   var user = res.locals.user;
+  var group = new Group(user._id, req.body);
   Group.inviteGroupMembers(req.body, user, ()=>{
-    res.redirect('/groups/new');
+    group.save(()=>{
+      res.redirect(`/users/${user.userName}`);
+    });
   });
 };

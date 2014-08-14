@@ -4,6 +4,7 @@ var traceur = require('traceur');
 var User = traceur.require(__dirname + '/../models/user.js');
 var Location = traceur.require(__dirname + '/../models/location.js');
 var Quest = traceur.require(__dirname + '/../models/quest.js');
+var Group = traceur.require(__dirname + '/../models/group.js');
 
 var multiparty = require('multiparty');
 
@@ -18,40 +19,73 @@ exports.index = (req, res)=>{
   }
 };
 
+exports.profile = (req, res)=>{
+  // need to query user from url path & check against res.locals to determine what version of profile is rendered
+  var user = res.locals.user;
+  res.render('users/profile', {title: 'Nashploration', user:user});
+};
+
 exports.register = (req, res)=>{
   var form = new multiparty.Form();
 
   form.parse(req, (err, fields, files)=>{
     var photoObj = files.photo[0];
     var userName = fields.userName[0].split(' ').map(w=>w.trim()).map(w=>w.toLowerCase()).join('');
-
-    User.register(fields, userName, (u)=>{
-      if (u) {
-        u.processPhoto(photoObj, (newPhoto)=>{
-          u.photo = newPhoto;
-          u.save(()=>{
-            res.locals.user = u;
-            req.session.userId = u._id;
-            res.redirect('/dashboard');
-          });
-        });
-      } else {
+    Group.findByGroupCode(fields.groupCode[0], group=>{
+      if (!group) {
         res.redirect('/');
       }
+      User.register(fields, userName, (u)=>{
+        if (u) {
+          u.processPhoto(photoObj, (newPhoto)=>{
+            u.photo = newPhoto;
+            group.joinGroup(u);
+            u.save(()=>{
+              group.save(()=>{
+                res.locals.user = u;
+                req.session.userId = u._id;
+                res.redirect('/dashboard');
+              });
+            });
+          });
+        } else {
+          res.redirect('/');
+        }
+      });
     });
   });
 };
 
 exports.login = (req, res)=>{
-  User.login(req.body, u=>{
-    if (u) {
-      res.locals.user = u;
-      req.session.userId = u._id;
-      res.redirect('/dashboard');
-    } else {
-      res.redirect('/');
-    }
-  });
+  if (req.body.groupCode) {
+    var groupCode = req.body.groupCode;
+    Group.findByGroupCode(groupCode, group=>{
+      User.login(req.body, u=>{
+        if (u) {
+          group.joinGroup(u);
+          u.save(()=>{
+            group.save(()=>{
+              res.locals.user = u;
+              req.session.userId = u._id;
+              res.redirect('/dashboard');
+            });
+          });
+        } else {
+          res.redirect('/');
+        }
+      });
+    });
+  } else {
+    User.login(req.body, u=>{
+      if (u) {
+        res.locals.user = u;
+        req.session.userId = u._id;
+        res.redirect('/dashboard');
+      } else {
+        res.redirect('/');
+      }
+    });
+  }
 };
 
 exports.lookup = (req, res, next)=>{

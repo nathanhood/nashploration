@@ -94,6 +94,7 @@ class User{
           var user = new User(fields, userName);
           user.password = bcrypt.hashSync(user.password, 8); //hashed/encrypted version of password
           user.save(()=>{
+            _.create(User.prototype, this);
             fn(user);
           });
         }
@@ -106,6 +107,7 @@ class User{
       if (u) {
         var isMatch = bcrypt.compareSync(obj.password, u.password);
         if (isMatch) {
+          u = _.create(User.prototype, u);
           fn(u);
         } else {
           fn(null);
