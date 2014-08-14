@@ -23,7 +23,7 @@ function load(app, fn){
   app.all('*', users.lookup);
 
   app.get('/', dbg, home.index);
-  app.get('/groups/confirmation/:groupCode', dbg, home.confirmation);
+  app.get('/confirmation/:groupCode', dbg, home.confirmation);
 
   app.post('/register', dbg, users.register);
   app.post('/login', dbg, users.login);
