@@ -1,0 +1,31 @@
+extends ../shared/template
+
+block content
+
+  #index-container
+    #register
+      form(method='POST', action='/register', enctype='multipart/form-data')
+        input.form-control.username(type='text', name='userName', placeholder='Username', required)
+        .clear
+        input.form-control.nickname(type='text', name='nickName', placeholder='Nick Name', required)
+        .clear
+        input.form-control.group-number(type='text', name='groupCode', placeholder='Group Code', hidden=true, value='#{code}')
+        .clear
+        input.form-control.email(type='email', name='email', placeholder='Email', required)
+        .clear
+        input.form-control.password(type='password', name='password', placeholder='Password', required)
+        .clear
+        input(type='file', name='photo')
+        .clear
+        button Create Account
+        .clear
+
+    #login
+      form(method='POST', action='/login')
+        input.form-control.username(type='text', name='userName', placeholder='Username', required)
+        .clear
+        input.form-control.password(type='password', name='password', placeholder='Password', required)
+        .clear
+        input.form-control.group-number(type='text', name='groupCode', placeholder='Group Code', hidden=true, value='#{code}')
+        .clear
+        button Login
