@@ -117,15 +117,14 @@ class Location{
   }
 
   static findActiveQuestLocations(questLocs, userLocs,  fn){
+    if(questLocs.length === userLocs.length){
+      return null;
+    }
     userLocs.forEach(q=>{
       questLocs.push(q);
     });
 
-    var filteredLocs = removeDuplicates(questLocs);
-
-        filteredLocs = removeDuplicates(filteredLocs); //TODO find out why it has to be filtered twice
-
-    async.map(filteredLocs, findQuestLocsById, (e, locs)=>{
+    async.map(questLocs, findQuestLocsById, (e, locs)=>{
       fn(locs);
     });
   }
@@ -162,20 +161,6 @@ function findCloseLocs(locName, fn){
 function findQuestLocsById(locId, fn){
   Base.findById(locId, locations, Location, fn);
 }
-
-function removeDuplicates(questLocs){
-  for(var i = 0; i < questLocs.length + 1; i++){
-    for(var j = i+1; j < questLocs.length; j++){
-      if(questLocs[i].equals(questLocs[j])){
-        questLocs.splice(j,1);
-        questLocs.splice(i,1);
-      }
-    }
-  }
-  return questLocs;
-}
-
-
 
 
 module.exports = Location;

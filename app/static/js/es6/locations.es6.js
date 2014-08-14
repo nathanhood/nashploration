@@ -21,8 +21,17 @@
       initMap();
 
       $.ajax('/getActiveQuestLocations').done(function(questData){
+        if(!questData){
+          allLocs.forEach(a=>{
+            placeMarkers(a.loc, a.name, a.description);
+          });
+          resizeMap();
+        }else{
 
-        questData.forEach(d=>{
+        var filteredQuests = checkForDups(questData);
+        var whatever = checkForDups(filteredQuests);
+        whatever.forEach(d=>{
+          console.log(d);
           placeQuetMarkers(d.loc, d.name, d.description);
         });
 
@@ -34,8 +43,22 @@
         });
 
         resizeMap();
+       }
       });
     });
+  }
+
+  function checkForDups(questData){
+    questData.sort();
+    for(var i = 0; i < questData.length; i++){
+      for(var j = i+1; j < questData.length; j++){
+        if(questData[j].number === questData[i].number){
+          questData.splice(j,1);
+          questData.splice(i,1);
+        }
+      }
+    }
+    return questData;
   }
 
 
