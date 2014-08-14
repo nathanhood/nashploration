@@ -28,29 +28,31 @@
           resizeMap();
         }else{
 
-        var filteredQuests = checkForDups(questData);
-        var secondFilter = checkForDups(filteredQuests);
-        var thirdFilter = checkForDups(secondFilter);
-        thirdFilter.forEach(d=>{
-          console.log(d);
-          placeQuetMarkers(d.loc, d.name, d.description);
-        });
+          var filteredQuests = checkForDups(questData);
+          var secondFilter = checkForDups(filteredQuests);
+          var thirdFilter = checkForDups(secondFilter);
+
+            thirdFilter.forEach(d=>{
+              console.log(d);
+              placeQuetMarkers(d.loc, d.name, d.description);
+            });
 
 
-        var newArray = checkIfQuest(allLocs, questData);
+          var newArray = checkIfQuest(allLocs, questData);
+              newArray = checkForDups(newArray);
+              newArray = checkForDups(newArray);
 
-        newArray.forEach(c=>{
-          placeMarkers(c.loc, c.name, c.description);
-        });
+            newArray.forEach(c=>{
+              placeMarkers(c.loc, c.name, c.description);
+            });
 
-        resizeMap();
+            resizeMap();
        }
       });
     });
   }
 
   function checkForDups(questData){
-    // questData.sort();
     for(var i = 0; i < questData.length; i++){
       for(var j = i+1; j < questData.length; j++){
         if(questData[j].number === questData[i].number){
@@ -70,7 +72,7 @@
 
     for(var i = 0; i < all.length; i++){
       for(var j = i+1; j < all.length; j++){
-        if(all[j].name === all[i].name){
+        if(all[j].number === all[i].number){
           all.splice(j,1);
           all.splice(i,1);
         }
