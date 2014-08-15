@@ -120,7 +120,6 @@ class Location{
     userLocs.forEach(q=>{
       questLocs.push(q);
     });
-
     async.map(questLocs, findQuestLocsById, (e, locs)=>{
       var minusDups = removeAllDups(locs);
         fn(minusDups);
@@ -130,7 +129,9 @@ class Location{
   static removeDuplicates(allLocs, questOrCheckInLocs, fn){
     questOrCheckInLocs.forEach(q=>{
       allLocs.push(q);
+      allLocs.push(q);
     });
+
     var minusDups = removeAllDups(allLocs);
       fn(minusDups);
   }
@@ -178,9 +179,9 @@ function findQuestLocsById(locId, fn){
 function removeAllDups(data) {
   for (var i = 0; i < data.length; i++) {
       var found = false,
-          num = data[i].number;
+          id = data[i]._id;
       for (var j = i+1; j < data.length; j++) {
-          if (data[j].number === num) {
+          if (data[j]._id.equals(id)) {
               found = true;
               data.splice(j--, 1);
           }

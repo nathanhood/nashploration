@@ -16,8 +16,10 @@
 //=======ajax call to fetch locations from the database: Richmond
   function fetchLocations() {
     $.ajax('/getAllLocations').done(function(data){
+      // console.log(data.all.length);
+      // console.log(data.quest.length);
+      // console.log(data.checkIns.length);
       initMap();
-      console.log(data);
       if(data.quest){
         data.quest.forEach(q=>{
           placeQuestMarkers(q.loc, q.name, q.description);

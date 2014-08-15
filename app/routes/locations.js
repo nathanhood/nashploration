@@ -22,19 +22,19 @@ exports.index = (req, res)=>{
 
 exports.getLocations = (req, res)=>{
   var allLocations = {};
-  Location.findAll((locations)=>{
+  Location.findAll((locations)=>{ //finds all locations
     if(res.locals.user){
-      Location.findManyById(res.locals.user.checkIns, allCheckIns=>{
-        Quest.findById(res.locals.user.activeQuest.questId, (err, quest)=>{
+      Location.findManyById(res.locals.user.checkIns, allCheckIns=>{ //finds locations that have been completed in user's Active Quest
+        Quest.findById(res.locals.user.activeQuest.questId, (err, quest)=>{ //finds users's Active Quest
           Location.removeDuplicates(locations, allCheckIns, allMinusCheckIns=>{
-          if(quest.checkIns.length === res.locals.user.activeQuest.questLocs.length){
+        if(quest.checkIns.length === res.locals.user.activeQuest.questLocs.length){ //checks if active quest is complete
             allLocations.all = allMinusCheckIns;
             allLocations.quest = null;
             allLocations.checkIns = allCheckIns;
               res.send(allLocations);
         }else{
-          Location.findActiveQuestLocations(quest.checkIns, res.locals.user.activeQuest.questLocs, (questLocs)=>{
-            Location.removeDuplicates(allMinusCheckIns, questLocs, allMinusDups=>{
+          Location.findActiveQuestLocations(quest.checkIns, res.locals.user.activeQuest.questLocs, (questLocs)=>{ //finds all locations in the active quest. brings back array of all checkins in quest and completed checkins by user
+            Location.removeDuplicates(allMinusCheckIns, questLocs, allMinusDups=>{ //removes
               Location.removeDuplicates(allCheckIns, questLocs, allCheckInsMinusDups=>{
                 allLocations.all = allMinusDups;
                 allLocations.quest = questLocs;
