@@ -117,7 +117,6 @@ class Location{
   }
 
   static findActiveQuestLocations(questLocs, userLocs,  fn){
-
     userLocs.forEach(q=>{
       questLocs.push(q);
     });
@@ -128,8 +127,8 @@ class Location{
     });
   }
 
-  static removeDuplicates(allLocs, questLocs, fn){
-    questLocs.forEach(q=>{
+  static removeDuplicates(allLocs, questOrCheckInLocs, fn){
+    questOrCheckInLocs.forEach(q=>{
       allLocs.push(q);
     });
     var minusDups = removeAllDups(allLocs);
@@ -137,12 +136,19 @@ class Location{
   }
 
   static findManyById(locationIds, fn){
-    if (typeof locationIds === 'string' && locationIds.length >= 24) {
-      locationIds = locationIds.split(',');
-      var objIds = locationIds.map(id=>{
-        return Mongo.ObjectID(id);
-      });
+    var objIds;
+    if (locationIds.length >= 24) {
+      if(typeof locationIds === 'string'){
+        locationIds = locationIds.split(',');
+          objIds = locationIds.map(id=>{
+            return Mongo.ObjectID(id);
+        });
+      }
+
+      objIds = locationIds;
+
       locations.find({_id: { $in: objIds } }).toArray((err, locations)=>{
+        fn(locations);
       });
     } else {
       fn(null);

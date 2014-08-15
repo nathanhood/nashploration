@@ -10,29 +10,28 @@
     fetchLocations();
     $('#map-filter select').on('change', filterLocations);
     $('body').on('click', '.info-window', showStreetView);
-    // fetchCurrentQuest();
     // findLocation();
-    // checkCloseLocs();
   }
 
 //=======ajax call to fetch locations from the database: Richmond
   function fetchLocations() {
     $.ajax('/getAllLocations').done(function(data){
       initMap();
-      console.log(data.all.length);
+      console.log(data);
       if(data.quest){
-        data.all.forEach(a=>{
-          placeMarkers(a.loc, a.name, a.description);
-        });
-
         data.quest.forEach(q=>{
           placeQuestMarkers(q.loc, q.name, q.description);
         });
-      }else{
-        data.all.forEach(a=>{
-          placeMarkers(a.loc, a.name, a.description);
-        });
       }
+
+      data.all.forEach(a=>{
+        placeMarkers(a.loc, a.name, a.description);
+      });
+
+      data.checkIns.forEach(c=>{
+        placeCheckInMarkers(c.loc, c.name, c.description);
+      });
+
       resizeMap();
     });
   }
@@ -121,11 +120,34 @@
   function placeMarkers(coords, locName, locDesc){
     var latLng = new google.maps.LatLng(coords[1], coords[0]);
       coordinates.push(latLng);
+
       latLng = new google.maps.Marker({  //latlng is the marker variable name so that each marker has a unique variable(makes infowindows show in correct location)
        position: latLng,
        map: map
       });
+
       markers.push(latLng);
+      infoWindows(locName, latLng, locDesc); //passing in coords because latLng is now a google Marker Object..coords is used to set the data of the infowindow "Show More" link
+
+  }
+
+  var checkInMarker = {
+      url: '/img/checkin-pin.svg',
+      scaledSize: new google.maps.Size(40,40)
+    };
+
+  var checkInMarkers = [];
+  function placeCheckInMarkers(coords, locName, locDesc){
+    var latLng = new google.maps.LatLng(coords[1], coords[0]);
+      coordinates.push(latLng);
+
+      latLng = new google.maps.Marker({  //latlng is the marker variable name so that each marker has a unique variable(makes infowindows show in correct location)
+       position: latLng,
+       map: map,
+       icon: checkInMarker
+      });
+
+      checkInMarkers.push(latLng);
       infoWindows(locName, latLng, locDesc); //passing in coords because latLng is now a google Marker Object..coords is used to set the data of the infowindow "Show More" link
 
   }
@@ -264,12 +286,10 @@
 var currentLat;
 var currentLong;
 function checkCloseLocs(pos){
-  console.log(pos);
   // currentLat= pos.k;
   // currentLong = pos.A; google is messing with us
   currentLat= pos.k;
   currentLong = pos.B;
-
 
   if(closeMarkers.length){
     resetMarkers();
