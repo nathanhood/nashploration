@@ -117,14 +117,23 @@ class Location{
   }
 
   static findActiveQuestLocations(questLocs, userLocs,  fn){
-    
+
     userLocs.forEach(q=>{
       questLocs.push(q);
     });
 
     async.map(questLocs, findQuestLocsById, (e, locs)=>{
-      fn(locs);
+      var minusDups = removeAllDups(locs);
+        fn(minusDups);
     });
+  }
+
+  static removeDuplicates(allLocs, questLocs, fn){
+    questLocs.forEach(q=>{
+      allLocs.push(q);
+    });
+    var minusDups = removeAllDups(allLocs);
+      fn(minusDups);
   }
 
   static findManyById(locationIds, fn){
@@ -160,5 +169,21 @@ function findQuestLocsById(locId, fn){
   Base.findById(locId, locations, Location, fn);
 }
 
+function removeAllDups(data) {
+  for (var i = 0; i < data.length; i++) {
+      var found = false,
+          num = data[i].number;
+      for (var j = i+1; j < data.length; j++) {
+          if (data[j].number === num) {
+              found = true;
+              data.splice(j--, 1);
+          }
+      }
+      if (found) {
+          data.splice(i--, 1);
+      }
+  }
+  return data;
+}
 
 module.exports = Location;

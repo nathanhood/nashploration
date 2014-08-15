@@ -17,37 +17,23 @@
 
 //=======ajax call to fetch locations from the database: Richmond
   function fetchLocations() {
-    $.ajax('/getAllLocations').done(function(allLocs){
+    $.ajax('/getAllLocations').done(function(data){
       initMap();
+      console.log(data.all.length);
+      if(data.quest){
+        data.all.forEach(a=>{
+          placeMarkers(a.loc, a.name, a.description);
+        });
 
-      $.ajax('/getActiveQuestLocations').done(function(questData){
-        if(!questData){
-          allLocs.forEach(a=>{
-            placeMarkers(a.loc, a.name, a.description);
-          });
-          resizeMap();
-        }else{
-
-          var filteredQuests = removeAllDups(questData);
-
-              filteredQuests.forEach(d=>{
-                console.log(d);
-                placeQuetMarkers(d.loc, d.name, d.description);
-              });
-
-              filteredQuests.forEach(q=>{
-                allLocs.push(q);
-              });
-
-          var allMinusQuest = removeAllDups(allLocs);
-
-              allMinusQuest.forEach(c=>{
-                placeMarkers(c.loc, c.name, c.description);
-              });
-
-            resizeMap();
-       }
-      });
+        data.quest.forEach(q=>{
+          placeQuestMarkers(q.loc, q.name, q.description);
+        });
+      }else{
+        data.all.forEach(a=>{
+          placeMarkers(a.loc, a.name, a.description);
+        });
+      }
+      resizeMap();
     });
   }
 
@@ -67,15 +53,6 @@
     }
     return data;
 }
-
-
-  function fetchCurrentQuest(){
-    $.ajax('/getActiveQuestLocations').done(function(data){
-      data.forEach(d=>{
-        placeQuetMarkers(d.loc);
-      });
-    });
-  }
 
 //===========filtering map :Nathan
   function filterLocations() {
@@ -159,7 +136,7 @@
     };
 
   var questMarkers = [];
-  function placeQuetMarkers(coords, locName, locDesc){
+  function placeQuestMarkers(coords, locName, locDesc){
     var latLng = new google.maps.LatLng(coords[1], coords[0]);
 
       latLng = new google.maps.Marker({
@@ -287,10 +264,12 @@
 var currentLat;
 var currentLong;
 function checkCloseLocs(pos){
+  console.log(pos);
+  // currentLat= pos.k;
+  // currentLong = pos.A; google is messing with us
   currentLat= pos.k;
-  currentLong = pos.A;
-  var lat = pos.k; // 36.1667;
-  var long = pos.A; //-86.7833;
+  currentLong = pos.B;
+
 
   if(closeMarkers.length){
     resetMarkers();
@@ -304,7 +283,7 @@ function checkCloseLocs(pos){
       }
       });
 
-      $.ajax(`/getCloseLocs/${lat}/${long}`).done(function(data){
+      $.ajax(`/getCloseLocs/${currentLat}/${currentLong}`).done(function(data){
         data.forEach(i=>{
           addCheckInMarkers(i.loc);
           addCheckInButton(i.name, i.description, i._id);
@@ -312,7 +291,7 @@ function checkCloseLocs(pos){
       });
     });
   } else {
-    $.ajax(`/getCloseLocs/${lat}/${long}`).done(function(data){
+    $.ajax(`/getCloseLocs/${currentLat}/${currentLong}`).done(function(data){
       data.forEach(i=>{
         addCheckInMarkers(i.loc);
         addCheckInButton(i.name, i.description, i._id);
@@ -332,7 +311,7 @@ var checkInIcon = {
 var closeMarkers = [];
 function addCheckInMarkers(coords){
     markers.forEach(m=>{ // loops thourgh the global array of markers and matches on the site coordinates. When it finds a match it changes the marker icon.
-      if(m.position.k.toFixed(6) === coords[1].toFixed(6) && m.position.A.toFixed(6) === coords[0].toFixed(6)){
+      if(m.position.k.toFixed(6) === coords[1].toFixed(6) && m.position.B.toFixed(6) === coords[0].toFixed(6)){
         m.setIcon(checkInIcon);
         closeMarkers.push(m);
       }
