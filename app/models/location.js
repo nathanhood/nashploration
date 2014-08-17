@@ -116,12 +116,38 @@ class Location{
     });
   }
 
+  static findActiveQuestLocations(questLocs, userLocs,  fn){
+    userLocs.forEach(q=>{
+      questLocs.push(q);
+    });
+    async.map(questLocs, findQuestLocsById, (e, locs)=>{
+      var minusDups = removeAllDups(locs);
+        fn(minusDups);
+    });
+  }
+
+  static removeDuplicates(allLocs, questOrCheckInLocs, fn){
+    questOrCheckInLocs.forEach(q=>{
+      allLocs.push(q);
+      allLocs.push(q);
+    });
+
+    var minusDups = removeAllDups(allLocs);
+      fn(minusDups);
+  }
+
   static findManyById(locationIds, fn){
-    if (typeof locationIds === 'string' && locationIds.length >= 24) {
-      locationIds = locationIds.split(',');
-      var objIds = locationIds.map(id=>{
-        return Mongo.ObjectID(id);
-      });
+    var objIds;
+    if (locationIds.length >= 24) {
+      if(typeof locationIds === 'string'){
+        locationIds = locationIds.split(',');
+          objIds = locationIds.map(id=>{
+            return Mongo.ObjectID(id);
+        });
+      }
+
+      objIds = locationIds;
+
       locations.find({_id: { $in: objIds } }).toArray((err, locations)=>{
         fn(locations);
       });
@@ -144,6 +170,27 @@ function findCloseLocs(locName, fn){
   locations.findOne({name: {$regex: locName, $options: 'i'}}, (err, location)=>{
     fn(null, location);
   });
+}
+
+function findQuestLocsById(locId, fn){
+  Base.findById(locId, locations, Location, fn);
+}
+
+function removeAllDups(data) {
+  for (var i = 0; i < data.length; i++) {
+      var found = false,
+          id = data[i]._id;
+      for (var j = i+1; j < data.length; j++) {
+          if (data[j]._id.equals(id)) {
+              found = true;
+              data.splice(j--, 1);
+          }
+      }
+      if (found) {
+          data.splice(i--, 1);
+      }
+  }
+  return data;
 }
 
 module.exports = Location;

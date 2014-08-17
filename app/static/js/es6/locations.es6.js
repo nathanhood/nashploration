@@ -11,33 +11,56 @@
     $('#map-filter select').on('change', filterLocations);
     $('body').on('click', '.info-window', showStreetView);
     // findLocation();
-    // checkCloseLocs();
   }
 
 //=======ajax call to fetch locations from the database: Richmond
   function fetchLocations() {
     $.ajax('/getAllLocations').done(function(data){
+      // console.log(data.all.length);
+      // console.log(data.quest.length);
+      // console.log(data.checkIns.length);
       initMap();
+      if(data.quest){
+        data.quest.forEach(q=>{
+          placeQuestMarkers(q.loc, q.name, q.description);
+        });
+      }
 
-      data.forEach(d=>{
-        placeMarkers(d.loc, d.name, d.description);
+      data.all.forEach(a=>{
+        placeMarkers(a.loc, a.name, a.description);
       });
+
+      data.checkIns.forEach(c=>{
+        placeCheckInMarkers(c.loc, c.name, c.description);
+      });
+
       resizeMap();
     });
   }
+
+  function removeAllDups(data) {
+    for (var i = 0; i < data.length; i++) {
+        var found = false,
+            num = data[i].number;
+        for (var j = i+1; j < data.length; j++) {
+            if (data[j].number === num) {
+                found = true;
+                data.splice(j--, 1);
+            }
+        }
+        if (found) {
+            data.splice(i--, 1);
+        }
+    }
+    return data;
+}
 
 //===========filtering map :Nathan
   function filterLocations() {
     var filter = $('#map-filter').find('option:selected').text();
     switch(filter) {
       case 'All':
-        $.ajax('/getAllLocations').done(function(data){
-          clearMap();
-          data.forEach(d=>{
-            placeMarkers(d.loc, d.name, d.description);
-          });
-          resizeMap();
-        });
+        fetchLocations();
         break;
       case 'Civil War Sites':
         $.ajax('/getCivilWarLocations').done(function(data){
@@ -65,6 +88,10 @@
   function setAllMap(map) {
     for (var i = 0; i < markers.length; i++) {
       markers[i].setMap(map);
+    }
+
+    for (var j = 0; j < questMarkers.length; j++){
+      questMarkers[j].setMap(map);
     }
   }
 
@@ -95,13 +122,55 @@
   function placeMarkers(coords, locName, locDesc){
     var latLng = new google.maps.LatLng(coords[1], coords[0]);
       coordinates.push(latLng);
+
       latLng = new google.maps.Marker({  //latlng is the marker variable name so that each marker has a unique variable(makes infowindows show in correct location)
        position: latLng,
        map: map
       });
+
       markers.push(latLng);
       infoWindows(locName, latLng, locDesc); //passing in coords because latLng is now a google Marker Object..coords is used to set the data of the infowindow "Show More" link
 
+  }
+
+  var checkInMarker = {
+      url: '/img/checkin-pin.svg',
+      scaledSize: new google.maps.Size(40,40)
+    };
+
+  var checkInMarkers = [];
+  function placeCheckInMarkers(coords, locName, locDesc){
+    var latLng = new google.maps.LatLng(coords[1], coords[0]);
+      coordinates.push(latLng);
+
+      latLng = new google.maps.Marker({  //latlng is the marker variable name so that each marker has a unique variable(makes infowindows show in correct location)
+       position: latLng,
+       map: map,
+       icon: checkInMarker
+      });
+
+      checkInMarkers.push(latLng);
+      infoWindows(locName, latLng, locDesc); //passing in coords because latLng is now a google Marker Object..coords is used to set the data of the infowindow "Show More" link
+
+  }
+
+  var questIcon = {
+      url: '/img/pin-filled.svg',
+      scaledSize: new google.maps.Size(40,40)
+    };
+
+  var questMarkers = [];
+  function placeQuestMarkers(coords, locName, locDesc){
+    var latLng = new google.maps.LatLng(coords[1], coords[0]);
+
+      latLng = new google.maps.Marker({
+        position: latLng,
+        map: map,
+        icon: questIcon
+      });
+
+      questMarkers.push(latLng);
+      infoWindows(locName, latLng, locDesc);
   }
 
 //======resizes the map to to just fit the available markers: Richmond
@@ -219,11 +288,10 @@
 var currentLat;
 var currentLong;
 function checkCloseLocs(pos){
-  console.log(pos);
+  // currentLat= pos.k;
+  // currentLong = pos.A; google is messing with us
   currentLat= pos.k;
-  currentLong = pos.A;
-  var lat = pos.k; // 36.1667;
-  var long = pos.A; //-86.7833;
+  currentLong = pos.B;
 
   if(closeMarkers.length){
     resetMarkers();
@@ -237,7 +305,7 @@ function checkCloseLocs(pos){
       }
       });
 
-      $.ajax(`/getCloseLocs/${lat}/${long}`).done(function(data){
+      $.ajax(`/getCloseLocs/${currentLat}/${currentLong}`).done(function(data){
         data.forEach(i=>{
           addCheckInMarkers(i.loc);
           addCheckInButton(i.name, i.description, i._id);
@@ -245,7 +313,7 @@ function checkCloseLocs(pos){
       });
     });
   } else {
-    $.ajax(`/getCloseLocs/${lat}/${long}`).done(function(data){
+    $.ajax(`/getCloseLocs/${currentLat}/${currentLong}`).done(function(data){
       data.forEach(i=>{
         addCheckInMarkers(i.loc);
         addCheckInButton(i.name, i.description, i._id);
@@ -265,7 +333,7 @@ var checkInIcon = {
 var closeMarkers = [];
 function addCheckInMarkers(coords){
     markers.forEach(m=>{ // loops thourgh the global array of markers and matches on the site coordinates. When it finds a match it changes the marker icon.
-      if(m.position.k.toFixed(6) === coords[1].toFixed(6) && m.position.A.toFixed(6) === coords[0].toFixed(6)){
+      if(m.position.k.toFixed(6) === coords[1].toFixed(6) && m.position.B.toFixed(6) === coords[0].toFixed(6)){
         m.setIcon(checkInIcon);
         closeMarkers.push(m);
       }

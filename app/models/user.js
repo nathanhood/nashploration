@@ -30,6 +30,10 @@ class User{
     // this.streetViewQuizzes = []; // Object IDs
   }
 
+  getActiveQuestId(fn){
+    fn(this.activeQuest.questId);
+  }
+
   saveCheckIn(questCheckIns, locationId, fn){
     locationId = Mongo.ObjectID(locationId);
 
