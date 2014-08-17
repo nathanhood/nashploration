@@ -1,3 +1,6 @@
 
 block content
-  h1 #{user.nickName} Profile
+  if (userProfile)
+    h1 Your Profile
+  if (otherProfile)
+    h1 Someone Else's Profile

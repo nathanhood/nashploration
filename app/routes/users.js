@@ -21,8 +21,18 @@ exports.index = (req, res)=>{
 
 exports.profile = (req, res)=>{
   // need to query user from url path & check against res.locals to determine what version of profile is rendered
-  var user = res.locals.user;
-  res.render('users/profile', {title: 'Nashploration', user:user});
+  User.findByUserName(req.params.userName, user=>{
+    if (user) {
+      if (user._id.equals(res.locals.user._id)) {
+        res.render('users/profile', {title: 'Nashploration', userProfile: user, otherProfile: null});
+      } else {
+        res.render('users/profile', {title: 'Nashploration', userProfile: null, otherProfile: user});
+      }
+    } else {
+      // flash error here to notify user that userName doesn't exist
+      res.redirect('/dashboard');
+    }
+  });
 };
 
 exports.register = (req, res)=>{
@@ -44,7 +54,7 @@ exports.register = (req, res)=>{
               group.save(()=>{
                 res.locals.user = u;
                 req.session.userId = u._id;
-                res.redirect('/dashboard');
+                res.redirect(`/users/${u.userName}`);
               });
             });
           });
@@ -67,7 +77,7 @@ exports.login = (req, res)=>{
             group.save(()=>{
               res.locals.user = u;
               req.session.userId = u._id;
-              res.redirect('/dashboard');
+              res.redirect(`/users/${u.userName}`);
             });
           });
         } else {

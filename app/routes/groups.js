@@ -14,6 +14,7 @@ exports.create = (req, res)=>{
   var group = new Group(user._id, req.body);
   Group.inviteGroupMembers(req.body, user, ()=>{
     group.save(()=>{
+      // confirmation that emails have been sent and group created. Include group Code
       res.redirect(`/users/${user.userName}`);
     });
   });
