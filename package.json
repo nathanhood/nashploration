@@ -35,7 +35,8 @@
     "multiparty":      "*",
     "needle":          "*",
     "crypto":          "*",
-    "mkdirp":          "*"
+    "mkdirp":          "*",
+    "connect-flash":   "*"
   },
   "devDependencies": {
     "grunt":                "*",

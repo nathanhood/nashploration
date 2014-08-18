@@ -13,24 +13,27 @@ exports.index = (req, res)=>{
   if (req.session.questConfirm) {
     var questConfirm = req.session.questConfirm;
     req.session.questConfirm = false;
-    res.render('users/index', {title: 'Nashploration', questConfirm:questConfirm});
+    res.render('users/index', {title: 'Nashploration', questConfirm:questConfirm, messages: req.flash('unknownProfile')});
   } else {
     res.render('users/index', {title: 'Nashploration'});
   }
 };
 
 exports.profile = (req, res)=>{
-  // need to query user from url path & check against res.locals to determine what version of profile is rendered
   User.findByUserName(req.params.userName, user=>{
     if (user) {
-      if (user._id.equals(res.locals.user._id)) {
-        res.render('users/profile', {title: 'Nashploration', userProfile: user, otherProfile: null});
+      if (res.locals.user._id.equals(user._id)) {
+        res.render('users/profile', {title: 'Nashploration', userProfile: user, otherProfile: null,
+        unknownProfile: req.flash('unknownProfile'),
+        groupConfirmation: req.flash('groupConfirmation'),
+        joinedGroup: req.flash('joinedGroup')
+        });
       } else {
         res.render('users/profile', {title: 'Nashploration', userProfile: null, otherProfile: user});
       }
     } else {
-      // flash error here to notify user that userName doesn't exist
-      res.redirect('/dashboard');
+      req.flash('unknownProfile', `There is no one with the username ${req.params.userName}.`);
+      res.redirect(`/users/${res.locals.user.userName}`);
     }
   });
 };
@@ -42,21 +45,27 @@ exports.register = (req, res)=>{
     var photoObj = files.photo[0];
     var userName = fields.userName[0].split(' ').map(w=>w.trim()).map(w=>w.toLowerCase()).join('');
     Group.findByGroupCode(fields.groupCode[0], group=>{
-      if (!group) {
-        res.redirect('/');
-      }
       User.register(fields, userName, (u)=>{
         if (u) {
           u.processPhoto(photoObj, (newPhoto)=>{
             u.photo = newPhoto;
-            group.joinGroup(u);
-            u.save(()=>{
-              group.save(()=>{
+            if (!group) {
+              u.save(()=>{
                 res.locals.user = u;
                 req.session.userId = u._id;
                 res.redirect(`/users/${u.userName}`);
               });
-            });
+            } else {
+              group.joinGroup(u);
+              u.save(()=>{
+                group.save(()=>{
+                  res.locals.user = u;
+                  req.session.userId = u._id;
+                  req.flash('joinedGroup', `You successfully joined the group ${group.name}`);
+                  res.redirect(`/users/${u.userName}`);
+                });
+              });
+            }
           });
         } else {
           res.redirect('/');

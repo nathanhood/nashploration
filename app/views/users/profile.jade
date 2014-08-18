@@ -1,6 +1,26 @@
 
 block content
+  if (unknownProfile)
+    p= unknownProfile
+  if (groupConfirmation)
+    p= groupConfirmation
+  if (joinedGroup)
+    p= joinedGroup
+
   if (userProfile)
     h1 Your Profile
+    span Username:
+    h3= userProfile.userName
+    span Nickname:
+    h3= userProfile.nickName
+    span Class:
+    h3= userProfile.class
+
   if (otherProfile)
     h1 Someone Else's Profile
+    span Username:
+    h3= otherProfile.userName
+    span Nickname:
+    h3= otherProfile.nickName
+    span Class:
+    h3= otherProfile.class

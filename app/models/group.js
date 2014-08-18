@@ -32,18 +32,20 @@ class Group {
     groups.save(this, ()=>fn());
   }
 
-//    }
-//
-//   static isOwner(userId, fn){
-//     groups.find({owner: userId}).toArray((err, owner)=>{
-//       fn(owner);
-//     });
-//   }
-//
+  static isOwner(userId, fn){
+    groups.find({owner: userId}).toArray((err, owner)=>{
+      fn(owner);
+    });
+  }
+
   static findByGroupCode(code, fn){
     groups.findOne({groupCode:code}, (err, group)=>{
-    group = _.create(Group.prototype, group);
-      fn(group);
+      if (!group) {
+        fn(null);
+      } else {
+        group = _.create(Group.prototype, group);
+          fn(group);
+      }
     });
   }
 

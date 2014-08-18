@@ -18,7 +18,7 @@ class User{
     this.userName = userName;
     this.nickName = fields.nickName[0];
     this.badges = []; // Object IDs
-    this.level = 'Explorer';
+    this.class = 'Explorer';
     this.groups = []; // Object IDs
     this.photo = null; // add photo object from processPhoto
     this.checkIns = []; // Location IDs
@@ -128,8 +128,12 @@ class User{
 
   static findByUserName(userName, fn){
     users.findOne({userName:userName}, (err, user)=>{
-      user = _.create(User.prototype, user);
-      fn(user);
+      if (user) {
+        user = _.create(User.prototype, user);
+        fn(user);
+      } else {
+        fn(null);
+      }
     });
   }
 }

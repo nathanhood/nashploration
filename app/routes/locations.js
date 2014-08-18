@@ -25,6 +25,7 @@ exports.getLocations = (req, res)=>{
   Location.findAll((locations)=>{ //finds all locations
     if(res.locals.user){
       Location.findManyById(res.locals.user.checkIns, allCheckIns=>{ //finds locations that have been completed in user's Active Quest
+        // if there is no active quest, this errors out.
         Quest.findById(res.locals.user.activeQuest.questId, (err, quest)=>{ //finds users's Active Quest
           Location.removeDuplicates(locations, allCheckIns, allMinusCheckIns=>{
         if(quest.checkIns.length === res.locals.user.activeQuest.questLocs.length){ //checks if active quest is complete
