@@ -16,22 +16,23 @@
 //=======ajax call to fetch locations from the database: Richmond
   function fetchLocations() {
     $.ajax('/getAllLocations').done(function(data){
-      // console.log(data.all.length);
-      // console.log(data.quest.length);
-      // console.log(data.checkIns.length);
+      console.log(data);
       initMap();
+
       if(data.quest){
         data.quest.forEach(q=>{
           placeQuestMarkers(q.loc, q.name, q.description);
         });
       }
 
+      if(data.checkIns){
+        data.checkIns.forEach(c=>{
+          placeCheckInMarkers(c.loc, c.name, c.description);
+        });
+      }
+
       data.all.forEach(a=>{
         placeMarkers(a.loc, a.name, a.description);
-      });
-
-      data.checkIns.forEach(c=>{
-        placeCheckInMarkers(c.loc, c.name, c.description);
       });
 
       resizeMap();

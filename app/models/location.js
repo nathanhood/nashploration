@@ -138,7 +138,7 @@ class Location{
 
   static findManyById(locationIds, fn){
     var objIds;
-    if (locationIds.length >= 24) {
+    // if (locationIds.length >= 24) {
       if(typeof locationIds === 'string'){
         locationIds = locationIds.split(',');
           objIds = locationIds.map(id=>{
@@ -151,9 +151,9 @@ class Location{
       locations.find({_id: { $in: objIds } }).toArray((err, locations)=>{
         fn(locations);
       });
-    } else {
-      fn(null);
-    }
+    // } else {
+    //   fn(null);
+    // }
   }
 
   static accumulateLocationIds(locations, fn){
