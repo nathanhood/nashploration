@@ -24,29 +24,36 @@ exports.getLocations = (req, res)=>{
   Location.findAll(locations=>{
     if(res.locals.user.checkIns){
       Location.findManyById(res.locals.user.checkIns, allCheckIns=>{
-        Quest.findById(res.locals.user.activeQuest.questId, (err, quest)=>{
-          Location.removeDuplicates(locations, allCheckIns, allMinusCheckIns=>{
-            if(quest.checkIns.length === res.locals.user.activeQuest.questLocs.length){
-              allLocations.all = allMinusCheckIns;
-              allLocations.quest = null;
-              allLocations.checkIns = allCheckIns;
-                res.send(allLocations);
-            }else{
-              Location.findActiveQuestLocations(quest.checkIns, res.locals.user.activeQuest.questLocs, (questLocs)=>{
-                Location.removeDuplicates(allMinusCheckIns, questLocs, allMinusDups=>{
-                  Location.removeDuplicates(allCheckIns, questLocs, allCheckInsMinusDups=>{
-                    allLocations.all = allMinusDups;
-                    allLocations.quest = questLocs;
-                    allLocations.checkIns = allCheckInsMinusDups;
-                      res.send(allLocations);
+        if(res.locals.user.activeQuest.questId){
+          Quest.findById(res.locals.user.activeQuest.questId, (err, quest)=>{
+            Location.removeDuplicates(locations, allCheckIns, allMinusCheckIns=>{
+              if(quest.checkIns.length === res.locals.user.activeQuest.questLocs.length){
+                allLocations.all = allMinusCheckIns;
+                allLocations.quest = null;
+                allLocations.checkIns = allCheckIns;
+                  res.send(allLocations);
+              }else{
+                Location.findActiveQuestLocations(quest.checkIns, res.locals.user.activeQuest.questLocs, (questLocs)=>{
+                  Location.removeDuplicates(allMinusCheckIns, questLocs, allMinusDups=>{
+                    Location.removeDuplicates(allCheckIns, questLocs, allCheckInsMinusDups=>{
+                      allLocations.all = allMinusDups;
+                      allLocations.quest = questLocs;
+                      allLocations.checkIns = allCheckInsMinusDups;
+                        res.send(allLocations);
+                    });
                   });
                 });
-              });
-            }
+              }
+
+            });
           });
-        });
+        }else{
+          allLocations.all = locations;
+          allLocations.quest = null;
+          res.send(allLocations);
+        }
       });
-    } else{
+    }else{
       allLocations.all = locations;
       allLocations.quest = null;
       res.send(allLocations);
