@@ -24,7 +24,7 @@ class User{
     this.checkIns = []; // Location IDs
     this.createdGroups = []; //Object IDs
     this.createdQuests = []; // Object IDs
-    this.activeQuest = null; // Object IDs
+    this.activeQuest = {questId:null, questLocs:[]}; // Object IDs
     this.myQuests = [];
     this.completedQuests = []; // Object IDs
     // this.streetViewQuizzes = []; // Object IDs

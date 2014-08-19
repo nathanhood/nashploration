@@ -63,7 +63,7 @@ exports.index = (req, res)=>{
 exports.getLocations = (req, res)=>{
   var locationsObj = {};
 
-  if(res.locals.user.checkIns.length && res.locals.user.activeQuest.questId){
+  if(res.locals.user.checkIns.length && res.locals.user.activeQuest.questId !== null){
     Location.findAll(locations=>{
       Location.findManyById(res.locals.user.checkIns, allCheckIns=>{
         Quest.findById(res.locals.user.activeQuest.questId, (err, quest)=>{
@@ -89,7 +89,7 @@ exports.getLocations = (req, res)=>{
         });
       });
     });
-  }else if(res.locals.user.activeQuest.questId && res.locals.user.checkIns.length < 1){
+  }else if(res.locals.user.activeQuest.questId !==null && res.locals.user.checkIns.length < 1){
     Location.findAll(locations=>{
       Quest.findById(res.locals.user.activeQuest.questId, (err, quest)=>{
         if(quest.checkIns.length === res.locals.user.activeQuest.questLocs.length){
@@ -109,7 +109,7 @@ exports.getLocations = (req, res)=>{
         }
       });
     });
-  }else if(!res.locals.user.activeQuest.questId && res.locals.user.checkIns){
+  }else if(res.locals.user.activeQuest.questId === null && res.locals.user.checkIns){
     Location.findAll(locations=>{
       Location.findManyById(res.locals.user.checkIns, allCheckIns=>{
         Location.removeDuplicates(locations, allCheckIns, allMinusCheckIns=>{
@@ -174,3 +174,33 @@ exports.getActiveQuestLocations = (req, res)=>{
    }
   });
 };
+
+function findAllLocations(fn){
+  Location.findAll(locations=>{
+    fn(locations);
+  });
+}
+
+function findManyLocsById(checkIns){
+  Location.findManyById(checkIns, allCheckIns=>{
+    return allCheckIns;
+  });
+}
+
+function findQuest(questId){
+  Quest.findById(questId, (err, quest)=>{
+    return quest;
+  });
+}
+
+function findActiveQuestLocations(questCheckIns, questLocations){
+  Location.findActiveQuestLocations(questCheckIns, questLocations, (questLocs)=>{
+    return questLocs;
+  });
+}
+
+function removeDups(data1, data2){
+  Location.removeDuplicates(data1, data1, allMinusDups=>{
+    return allMinusDups;
+  });
+}
