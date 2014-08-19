@@ -174,33 +174,3 @@ exports.getActiveQuestLocations = (req, res)=>{
    }
   });
 };
-
-function findAllLocations(fn){
-  Location.findAll(locations=>{
-    fn(locations);
-  });
-}
-
-function findManyLocsById(checkIns){
-  Location.findManyById(checkIns, allCheckIns=>{
-    return allCheckIns;
-  });
-}
-
-function findQuest(questId){
-  Quest.findById(questId, (err, quest)=>{
-    return quest;
-  });
-}
-
-function findActiveQuestLocations(questCheckIns, questLocations){
-  Location.findActiveQuestLocations(questCheckIns, questLocations, (questLocs)=>{
-    return questLocs;
-  });
-}
-
-function removeDups(data1, data2){
-  Location.removeDuplicates(data1, data1, allMinusDups=>{
-    return allMinusDups;
-  });
-}
