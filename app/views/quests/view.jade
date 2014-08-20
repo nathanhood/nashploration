@@ -1,0 +1,16 @@
+extends ../shared/template
+
+block content
+  h1 View Quests
+
+  h2 Created Quests
+  if (createdQuests)
+    each quest in createdQuests
+      h3 quest.name
+      p quest.creator
+
+  h2 Joined Quests
+  if (myQuests)
+    each quest in myQuests
+      h3 quest.name
+      p quest.creator

@@ -57,6 +57,7 @@ function load(app, fn){
 
   /* ----------- Quests ------------- */
   app.get('/quests/new', dbg, quests.new);
+  app.get('/quests/view', dbg, quests.view);
   app.post('/quests/create', dbg, quests.create);
   app.post('/quests/create-quest-map', dbg, quests.questMap);
 
