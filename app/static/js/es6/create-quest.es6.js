@@ -80,7 +80,7 @@
     $.ajax('/getAllLocations').done(function(data){
       initMap();
 
-      data.forEach(d=>{
+      data.all.forEach(d=>{
         placeMarkers(d.loc, d.name, d.description, d._id);
         buildLocationsListing(d);
       });
@@ -114,7 +114,7 @@
       case 'All':
         $.ajax('/getAllLocations').done(function(data){
           clearMap();
-          data.forEach(d=>{
+          data.all.forEach(d=>{
             placeMarkers(d.loc, d.name, d.description, d._id);
           });
           resizeMap();

@@ -18,42 +18,116 @@ exports.addHistory = (req, res)=>{
 exports.index = (req, res)=>{
   res.render('locations/index');
 };
-
+//
+// exports.getLocations = (req, res)=>{
+//   var allLocations = {};
+//   Location.findAll(locations=>{
+//     if(res.locals.user.checkIns){
+//       Location.findManyById(res.locals.user.checkIns, allCheckIns=>{
+//         if(res.locals.user.activeQuest.questId){
+//           Quest.findById(res.locals.user.activeQuest.questId, (err, quest)=>{
+//             Location.removeDuplicates(locations, allCheckIns, allMinusCheckIns=>{
+//               if(quest.checkIns.length === res.locals.user.activeQuest.questLocs.length){
+//                 allLocations.all = allMinusCheckIns;
+//                 allLocations.quest = null;
+//                 allLocations.checkIns = allCheckIns;
+//                   res.send(allLocations);
+//               }else{
+//                 Location.findActiveQuestLocations(quest.checkIns, res.locals.user.activeQuest.questLocs, (questLocs)=>{
+//                   Location.removeDuplicates(allMinusCheckIns, questLocs, allMinusDups=>{
+//                     Location.removeDuplicates(allCheckIns, questLocs, allCheckInsMinusDups=>{
+//                       allLocations.all = allMinusDups;
+//                       allLocations.quest = questLocs;
+//                       allLocations.checkIns = allCheckInsMinusDups;
+//                         res.send(allLocations);
+//                     });
+//                   });
+//                 });
+//               }
+//             });
+//           });
+//         }else{
+//           allLocations.all = locations;
+//           allLocations.quest = null;
+//           res.send(allLocations);
+//         }
+//       });
+//     }else{
+//       allLocations.all = locations;
+//       allLocations.quest = null;
+//       res.send(allLocations);
+//     }
+//   });
+// };
 
 exports.getLocations = (req, res)=>{
-  var allLocations = {};
-  Location.findAll((locations)=>{ //finds all locations
-    if(res.locals.user){
-      Location.findManyById(res.locals.user.checkIns, allCheckIns=>{ //finds locations that have been completed in user's Active Quest
-        // if there is no active quest, this errors out.
-        Quest.findById(res.locals.user.activeQuest.questId, (err, quest)=>{ //finds users's Active Quest
+  var locationsObj = {};
+
+  if(res.locals.user.checkIns.length && res.locals.user.activeQuest.questId !== null){
+    Location.findAll(locations=>{
+      Location.findManyById(res.locals.user.checkIns, allCheckIns=>{
+        Quest.findById(res.locals.user.activeQuest.questId, (err, quest)=>{
           Location.removeDuplicates(locations, allCheckIns, allMinusCheckIns=>{
-        if(quest.checkIns.length === res.locals.user.activeQuest.questLocs.length){ //checks if active quest is complete
-            allLocations.all = allMinusCheckIns;
-            allLocations.quest = null;
-            allLocations.checkIns = allCheckIns;
-              res.send(allLocations);
-        }else{
-          Location.findActiveQuestLocations(quest.checkIns, res.locals.user.activeQuest.questLocs, (questLocs)=>{ //finds all locations in the active quest. brings back array of all checkins in quest and completed checkins by user
-            Location.removeDuplicates(allMinusCheckIns, questLocs, allMinusDups=>{ //removes
-              Location.removeDuplicates(allCheckIns, questLocs, allCheckInsMinusDups=>{
-                allLocations.all = allMinusDups;
-                allLocations.quest = questLocs;
-                allLocations.checkIns = allCheckInsMinusDups;
-                res.send(allLocations);
+            if(quest.checkIns.length === res.locals.user.activeQuest.questLocs.length){
+              locationsObj.all = allMinusCheckIns;
+              locationsObj.quest = null;
+              locationsObj.checkIns = allCheckIns;
+                res.send(locationsObj);
+            }else{
+              Location.findActiveQuestLocations(quest.checkIns, res.locals.user.activeQuest.questLocs, (questLocs)=>{
+                Location.removeDuplicates(allMinusCheckIns, questLocs, allMinusDups=>{
+                  Location.removeDuplicates(allCheckIns, questLocs, allCheckInsMinusDups=>{
+                    locationsObj.all = allMinusDups;
+                    locationsObj.quest = questLocs;
+                    locationsObj.checkIns = allCheckInsMinusDups;
+                      res.send(locationsObj);
+                  });
+                });
               });
+            }
+          });
+        });
+      });
+    });
+  }else if(res.locals.user.activeQuest.questId !==null && res.locals.user.checkIns.length < 1){
+    Location.findAll(locations=>{
+      Quest.findById(res.locals.user.activeQuest.questId, (err, quest)=>{
+        if(quest.checkIns.length === res.locals.user.activeQuest.questLocs.length){
+          locationsObj.all = locations;
+          locationsObj.quest = null;
+          locationsObj.checkIns = null;
+            res.send(locationsObj);
+        }else{
+          Location.findActiveQuestLocations(quest.checkIns, res.locals.user.activeQuest.questLocs, (questLocs)=>{
+            Location.removeDuplicates(locations, questLocs, allMinusDups=>{
+              locationsObj.all = allMinusDups;
+              locationsObj.quest = questLocs;
+              locationsObj.checkIns = null;
+                res.send(locationsObj);
             });
           });
-         }
-        });
-       });
+        }
       });
-    }else{
-      allLocations.all = locations;
-      allLocations.quest = null;
-      res.send(allLocations);
-   }
-  });
+    });
+  }else if(res.locals.user.activeQuest.questId === null && res.locals.user.checkIns){
+    Location.findAll(locations=>{
+      Location.findManyById(res.locals.user.checkIns, allCheckIns=>{
+        Location.removeDuplicates(locations, allCheckIns, allMinusCheckIns=>{
+          locationsObj.all = allMinusCheckIns;
+          locationsObj.quest = null;
+          locationsObj.checkIns = allCheckIns;
+            res.send(locationsObj);
+        });
+      });
+    });
+  }else{
+    Location.findAll(locations=>{
+      locationsObj.all = locations;
+      locationsObj.quest = null;
+      locationsObj.checkIns = null;
+        res.send(locationsObj);
+    });
+  }
 };
 
 exports.getCivilWarLocations = (req, res)=>{
@@ -100,3 +174,33 @@ exports.getActiveQuestLocations = (req, res)=>{
    }
   });
 };
+
+function findAllLocations(fn){
+  Location.findAll(locations=>{
+    fn(locations);
+  });
+}
+
+function findManyLocsById(checkIns){
+  Location.findManyById(checkIns, allCheckIns=>{
+    return allCheckIns;
+  });
+}
+
+function findQuest(questId){
+  Quest.findById(questId, (err, quest)=>{
+    return quest;
+  });
+}
+
+function findActiveQuestLocations(questCheckIns, questLocations){
+  Location.findActiveQuestLocations(questCheckIns, questLocations, (questLocs)=>{
+    return questLocs;
+  });
+}
+
+function removeDups(data1, data2){
+  Location.removeDuplicates(data1, data1, allMinusDups=>{
+    return allMinusDups;
+  });
+}

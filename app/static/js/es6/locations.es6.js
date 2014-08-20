@@ -13,25 +13,26 @@
     // findLocation();
   }
 
+  var allMarkers = [];
 //=======ajax call to fetch locations from the database: Richmond
   function fetchLocations() {
     $.ajax('/getAllLocations').done(function(data){
-      // console.log(data.all.length);
-      // console.log(data.quest.length);
-      // console.log(data.checkIns.length);
       initMap();
+
       if(data.quest){
         data.quest.forEach(q=>{
           placeQuestMarkers(q.loc, q.name, q.description);
         });
       }
 
+      if(data.checkIns){
+        data.checkIns.forEach(c=>{
+          placeCheckInMarkers(c.loc, c.name, c.description);
+        });
+      }
+
       data.all.forEach(a=>{
         placeMarkers(a.loc, a.name, a.description);
-      });
-
-      data.checkIns.forEach(c=>{
-        placeCheckInMarkers(c.loc, c.name, c.description);
       });
 
       resizeMap();
@@ -129,6 +130,7 @@
       });
 
       markers.push(latLng);
+      allMarkers.push(latLng);
       infoWindows(locName, latLng, locDesc); //passing in coords because latLng is now a google Marker Object..coords is used to set the data of the infowindow "Show More" link
 
   }
@@ -150,6 +152,7 @@
       });
 
       checkInMarkers.push(latLng);
+      allMarkers.push(latLng);
       infoWindows(locName, latLng, locDesc); //passing in coords because latLng is now a google Marker Object..coords is used to set the data of the infowindow "Show More" link
 
   }
@@ -170,6 +173,7 @@
       });
 
       questMarkers.push(latLng);
+      allMarkers.push(latLng);
       infoWindows(locName, latLng, locDesc);
   }
 
@@ -297,30 +301,12 @@ function checkCloseLocs(pos){
     resetMarkers();
   }
 
-  if(closeLocations.length){  //if there are nearby locations currently displaying and the user moves this call resets markers that are no longer in range of user and sets ones that now are: Richmond
-    $.ajax(`/resetCloseLocations/${closeLocations}`).done(function(data){
-      data.forEach(d=>{
-        if(d){  //if database returns null, it throws an error and does not recover until page refresh..this prevents that
-        placeMarkers(d.loc, d.name, d.description);
-      }
-      });
-
-      $.ajax(`/getCloseLocs/${currentLat}/${currentLong}`).done(function(data){
-        data.forEach(i=>{
-          addCheckInMarkers(i.loc);
-          addCheckInButton(i.name, i.description, i._id);
-        });
-      });
+  $.ajax(`/getCloseLocs/${currentLat}/${currentLong}`).done(function(data){
+    data.forEach(i=>{
+      addCheckInMarkers(i.loc);
+      addCheckInButton(i.name, i.description, i._id);
     });
-  } else {
-    $.ajax(`/getCloseLocs/${currentLat}/${currentLong}`).done(function(data){
-      data.forEach(i=>{
-        addCheckInMarkers(i.loc);
-        addCheckInButton(i.name, i.description, i._id);
-      });
-    });
-  }
-closeLocations = [];
+  });
 }
 
 
@@ -332,9 +318,10 @@ var checkInIcon = {
 //==== changes the icons for the markers that are within range of checkin: Richmond
 var closeMarkers = [];
 function addCheckInMarkers(coords){
-    markers.forEach(m=>{ // loops thourgh the global array of markers and matches on the site coordinates. When it finds a match it changes the marker icon.
+    allMarkers.forEach(m=>{ // loops thourgh the global array of markers and matches on the site coordinates. When it finds a match it changes the marker icon.
       if(m.position.k.toFixed(6) === coords[1].toFixed(6) && m.position.B.toFixed(6) === coords[0].toFixed(6)){
-        m.setIcon(checkInIcon);
+        // m.setAnimation(google.maps.Animation.BOUNCE);
+        toggleBounce(m);
         closeMarkers.push(m);
       }
     });
@@ -362,11 +349,18 @@ function addCheckInButton(windowName, description, id){
   closeLocations.push(windowName);
 }
 
+function toggleBounce (m) {
+  m.setAnimation(google.maps.Animation.BOUNCE);
+     google.maps.event.addListener(m, 'click', function () {
+       m.setAnimation(null);
+    });
 
+
+}
 
 function resetMarkers(){
   closeMarkers.forEach(i=>{
-    i.setMap(null);
+    i.setAnimation(null);
   });
   closeMarkers = [];
 }
