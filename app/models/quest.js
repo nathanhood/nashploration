@@ -28,6 +28,18 @@ class Quest{
     Base.findById(id, quests, Quest, fn);
   }
 
+  static findManyById(questIds, fn){
+    quests.find({_id: { $in: questIds } }).toArray((err, quests)=>{
+      fn(quests);
+    });
+  }
+
+  static findByUserId(userId, fn) {
+    quests.find({creator:userId}).toArray((err, quests)=>{
+      fn(quests);
+    });
+  }
+
 }
 
 

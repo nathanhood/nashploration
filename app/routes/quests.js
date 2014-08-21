@@ -5,14 +5,13 @@
 var traceur = require('traceur');
 var Quest = traceur.require(__dirname + '/../models/quest.js');
 var Group = traceur.require(__dirname + '/../models/group.js');
+var User = traceur.require(__dirname + '/../models/user.js');
 var Location = traceur.require(__dirname + '/../models/location.js');
 
 exports.new = (req, res)=>{
   var userId = res.locals.user._id;
   Group.findAllByOwnerId(userId, groups=>{
-    console.log('IN QUEST ROUTE');
-    console.log(groups);
-    res.render('quests/create-quest', {title: 'Create Quest', groups:groups});
+    res.render('quests/create-quest', {title: 'Nashploration', groups:groups});
   });
 };
 
@@ -33,6 +32,27 @@ exports.create = (req, res)=>{
           res.redirect('/dashboard');
         });
       });
+    });
+  });
+};
+
+exports.view = (req, res)=>{
+  var myQuests = res.locals.user.myQuests;
+  Quest.findByUserId(res.locals.user._id, created=>{
+    Quest.findManyById(myQuests, allMyQuests=>{
+      User.findAndReplaceQuestCreators(created, finalCreated=>{
+        User.findAndReplaceQuestCreators(allMyQuests, finalMyQuests=>{
+          res.render('quests/view', {title: 'Nashploration', createdQuests:finalCreated , myQuests:finalMyQuests});
+        });
+      });
+    });
+  });
+};
+
+exports.show = (req, res)=>{
+  Quest.findById(req.params.questId, (err, quest)=>{
+    User.findById(quest.creator, (err, user)=>{
+      res.render('quests/show', {title: 'Nashploration', user:user, quest:quest});
     });
   });
 };

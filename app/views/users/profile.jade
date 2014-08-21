@@ -1,3 +1,4 @@
+extends ../shared/template
 
 block content
   if (unknownProfile)
@@ -7,14 +8,44 @@ block content
   if (joinedGroup)
     p= joinedGroup
 
+  form(method='POST', action='/logout')
+    button Logout
+
   if (userProfile)
     h1 Your Profile
+    if (userProfile.photo)
+      img.profile-picture(src=userProfile.photo.filePath)
+    else
+      img.profile-picture(src='/img/assets/placeholder.png')
     span Username:
     h3= userProfile.userName
     span Nickname:
     h3= userProfile.nickName
     span Class:
     h3= userProfile.class
+    h4 Check-Ins: #{userProfile.checkIns.length}
+    h4 Groups: #{userProfile.groups.length}
+    h4 Leaders: Not sure about this category
+    .quest-group-menu-buttons
+      button.quest-menu-button Quests
+      button.group-menu-button Groups
+    .quest-group-menus
+      ul.quest-menu
+        li
+          a(href='#') Find a Quest
+        li
+          a(href='/quests/new') Build a Quest
+        li
+          a(href='/quests/view') View Quests
+        li
+          a(href='#') Completed Quests
+      ul.group-menu
+        li
+          a(href='#') Join a Group
+        li
+          a(href='/groups/new') Create a Group
+        li
+          a(href='#') Manage Groups
 
   if (otherProfile)
     h1 Someone Else's Profile
@@ -24,3 +55,6 @@ block content
     h3= otherProfile.nickName
     span Class:
     h3= otherProfile.class
+    h4 Check-Ins: #{otherProfile.checkIns.length}
+    h4 Groups: #{otherProfile.groups.length}
+    h4 Leaders: Not sure about this category

@@ -137,11 +137,13 @@ exports.checkIn = (req, res)=>{
   Location.findById(req.params.locationId, (err, location)=>{
     location.saveComment(req.body.comment, currLoc, res.locals.user._id, ()=>{
       Quest.findById(res.locals.user.activeQuest.questId, (err,quest)=>{
-        res.locals.user.saveCheckIn(quest.checkIns, req.params.locationId, ()=>{
-          res.locals.user.save(()=>{
-            location.save(()=>{
-            res.redirect('/dashboard');
-            });
+        if (quest) {
+          res.locals.user.updateActiveQuest(quest.checkIns, location._id);
+        }
+        res.locals.user.updateCheckIns(location._id);
+        res.locals.user.save(()=>{
+          location.save(()=>{
+          res.redirect('/dashboard');
           });
         });
       });

@@ -70,17 +70,16 @@ class Group {
   }
 
   static findManyById(groupIds, fn){
-    if (typeof groupIds === 'string' && groupIds.length >= 24) {
+    if(typeof groupIds === 'string'){
       groupIds = groupIds.split(',');
-      var objIds = groupIds.map(id=>{
-        return Mongo.ObjectID(id);
+        groupIds = groupIds.map(id=>{
+          return Mongo.ObjectID(id);
       });
-      groups.find({_id: { $in: objIds } }).toArray((err, groups)=>{
-        fn(groups);
-      });
-    } else {
-      fn(null);
     }
+
+    groups.find({_id: { $in: groupIds } }).toArray((err, groups)=>{
+      fn(groups);
+    });
   }
 
   static accumulateUsersFromGroups(groups){
