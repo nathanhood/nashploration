@@ -137,23 +137,16 @@ class Location{
   }
 
   static findManyById(locationIds, fn){
-    var objIds;
-    // if (locationIds.length >= 24) {
-      if(typeof locationIds === 'string'){
-        locationIds = locationIds.split(',');
-          objIds = locationIds.map(id=>{
-            return Mongo.ObjectID(id);
-        });
-      }
-
-      objIds = locationIds;
-
-      locations.find({_id: { $in: objIds } }).toArray((err, locations)=>{
-        fn(locations);
+    if(typeof locationIds === 'string'){
+      locationIds = locationIds.split(',');
+        locationIds = locationIds.map(id=>{
+          return Mongo.ObjectID(id);
       });
-    // } else {
-    //   fn(null);
-    // }
+    }
+
+    locations.find({_id: { $in: locationIds } }).toArray((err, locations)=>{
+      fn(locations);
+    });
   }
 
   static accumulateLocationIds(locations, fn){
