@@ -2,19 +2,40 @@ doctype html
 html
   head
     meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
     title= title
     script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyArPvnhx4BUiKnrYG6cyNX-YZL21LruNAQ&sensor=false')
+    script(type='text/javascript', src='//use.typekit.net/osj8ghm.js')
+    script(type='text/javascript').
+      try{Typekit.load();}catch(e){}
+    link(href='//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css', rel='stylesheet')
     link(href='/less/app.css', rel='stylesheet')
 
-  body
+  body.cbp-spmenu-push
+    nav#cbp-spmenu-s1.cbp-spmenu.cbp-spmenu-vertical.cbp-spmenu-left
+      a(href='/') Home
+      a(href='/tasks') Tasks
+      a(href='/priorities') Priorities
+
+    header
+      a.menu-link#showLeftPush(href='#')
+        i.fa.fa-bars
+      h1.logo Nashploration
+      .search-container
+        form#main-search
+          input.main-search-input(type='text', placeholder='Search here')
+        a.show-searchbar
+          i.fa.fa-search
+    
     block content
 
+    script(src='/js/vendor/classie.js')
     script(src='/js/vendor/jquery-2.1.1.js')
     script(src='/js/vendor/lodash-2.4.1.js')
     script(src='/js/vendor/moment-2.6.0.js')
     script(src='/js/vendor/traceur.js')
     script(src='/socket.io/socket.io.js')
-    script(src='/js/es5/main.js')
+    script(src='/js/es5/interface.js')
     script(src='/js/es6/compiled/main.js')
     script(src='/js/es6/compiled/sockets.js')
 
