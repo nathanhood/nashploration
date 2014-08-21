@@ -6,10 +6,10 @@ block content
     a.checkin-button
     .profile-wrapper
       .profile-pic-wrapper
-        img(src="/img/assets/placeholder-profile-pic.jpg")
+        img(src="#{user.photo.filePath}")
       .class-name-wrapper
         p Class:
-        p.class-name Explorer
+        p.class-name= user.class
       .class-icon-wrapper
         img(src="/img/assets/placeholder-class-icon.png")
           
