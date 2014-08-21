@@ -13,7 +13,6 @@ exports.index = (req, res)=>{
   if (req.session.questConfirm) {
     var questConfirm = req.session.questConfirm;
     req.session.questConfirm = false;
-    console.log('++++++++++++++++++++++++');
     res.render('users/index', {title: 'Nashploration', questConfirm:questConfirm, messages: req.flash('unknownProfile')});
   } else {
     res.render('users/index', {title: 'Nashploration', successCheckIn: req.flash('checkInSuccess')});
@@ -134,7 +133,6 @@ exports.showCheckIn = (req, res)=>{
   });
 };
 
-//TODO add confirmation flash message
 exports.checkIn = (req, res)=>{
   var currLoc = {lat: req.query.lat, lng: req.query.lng};
 
