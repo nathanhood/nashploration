@@ -5,4 +5,8 @@ block content
      textarea(rows='5', columns='50', name='comment')
      button Check In
 
+    if(prevCheckInStatus)
+      p You can check into a location multiple times but it will only be counted to your score for leveling up and badges once.
+
+
    //- #{user.activeQuest.questId}/#{locationId}

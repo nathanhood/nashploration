@@ -8,6 +8,7 @@ var bcrypt = require('bcrypt');
 var crypto = require('crypto');
 var path = require('path');
 var fs = require('fs');
+var Mongo = require('mongodb');
 
 
 
@@ -28,6 +29,16 @@ class User{
     this.myQuests = [];
     this.completedQuests = []; // Object IDs
     // this.streetViewQuizzes = []; // Object IDs
+  }
+
+  isPreviousCheckIn(locationId, fn){
+    locationId = Mongo.ObjectID(locationId);
+
+    var previousCheckIn = this.checkIns.some(checkIn=>{
+      return checkIn.equals(locationId);
+    });
+
+    fn(previousCheckIn);
   }
 
   getActiveQuestId(fn){
