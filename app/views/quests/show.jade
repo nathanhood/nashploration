@@ -1,0 +1,8 @@
+extends ../shared/template
+
+block content
+
+  if (user.isOwner(quest.creator))
+    h1 Is Owner
+  else
+    h1 Is Not Owner
