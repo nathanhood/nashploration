@@ -15,7 +15,7 @@ exports.addHistory = (req, res)=>{
   });
 };
 
-exports.index = (req, res)=>{
+exports.index = (req, res)=>{ //this renders the dashboard
   res.render('locations/index');
 };
 

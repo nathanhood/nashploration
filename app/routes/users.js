@@ -13,9 +13,10 @@ exports.index = (req, res)=>{
   if (req.session.questConfirm) {
     var questConfirm = req.session.questConfirm;
     req.session.questConfirm = false;
+    console.log('++++++++++++++++++++++++');
     res.render('users/index', {title: 'Nashploration', questConfirm:questConfirm, messages: req.flash('unknownProfile')});
   } else {
-    res.render('users/index', {title: 'Nashploration'});
+    res.render('users/index', {title: 'Nashploration', successCheckIn: req.flash('checkInSuccess')});
   }
 };
 
@@ -146,6 +147,7 @@ exports.checkIn = (req, res)=>{
         res.locals.user.updateCheckIns(location._id);
         res.locals.user.save(()=>{
           location.save(()=>{
+          req.flash('checkInSuccess', `You successfully checked into ${location.name}!`);
           res.redirect('/dashboard');
           });
         });
