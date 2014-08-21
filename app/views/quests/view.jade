@@ -6,11 +6,13 @@ block content
   h2 Created Quests
   if (createdQuests)
     each quest in createdQuests
-      h3 quest.name
-      p quest.creator
+      h3= quest.name
+      a(href='/quests/show/#{quest._id}') edit
+      p= quest.creator.userName
 
   h2 Joined Quests
   if (myQuests)
     each quest in myQuests
-      h3 quest.name
-      p quest.creator
+      h3
+       a(href='/quests/show/#{quest._id}')= quest.name
+      p= quest.creator.userName

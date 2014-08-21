@@ -23,7 +23,6 @@ class User{
     this.photo = null; // add photo object from processPhoto
     this.checkIns = []; // Location IDs
     this.createdGroups = []; //Object IDs
-    this.createdQuests = []; // Object IDs
     this.activeQuest = {questId:null, questLocs:[]}; // Object IDs
     this.myQuests = [];
     this.completedQuests = []; // Object IDs
@@ -90,6 +89,10 @@ class User{
     });
   }
 
+  isOwner(userId){
+    return this._id === userId;
+  }
+
   static register(fields, userName, fn){
     users.findOne({email:fields.email[0]}, (err, u)=>{
       users.findOne({userName:userName}, (err, u2)=>{
@@ -136,6 +139,28 @@ class User{
         fn(null);
       }
     });
+  }
+
+  static findAndReplaceQuestCreators(objectArray, fn){
+    if (objectArray.length) {
+      var ids = objectArray.map(object=>{
+        return object.creator;
+      });
+      users.find({_id: { $in: ids } }).toArray((err, users)=>{
+        var finalArray = [];
+        objectArray.forEach(quest=>{
+          users.forEach(user=>{
+            if (user._id.equals(quest.creator)) {
+              quest.creator = user;
+              finalArray.push(quest);
+            }
+          });
+        });
+        fn(finalArray);
+      });
+    } else {
+      fn(null);
+    }
   }
 }
 

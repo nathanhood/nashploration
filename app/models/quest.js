@@ -34,6 +34,12 @@ class Quest{
     });
   }
 
+  static findByUserId(userId, fn) {
+    quests.find({creator:userId}).toArray((err, quests)=>{
+      fn(quests);
+    });
+  }
+
 }
 
 
