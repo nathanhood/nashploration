@@ -2,34 +2,34 @@ extends ../shared/template
 
 block content
 
-  .profile-content-wrapper
-    .messages
-    if (user.isOwner(group.owner))
-      h1.group-name(data-id='#{group._id}')= group.name
-      a(href='#') edit
 
-      p= group.description
-      a(href='#') edit
+  .messages
+  if (user.isOwner(group.owner))
+    h1.group-name(data-id='#{group._id}')= group.name
+    a(href='#') edit
 
-      button.add-member-button + Add a Member
-      .add-member-info(hidden)
-        input(type='email', name='email', placeholder='Email')
-        input(type='text', name='name', placeholder='Name')
-        button.send-member-invite Send Invitation
+    p= group.description
+    a(href='#') edit
 
-      h2 Group Members
-      if (members)
-        ul
-          each member in members
-            li
-              img.profile-picture(src=member.photo.filePath)
-              span Nickname:
-              h3= member.nickName
-              span Username:
-              h3.member-username= member.userName
-              button.remove-group-member(data-id='#{member._id}') Remove From Group
-      else
-        p There are no group members
+    button.add-member-button + Add a Member
+    .add-member-info(hidden)
+      input(type='email', name='email', placeholder='Email')
+      input(type='text', name='name', placeholder='Name')
+      button.send-member-invite Send Invitation
+
+    h2 Group Members
+    if (members)
+      ul
+        each member in members
+          li
+            img.profile-picture(src=member.photo.filePath)
+            span Nickname:
+            h3= member.nickName
+            span Username:
+            h3.member-username= member.userName
+            button.remove-group-member(data-id='#{member._id}') Remove From Group
+    else
+      p There are no group members
 
 block scripts
   script(src='/js/es6/compiled/edit-group.js')

@@ -2,19 +2,19 @@ extends ../shared/template
 
 block content
 
-  .profile-content-wrapper
-    h1.group-name(data-id=group._id.toString())= group.name
-    p= group.description
 
-    h2 Group Members
-    if (members)
-      ul
-        each member in members
-          li
-            img.profile-picture(src=member.photo.filePath)
-            span Nickname:
-            h3= member.nickName
-            span Username:
-            h3= member.userName
-    else
-      p There are no group members
+  h1.group-name(data-id=group._id.toString())= group.name
+  p= group.description
+
+  h2 Group Members
+  if (members)
+    ul
+      each member in members
+        li
+          img.profile-picture(src=member.photo.filePath)
+          span Nickname:
+          h3= member.nickName
+          span Username:
+          h3= member.userName
+  else
+    p There are no group members
