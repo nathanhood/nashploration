@@ -97,7 +97,7 @@
       description = `${location.description.substr(0, 40)}...`;
     }
     var listing = `<li class="location-listing">
-                  ${location.name}<br>
+                  <p>${location.name}</p>
                   <p>${description}</p>
                   <button class="add-location-button", data-id=${location._id}>
                   Add To List
@@ -260,7 +260,7 @@
 
   function addToQuestFromList(){
     var locationId = $(this).data('id');
-    var title = $(this).closest('.location-listing').text();
+    var title = $(this).siblings('p:nth-child(1)').text();
     if (!isLocationInQuest(locationId)) {
       questLocations.push(locationId);
       addToQuestList(title, locationId);
