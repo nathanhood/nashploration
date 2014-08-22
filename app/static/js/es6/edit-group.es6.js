@@ -8,6 +8,25 @@
   function init(){
     $('.add-member-button').click(toggleAddMember);
     $('.send-member-invite').click(sendEmailInvitation);
+    $('.remove-group-member').click(removeGroupMember);
+  }
+
+  function removeGroupMember(){
+    var memberId = $(this).data('id');
+    var groupId = $('.group-name').data('id');
+
+    var r = confirm('Are you sure you want to remove this member?');
+    if (r === true) {
+      ajax('/groups/remove-member/', 'POST', {memberId:memberId, groupId:groupId},
+      (user)=>{
+        var confirmation = `<p>${user.userName} was successfully removed!</p>`;
+        $('.messages').append(confirmation);
+        $(`button[data-id=${memberId}]`).parent('li').remove();
+        setTimeout(function(){
+          $('.messages p').fadeOut('slow');
+        }, 3000);
+      }, 'json');
+    }
   }
 
   function toggleAddMember(){
@@ -59,6 +78,10 @@
       status = true;
     }
     return status;
+  }
+
+  function ajax(url, type, data={}, success=r=>console.log(r), dataType='html'){
+    $.ajax({url:url, type:type, dataType:dataType, data:data, success:success});
   }
 
 })();

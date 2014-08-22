@@ -93,6 +93,13 @@ class User{
     return this._id.toString() === userId.toString();
   }
 
+  removeGroup(groupId){
+    var removed = _.remove(this.groups, (group)=>{
+      return groupId === group.toString();
+    });
+    return removed;
+  }
+
   static register(fields, userName, fn){
     users.findOne({email:fields.email[0]}, (err, u)=>{
       users.findOne({userName:userName}, (err, u2)=>{

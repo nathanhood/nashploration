@@ -32,6 +32,13 @@ class Group {
     groups.save(this, ()=>fn());
   }
 
+  removeMember(memberId){
+    var removed = _.remove(this.members, (member)=>{
+      return memberId === member.toString();
+    });
+    return removed;
+  }
+
   static isOwner(userId, fn){
     groups.find({owner: userId}).toArray((err, owner)=>{
       fn(owner);

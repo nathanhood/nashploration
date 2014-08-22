@@ -41,6 +41,28 @@ exports.show = (req, res)=>{
   });
 };
 
+exports.edit = (req, res)=>{
+  Group.findByGroupId(req.params.groupId, group=>{
+    User.findManyById(group.members, members=>{
+      res.render('groups/edit', {title: 'Nashploration', group:group, members:members});
+    });
+  });
+};
+
+exports.removeMember = (req, res)=>{
+  Group.findByGroupId(req.body.groupId, group=>{
+    var removed = group.removeMember(req.body.memberId);
+    User.findById(removed[0], (err, user)=>{
+      user.removeGroup(req.body.groupId);
+      user.save(()=>{
+        group.save(()=>{
+          res.send(user);
+        });
+      });
+    });
+  });
+};
+
 exports.sendInvitation = (req, res)=>{
   var user = res.locals.user;
   Group.findByGroupId(req.body.groupId, group=>{
