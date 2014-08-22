@@ -128,8 +128,12 @@ exports.logout = (req, res)=>{
 };
 
 exports.showCheckIn = (req, res)=>{
+  console.log('IN THE ROUTE');
+  console.log(req.params.locationId);
   res.locals.user.isPreviousCheckIn(req.params.locationId, prevCheckInStatus=>{ //checks if location has already been checked into..used to alert user that multiple checkins to same location do not count
-    res.render('users/checkIn', {title: 'Nashploration', locationId: req.params.locationId, lat: req.query.lat, lng: req.query.lng, prevCheckInStatus: prevCheckInStatus});
+    Location.findById(req.params.locationId, (err, location)=>{
+      res.render('users/checkIn', {title: 'Nashploration', location: location, prevCheckInStatus: prevCheckInStatus});
+    });
   });
 };
 
