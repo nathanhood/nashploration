@@ -78,7 +78,7 @@ class User{
       fs.renameSync(photo.path, fullDir);
       fn(newPhoto);
     } else {
-      fn({filePath: '/img/assets/placeholder-profile-pic.jpg'});
+      fn({filePath: '/img/assets/placeholder.png'});
     }
   }
 
@@ -90,7 +90,7 @@ class User{
   }
 
   isOwner(userId){
-    return this._id === userId;
+    return this._id.toString() === userId.toString();
   }
 
   static register(fields, userName, fn){
@@ -124,6 +124,16 @@ class User{
         fn(null);
       }
     });
+  }
+
+  static findManyById(userIds, fn){
+    if (userIds.length) {
+      users.find({_id: { $in: userIds } }).toArray((err, users)=>{
+        fn(users);
+      });
+    } else {
+      fn(null);
+    }
   }
 
   static findById(id, fn){

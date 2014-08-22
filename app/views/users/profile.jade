@@ -8,15 +8,10 @@ block content
   if (joinedGroup)
     p= joinedGroup
 
-  form(method='POST', action='/logout')
-    button Logout
-
-  if (userProfile)
-    h1 Your Profile
-    if (userProfile.photo)
-      img.profile-picture(src=userProfile.photo.filePath)
-    else
-      img.profile-picture(src='/img/assets/placeholder.png')
+  if(userProfile)
+    form(method='POST', action='/logout')
+      button Logout
+    img.profile-picture(src=userProfile.photo.filePath)
     span Username:
     h3= userProfile.userName
     span Nickname:
@@ -45,7 +40,7 @@ block content
         li
           a(href='/groups/new') Create a Group
         li
-          a(href='#') Manage Groups
+          a(href='/groups/view') Manage Groups
 
   if (otherProfile)
     h1 Someone Else's Profile

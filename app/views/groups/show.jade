@@ -1,0 +1,31 @@
+extends ../shared/template
+
+block content
+
+  h1.group-name(data-id=group._id.toString())= group.name
+  p= group.description
+
+  .messages
+
+  if (user.isOwner(group.owner))
+    button.add-member-button + Add a Member
+    .add-member-info(hidden)
+      input(type='email', name='email', placeholder='Email')
+      input(type='text', name='name', placeholder='Name')
+      button.send-member-invite Send Invitation
+
+  h2 Group Members
+  if (members)
+    ul
+      each member in members
+        li
+          img.profile-picture(src=member.photo.filePath)
+          span Nickname:
+          h3= member.nickName
+          span Username:
+          h3= member.userName
+  else
+    p There are no group members
+
+block scripts
+  script(src='/js/es6/compiled/show-group.js')

@@ -1,0 +1,16 @@
+extends ../shared/template
+
+block content
+  h1 Manage Groups
+
+  h1 Groups
+    ul
+      each group in groups
+        li= group.name
+          a(href='/groups/show/#{group._id}') view
+
+  h2 Manage Groups You Created
+    ul
+      each group in createdGroups
+        li= group.name
+          a(href='/groups/show/#{group._id}') edit
