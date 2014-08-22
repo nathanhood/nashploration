@@ -2,6 +2,16 @@ extends ../shared/template
 
 block content
   #map-canvas
-
+  .map-bottom-container
+    a.checkin-button
+    .profile-wrapper
+      .profile-pic-wrapper
+        img(src="#{user.photo.filePath}")
+      .class-name-wrapper
+        p Class:
+        p.class-name= user.class
+      .class-icon-wrapper
+        img(src="/img/assets/placeholder-class-icon.png")
+          
 block scripts
   script(src='/js/es6/compiled/locations.js')

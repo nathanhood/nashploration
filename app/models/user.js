@@ -78,7 +78,7 @@ class User{
       fs.renameSync(photo.path, fullDir);
       fn(newPhoto);
     } else {
-      fn(null);
+      fn({filePath: '/img/assets/placeholder-profile-pic.jpg'});
     }
   }
 
