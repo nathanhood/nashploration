@@ -2,6 +2,7 @@
 
 @base-complement: #ecb534;
 @base-color: #5a4626;
+@light-base: #a7855f;
 @dark-base: #47391f;
 @offwhite: #e3dfd6;
 
@@ -10,6 +11,10 @@
   -moz-transition: all @duration ease;
   -o-transition: all @duration ease;
   transition: all @duration ease;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 html, body, #map {
@@ -27,13 +32,25 @@ body {
   color: #333;
   position:relative;
   font-family: "adobe-garamond-pro", serif;
+  background-image: url(/img/assets/white-paper-bkg.jpg);
+  background-size: 100px auto;
+  color: darken(@dark-base, 10%);
+}
+
+.map-wrapper {
+  height: 100%;
+  max-height: 100%;
+  position:relative;
+  overflow:hidden;
 }
 
 #map-canvas {
-  height: 1000px;
+  height: 100%;
   max-height: 100%;
-  position:relative;
-  margin: 0px 0 0 0;
+  position:absolute;
+  z-index: 1;
+  top: 60px;
+  margin: 0;
   padding: 0;
   width: 100%;
 }
@@ -44,6 +61,67 @@ body {
 .cbp-spmenu {
   background: @dark-base;
   position: fixed;
+  box-shadow: inset -2px 0px 9px 0 #222;
+  text-align:center;
+  color: @offwhite;
+  text-shadow: 0px 0px 5px #222;
+  padding: 35px 0 0 0;
+}
+
+.nav-profile-pic {
+  width: 100px;
+  height: 100px;
+  background-size: cover;
+  background-position: center;
+  display:inline-block;
+  border-radius: 50%;
+  border: 2px solid @offwhite;
+  box-shadow: 0px 0px 10px darken(@dark-base, 10%);
+  margin: 0 0 10px 0;
+}
+
+p.nav-name {
+  font-size:1.5em;
+  margin-bottom: 10px;
+}
+p.nav-class {
+  font-size: 1.25em;
+  margin: 0 0 20px 0;
+  color: lighten(@light-base, 10%);
+}
+
+ul.main-nav {
+  width: 100%;
+  list-style-type:none;
+  color: @light-base;
+
+  li:first-child {
+    border-top: 1px solid lighten(@dark-base, 5%);
+  }
+
+  li {
+    border-bottom: 1px solid lighten(@dark-base, 5%);
+    
+    a {
+      display:block;
+      padding: 15px 0;
+      color: @light-base;
+      text-decoration: none;
+      font-size: 1.2em;
+      text-shadow: 0px 0px 5px darken(@dark-base, 10%);
+    }
+
+    a:hover {
+      background: darken(@dark-base, 2%);
+      color: lighten(@light-base, 10%);
+    }
+  }
+}
+
+img.nav-logo-icon {
+  width: 25%;
+  margin: 20px 0 0 0;
+  height:auto;
 }
 
 /* Orientation-dependent styles for the content of the menu */
@@ -53,11 +131,6 @@ body {
   height: 100%;
   top: 0;
   z-index: 1000;
-}
-
-.cbp-spmenu-vertical a {
-  border-bottom: 1px solid #fff;
-  padding: 1em;
 }
 
 
@@ -123,7 +196,7 @@ header {
   background-image: url('/img/assets/brown-paper-bkg.jpg');
   background-size: 100px 100px;
   box-shadow: 0px 0px 10px 1px #352e1f;
-  position:relative;
+  position:fixed;
   z-index: 100;
   color: @offwhite;
   text-align:center;
@@ -217,11 +290,12 @@ header {
 
 .map-bottom-container {
   position:absolute;
+  z-index: 5;
   display:block;
   width: 100%;
-  background-color: #fc0;
-  height: 85px;
-  bottom: 0;
+  background-color: @offwhite;
+  height: 75px;
+  bottom: 0px;
   background-image: url(/img/assets/white-paper-bkg.jpg);
   background-size: 100px auto;
   box-shadow: 0px 0px 10px @dark-base;
@@ -252,7 +326,7 @@ header {
 
     .profile-pic-wrapper {
       width: 50px;
-      padding: 15px;
+      margin: 15px 15px 0 15px;
       float:left;
 
       img {
@@ -269,6 +343,7 @@ header {
       width: 85px;
       float:left;
       padding-top: 25px;
+      font-family: "adobe-garamond-pro", serif;
 
       p.class-name {
         font-weight: bold;
@@ -280,7 +355,7 @@ header {
     .class-icon-wrapper {
       width: 50px;
       float:right;
-      padding: 15px 5px;
+      margin: 15px 5px 0px 5px;
 
       img {
         width: 100%;
@@ -291,6 +366,146 @@ header {
       }
     }
   }
+}
+
+
+/* ==================== USER PROFILE CSS ====================== */
+
+.profile-content-wrapper {
+  width: 90%;
+  margin: 0 auto;
+  padding: 70px 0 0 0;
+  max-width: 600px;
+
+  .profile-wrapper {
+    padding: 15px;
+    margin: 0 0 15px 0;
+    border-bottom: 1px solid darken(@offwhite, 20%);
+
+    .profile-info-left {
+      display:inline-block;
+      width: 40%;
+      margin: 0 10px 0 0;
+      text-align:center;
+      float:left;
+
+      .profile-pic {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        box-shadow: 0px 0px 5px @base-color;
+        background-size: cover;
+        background-position: center;
+      }
+
+      a {
+        display:block;
+        margin-top: 20px;
+        text-decoration: none;
+        color: lighten(@dark-base, 10%);
+      }
+    }
+
+    .profile-info-right {
+      display:inline-block;
+      width: 50%;
+
+      span {
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: .75em;
+      }
+
+      h3 {
+        font-size: 1.5em;
+        color: lighten(@dark-base, 10%);
+        font-weight:bold;
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  .links {
+    a {
+      display:inline-block;
+      width: 33%;
+      text-align: center;
+      text-decoration: none;
+      color:lighten(@dark-base, 10%);
+
+      img {
+        width: 70%;
+        height: auto;
+        max-width: 90px;
+        margin: 10px 0 0 0;
+      }
+    }
+  }
+
+  .quest-group-menu-buttons {
+    padding: 20px 0 5px 0;
+    a {
+      width: 50%;
+      display:inline-block;
+      background: ;
+      text-align:center;
+      color: @base-color;
+      padding: 10px;
+      border: 1px solid @base-color;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    a:hover {
+      background: darken(@offwhite, 5%);
+    }
+
+    a.active-button {
+      background: @base-color;
+      color: @offwhite;
+    }
+
+    a.quest-menu-button {
+      border-top-left-radius: 3px;
+      border-bottom-left-radius: 3px;
+    }
+
+    a.group-menu-button {
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+    }
+  }
+
+  .quest-group-menus {
+    padding-top: 20px;
+    ul {
+      text-align: center;
+
+      li:first-child {
+        border-top: 1px solid darken(@offwhite, 20%);
+      }
+
+      li {
+        border-bottom: 1px solid darken(@offwhite, 20%);
+
+        a {
+          font-size: 1.25em;
+          display:block;
+          text-decoration: none;
+          color: @base-color;
+          font-weight: bold;
+          padding: 20px;
+        }
+
+        a:hover {
+          box-shadow: inset 0px 0px 10px darken(@offwhite, 5%);
+        }
+      }
+    }
+  }
+
 }
 
 

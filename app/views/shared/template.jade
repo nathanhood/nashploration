@@ -13,9 +13,23 @@ html
 
   body.cbp-spmenu-push
     nav#cbp-spmenu-s1.cbp-spmenu.cbp-spmenu-vertical.cbp-spmenu-left
-      a(href='/') Home
-      a(href='/tasks') Tasks
-      a(href='/priorities') Priorities
+      .nav-profile-pic(style='background-image: url("#{user.photo.filePath}")')
+      p.nav-name= user.nickName
+      p.nav-class= user.class
+      ul.main-nav
+        li 
+          a(href="#") Home
+        li 
+          a(href="#") Dashboard
+        li 
+          a(href="#") Minigame
+        li 
+          a(href="#") Settings
+        li 
+          a(href="#") Logout
+
+      img.nav-logo-icon(src="/img/assets/logo-icon.png")
+
 
     header
       a.menu-link#showLeftPush(href='#')
