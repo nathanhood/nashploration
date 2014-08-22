@@ -116,6 +116,17 @@ class Group {
     return text;
   }
 
+  static sendGroupInvitation(obj, user, group, fn){
+    var message = {};
+    message.ownerName = user.nickName;
+    message.email = obj.email;
+    message.name = obj.name;
+    message.code = group.groupCode;
+    message.groupTitle = group.name;
+    message.description = group.description;
+    sendVerificationEmail(message, ()=>fn());
+  }
+
   static inviteGroupMembers(body, user, fn){
     var emails = body.emails.split(',');
     var names = body.names.split(',');
@@ -146,9 +157,11 @@ function sendVerificationEmail(message, fn){
   form.append('from', 'admin@nashploration.com');
   form.append('to', message.email);
   form.append('subject', 'Nashploration: Group Invitation');
-  form.append('html', `<p>${message.name},\n
+  form.append('html', `<p>${message.name},</p>
+                       <p>
                         You have been invited by ${message.ownerName} to join a Nashploration group.
                       </p>
+                      <br>
                       <p><b>Group Code</b>: ${message.code}</p>
                       <p><b>Group Name</b>: ${message.groupTitle}</p>
                       <p><b>Description</b>: ${message.description}</p>

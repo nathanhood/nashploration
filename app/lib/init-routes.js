@@ -65,6 +65,9 @@ function load(app, fn){
 
   /* ----------- Groups ------------- */
   app.get('/groups/new', dbg, groups.new);
+  app.get('/groups/view', dbg, groups.view);
+  app.get('/groups/show/:groupId', dbg, groups.show);
+  app.post('/groups/send-invitation', dbg, groups.sendInvitation);
   app.post('/groups/create', dbg, groups.create);
 
   console.log('Routes Loaded');
