@@ -26,10 +26,10 @@ exports.create = (req, res)=>{
     }
     Location.findManyById(req.body.locations, locations=>{
       Location.accumulateLocationIds(locations, locationIds=>{
-        var quest = new Quest(userId, locationIds, req.body.name, groupUsers, groupIds);
+        var quest = new Quest(userId, locationIds, req.body.name, req.body.description, groupUsers, groupIds);
         quest.save(()=>{
-          req.session.questConfirm = true;
-          res.redirect('/dashboard');
+          req.flash('questConfirm', 'Quest successfully created!');
+          res.redirect(`/users/${res.locals.user.userName}`);
         });
       });
     });

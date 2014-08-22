@@ -2,12 +2,15 @@ extends ../shared/template
 
 block content
   .profile-content-wrapper
-    if (unknownProfile)
-      p= unknownProfile
-    if (groupConfirmation)
-      p= groupConfirmation
-    if (joinedGroup)
-      p= joinedGroup
+    .messages
+      if (questConfirm)
+        p= questConfirm
+      if (unknownProfile)
+        p= unknownProfile
+      if (groupConfirmation)
+        p= groupConfirmation
+      if (joinedGroup)
+        p= joinedGroup
 
     if (userProfile)
       .profile-wrapper
@@ -63,3 +66,6 @@ block content
       h4 Check-Ins: #{otherProfile.checkIns.length}
       h4 Groups: #{otherProfile.groups.length}
       h4 Leaders: Not sure about this category
+
+block scripts
+  script(src='/js/es6/compiled/profile.js')

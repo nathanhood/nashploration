@@ -10,13 +10,7 @@ var multiparty = require('multiparty');
 
 
 exports.index = (req, res)=>{
-  if (req.session.questConfirm) {
-    var questConfirm = req.session.questConfirm;
-    req.session.questConfirm = false;
-    res.render('users/index', {title: 'Nashploration', questConfirm:questConfirm, messages: req.flash('unknownProfile')});
-  } else {
-    res.render('users/index', {title: 'Nashploration'});
-  }
+  res.render('users/index', {title: 'Nashploration'});
 };
 
 exports.profile = (req, res)=>{
@@ -26,7 +20,8 @@ exports.profile = (req, res)=>{
         res.render('users/profile', {title: 'Nashploration', userProfile: user, otherProfile: null,
         unknownProfile: req.flash('unknownProfile'),
         groupConfirmation: req.flash('groupConfirmation'),
-        joinedGroup: req.flash('joinedGroup')
+        joinedGroup: req.flash('joinedGroup'),
+        questConfirm: req.flash('questConfirm')
         });
       } else {
         res.render('users/profile', {title: 'Nashploration', userProfile: null, otherProfile: user});

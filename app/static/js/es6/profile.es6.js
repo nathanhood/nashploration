@@ -10,11 +10,9 @@
   }
 
   function fadeConfirmMessage(){
-    if ($('#quest-confirmation').length > 0) {
-      setTimeout(function(){
-        $('#quest-confirmation').fadeOut('slow');
-      }, 3000);
-    }
+    setTimeout(function(){
+      $('.messages').fadeOut('slow');
+    }, 4000);
   }
 
 })();
