@@ -83,6 +83,22 @@ exports.delete = (req, res)=>{
   });
 };
 
+exports.updateName = (req, res)=>{
+  Group.updateName(req.body.groupId, req.body.groupName, (err)=>{
+    Group.findByGroupId(req.body.groupId, group=>{
+      res.send(group);
+    });
+  });
+};
+
+exports.updateDescription = (req, res)=>{
+  Group.updateDescription(req.body.groupId, req.body.groupDesc, (err)=>{
+    Group.findByGroupId(req.body.groupId, group=>{
+      res.send(group);
+    });
+  });
+};
+
 exports.sendInvitation = (req, res)=>{
   var user = res.locals.user;
   Group.findByGroupId(req.body.groupId, group=>{

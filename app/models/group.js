@@ -96,6 +96,20 @@ class Group {
     });
   }
 
+  static updateName(groupId, groupName, fn){
+    groupId = Mongo.ObjectID(groupId);
+    groups.update({ _id: groupId }, { $set: { name: groupName } }, (err, res)=>{
+      fn(err, res);
+    });
+  }
+
+  static updateDescription(groupId, groupDescription, fn){
+    groupId = Mongo.ObjectID(groupId);
+    groups.update({ _id: groupId }, { $set: { description: groupDescription } }, (err, res)=>{
+      fn(err, res);
+    });
+  }
+
   static accumulateUsersFromGroups(groups){
     var users = [];
     groups.forEach(group=>{

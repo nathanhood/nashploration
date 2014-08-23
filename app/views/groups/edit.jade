@@ -12,11 +12,21 @@ block content
     button.delete-group Delete Group
 
     if (user.isOwner(group.owner))
-      h1.group-name(data-id='#{group._id}')= group.name
-      a(href='#') edit
+      .group-name-container
+        h1.group-name(data-id='#{group._id}')= group.name
+        button.edit-group-name edit
+      .group-name-edit-container(hidden)
+        input.group-name-input(type='text', value='#{group.name}')
+        button.cancel-name cancel
+        button.submit-group-name submit
 
-      p= group.description
-      a(href='#') edit
+      .group-description-container
+        p.group-description= group.description
+        button.edit-group-description edit
+      .group-description-edit-container(hidden)
+        input.group-description-input(type='text', value='#{group.description}')
+        button.cancel-description cancel
+        button.submit-group-description submit
 
       button.add-member-button + Add a Member
       .add-member-info(hidden)

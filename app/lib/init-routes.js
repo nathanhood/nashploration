@@ -68,6 +68,8 @@ function load(app, fn){
   app.get('/groups/view', dbg, groups.view);
   app.get('/groups/show/:groupId', dbg, groups.show);
   app.get('/groups/edit/:groupId', dbg, groups.edit);
+  app.post('/groups/update-name', dbg, groups.updateName);
+  app.post('/groups/update-description', dbg, groups.updateDescription);
   app.post('/groups/send-invitation', dbg, groups.sendInvitation);
   app.post('/groups/create', dbg, groups.create);
   app.post('/groups/remove-member', dbg, groups.removeMember);

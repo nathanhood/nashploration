@@ -10,7 +10,72 @@
     $('.send-member-invite').click(sendEmailInvitation);
     $('.remove-group-member').click(removeGroupMember);
     $('.delete-group').click(deleteGroup);
+    $('.edit-group-name, .cancel-name').click(toggleGroupName);
+    $('.edit-group-description, .cancel-description').click(toggleGroupDescription);
+
+    /* ======== Change Name/Descrition ========== */
+    $('.submit-group-name').click(submitNewName);
+    $('.submit-group-description').click(submitNewDescription);
   }
+
+/* ========= EDIT GROUP NAME AND DESCRIPTION ========== */
+
+  function submitNewName(){
+    var groupId = $('.group-name').data('id');
+    var newName = $('.group-name-input').val();
+    // ajax('/groups/udate-name', 'POST', {groupId: groupId, groupName: newName}, group=>{
+    //
+    // }, 'json');
+    $.ajax({
+      url: '/groups/update-name',
+      type: 'POST',
+      dataType: 'json',
+      data: {groupId: groupId, groupName: newName},
+      success: group=>{
+        $('.group-name').text(group.name);
+        $('.group-name-input').val(group.name);
+        $('.cancel-name').trigger('click');
+      }
+    });
+  }
+
+  function submitNewDescription(){
+    var groupId = $('.group-name').data('id');
+    var newDesc = $('.group-description-input').val();
+    $.ajax({
+      url: '/groups/update-description',
+      type: 'POST',
+      dataType: 'json',
+      data: {groupId: groupId, groupDesc: newDesc},
+      success: group=>{
+        $('.group-description').text(group.description);
+        $('.group-description-input').val(group.description);
+        $('.cancel-description').trigger('click');
+      }
+    });
+  }
+
+  function toggleGroupDescription(){
+    if ($(this).hasClass('edit-group-description')) {
+      $('.group-description-container').hide();
+      $('.group-description-edit-container').show();
+    } else if ($(this).hasClass('cancel-description')) {
+      $('.group-description-container').show();
+      $('.group-description-edit-container').hide();
+    }
+  }
+
+  function toggleGroupName(){
+    if ($(this).hasClass('edit-group-name')) {
+      $('.group-name-container').hide();
+      $('.group-name-edit-container').show();
+    } else if ($(this).hasClass('cancel-name')) {
+      $('.group-name-container').show();
+      $('.group-name-edit-container').hide();
+    }
+  }
+
+  /* ============ DELETE GROUP =========== */
 
   function deleteGroup(){
     var r = confirm('Are you sure you want to delete this group?\nThis cannot be undone.');
@@ -18,6 +83,8 @@
       $('#delete-group-form').submit();
     }
   }
+
+  /* ============ REMOVE MEMBER FROM GROUP =========== */
 
   function removeGroupMember(){
     var memberId = $(this).data('id');
@@ -36,6 +103,8 @@
       }, 'json');
     }
   }
+
+  /* ============ INVITE A NEW MEMBER ============= */
 
   function toggleAddMember(){
     $('.add-member-info').slideToggle();
