@@ -94,7 +94,6 @@ class Group {
     groups.forEach(group=>{
       group.members.forEach(user=>{
         user = user.toString();
-        console.log(user);
         users.push(user);
       });
     });

@@ -10,7 +10,7 @@ var multiparty = require('multiparty');
 
 
 exports.index = (req, res)=>{
-  res.render('users/index', {title: 'Nashploration'});
+  res.render('users/index', {title: 'Nashploration', successCheckIn: req.flash('checkInSuccess')});
 };
 
 exports.profile = (req, res)=>{
@@ -123,7 +123,13 @@ exports.logout = (req, res)=>{
 };
 
 exports.showCheckIn = (req, res)=>{
-  res.render('users/checkIn', {title: 'Nashploration', locationId: req.params.locationId, lat: req.query.lat, lng: req.query.lng});
+  console.log('IN THE ROUTE');
+  console.log(req.params.locationId);
+  res.locals.user.isPreviousCheckIn(req.params.locationId, prevCheckInStatus=>{ //checks if location has already been checked into..used to alert user that multiple checkins to same location do not count
+    Location.findById(req.params.locationId, (err, location)=>{
+      res.render('users/checkIn', {title: 'Nashploration', location: location, prevCheckInStatus: prevCheckInStatus});
+    });
+  });
 };
 
 exports.checkIn = (req, res)=>{
@@ -138,6 +144,7 @@ exports.checkIn = (req, res)=>{
         res.locals.user.updateCheckIns(location._id);
         res.locals.user.save(()=>{
           location.save(()=>{
+          req.flash('checkInSuccess', `You successfully checked into ${location.name}!`);
           res.redirect('/dashboard');
           });
         });

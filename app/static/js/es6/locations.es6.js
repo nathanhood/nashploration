@@ -339,7 +339,7 @@ function addCheckInButton(windowName, description, id){
       var content = '<h3>'+windowName+'</h3>'+
       '<p>'+description+'</p>'+
       '<a href="/locations/'+siteURL+'", class=info-window>Show More</a>'+ //id is the locations mongo id
-      '<a href="/checkIn/'+id+'/?lat='+currentLat+'&lng='+currentLong+'", class="checkin-button"> <button>Check In</button></a>'; //onclick="'+checkIn()+'"
+      '<a href="/checkIn/'+id+'", class="checkin-button"> <button>Check In</button></a>'; //onclick="'+checkIn()+'"
 
       w.setContent(content);
     }
