@@ -48,8 +48,14 @@ block content
           li
             a(href='#') Completed Quests
         ul.group-menu
+          li.join-group-form(hidden)
+            form(action='/groups/join-group', method='POST')
+              input.group-code(type='text', name='groupCode', placeholder='Enter Group Code Here')
+            button Join Group
           li
-            a(href='#') Join a Group
+            a.join-group-link(href='#') Join a Group
+          li
+            a(href='#') Find a Group
           li
             a(href='/groups/new') Create a Group
           li

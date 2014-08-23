@@ -7,13 +7,18 @@ var Base = traceur.require(__dirname + '/../models/base.js');
 
 
 class Quest{
-  constructor(userId, locationIds, name, description, groupUsers, groupIds){
-    this.name = name;
-    this.description = description;
+  constructor(userId, locationIds, body, groupUsers, groupIds){
+    this.name = body.name;
+    this.description = body.description;
     this.users = groupUsers;
     this.groupIds = groupIds;
     this.creator = userId;
     this.checkIns = locationIds;
+    if (body.isPublic === 'true') {
+      this.isPublic = true;
+    } else {
+      this.isPublic = false;
+    }
   //   this.image = files.image[0].originalFilename OR default image path;
   }
 

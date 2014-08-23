@@ -19,6 +19,7 @@ exports.create = (req, res)=>{
   var userId = res.locals.user._id;
   var groupUsers = null;
   var groupIds = null;
+  var user = res.locals.user;
   Group.findManyById(req.body.groupIds, groups=>{
     if (groups !== null) {
       groupUsers = Group.accumulateUsersFromGroups(groups);
@@ -26,10 +27,13 @@ exports.create = (req, res)=>{
     }
     Location.findManyById(req.body.locations, locations=>{
       Location.accumulateLocationIds(locations, locationIds=>{
-        var quest = new Quest(userId, locationIds, req.body.name, req.body.description, groupUsers, groupIds);
+        var quest = new Quest(userId, locationIds, req.body, groupUsers, groupIds);
         quest.save(()=>{
-          req.flash('questConfirm', 'Quest successfully created!');
-          res.redirect(`/users/${res.locals.user.userName}`);
+          user.createdQuests.push(quest._id);
+          user.save(()=>{
+            req.flash('questConfirm', 'Quest successfully created!');
+            res.redirect(`/users/${res.locals.user.userName}`);
+          });
         });
       });
     });

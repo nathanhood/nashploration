@@ -99,6 +99,25 @@ exports.updateDescription = (req, res)=>{
   });
 };
 
+exports.joinGroup = (req, res)=>{
+  var user = res.locals.user;
+  Group.findByGroupCode(req.body.groupCode, group=>{
+    var exists = group.isInGroup(user);
+      if (exists) {
+        req.flash('groupMemberExists', 'You are already a member of this group');
+        res.redirect(`/users/user.userName`);
+      } else {
+        group.joinGroup(user);
+        user.save(()=>{
+          group.save(()=>{
+            req.flash('joinGroupConfirm', 'You have successfully joined this group!');
+            res.redirect(`/groups/show/group._id`);
+          });
+        });
+      }
+  });
+};
+
 exports.sendInvitation = (req, res)=>{
   var user = res.locals.user;
   Group.findByGroupId(req.body.groupId, group=>{
