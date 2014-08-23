@@ -11,6 +11,10 @@ block content
         p= groupConfirmation
       if (joinedGroup)
         p= joinedGroup
+      if (invalideGroupCode)
+        p= invalideGroupCode
+      if (groupMemberExists)
+        p= groupMemberExists
 
     if (userProfile)
       .profile-wrapper

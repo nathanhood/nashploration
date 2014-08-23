@@ -2,7 +2,13 @@ extends ../shared/template
 
 block content
 
-  if (user.isOwner(quest.creator))
-    h1 Is Owner
-  else
-    h1 Is Not Owner
+  .messages
+
+  .profile-content-wrapper
+    h1.quest-name(data-id='#{quest._id}')= quest.name
+    p= quest.description
+
+  #quest-map-canvas
+
+block scripts
+  script(src='/js/es6/compiled/show-quest.js')

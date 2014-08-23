@@ -134,6 +134,14 @@ exports.getActiveQuestLocations = (req, res)=>{
   });
 };
 
+exports.getQuestLocations = (req, res)=>{
+  Quest.findById(req.params.questId, (err, quest)=>{
+    Location.findManyById(quest.checkIns, locations=>{
+      res.send(locations);
+    });
+  });
+};
+
 // function findAllLocations(fn){
 //   Location.findAll(locations=>{
 //     fn(locations);

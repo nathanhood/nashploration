@@ -21,7 +21,9 @@ exports.profile = (req, res)=>{
         unknownProfile: req.flash('unknownProfile'),
         groupConfirmation: req.flash('groupConfirmation'),
         joinedGroup: req.flash('joinedGroup'),
-        questConfirm: req.flash('questConfirm')
+        questConfirm: req.flash('questConfirm'),
+        invalideGroupCode: req.flash('invalideGroupCode'),
+        groupMemberExists: req.flash('groupMemberExists')
         });
       } else {
         res.render('users/profile', {title: 'Nashploration', userProfile: null, otherProfile: user});

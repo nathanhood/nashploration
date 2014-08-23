@@ -2,8 +2,11 @@ extends ../shared/template
 
 block content
 
+  .messages
+    if (joinGroupConfirm)
+      p= joinGroupConfirm
 
-  h1.group-name(data-id=group._id.toString())= group.name
+  h1.group-name(data-id='#{group._id}')= group.name
   p= group.description
 
   h2 Group Members
