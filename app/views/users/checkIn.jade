@@ -1,8 +1,10 @@
 extends ../shared/template
+include ../shared/back.jade
 
 block content
-   form(action='/users/checkin/#{locationId}/?lat=#{lat}&lng=#{lng}', method='POST')
-     textarea(rows='5', columns='50', name='comment')
-     button Check In
+	.checkin-wrapper 
+		mixin back('Check In')
 
-   //- #{user.activeQuest.questId}/#{locationId}
+		form(action='/users/checkin/#{locationId}/?lat=#{lat}&lng=#{lng}', method='POST')
+			textarea(rows='5', columns='50', name='comment')
+			button Check In

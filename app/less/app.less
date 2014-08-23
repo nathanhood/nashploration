@@ -55,17 +55,25 @@ body {
   width: 100%;
 }
 
-/* ==================== NAVIGATION CSS ====================== */
+/* ======================================== NAVIGATION CSS ======================================== */
 
 /* General styles for all menus */
+.nav-wrapper {
+  overflow: scroll;
+  height: 700px;
+  padding: 35px 0;
+  margin-bottom: 40px;
+
+}
+
 .cbp-spmenu {
   background: @dark-base;
   position: fixed;
+  height: 1000px;
   box-shadow: inset -2px 0px 9px 0 #222;
   text-align:center;
   color: @offwhite;
   text-shadow: 0px 0px 5px #222;
-  padding: 35px 0 0 0;
 }
 
 .nav-profile-pic {
@@ -127,8 +135,8 @@ img.nav-logo-icon {
 /* Orientation-dependent styles for the content of the menu */
 
 .cbp-spmenu-vertical {
-  width: 280px;
-  height: 100%;
+  width: 260px;
+  // height: 100%;
   top: 0;
   z-index: 1000;
 }
@@ -137,7 +145,7 @@ img.nav-logo-icon {
 /* Vertical menu that slides from the left or right */
 
 .cbp-spmenu-left {
-  left: -280px;
+  left: -260px;
 }
 
 .cbp-spmenu-left.cbp-spmenu-open {
@@ -148,12 +156,13 @@ img.nav-logo-icon {
 
 .cbp-spmenu-push {
   overflow-x: hidden;
+  overflow-y: scroll;
   position: relative;
   left: 0;
 }
 
 .cbp-spmenu-push-toright {
-  left: 280px;
+  left: 260px;
 }
 
 /* Transitions */
@@ -166,6 +175,12 @@ img.nav-logo-icon {
 }
 
 /* Example media queries */
+
+@media screen and (max-height: 550px){
+  .nav-wrapper {
+    height: 500px;
+  }
+}
 
 @media screen and (max-width: 55.1875em){
   .cbp-spmenu-horizontal {
@@ -188,7 +203,7 @@ img.nav-logo-icon {
 
 }
 
-/* ==================== HEADER CSS ====================== */
+/* ======================================== HEADER CSS ======================================== */
 
 header {
   height: 60px;
@@ -196,28 +211,37 @@ header {
   background-image: url('/img/assets/brown-paper-bkg.jpg');
   background-size: 100px 100px;
   box-shadow: 0px 0px 10px 1px #352e1f;
-  position:fixed;
+  position:absolute;
   z-index: 100;
   color: @offwhite;
   text-align:center;
 
-  h1.logo {
-    position:absolute;
-    z-index: 5;
+  a.logo-link {
+    display:inline-block;
     height: 60px;
     width: 50px;
-    margin: 0 auto;
-    left:0;
-    right:0;
-    text-indent: -9999px;
-    background-image: url('/img/assets/logo-icon.png');
-    background-repeat: no-repeat;
-    background-position:center;
-    background-size: 45px auto;
-    text-align:center;
+    margin: 0;
+
+    h1.logo {
+      position:absolute;
+      display:inline-block;
+      z-index: 5;
+      height: 60px;
+      width: 50px;
+      margin: 0 auto;
+      left:0;
+      right:0;
+      text-indent: -9999px;
+      background-image: url('/img/assets/logo-icon.png');
+      background-repeat: no-repeat;
+      background-position:center;
+      background-size: 45px auto;
+      text-align:center;
+    }
   }
 
   a.menu-link {
+    display:inline-block;
     margin: 17px 20px;
     float:left;
     font-size: 1.75em;
@@ -235,11 +259,12 @@ header {
     a.show-searchbar {
       display:inline-block;
       position:absolute;
-      right: 20px;
+      right: 18px;
       top: 17px;
       z-index: 20;
       font-size: 1.5em;
       .transition;
+      color: @offwhite;
     }
 
     a.show-searchbar.small-magnifying-glass {
@@ -257,6 +282,9 @@ header {
       text-align:right;
 
       input[type='text']{
+        position: absolute;
+        top: 0px;
+        right: 0;
         width: 0%;
         opacity: 0;
         padding: 13px;
@@ -276,7 +304,7 @@ header {
   }
 }
 
-/* ==================== MAP INDEX CSS ==================== */
+/* ======================================== MAP INDEX CSS ======================================== */
 
 #map-filter {
   position:absolute;
@@ -369,7 +397,7 @@ header {
 }
 
 
-/* ==================== USER PROFILE CSS ====================== */
+/* ======================================== USER PROFILE CSS ======================================== */
 
 .profile-content-wrapper {
   width: 90%;
@@ -508,6 +536,32 @@ header {
 
 }
 
+.back-wrapper {
+  border-bottom: 1px solid darken(@offwhite, 20%);
+  width: 90%;
+  margin: 0 auto;
+  padding: 80px 0px 10px 0px;
+  text-align: center;
+  font-size: 1.25em;
+  color: @base-color;
+
+  a {
+    float:left;
+    color:@base-color;
+  }
+
+  h2 {
+    font-weight: bold;
+  }
+
+}
+
+
+/* ======================================== CHECK IN CSS ======================================== */
+.checkin-wrapper {
+
+
+}
 
 
 
@@ -524,7 +578,8 @@ header {
 
 
 
-/* ==================== OLD CSS ==================== */
+
+/* ======================================== OLD CSS ======================================== */
 
 
 #create-quest-map {
@@ -607,7 +662,7 @@ button {
   width: 400px;
 }
 
-/* ==================== NATHAN EDITS ==================== */
+/* ======================================== NATHAN EDITS ======================================== */
 
 #quest-locations-listing {
   background: white;
