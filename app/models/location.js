@@ -81,6 +81,18 @@ class Location{
     });
   }
 
+  static searchByName(query, fn){
+    locations.find({ name: { $regex: query, $options: 'i'} }).toArray((err, results)=>{
+      fn(results);
+    });
+  }
+
+  static searchByDescription(query, fn){
+    locations.find({ description: {$regex: query, $options: 'i'} }).toArray((err, results)=>{
+      fn(results);
+    });
+  }
+
   static findAll(fn){
     locations.find({}).toArray((err, loc)=>{
       fn(loc);
