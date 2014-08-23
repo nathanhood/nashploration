@@ -14,10 +14,10 @@ class Quest{
     this.groupIds = groupIds;
     this.creator = userId;
     this.checkIns = locationIds;
-    if (body.isPublic === 'true') {
-      this.isPublic = true;
+    if (body.isPrivate === 'true') {
+      this.isPrivate = true;
     } else {
-      this.isPublic = false;
+      this.isPrivate = false;
     }
   //   this.image = files.image[0].originalFilename OR default image path;
   }
@@ -46,7 +46,19 @@ class Quest{
     });
   }
 
-}
+  static searchByName(query, fn){
+    quests.find({ name: { $regex: query, $options: 'i'}, isPrivate: false }).toArray((err, results)=>{
+      fn(results);
+    });
+  }
+
+  static findManyByCreatorForSeach(query, questIds, fn){
+    quests.find({creator: questIds, name: { $regex: query, $options: 'i'} }).toArray((err, quests)=>{
+      fn(quests);
+    });
+  }
+
+} //end of class
 
 
 module.exports = Quest; //exporting Class out

@@ -186,6 +186,12 @@ class User{
     });
   }
 
+  static searchByName(query, fn){
+    users.find({ userName: { $regex: query, $options: 'i'}}).toArray((err, results)=>{
+      fn(results);
+    });
+  }
+
   static findAndReplaceQuestCreators(objectArray, fn){
     if (objectArray.length) {
       var ids = objectArray.map(object=>{
