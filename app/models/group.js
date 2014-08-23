@@ -89,6 +89,13 @@ class Group {
     });
   }
 
+  static destroyGroup(groupId, fn){
+    groupId = Mongo.ObjectID(groupId);
+    groups.remove({ _id: groupId, $isolated: 1 }, (err, res)=>{
+      fn(err, res);
+    });
+  }
+
   static accumulateUsersFromGroups(groups){
     var users = [];
     groups.forEach(group=>{

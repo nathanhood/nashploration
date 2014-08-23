@@ -9,6 +9,14 @@
     $('.add-member-button').click(toggleAddMember);
     $('.send-member-invite').click(sendEmailInvitation);
     $('.remove-group-member').click(removeGroupMember);
+    $('.delete-group').click(deleteGroup);
+  }
+
+  function deleteGroup(){
+    var r = confirm('Are you sure you want to delete this group?\nThis cannot be undone.');
+    if (r === true) {
+      $('#delete-group-form').submit();
+    }
   }
 
   function removeGroupMember(){

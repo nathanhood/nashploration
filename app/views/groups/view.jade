@@ -2,29 +2,33 @@ extends ../shared/template
 
 block content
 
+  .profile-content-wrapper
+    .messages
+      if (deleteGroupConfirm)
+        p= deleteGroupConfirm
 
-  h1 Manage Groups
+    h1 Manage Groups
 
-  h2 Groups
-  ul
-    if (groups.length > 0)
-      each group in groups
-        li= group.name
-          a(href='/groups/show/#{group._id}') view
-    else
-      li
-        p You have not joined any groups
-        a(href='#')
-          button Find Groups
+    h2 Groups
+    ul
+      if (groups.length > 0)
+        each group in groups
+          li= group.name
+            a(href='/groups/show/#{group._id}') view
+      else
+        li
+          p You have not joined any groups
+          a(href='#')
+            button Find Groups
 
-  h2 Manage Groups You Created
-  ul
-    if (createdGroups.length > 0)
-      each group in createdGroups
-        li= group.name
-          a(href='/groups/edit/#{group._id}') edit
-    else
-      li
-        p You have not created any groups
-        a(href='/groups/new')
-          button Create Group
+    h2 Manage Groups You Created
+    ul
+      if (createdGroups.length > 0)
+        each group in createdGroups
+          li= group.name
+            a(href='/groups/edit/#{group._id}') edit
+      else
+        li
+          p You have not created any groups
+          a(href='/groups/new')
+            button Create Group

@@ -111,6 +111,22 @@ class User{
     return removed;
   }
 
+  static removeGroupFromUsersGroups(groupId, fn){
+    groupId = Mongo.ObjectID(groupId);
+    users.update({ groups: groupId }, { $pull: { groups: groupId } }, { multi: true },
+      (err, res)=>{
+      fn(err, res);
+    });
+  }
+
+  static removeGroupFromUserCreatedGroups(groupId, fn){
+    groupId = Mongo.ObjectID(groupId);
+    users.update({ createdGroups: groupId }, { $pull: { createdGroups: groupId } }, { multi: true },
+      (err, res)=>{
+        fn(err, res);
+    });
+  }
+
   static register(fields, userName, fn){
     users.findOne({email:fields.email[0]}, (err, u)=>{
       users.findOne({userName:userName}, (err, u2)=>{

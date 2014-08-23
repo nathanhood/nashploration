@@ -1,3 +1,5 @@
+/* jshint unused:false */
+
 'use strict';
 
 var traceur = require('traceur');
@@ -28,7 +30,7 @@ exports.view = (req, res)=>{
   var myGroups = res.locals.user.groups;
   Group.findManyById(myGroups, groups=>{
     Group.findAllByOwnerId(res.locals.user._id, createdGroups=>{
-      res.render('groups/view', {title: 'Nashploration', groups:groups, createdGroups:createdGroups});
+      res.render('groups/view', {title: 'Nashploration', groups:groups, createdGroups:createdGroups, deleteGroupConfirm: req.flash('deleteGroupConfirm')});
     });
   });
 };
@@ -44,7 +46,7 @@ exports.show = (req, res)=>{
 exports.edit = (req, res)=>{
   Group.findByGroupId(req.params.groupId, group=>{
     User.findManyById(group.members, members=>{
-      res.render('groups/edit', {title: 'Nashploration', group:group, members:members});
+      res.render('groups/edit', {title: 'Nashploration', group:group, members:members, deleteGroupError: req.flash('deleteGroupError')});
     });
   });
 };
@@ -58,6 +60,24 @@ exports.removeMember = (req, res)=>{
         group.save(()=>{
           res.send(user);
         });
+      });
+    });
+  });
+};
+
+exports.delete = (req, res)=>{
+  var groupId = req.body.groupId;
+  var groupName = req.body.groupName;
+  User.removeGroupFromUsersGroups(groupId, (err)=>{
+    User.removeGroupFromUserCreatedGroups(groupId, (err2)=>{
+      Group.destroyGroup(groupId, (err3)=>{
+        if (!err) {
+          req.flash('deleteGroupConfirm', `${groupName} was successfully deleted`);
+          res.redirect('/groups/view');
+        } else {
+          req.flash('deleteGroupError', 'There was a problem. Your group has not been deleted properly.');
+          res.redirect(`/groups/edit/groupId`);
+        }
       });
     });
   });
