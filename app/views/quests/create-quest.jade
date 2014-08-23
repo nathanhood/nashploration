@@ -9,6 +9,8 @@ block content
   form(action='/quests/create', method='POST')
     input#quest-title(type='text', name='name', placeholder='Quest Name Here')
     textarea#quest-description(type='text', name='description', placeholder='Quest Description Here')
+    label Make Quest Public (viewable by everyone)
+      input(type='checkbox', name='isPublic', value='true')
     input#selected-groups(type='text', name='groupIds', hidden=true)
     input#location-ids(type='text', name='locations', hidden=true)
 

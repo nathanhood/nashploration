@@ -14,7 +14,6 @@ class Group {
     this.owner = ownerId;
     this.members = [];
     this.isLocked = false;
-    this.quests = [];
     this.description = obj.description;
   }
 
@@ -26,6 +25,13 @@ class Group {
       this.members.push(user._id);
       user.groups.push(this._id);
     }
+  }
+
+  isInGroup(user){
+    var exists = this.members.some(member=>{
+      return (member.toHexString() === user._id.toHexString());
+    });
+    return exists;
   }
 
   save(fn){

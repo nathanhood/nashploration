@@ -74,6 +74,7 @@ function load(app, fn){
   app.post('/groups/create', dbg, groups.create);
   app.post('/groups/remove-member', dbg, groups.removeMember);
   app.post('/groups/delete', dbg, groups.delete);
+  app.post('/groups/join-group', dbg, groups.joinGroup);
 
   console.log('Routes Loaded');
   fn();
