@@ -13,19 +13,20 @@ html
 
   body.cbp-spmenu-push
     nav#cbp-spmenu-s1.cbp-spmenu.cbp-spmenu-vertical.cbp-spmenu-left
-      .nav-profile-pic(style='background-image: url("#{user.photo.filePath}")')
-      p.nav-name= user.nickName
-      p.nav-class= user.class
+      if (user)
+        .nav-profile-pic(style='background-image: url("#{user.photo.filePath}")')
+        p.nav-name= user.nickName
+        p.nav-class= user.class
       ul.main-nav
-        li 
+        li
           a(href="#") Home
-        li 
+        li
           a(href="#") Dashboard
-        li 
+        li
           a(href="#") Minigame
-        li 
+        li
           a(href="#") Settings
-        li 
+        li
           a(href="#") Logout
 
       img.nav-logo-icon(src="/img/assets/logo-icon.png")
@@ -40,7 +41,7 @@ html
           input.main-search-input(type='text', placeholder='Search here')
         a.show-searchbar
           i.fa.fa-search
-    
+
     block content
 
     script(src='/js/vendor/classie.js')
