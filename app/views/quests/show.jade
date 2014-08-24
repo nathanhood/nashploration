@@ -6,7 +6,24 @@ block content
 
   .profile-content-wrapper
     h1.quest-name(data-id='#{quest._id}')= quest.name
+    //- if (quest.isPublic)
+    if (!user.isActiveQuest(quest._id))
+      form(action='/users/add-active-quest/#{quest._id}', method='POST')
+        button.make-active-quest Begin Voyage
+    else
+      p This is your current quest
+
+    if (!user.isInMyQuests(quest._id))
+      form(action='/users/add-quest/#{quest._id}', method='POST')
+        button.add-quest Take Voyage Later
+    else
+      form.remove-quest-form(action='/users/remove-quest/#{quest._id}', method='POST')
+        button.remove-quest Remove Quest
     p= quest.description
+
+    .quest-destinations-container
+      h2 Quest Path
+      ul.quest-destinations
 
   #quest-map-canvas
 

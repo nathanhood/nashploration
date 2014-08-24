@@ -46,7 +46,8 @@ exports.view = (req, res)=>{
     Quest.findManyById(myQuests, allMyQuests=>{
       User.findAndReplaceQuestCreators(created, finalCreated=>{
         User.findAndReplaceQuestCreators(allMyQuests, finalMyQuests=>{
-          res.render('quests/view', {title: 'Nashploration', createdQuests:finalCreated , myQuests:finalMyQuests});
+          res.render('quests/view', {title: 'Nashploration', createdQuests:finalCreated , myQuests:finalMyQuests,
+          questRemovedFromMyQuests: req.flash('questRemovedFromMyQuests')});
         });
       });
     });

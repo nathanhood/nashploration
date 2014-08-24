@@ -3,6 +3,10 @@ extends ../shared/template
 block content
 
   .profile-content-wrapper
+    .messages
+      if (questRemovedFromMyQuests)
+        p= questRemovedFromMyQuests
+        
     h1 View Quests
 
     h2 Created Quests

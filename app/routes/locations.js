@@ -48,7 +48,7 @@ exports.getLocations = (req, res)=>{
         });
       });
     });
-  }else if(res.locals.user.activeQuest.questId !==null && res.locals.user.checkIns.length < 1){
+  }else if(res.locals.user.activeQuest.questId !== null && res.locals.user.checkIns.length < 1){
     Location.findAll(locations=>{
       Quest.findById(res.locals.user.activeQuest.questId, (err, quest)=>{
         if(quest.checkIns.length === res.locals.user.activeQuest.questLocs.length){

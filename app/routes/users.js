@@ -23,7 +23,9 @@ exports.profile = (req, res)=>{
         joinedGroup: req.flash('joinedGroup'),
         questConfirm: req.flash('questConfirm'),
         invalideGroupCode: req.flash('invalideGroupCode'),
-        groupMemberExists: req.flash('groupMemberExists')
+        groupMemberExists: req.flash('groupMemberExists'),
+        addedToMyQuests: req.flash('addedToMyQuests'),
+        alreadyInMyQuests: req.flash('alreadyInMyQuests')
         });
       } else {
         res.render('users/profile', {title: 'Nashploration', userProfile: null, otherProfile: user});
@@ -125,8 +127,6 @@ exports.logout = (req, res)=>{
 };
 
 exports.showCheckIn = (req, res)=>{
-  console.log('IN THE ROUTE');
-  console.log(req.params.locationId);
   res.locals.user.isPreviousCheckIn(req.params.locationId, prevCheckInStatus=>{ //checks if location has already been checked into..used to alert user that multiple checkins to same location do not count
     Location.findById(req.params.locationId, (err, location)=>{
       res.render('users/checkIn', {title: 'Nashploration', location: location, prevCheckInStatus: prevCheckInStatus});
@@ -164,5 +164,39 @@ exports.getActiveQuestLocations = (req, res)=>{
       res.send(locations);
     });
    }
+  });
+};
+
+exports.addActiveQuest = (req, res)=>{
+  var user = res.locals.user;
+  user.addQuest(req.params.questId);
+  user.makeActiveQuest(req.params.questId);
+  user.save(()=>{
+    res.redirect('/dashboard');
+  });
+};
+
+exports.addQuest = (req, res)=>{
+  var user = res.locals.user;
+  var addedToMyQuests = user.addQuest(req.params.questId);
+  if (addedToMyQuests) {
+    user.save(()=>{
+      req.flash('addedToMyQuests', 'Quest successfully added to your account!');
+      res.redirect(`/users/${user.userName}`);
+    });
+  } else {
+    req.flash('alreadyInMyQuests', 'You have already added that quest to your account');
+    res.redirect(`/users/${user.userName}`);
+  }
+};
+
+exports.removeQuest = (req, res)=>{
+  var user = res.locals.user;
+  user.removeQuest(req.params.questId);
+  user.save(()=>{
+    Quest.findById(req.params.questId, (err, quest)=>{
+      req.flash('questRemovedFromMyQuests', `${quest.name} has been successfully removed`);
+      res.redirect('/quests/view');
+    });
   });
 };
