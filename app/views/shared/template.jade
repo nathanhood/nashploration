@@ -13,33 +13,37 @@ html
 
   body.cbp-spmenu-push
     nav#cbp-spmenu-s1.cbp-spmenu.cbp-spmenu-vertical.cbp-spmenu-left
-      if (user)
-        .nav-profile-pic(style='background-image: url("#{user.photo.filePath}")')
-        p.nav-name= user.nickName
-        p.nav-class= user.class
-      ul.main-nav
-        li
-          a(href="#") Home
-        li
-          a(href="#") Dashboard
-        li
-          a(href="#") Minigame
-        li
-          a(href="#") Settings
-        li
-          a(href="#") Logout
+      .nav-wrapper
+        if (user)
+          .nav-profile-pic(style='background-image: url("#{user.photo.filePath}")')
+          p.nav-name= user.nickName
+          p.nav-class= user.class
+          ul.main-nav
+            li
+              a(href="/dashboard") Home
+            li
+              a(href="/users/#{user.userName}") Profile
+            li
+              a(href="#") Minigame
+            li
+              a(href="#") Settings
+            li
+              form.logout-form(action='/logout', method='POST')
+                a.submit-logout(href="#") Logout
+        else
+          h2 YOU NEED TO LOG IN
 
-      img.nav-logo-icon(src="/img/assets/logo-icon.png")
-
+        img.nav-logo-icon(src="/img/assets/logo-icon.png")
 
     header
       a.menu-link#showLeftPush(href='#')
         i.fa.fa-bars
-      h1.logo Nashploration
+      a.logo-link(href='/dashboard')
+        h1.logo Nashploration
       .search-container
         form#main-search
           input.main-search-input(type='text', placeholder='Search here')
-        a.show-searchbar
+        a.show-searchbar(href="#")
           i.fa.fa-search
 
     block content

@@ -7,7 +7,7 @@ block content
   .profile-content-wrapper
     h1.quest-name(data-id='#{quest._id}')= quest.name
 
-  // TODO if (quest.isPublic)
+    // TODO if (quest.isPublic)
     if (!user.isCompletedQuest(quest._id))
       if (!user.isActiveQuest(quest._id))
         form(action='/users/add-active-quest/#{quest._id}', method='POST')
