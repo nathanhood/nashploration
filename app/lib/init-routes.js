@@ -19,6 +19,7 @@ function load(app, fn){
   var users = traceur.require(__dirname + '/../routes/users.js');
   var quests = traceur.require(__dirname + '/../routes/quests.js');
   var groups = traceur.require(__dirname + '/../routes/groups.js');
+  var searches = traceur.require(__dirname + '/../routes/searches.js');
 
   app.all('*', users.lookup);
 
@@ -81,6 +82,9 @@ function load(app, fn){
   app.post('/groups/remove-member', dbg, groups.removeMember);
   app.post('/groups/delete', dbg, groups.delete);
   app.post('/groups/join-group', dbg, groups.joinGroup);
+
+  /* ----------- Search ------------- */
+  app.get('/search', dbg, searches.getResults);
 
   console.log('Routes Loaded');
   fn();

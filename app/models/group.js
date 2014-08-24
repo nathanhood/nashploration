@@ -95,6 +95,12 @@ class Group {
     });
   }
 
+  static searchByName(query, fn){
+    groups.find({ name: { $regex: query, $options: 'i'} }).toArray((err, results)=>{
+      fn(results);
+    });
+  }
+
   static destroyGroup(groupId, fn){
     groupId = Mongo.ObjectID(groupId);
     groups.remove({ _id: groupId, $isolated: 1 }, (err, res)=>{
