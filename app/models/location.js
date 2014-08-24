@@ -82,14 +82,8 @@ class Location{
     });
   }
 
-  static searchByName(query, fn){
-    locations.find({ name: { $regex: query, $options: 'i'} }).toArray((err, results)=>{
-      fn(results);
-    });
-  }
-
-  static searchByDescription(query, fn){
-    locations.find({ description: {$regex: query, $options: 'i'} }).toArray((err, results)=>{
+  static searchByNameAndDesc(query, fn){
+    locations.find( { $or: [ { name: { $regex: query, $options: 'i'} }, { description: {$regex: query, $options: 'i'} } ] }).sort({name: 1}).toArray((err, results)=>{
       fn(results);
     });
   }

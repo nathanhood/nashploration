@@ -298,7 +298,7 @@ class User{
   }
 
   static searchByName(query, fn){
-    users.find({ userName: { $regex: query, $options: 'i'}}).toArray((err, results)=>{
+    users.find({ userName: { $regex: query, $options: 'i'}}).sort({name: 1}).toArray((err, results)=>{
       fn(results);
     });
   }

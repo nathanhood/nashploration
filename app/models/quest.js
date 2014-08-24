@@ -36,7 +36,7 @@ class Quest{
 
   isStartedQuest(user){
     var inStartedQuests;
-    
+
     if (user.startedQuests.length > 0) {
       inStartedQuests = user.startedQuests.some(quest=>{
         return this._id.equals(quest.questId);
@@ -87,7 +87,7 @@ class Quest{
   }
 
   static searchByName(query, fn){
-    quests.find({ name: { $regex: query, $options: 'i'}, isPrivate: false }).toArray((err, results)=>{
+    quests.find({ name: { $regex: query, $options: 'i'}, isPrivate: false }).sort({name: 1}).toArray((err, results)=>{
       fn(results);
     });
   }
