@@ -1,0 +1,18 @@
+extends ../shared/template
+
+block content
+
+  .profile-content-wrapper
+    h1.quest-name(data-id='#{quest._id}') Edit Quest Page
+    p= quest.description
+
+
+    .quest-destinations-container
+      button.add-quest-locations Add Locations
+      h2 Quest Locations
+      ul.quest-destinations
+
+  #quest-map-canvas
+
+block scripts
+  script(src='/js/es6/compiled/edit-quest.js')

@@ -171,6 +171,16 @@ class User{
     return inMyQuests;
   }
 
+  isCompletedQuest(questId){
+    var completeQuest = false;
+    if (this.completedQuests.length > 0) {
+      completeQuest = this.completedQuests.some(quest=>{
+        return questId.toString() === quest.toString();
+      });
+    }
+    return completeQuest;
+  }
+
   isActiveQuest(questId){
     questId = Mongo.ObjectID(questId);
     var activeQuestId = Mongo.ObjectID(this.activeQuest.questId);

@@ -6,19 +6,26 @@ block content
     .messages
       if (questRemovedFromMyQuests)
         p= questRemovedFromMyQuests
-        
+
     h1 View Quests
 
-    h2 Created Quests
-    if (createdQuests)
+    if (createdQuests !== null)
+      h2 Created Quests
       each quest in createdQuests
         h3= quest.name
-        a(href='/quests/show/#{quest._id}') edit
-        p= quest.creator.userName
+        a(href='/quests/edit/#{quest._id}') edit
+        p created by #{quest.creator.userName}
 
-    h2 Joined Quests
-    if (myQuests)
+    if (myQuests !== null)
+      h2 Joined Quests
       each quest in myQuests
         h3
          a(href='/quests/show/#{quest._id}')= quest.name
-        p= quest.creator.userName
+        p created by #{quest.creator.userName}
+
+    if (completedQuests !== null)
+      h2 Completed Quests
+      each quest in completedQuests
+        h3
+          a(href='/quests/show/#{quest._id}')=quest.name
+        p created by #{quest.creator.userName}

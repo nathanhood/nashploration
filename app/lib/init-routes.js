@@ -37,9 +37,11 @@ function load(app, fn){
   app.post('/addHistory', dbg, locations.addHistory);
 
   app.get('/locations/:location', dbg, locations.locationDetails);
+  app.get('/getQuestLocations/:questId', dbg, locations.getQuestLocations);
 
   app.get('/getCloseLocs/:lat/:long', dbg, locations.findCloseLocs); //ajax call for finding locations around users current location
   app.get('/resetCloseLocations/:closeLocations', dbg, locations.resetLocations);
+
 
   app.all('*', users.bounce);
 
@@ -62,6 +64,7 @@ function load(app, fn){
   app.get('/quests/new', dbg, quests.new);
   app.get('/quests/view', dbg, quests.view);
   app.get('/quests/show/:questId', dbg, quests.show);
+  app.get('/quests/edit/:questId', dbg, quests.edit);
   app.post('/quests/create', dbg, quests.create);
   app.post('/quests/create-quest-map', dbg, quests.questMap);
 

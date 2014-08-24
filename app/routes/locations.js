@@ -133,3 +133,26 @@ exports.getActiveQuestLocations = (req, res)=>{
    }
   });
 };
+
+exports.getQuestLocations = (req, res)=>{
+  var user = res.locals.user;
+  Quest.findById(req.params.questId, (err, quest)=>{
+    Location.findManyById(quest.checkIns, locations=>{
+      var checkInObj;
+      if (quest.isActiveQuest(user)) {
+
+        checkInObj = Quest.separateCheckIns(locations, user.activeQuest);
+        res.send(checkInObj);
+      } else if (quest.isStartedQuest(user)) {
+
+        var startedQuest = quest.findStartedQuest(user);
+        checkInObj = Quest.separateCheckIns(locations, startedQuest);
+        res.send(checkInObj);
+      } else {
+
+        checkInObj = {incomplete: locations};
+        res.send(checkInObj);
+      }
+    });
+  });
+};

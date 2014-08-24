@@ -21,6 +21,8 @@
     event.preventDefault();
   }
 
+
+
   function fetchLocations() {
     var questId = $('.quest-name').data('id');
     $.ajax(`/getQuestLocations/${questId}`).done(function(data){
@@ -35,7 +37,6 @@
       }
 
       if (data.complete) {
-        createProgressList(data.complete);
         data.complete.forEach(a=>{
           placeCheckInMarkers(a.loc, a.name, a.description);
         });
@@ -44,7 +45,6 @@
       resizeMap();
     });
   }
-
 
   var allMarkers = [];
 
@@ -57,17 +57,6 @@
                         <p><b>Description</b>: ${location.description}</p>
                       </li>`;
       $('.quest-destinations').append(destination);
-    });
-  }
-
-  function createProgressList(checkIns){
-    checkIns.forEach(location=>{
-      var destination = `<li class='completed-location'>
-                        <h3>${location.name}</h3>
-                        <p><b>Address</b>: ${location.address}<p>
-                        <p><b>Description</b>: ${location.description}</p>
-                      </li>`;
-      $('.quest-progress').append(destination);
     });
   }
 
