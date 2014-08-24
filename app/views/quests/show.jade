@@ -21,6 +21,11 @@ block content
         button.remove-quest Remove Quest
     p= quest.description
 
+    .quest-progress-container
+      if (user.activeQuest.questLocs.length > 0)
+        h2 Quest Progress
+        ul.quest-progress
+
     .quest-destinations-container
       h2 Quest Path
       ul.quest-destinations
