@@ -142,6 +142,7 @@ exports.checkIn = (req, res)=>{
       Quest.findById(res.locals.user.activeQuest.questId, (err,quest)=>{
         if (quest) {
           res.locals.user.updateActiveQuest(quest.checkIns, location._id);
+          //TODO add check for completed quest...if completed send flash message
         }
         res.locals.user.updateCheckIns(location._id);
         res.locals.user.save(()=>{

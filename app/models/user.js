@@ -246,6 +246,42 @@ class User{
     }
   }
 
+  static findManyCheckInCommentsById(checkInObjs, fn){
+    if (checkInObjs.length) {
+      var userIdsArray = [];
+      checkInObjs.forEach(c=>{
+        userIdsArray.push(c.userId);
+      });
+      users.find({_id: { $in: userIdsArray } }).toArray((err, users)=>{
+        fn(users);
+      });
+    } else {
+      fn(null);
+    }
+  }
+
+  static matchUserToComment(users, checkIns, fn){
+    var allComments = [];
+    checkIns.forEach(c=>{
+      users.forEach(u=>{
+        if(u._id.equals(c.userId)){
+          var daysFromComment = (Math.abs(new Date() - c.date) / 86400000).toFixed(0); //milliseconds in a day
+            if(daysFromComment < 1){
+              daysFromComment = 'Today';
+            }else if(daysFromComment === 1){
+              daysFromComment = '1 day ago';
+            }else{
+              daysFromComment = `${daysFromComment} days ago`;
+            }
+          var userComment = {userName: u.userName, userPhoto: u.photo.filePath, comment: c.comment, daysFromComment: daysFromComment };
+          allComments.push(userComment);
+        }
+      });
+    });
+
+    fn(allComments);
+  }
+
   static findById(id, fn){
     Base.findById(id, users, User, fn);
   }

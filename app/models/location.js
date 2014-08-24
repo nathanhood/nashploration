@@ -28,7 +28,8 @@ class Location{
   }
 
   saveComment(comment, coords, userId, fn){
-    var checkIn = {userId: userId, coordinates: coords, comment: comment};
+    var date = new Date();
+    var checkIn = {userId: userId, coordinates: coords, comment: comment, date: date};
     this.checkIns.push(checkIn);
     fn();
   }

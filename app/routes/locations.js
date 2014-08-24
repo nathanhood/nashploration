@@ -5,7 +5,7 @@
 var traceur = require('traceur');
 var Location = traceur.require(__dirname + '/../models/location.js');
 var Quest = traceur.require(__dirname + '/../models/quest.js');
-
+var User = traceur.require(__dirname + '/../models/user.js');
 
 
 exports.addHistory = (req, res)=>{
@@ -104,7 +104,11 @@ exports.getAndrewJacksonLocations = (req, res)=>{
 
 exports.locationDetails = (req, res)=>{
   Location.findCoordinates(req.params, location=>{
-    res.render('locations/detail', {title: `${location.name}`, location: location});
+    User.findManyCheckInCommentsById(location.checkIns, users=>{
+      User.matchUserToComment(users, location.checkIns, comments=>{
+        res.render('locations/detail', {title: `${location.name}`, location: location, comments: comments});
+      });
+    });
   });
 };
 
