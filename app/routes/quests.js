@@ -42,11 +42,17 @@ exports.create = (req, res)=>{
 
 exports.view = (req, res)=>{
   var myQuests = res.locals.user.myQuests;
+  var completedQuests = res.locals.user.completedQuests;
   Quest.findByUserId(res.locals.user._id, created=>{
     Quest.findManyById(myQuests, allMyQuests=>{
-      User.findAndReplaceQuestCreators(created, finalCreated=>{
-        User.findAndReplaceQuestCreators(allMyQuests, finalMyQuests=>{
-          res.render('quests/view', {title: 'Nashploration', createdQuests:finalCreated , myQuests:finalMyQuests});
+      Quest.findManyById(completedQuests, complete=>{
+        User.findAndReplaceQuestCreators(created, finalCreated=>{
+          User.findAndReplaceQuestCreators(allMyQuests, finalMyQuests=>{
+            User.findAndReplaceQuestCreators(complete, finalComplete=>{
+              res.render('quests/view', {title: 'Nashploration', createdQuests:finalCreated , myQuests:finalMyQuests,
+              completedQuests: finalComplete, questRemovedFromMyQuests: req.flash('questRemovedFromMyQuests')});
+            });
+          });
         });
       });
     });
@@ -58,6 +64,12 @@ exports.show = (req, res)=>{
     User.findById(quest.creator, (err, user)=>{
       res.render('quests/show', {title: 'Nashploration', user:user, quest:quest});
     });
+  });
+};
+
+exports.edit = (req, res)=>{
+  Quest.findById(req.params.questId, (err, quest)=>{
+    res.render('quests/edit', {title: 'Nashploration', quest:quest});
   });
 };
 

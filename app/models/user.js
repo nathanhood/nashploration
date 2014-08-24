@@ -26,6 +26,7 @@ class User{
     this.createdGroups = []; //Object IDs
     this.createdQuests = [];
     this.activeQuest = {questId:null, questLocs:[]}; // Object IDs
+    this.startedQuests = [];
     this.myQuests = [];
     this.completedQuests = []; // Object IDs
     // this.streetViewQuizzes = []; // Object IDs
@@ -110,6 +111,80 @@ class User{
       return groupId === group.toString();
     });
     return removed;
+  }
+
+  makeActiveQuest(questId){
+    questId = Mongo.ObjectID(questId);
+    var isActive = questId.equals(this.activeQuest.questId);
+    var isStarted = false;
+    if (this.startedQuests.length > 0) {
+      isStarted = _.remove(this.startedQuests, (quest)=>{
+        return questId.equals(quest.questId);
+      });
+    }
+
+    if (this.activeQuest.questId !== null) {
+      this.startedQuests.push(this.activeQuest);
+    }
+
+    if (!isActive && !isStarted[0]) {
+      this.activeQuest = {questId:questId, questLocs:[]};
+    } else if (isStarted[0]) {
+      this.activeQuest = isStarted[0];
+    }
+  }
+
+  addQuest(questId){
+    questId = Mongo.ObjectID(questId);
+    var inMyQuests = this.myQuests.some(quest=>{
+      return questId.equals(quest);
+    });
+    if (!inMyQuests) {
+      this.myQuests.push(questId);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  removeQuest(questId){
+    questId = Mongo.ObjectID(questId);
+    _.remove(this.myQuests, (quest)=>{
+      return questId.equals(quest);
+    });
+    _.remove(this.startedQuests, (quest)=>{
+      return questId.equals(quest.questId);
+    });
+    var isActive = questId.equals(this.activeQuest.questId);
+    if (isActive) {
+      this.activeQuest = {questId: null, questLocs: []};
+    }
+  }
+
+  isInMyQuests(questId){
+    var inMyQuests = false;
+    if (this.myQuests.length > 0) {
+      inMyQuests = this.myQuests.some(quest=>{
+        return questId.toString() === quest.toString();
+      });
+    }
+    return inMyQuests;
+  }
+
+  isCompletedQuest(questId){
+    var completeQuest = false;
+    if (this.completedQuests.length > 0) {
+      completeQuest = this.completedQuests.some(quest=>{
+        return questId.toString() === quest.toString();
+      });
+    }
+    return completeQuest;
+  }
+
+  isActiveQuest(questId){
+    questId = Mongo.ObjectID(questId);
+    var activeQuestId = Mongo.ObjectID(this.activeQuest.questId);
+    return activeQuestId.equals(questId);
   }
 
   static removeGroupFromUsersGroups(groupId, fn){

@@ -38,7 +38,7 @@ exports.view = (req, res)=>{
 exports.show = (req, res)=>{
   Group.findByGroupId(req.params.groupId, group=>{
     User.findManyById(group.members, members=>{
-      res.render('groups/show', {title: 'Nashploration', group:group, members:members});
+      res.render('groups/show', {title: 'Nashploration', group:group, members:members, joinGroupConfirm: req.flash('joinGroupConfirm')});
     });
   });
 };
@@ -102,19 +102,24 @@ exports.updateDescription = (req, res)=>{
 exports.joinGroup = (req, res)=>{
   var user = res.locals.user;
   Group.findByGroupCode(req.body.groupCode, group=>{
-    var exists = group.isInGroup(user);
-      if (exists) {
-        req.flash('groupMemberExists', 'You are already a member of this group');
-        res.redirect(`/users/user.userName`);
-      } else {
-        group.joinGroup(user);
-        user.save(()=>{
-          group.save(()=>{
-            req.flash('joinGroupConfirm', 'You have successfully joined this group!');
-            res.redirect(`/groups/show/group._id`);
+    if (!group) {
+      req.flash('invalideGroupCode', 'The group code you entered is not valid.');
+      res.redirect(`/users/${user.userName}`);
+    } else {
+      var exists = group.isInGroup(user);
+        if (exists) {
+          req.flash('groupMemberExists', `You are already a member of group ${group.name}`);
+          res.redirect(`/users/${user.userName}`);
+        } else {
+          group.joinGroup(user);
+          user.save(()=>{
+            group.save(()=>{
+              req.flash('joinGroupConfirm', 'You have successfully joined this group!');
+              res.redirect(`/groups/show/${group._id}`);
+            });
           });
-        });
-      }
+        }
+    }
   });
 };
 

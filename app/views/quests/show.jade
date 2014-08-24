@@ -2,7 +2,42 @@ extends ../shared/template
 
 block content
 
-  if (user.isOwner(quest.creator))
-    h1 Is Owner
-  else
-    h1 Is Not Owner
+  .messages
+
+  .profile-content-wrapper
+    h1.quest-name(data-id='#{quest._id}')= quest.name
+
+  // TODO if (quest.isPublic)
+    if (!user.isCompletedQuest(quest._id))
+      if (!user.isActiveQuest(quest._id))
+        form(action='/users/add-active-quest/#{quest._id}', method='POST')
+          button.make-active-quest Begin Voyage
+      else
+        p This is your current quest
+
+      if (!user.isInMyQuests(quest._id))
+        form(action='/users/add-quest/#{quest._id}', method='POST')
+          button.add-quest Save Voyage For Later
+      else
+        form.remove-quest-form(action='/users/remove-quest/#{quest._id}', method='POST')
+          button.remove-quest Remove Quest
+    else
+      h2 You have completed this quest!
+      form(action='/users/add-active-quest/#{quest._id}', method='POST')
+        button.make-active-quest Begin Voyage Again!
+      form(action='/users/add-quest/#{quest._id}', method='POST')
+        button.add-quest Save Voyage Again For Later
+    p= quest.description
+
+    .quest-progress-container
+      h2 Quest Progress
+      ul.quest-progress
+
+    .quest-destinations-container
+      h2 Quest Path
+      ul.quest-destinations
+
+  #quest-map-canvas
+
+block scripts
+  script(src='/js/es6/compiled/show-quest.js')

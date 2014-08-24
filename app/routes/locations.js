@@ -48,7 +48,7 @@ exports.getLocations = (req, res)=>{
         });
       });
     });
-  }else if(res.locals.user.activeQuest.questId !==null && res.locals.user.checkIns.length < 1){
+  }else if(res.locals.user.activeQuest.questId !== null && res.locals.user.checkIns.length < 1){
     Location.findAll(locations=>{
       Quest.findById(res.locals.user.activeQuest.questId, (err, quest)=>{
         if(quest.checkIns.length === res.locals.user.activeQuest.questLocs.length){
@@ -134,32 +134,25 @@ exports.getActiveQuestLocations = (req, res)=>{
   });
 };
 
-// function findAllLocations(fn){
-//   Location.findAll(locations=>{
-//     fn(locations);
-//   });
-// }
-//
-// function findManyLocsById(checkIns){
-//   Location.findManyById(checkIns, allCheckIns=>{
-//     return allCheckIns;
-//   });
-// }
-//
-// function findQuest(questId){
-//   Quest.findById(questId, (err, quest)=>{
-//     return quest;
-//   });
-// }
-//
-// function findActiveQuestLocations(questCheckIns, questLocations){
-//   Location.findActiveQuestLocations(questCheckIns, questLocations, (questLocs)=>{
-//     return questLocs;
-//   });
-// }
-//
-// function removeDups(data1, data2){
-//   Location.removeDuplicates(data1, data1, allMinusDups=>{
-//     return allMinusDups;
-//   });
-// }
+exports.getQuestLocations = (req, res)=>{
+  var user = res.locals.user;
+  Quest.findById(req.params.questId, (err, quest)=>{
+    Location.findManyById(quest.checkIns, locations=>{
+      var checkInObj;
+      if (quest.isActiveQuest(user)) {
+
+        checkInObj = Quest.separateCheckIns(locations, user.activeQuest);
+        res.send(checkInObj);
+      } else if (quest.isStartedQuest(user)) {
+
+        var startedQuest = quest.findStartedQuest(user);
+        checkInObj = Quest.separateCheckIns(locations, startedQuest);
+        res.send(checkInObj);
+      } else {
+
+        checkInObj = {incomplete: locations};
+        res.send(checkInObj);
+      }
+    });
+  });
+};

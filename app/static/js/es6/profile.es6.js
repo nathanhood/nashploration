@@ -12,7 +12,15 @@
   }
 
   function submitGroupCode(){
-    
+    var groupCode = $('.group-code').val();
+    if (groupCode.length !== 5) {
+      var message = `<p>That is an invalid code. It can only be 5 characters long</p>`;
+      $('.messages').append(message);
+      $('.messages').show();
+      fadeConfirmMessage();
+    } else {
+      $('.join-group-form form').submit();
+    }
   }
 
   function toggleGroupCodeForm(){

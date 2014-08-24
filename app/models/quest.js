@@ -30,6 +30,46 @@ class Quest{
     });
   }
 
+  isActiveQuest(user){
+    return this._id.equals(user.activeQuest.questId);
+  }
+
+  isStartedQuest(user){
+    var inStartedQuests;
+    
+    if (user.startedQuests.length > 0) {
+      inStartedQuests = user.startedQuests.some(quest=>{
+        return this._id.equals(quest.questId);
+      });
+    }
+    return inStartedQuests;
+  }
+
+  findStartedQuest(user){
+    var quest = _.remove(user.startedQuests, (quest)=>{
+      return quest.questId.equals(this._id);
+    });
+    return quest[0];
+  }
+
+  static separateCheckIns(locations, obj){
+    var separated;
+    if (obj.questLocs.length > 0) {
+      var complete;
+      obj.questLocs.forEach(loc=>{
+        complete = _.remove(locations, (checkIn)=>{
+          return checkIn._id.equals(loc);
+        });
+      });
+
+      separated = {incomplete: locations, complete: complete};
+      return separated;
+    } else {
+      separated = {incomplete: locations};
+      return separated;
+    }
+  }
+
   static findById(id, fn){
     Base.findById(id, quests, Quest, fn);
   }
@@ -59,6 +99,5 @@ class Quest{
   }
 
 } //end of class
-
 
 module.exports = Quest; //exporting Class out
