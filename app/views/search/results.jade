@@ -7,28 +7,31 @@ block content
   br
   br
   br
+  h2 Public Quests
   br
-  h3 Results
-  h2 Quests
   if(results.questNames.length > 0)
     each quest in results.questNames
       h2= quest.name
   br
   h2 Groups
+  br
   if(results.groupNames.length > 0)
     each group in results.groupResults
       h2= quest.name
   br
   h2 Locations
+  br
   if(results.locationNames.length > 0)
     each location in results.locationNames
-      h2= location.name
+      a(href='/locations/#{location.name}')= location.name
+
   br
   if(results.locationDescResults.length > 0)
     each location in results.locationDescResults
-      h2= location.name
+      a(href='/locations/#{location.name}')= location.name
   br
   h2 Users
+  br
   if(results.userNames.length > 0)
     each user in results.userNames
       h2= user.userName
