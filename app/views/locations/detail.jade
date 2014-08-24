@@ -10,8 +10,11 @@ block content
       p= comment.userName
       p Posted #{comment.daysFromComment}
       p= comment.comment
-
-
+      img(src='#{comment.userPhoto}')
+  br
+  br
+  br
+  br
   #wiki
     div(id='coords', data-lat='#{location.loc[1]}', data-long='#{location.loc[0]}')
 

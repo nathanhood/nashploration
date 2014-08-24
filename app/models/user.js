@@ -273,7 +273,7 @@ class User{
             }else{
               daysFromComment = `${daysFromComment} days ago`;
             }
-          var userComment = {userName: u.userName, userPhoto: u.photo.filePath, comment: c.comment, daysFromComment: daysFromComment };
+          var userComment = {userName: u.userName, userId: u._id, userPhoto: u.photo.filePath, comment: c.comment, daysFromComment: daysFromComment };
           allComments.push(userComment);
         }
       });
