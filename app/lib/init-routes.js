@@ -68,6 +68,7 @@ function load(app, fn){
   app.get('/quests/edit/:questId', dbg, quests.edit);
   app.post('/quests/create', dbg, quests.create);
   app.post('/quests/create-quest-map', dbg, quests.questMap);
+  app.post('/quests/update/:questId', dbg, quests.updateQuest);
 
 
   /* ----------- Groups ------------- */

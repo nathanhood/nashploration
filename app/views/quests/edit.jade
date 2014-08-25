@@ -3,7 +3,7 @@ extends ../shared/template
 block content
 
   .profile-content-wrapper
-    h1.quest-name(data-id='#{quest._id}') Edit Quest Page
+    h1.quest-name(data-id='#{quest._id}') Edit #{quest.name}
     p= quest.description
 
     img(src='#{quest.photo.filePath}')
@@ -11,6 +11,7 @@ block content
       label Choose New Quest Image
         input(type='file', name='photo')
       input#selected-groups(type='text', name='groupIds', hidden=true)
+      button.submit-quest-changes Save Changes
 
     .group-quest-options
       if(groups.length > 0)

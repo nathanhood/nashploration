@@ -39,8 +39,10 @@ exports.create = (req, res)=>{
             quest.save(()=>{
               user.createdQuests.push(quest._id);
               user.save(()=>{
-                req.flash('questConfirm', 'Quest successfully created!');
-                res.redirect(`/users/${res.locals.user.userName}`);
+                User.updateQuestOnManyUsers(groupUsers, quest._id, (err, result)=>{
+                  req.flash('questConfirm', 'Quest successfully created!');
+                  res.redirect(`/users/${res.locals.user.userName}`);
+                });
               });
             });
           });
@@ -60,7 +62,8 @@ exports.view = (req, res)=>{
           User.findAndReplaceQuestCreators(allMyQuests, finalMyQuests=>{
             User.findAndReplaceQuestCreators(complete, finalComplete=>{
               res.render('quests/view', {title: 'Nashploration', createdQuests:finalCreated , myQuests:finalMyQuests,
-              completedQuests: finalComplete, questRemovedFromMyQuests: req.flash('questRemovedFromMyQuests')});
+              completedQuests: finalComplete, questRemovedFromMyQuests: req.flash('questRemovedFromMyQuests'),
+              questUpdateConfirm: req.flash('questUpdateConfirm')});
             });
           });
         });
@@ -83,6 +86,38 @@ exports.edit = (req, res)=>{
     Group.findAllByOwnerId(userId, groups=>{
       var finalGroups = quest.findUnAddedGroupIds(groups);
       res.render('quests/edit', {title: 'Nashploration', quest:quest, groups:finalGroups});
+    });
+  });
+};
+
+exports.updateQuest = (req, res)=>{
+  var questId = req.params.questId;
+  var groupUsers = null;
+  var groupIds = null;
+
+  var form = new multiparty.Form();
+
+  form.parse(req, (err, fields, files)=>{
+    Quest.findById(questId, (err, quest)=>{
+      Group.findManyById(fields.groupIds[0], groups=>{
+        if (groups !== null) {
+          groupUsers = Group.accumulateUsersFromGroups(groups);
+          groupIds = Group.accumulateGroupIds(groups);
+          quest.addGroupUsers(groupUsers);
+          quest.addGroupIds(groupIds);
+        }
+        quest.photo = quest.processPhoto(files.photo[0]);
+        quest.save(()=>{
+          User.findManyById(groupUsers, users=>{
+
+            groupUsers = User.findUsersWithoutQuest(users, groupUsers, quest._id);
+            User.updateQuestOnManyUsers(groupUsers, quest._id, (err, result)=>{
+              req.flash('questUpdateConfirm', `${quest.name} was successfully updated!`);
+              res.redirect('/quests/view');
+            });
+          });
+        });
+      });
     });
   });
 };

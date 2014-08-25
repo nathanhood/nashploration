@@ -9,8 +9,18 @@
   function init(){
     fetchLocations();
     $('.remove-quest').click(removeQuest);
+    $('.submit-quest-changes').click(submitForm);
   }
 
+  function submitForm(event){
+    var groups = [];
+    $('.group-to-quest:checked').each((i, group)=>{
+      groups.push($(group).attr('id'));
+    });
+    $('#selected-groups').val(groups);
+    $('form').submit();
+    event.preventDefault();
+  }
 
   function removeQuest(event){
     var questId = $('.quest-name').data('id');

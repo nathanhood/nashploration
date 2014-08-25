@@ -34,6 +34,22 @@ class Quest{
     });
   }
 
+  addGroupUsers(groupUsers){
+    groupUsers.forEach(user=>{
+      this.groupUsers.push(user);
+    });
+
+    this.groupUsers = _.uniq(this.groupUsers, (user)=>{
+      return user.toString();
+    });
+  }
+
+  addGroupIds(groupIds){
+    groupIds.forEach(group=>{
+      this.groupIds.push(group);
+    });
+  }
+
   isActiveQuest(user){
     return this._id.equals(user.activeQuest.questId);
   }

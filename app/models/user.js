@@ -187,6 +187,28 @@ class User{
     return activeQuestId.equals(questId);
   }
 
+  static findUsersWithoutQuest(users, userIds, questId){
+    if (users && userIds) {
+      var unavailableUsers = [];
+      users.forEach(user=>{
+        user.myQuests.forEach(quest=>{
+          if (quest.equals(questId)) {
+            unavailableUsers.push(user);
+          }
+        });
+      });
+
+      unavailableUsers.forEach(user=>{
+        _.remove(userIds, id=>{
+          return user._id.equals(id);
+        });
+      });
+      return userIds;
+    } else {
+      return null;
+    }
+  }
+
   static removeGroupFromUsersGroups(groupId, fn){
     groupId = Mongo.ObjectID(groupId);
     users.update({ groups: groupId }, { $pull: { groups: groupId } }, { multi: true },
@@ -201,6 +223,16 @@ class User{
       (err, res)=>{
         fn(err, res);
     });
+  }
+
+  static updateQuestOnManyUsers(userIds, questId, fn){
+    if (userIds) {
+      users.update({_id: { $in: userIds } }, { $push: { myQuests: questId } }, { multi: true }, (err, result)=>{
+        fn(err, result);
+      });
+    } else {
+      fn(null);
+    }
   }
 
   static register(fields, userName, fn){
