@@ -20,66 +20,55 @@ block content
       if (addedToMyQuests)
         p= addedToMyQuests
 
-    if (userProfile)
-      .profile-wrapper
-        .profile-info-left
-          .profile-pic(style='background-image: url("#{user.photo.filePath}")')
-          a.edit-profile(href="#") EDIT
-        .profile-info-right
-          span Username:
-          h3= userProfile.userName
-          span Nickname:
-          h3= userProfile.nickName
-          span Class:
-          h3= userProfile.class
-      .links
-        a(href="#")
-          h4 Check-Ins #{userProfile.checkIns.length}
-          img(src="/img/assets/link-placeholder.png")
-        a(href="#")
-          h4 Groups #{userProfile.groups.length}
-          img(src="/img/assets/link-placeholder.png")
-        a(href="#")
-          h4 Leaders
-          img(src="/img/assets/link-placeholder.png")
-      .quest-group-menu-buttons
-        a.quest-menu-button.active-button(href="#") Quests
-        a.group-menu-button(href="#") Groups
-      .quest-group-menus
-        ul.quest-menu
-          li
-            a(href='#') Find a Quest
-          li
-            a(href='/quests/new') Build a Quest
-          li
-            a(href='/quests/view') View Quests
-          li
-            a(href='#') Completed Quests
-        ul.group-menu
-          li.join-group-form(hidden)
-            form(action='/groups/join-group', method='POST')
-              input.group-code(type='text', name='groupCode', placeholder='Enter Group Code Here')
-            button Join Group
-          li
-            a.join-group-link(href='#') Join a Group
-          li
-            a(href='#') Find a Group
-          li
-            a(href='/groups/new') Create a Group
-          li
-            a(href='/groups/view') Manage Groups
 
-    if (otherProfile)
-      h1 Someone Else's Profile
-      span Username:
-      h3= otherProfile.userName
-      span Nickname:
-      h3= otherProfile.nickName
-      span Class:
-      h3= otherProfile.class
-      h4 Check-Ins: #{otherProfile.checkIns.length}
-      h4 Groups: #{otherProfile.groups.length}
-      h4 Leaders: Not sure about this category
+    .profile-wrapper
+      .profile-info-left
+        .profile-pic(style='background-image: url("#{profileOwner.photo.filePath}")')
+        if(user.isOwner(profileOwner._id))
+          a.edit-profile(href="#") EDIT
+      .profile-info-right
+        span Username:
+        h3= profileOwner.userName
+        span Nickname:
+        h3= profileOwner.nickName
+        span Class:
+        h3= profileOwner.class
+    .links
+      a(href="#")
+        h4 Check-Ins #{profileOwner.checkIns.length}
+        img(src="/img/assets/link-placeholder.png")
+      a(href="#")
+        h4 Groups #{profileOwner.groups.length}
+        img(src="/img/assets/link-placeholder.png")
+      a(href="#")
+        h4 Leaders
+        img(src="/img/assets/link-placeholder.png")
+    .quest-group-menu-buttons
+      a.quest-menu-button.active-button(href="#") Quests
+      a.group-menu-button(href="#") Groups
+    .quest-group-menus
+      ul.quest-menu
+        li
+          a(href='#') Find a Quest
+        li
+          a(href='/quests/new') Build a Quest
+        li
+          a(href='/quests/view') View Quests
+        li
+          a(href='#') Completed Quests
+      ul.group-menu
+        li.join-group-form(hidden)
+          form(action='/groups/join-group', method='POST')
+            input.group-code(type='text', name='groupCode', placeholder='Enter Group Code Here')
+          button Join Group
+        li
+          a.join-group-link(href='#') Join a Group
+        li
+          a(href='#') Find a Group
+        li
+          a(href='/groups/new') Create a Group
+        li
+          a(href='/groups/view') Manage Groups
 
 block scripts
   script(src='/js/es6/compiled/profile.js')

@@ -16,8 +16,7 @@ exports.index = (req, res)=>{
 exports.profile = (req, res)=>{
   User.findByUserName(req.params.userName, user=>{
     if (user) {
-      if (res.locals.user._id.equals(user._id)) {
-        res.render('users/profile', {title: 'Nashploration', userProfile: user, otherProfile: null,
+        res.render('users/profile', {title: 'Nashploration', profileOwner: user,
         unknownProfile: req.flash('unknownProfile'),
         groupConfirmation: req.flash('groupConfirmation'),
         joinedGroup: req.flash('joinedGroup'),
@@ -27,9 +26,7 @@ exports.profile = (req, res)=>{
         addedToMyQuests: req.flash('addedToMyQuests'),
         alreadyInMyQuests: req.flash('alreadyInMyQuests')
         });
-      } else {
-        res.render('users/profile', {title: 'Nashploration', userProfile: null, otherProfile: user});
-      }
+
     } else {
       req.flash('unknownProfile', `There is no one with the username ${req.params.userName}.`);
       res.redirect(`/users/${res.locals.user.userName}`);
