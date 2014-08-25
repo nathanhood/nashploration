@@ -8,6 +8,8 @@ var Group = traceur.require(__dirname + '/../models/group.js');
 var User = traceur.require(__dirname + '/../models/user.js');
 var Location = traceur.require(__dirname + '/../models/location.js');
 
+var multiparty = require('multiparty');
+
 exports.new = (req, res)=>{
   var userId = res.locals.user._id;
   Group.findAllByOwnerId(userId, groups=>{
@@ -17,22 +19,30 @@ exports.new = (req, res)=>{
 
 exports.create = (req, res)=>{
   var userId = res.locals.user._id;
+  var user = res.locals.user;
   var groupUsers = null;
   var groupIds = null;
-  var user = res.locals.user;
-  Group.findManyById(req.body.groupIds, groups=>{
-    if (groups !== null) {
-      groupUsers = Group.accumulateUsersFromGroups(groups);
-      groupIds = Group.accumulateGroupIds(groups);
-    }
-    Location.findManyById(req.body.locations, locations=>{
-      Location.accumulateLocationIds(locations, locationIds=>{
-        var quest = new Quest(userId, locationIds, req.body, groupUsers, groupIds);
-        quest.save(()=>{
-          user.createdQuests.push(quest._id);
-          user.save(()=>{
-            req.flash('questConfirm', 'Quest successfully created!');
-            res.redirect(`/users/${res.locals.user.userName}`);
+
+  var form = new multiparty.Form();
+  form.parse(req, (err, fields, files)=>{
+
+    Group.findManyById(fields.groupIds[0], groups=>{
+      if (groups !== null) {
+        groupUsers = Group.accumulateUsersFromGroups(groups);
+        groupIds = Group.accumulateGroupIds(groups);
+      }
+      Location.findManyById(fields.locations[0], locations=>{
+        Location.accumulateLocationIds(locations, locationIds=>{
+          var quest = new Quest(userId, locationIds, fields, groupUsers, groupIds);
+          quest.save(()=>{
+            quest.photo = quest.processPhoto(files.photo[0]);
+            quest.save(()=>{
+              user.createdQuests.push(quest._id);
+              user.save(()=>{
+                req.flash('questConfirm', 'Quest successfully created!');
+                res.redirect(`/users/${res.locals.user.userName}`);
+              });
+            });
           });
         });
       });

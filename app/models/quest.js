@@ -1,28 +1,31 @@
 'use strict';
 
-var quests = global.nss.db.collection('quests');
 var _ = require('lodash');
+var crypto = require('crypto');
+var path = require('path');
+var fs = require('fs');
 var Mongo = require('mongodb');
 var traceur = require('traceur');
+
+var quests = global.nss.db.collection('quests');
 var Base = traceur.require(__dirname + '/../models/base.js');
 
 
 class Quest{
-  constructor(userId, locationIds, body, groupUsers, groupIds){
-    this.name = body.name;
-    this.description = body.description;
-    this.users = groupUsers;
+  constructor(userId, locationIds, fields, groupUsers, groupIds){
+    this.name = fields.name[0];
+    this.description = fields.description[0];
+    this.groupUsers = groupUsers;
     this.groupIds = groupIds;
     this.creator = userId;
     this.checkIns = locationIds;
-    if (body.isPrivate === 'true') {
+    if (fields.isPrivate) {
       this.isPrivate = true;
     } else {
       this.isPrivate = false;
     }
-  //   this.image = files.image[0].originalFilename OR default image path;
+    this.photo = null;
   }
-
 
   save(fn){
     quests.save(this, ()=>{
@@ -52,6 +55,28 @@ class Quest{
     });
     return quest[0];
   }
+
+  processPhoto(photo, fn) {
+    if(photo.size) {
+      var name = crypto.randomBytes(12).toString('hex') + path.extname(photo.originalFilename).toLowerCase();
+      var file = `/img/${this._id}/${name}`;
+
+      var newPhoto = {};
+      newPhoto.fileName = name;
+      newPhoto.filePath = file;
+      newPhoto.origFileName = photo.originalFilename;
+
+      var userDir = `${__dirname}/../static/img/${this._id}`;
+      var fullDir = `${userDir}/${name}`;
+
+      if(!fs.existsSync(userDir)){fs.mkdirSync(userDir);}
+      fs.renameSync(photo.path, fullDir);
+      return newPhoto;
+    } else {
+      return {fileName: null, filePath: '/img/assets/quest-placeholder.png', origFileName: null};
+    }
+  }
+
 
   static removeGroupFromGroupIds(groupId, fn){
     groupId = Mongo.ObjectID(groupId);

@@ -83,7 +83,7 @@ class Group {
   }
 
   static findManyById(groupIds, fn){
-    if(typeof groupIds === 'string'){
+    if(typeof groupIds === 'string' && groupIds.length >= 24){
       groupIds = groupIds.split(',');
         groupIds = groupIds.map(id=>{
           return Mongo.ObjectID(id);
