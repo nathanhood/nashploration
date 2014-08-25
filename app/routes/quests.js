@@ -78,8 +78,12 @@ exports.show = (req, res)=>{
 };
 
 exports.edit = (req, res)=>{
+  var userId = res.locals.user._id;
   Quest.findById(req.params.questId, (err, quest)=>{
-    res.render('quests/edit', {title: 'Nashploration', quest:quest});
+    Group.findAllByOwnerId(userId, groups=>{
+      var finalGroups = quest.findUnAddedGroupIds(groups);
+      res.render('quests/edit', {title: 'Nashploration', quest:quest, groups:finalGroups});
+    });
   });
 };
 

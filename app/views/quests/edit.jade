@@ -6,9 +6,21 @@ block content
     h1.quest-name(data-id='#{quest._id}') Edit Quest Page
     p= quest.description
 
+    img(src='#{quest.photo.filePath}')
+    form(action='/quests/update/#{quest._id}', method='POST', enctype='multipart/form-data')
+      label Choose New Quest Image
+        input(type='file', name='photo')
+      input#selected-groups(type='text', name='groupIds', hidden=true)
 
+    .group-quest-options
+      if(groups.length > 0)
+        h3 Add Groups
+        each group in groups
+          label(for='#{group._id}')= group.name
+          input(type="checkbox", id='#{group._id}', class='group-to-quest', value='#{group.name}')
+      else
+        h3 All your groups are a part of this quest
     .quest-destinations-container
-      button.add-quest-locations Add Locations
       h2 Quest Locations
       ul.quest-destinations
 

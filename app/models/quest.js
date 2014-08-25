@@ -77,6 +77,17 @@ class Quest{
     }
   }
 
+  findUnAddedGroupIds(groups){
+    if (groups.length > 0){
+      this.groupIds.forEach(id=>{
+        _.remove(groups, group=>{
+          return group._id.equals(id);
+        });
+      });
+      return groups;
+    }
+  }
+
 
   static removeGroupFromGroupIds(groupId, fn){
     groupId = Mongo.ObjectID(groupId);
