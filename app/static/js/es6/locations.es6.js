@@ -10,6 +10,7 @@
     fetchLocations();
     $('#map-filter select').on('change', filterLocations);
     $('body').on('click', '.info-window', showStreetView);
+    fadeConfirmMessage();
     // findLocation();
   }
 
@@ -368,6 +369,10 @@ function ajax(url, type, data={}, success=r=>console.log(r), dataType='html'){
 $.ajax({url:url, type:type, dataType:dataType, data:data, success:success});
 }
 
-
+function fadeConfirmMessage(){
+  setTimeout(function(){
+    $('.messages').fadeOut('slow');
+  }, 4000);
+}
 
 })();
