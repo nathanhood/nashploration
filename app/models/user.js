@@ -33,7 +33,6 @@ class User{
   }
 
   updateInfo(userInfo, fn){
-    console.log(userInfo);
     var value = Object.keys(userInfo)[0];
     var update = { $set: {} };
 

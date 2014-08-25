@@ -14,3 +14,5 @@ block content
   form(action='/users/edit/#{profileOwner._id}', method='POST')
     input(type='text', name='email', value='#{profileOwner.email}')
     button Submit
+
+  a(href='/users/#{profileOwner.userName}') Finish

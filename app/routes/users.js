@@ -206,6 +206,6 @@ exports.fetchInfo = (req, res)=>{
 
 exports.updateInfo = (req, res)=>{
   res.locals.user.updateInfo(req.body, updatedUser=>{
-    res.redirect(`/users/${updatedUser.userName}`);
+    res.redirect(`/users/edit/${updatedUser._id}`);
   });
 };
