@@ -85,6 +85,7 @@ exports.login = (req, res)=>{
             group.save(()=>{
               res.locals.user = u;
               req.session.userId = u._id;
+              req.flash('joinedGroup', `You successfully joined the group ${group.name}`);
               res.redirect(`/users/${u.userName}`);
             });
           });
