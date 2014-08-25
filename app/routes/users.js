@@ -209,3 +209,8 @@ exports.updateInfo = (req, res)=>{
     res.redirect(`/users/edit/${updatedUser._id}`);
   });
 };
+
+exports.changePassword = (req, res)=>{
+  console.log(req.body);
+
+};

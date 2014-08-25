@@ -1,4 +1,4 @@
-
+/* jshint unused: false */
 
 (function(){
   'use strict';
@@ -32,5 +32,5 @@
       $('.messages').fadeOut('slow');
     }, 4000);
   }
-  
+
 })();

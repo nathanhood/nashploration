@@ -1,6 +1,12 @@
 extends ../shared/template
 
+append scripts
+  script(src='/js/es6/compiled/profile.js')
+
+
+
 block content
+
   br
   br
   br
@@ -14,5 +20,30 @@ block content
   form(action='/users/edit/#{profileOwner._id}', method='POST')
     input(type='text', name='email', value='#{profileOwner.email}')
     button Submit
+  form(name='passwordCheck', onsubmit='return validatePassword();', action='/users/edit/#{profileOwner._id}}', method='POST')
+    input(type='password', id='password', name='password')
+    input(type='password', id='passwordConfirmation', name='passwordConfirmation')
+    button Submit
+
+  script.
+    function validatePassword() {
+       var password = document.forms['passwordCheck']['password'].value;
+       var passwordConfirmation = document.forms['passwordCheck']['passwordConfirmation'].value;
+
+       if (password !== passwordConfirmation ) {
+           alert('Password fields must match');
+           $('#password').val('');
+           $('#passwordConfirmation').val('');
+
+           return false;
+       }else if(password === '' || passwordConfirmation === ''){
+         alert('Password can not be blank');
+       }
+        $('#passwordConfirmation').attr('name', '');
+     }
+
 
   a(href='/users/#{profileOwner.userName}') Finish
+
+block scripts
+  script(src='/js/es6/compiled/profile.js')

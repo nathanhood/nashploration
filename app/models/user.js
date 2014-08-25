@@ -34,10 +34,19 @@ class User{
 
   updateInfo(userInfo, fn){
     var value = Object.keys(userInfo)[0];
+
     var update = { $set: {} };
 
-    update.$set[value] = userInfo[value];
-
+    if(value === 'password'){
+      console.log('=======');
+      console.log(userInfo);
+      var password = bcrypt.hashSync(userInfo.password, 8);
+      update.$set[value] = password;
+    }else{
+      update.$set[value] = userInfo[value];
+    }
+    console.log('IN MODEL');
+    console.log(update);
     users.update({_id: this._id}, update, (err, res)=>{
       users.findOne({_id: this._id}, (err, user)=>{
           fn(user);
