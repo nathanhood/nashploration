@@ -155,6 +155,18 @@ class Location{
     });
   }
 
+  static findAllCheckInIds(checkIns, fn){
+    var checkInIds = [];
+      checkIns.forEach(c=>{
+        checkInIds.push(c.locId);
+      });
+      
+    locations.find({_id: { $in: checkInIds } }).toArray((err, locations)=>{
+      fn(locations);
+    });
+  }
+
+
   static accumulateLocationIds(locations, fn){
     var ids = [];
     locations.forEach(location=>{

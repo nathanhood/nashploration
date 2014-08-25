@@ -36,7 +36,7 @@ class User{
     locationId = Mongo.ObjectID(locationId);
 
     var previousCheckIn = this.checkIns.some(checkIn=>{
-      return checkIn.equals(locationId);
+      return checkIn.locId.equals(locationId);
     });
 
     fn(previousCheckIn);
@@ -59,18 +59,26 @@ class User{
     if(isInQuestArray === true && isInActiveQuestArray === false){
       this.activeQuest.questLocs.push(locationId);
     }
+
   }
 
   updateCheckIns(locationId){
     var isInCheckInsArray = false;
+
     if (this.checkIns.length) {
-      isInCheckInsArray = this.checkIns.some(checkInId=>{
-        return checkInId.equals(locationId);
-      });
+      var checkInLocIds = [];
+        this.checkIns.forEach(c=>{
+          checkInLocIds.push(c.locId);
+        });
+
+        isInCheckInsArray = checkInLocIds.some(checkInId=>{
+          return checkInId.equals(locationId);
+        });
     }
 
     if(isInCheckInsArray === false){
-      this.checkIns.push(locationId);
+      var checkIn = {timeStamp: new Date(), locId: locationId};
+      this.checkIns.push(checkIn);
     }
   }
 

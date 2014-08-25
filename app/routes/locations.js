@@ -21,10 +21,10 @@ exports.index = (req, res)=>{ //this renders the dashboard
 
 exports.getLocations = (req, res)=>{
   var locationsObj = {};
-
-  if(res.locals.user.checkIns.length && res.locals.user.activeQuest.questId !== null){
+  
+  if(res.locals.user.checkIns.length > 1 && res.locals.user.activeQuest.questId !== null){
     Location.findAll(locations=>{
-      Location.findManyById(res.locals.user.checkIns, allCheckIns=>{
+      Location.findAllCheckInIds(res.locals.user.checkIns, allCheckIns=>{
         Quest.findById(res.locals.user.activeQuest.questId, (err, quest)=>{
           Location.removeDuplicates(locations, allCheckIns, allMinusCheckIns=>{
             if(quest.checkIns.length === res.locals.user.activeQuest.questLocs.length){
@@ -68,9 +68,10 @@ exports.getLocations = (req, res)=>{
         }
       });
     });
-  }else if(res.locals.user.activeQuest.questId === null && res.locals.user.checkIns){
+  }else if(res.locals.user.activeQuest.questId === null && res.locals.user.checkIns.length){
+
     Location.findAll(locations=>{
-      Location.findManyById(res.locals.user.checkIns, allCheckIns=>{
+      Location.findAllCheckInIds(res.locals.user.checkIns, allCheckIns=>{
         Location.removeDuplicates(locations, allCheckIns, allMinusCheckIns=>{
           locationsObj.all = allMinusCheckIns;
           locationsObj.quest = null;
