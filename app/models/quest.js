@@ -2,6 +2,7 @@
 
 var quests = global.nss.db.collection('quests');
 var _ = require('lodash');
+var Mongo = require('mongodb');
 var traceur = require('traceur');
 var Base = traceur.require(__dirname + '/../models/base.js');
 
@@ -36,7 +37,7 @@ class Quest{
 
   isStartedQuest(user){
     var inStartedQuests;
-    
+
     if (user.startedQuests.length > 0) {
       inStartedQuests = user.startedQuests.some(quest=>{
         return this._id.equals(quest.questId);
@@ -50,6 +51,14 @@ class Quest{
       return quest.questId.equals(this._id);
     });
     return quest[0];
+  }
+
+  static removeGroupFromGroupIds(groupId, fn){
+    groupId = Mongo.ObjectID(groupId);
+    quests.update({ groupIds: groupId }, { $pull: { groupIds: groupId } }, { multi: true },
+      (err, res)=>{
+        fn(err, res);
+    });
   }
 
   static separateCheckIns(locations, obj){

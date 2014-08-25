@@ -5,6 +5,7 @@
 var traceur = require('traceur');
 var Group = traceur.require(__dirname + '/../models/group.js');
 var User = traceur.require(__dirname + '/../models/user.js');
+var Quest = traceur.require(__dirname + '/../models/quest.js');
 
 
 exports.new = (req, res)=>{
@@ -70,14 +71,16 @@ exports.delete = (req, res)=>{
   var groupName = req.body.groupName;
   User.removeGroupFromUsersGroups(groupId, (err)=>{
     User.removeGroupFromUserCreatedGroups(groupId, (err2)=>{
-      Group.destroyGroup(groupId, (err3)=>{
-        if (!err) {
-          req.flash('deleteGroupConfirm', `${groupName} was successfully deleted`);
-          res.redirect('/groups/view');
-        } else {
-          req.flash('deleteGroupError', 'There was a problem. Your group has not been deleted properly.');
-          res.redirect(`/groups/edit/groupId`);
-        }
+      Quest.removeGroupFromGroupIds(groupId, (err3)=>{
+        Group.destroyGroup(groupId, (err4)=>{
+          if (!err4) {
+            req.flash('deleteGroupConfirm', `${groupName} was successfully deleted`);
+            res.redirect('/groups/view');
+          } else {
+            req.flash('deleteGroupError', 'There was a problem. Your group has not been deleted properly.');
+            res.redirect(`/groups/edit/groupId`);
+          }
+        });
       });
     });
   });
