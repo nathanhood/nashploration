@@ -107,8 +107,7 @@
     var startLatLng = new google.maps.LatLng(36.1667, -86.7833);
     var mapOptions = {
       zoom: 14,
-      center: startLatLng,
-      draggableCursor: 'crosshair'
+      center: startLatLng
     };
       map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 

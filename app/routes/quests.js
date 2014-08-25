@@ -8,6 +8,13 @@ var Group = traceur.require(__dirname + '/../models/group.js');
 var User = traceur.require(__dirname + '/../models/user.js');
 var Location = traceur.require(__dirname + '/../models/location.js');
 
+exports.index = (req, res)=>{
+  Quest.findAllPublic(quests=>{
+    res.render('quests/index', {title: 'Nashploration', quests: quests});
+  });
+};
+
+
 exports.new = (req, res)=>{
   var userId = res.locals.user._id;
   Group.findAllByOwnerId(userId, groups=>{

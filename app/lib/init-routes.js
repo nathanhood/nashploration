@@ -62,6 +62,7 @@ function load(app, fn){
 
 
   /* ----------- Quests ------------- */
+  app.get('/quests', dbg, quests.index);
   app.get('/quests/new', dbg, quests.new);
   app.get('/quests/view', dbg, quests.view);
   app.get('/quests/show/:questId', dbg, quests.show);

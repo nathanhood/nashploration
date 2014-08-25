@@ -1,0 +1,12 @@
+extends ../shared/template
+
+block content
+  br
+  br
+  br
+  br
+  br
+  if(quests)
+    each quest in quests
+      br
+      a(href='/quests/show/#{quest._id}')= quest.name

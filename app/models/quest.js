@@ -86,6 +86,12 @@ class Quest{
     });
   }
 
+  static findAllPublic(fn){
+    quests.find({isPrivate: false}).toArray((err, quests)=>{
+      fn(quests);
+    });
+  }
+
   static searchByName(query, fn){
     quests.find({ name: { $regex: query, $options: 'i'}, isPrivate: false }).sort({name: 1}).toArray((err, results)=>{
       fn(results);
