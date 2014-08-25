@@ -289,7 +289,7 @@ class User{
           var daysFromComment = (Math.abs(new Date() - c.date) / 86400000).toFixed(0); //milliseconds in a day
             if(daysFromComment < 1){
               daysFromComment = 'Today';
-            }else if(daysFromComment === 1){
+            }else if(daysFromComment >= 1 && daysFromComment < 2){
               daysFromComment = '1 day ago';
             }else{
               daysFromComment = `${daysFromComment} days ago`;

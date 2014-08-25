@@ -160,7 +160,7 @@ class Location{
       checkIns.forEach(c=>{
         checkInIds.push(c.locId);
       });
-      
+
     locations.find({_id: { $in: checkInIds } }).toArray((err, locations)=>{
       fn(locations);
     });
