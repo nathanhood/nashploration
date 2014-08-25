@@ -269,7 +269,7 @@ class User{
   }
 
   static findManyById(userIds, fn){
-    if (userIds.length) {
+    if (userIds) {
       users.find({_id: { $in: userIds } }).toArray((err, users)=>{
         fn(users);
       });

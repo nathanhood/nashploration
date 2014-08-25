@@ -100,16 +100,20 @@ exports.updateQuest = (req, res)=>{
   form.parse(req, (err, fields, files)=>{
     Quest.findById(questId, (err, quest)=>{
       Group.findManyById(fields.groupIds[0], groups=>{
+
         if (groups !== null) {
           groupUsers = Group.accumulateUsersFromGroups(groups);
           groupIds = Group.accumulateGroupIds(groups);
           quest.addGroupUsers(groupUsers);
           quest.addGroupIds(groupIds);
         }
+        if (fields.isPrivate) {
+          var val = (fields.isPrivate[0] === 'true');
+          quest.isPrivate = val;
+        }
         quest.photo = quest.processPhoto(files.photo[0]);
         quest.save(()=>{
           User.findManyById(groupUsers, users=>{
-
             groupUsers = User.findUsersWithoutQuest(users, groupUsers, quest._id);
             User.updateQuestOnManyUsers(groupUsers, quest._id, (err, result)=>{
               req.flash('questUpdateConfirm', `${quest.name} was successfully updated!`);
