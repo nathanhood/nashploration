@@ -1,0 +1,16 @@
+extends ../shared/template
+
+block content
+  br
+  br
+  br
+  br
+  form(action='/users/edit/#{profileOwner._id}', method='POST')
+    input(type='text', name='userName', value='#{profileOwner.userName}')
+    button Submit
+  form(action='/users/edit/#{profileOwner._id}', method='POST')
+    input(type='text', name='nickName', value='#{profileOwner.nickName}')
+    button Submit
+  form(action='/users/edit/#{profileOwner._id}', method='POST')
+    input(type='text', name='email', value='#{profileOwner.email}')
+    button Submit

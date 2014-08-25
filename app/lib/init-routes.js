@@ -55,11 +55,12 @@ function load(app, fn){
   /* ------------ Users ------------ */
   app.get('/dashboard', dbg, users.index);
   app.get('/users/:userName', dbg, users.profile);
+  app.get('/users/edit/:userId', dbg, users.fetchInfo);
+  app.post('/users/edit/:userId', dbg, users.updateInfo);
   app.post('/users/checkin/:locationId', dbg, users.checkIn);
   app.post('/users/add-active-quest/:questId', dbg, users.addActiveQuest);
   app.post('/users/add-quest/:questId', dbg, users.addQuest);
   app.post('/users/remove-quest/:questId', dbg, users.removeQuest);
-
 
   /* ----------- Quests ------------- */
   app.get('/quests', dbg, quests.index);

@@ -25,7 +25,7 @@ block content
       .profile-info-left
         .profile-pic(style='background-image: url("#{profileOwner.photo.filePath}")')
         if(user.isOwner(profileOwner._id))
-          a.edit-profile(href="#") EDIT
+          a.edit-profile(href="/users/edit/#{profileOwner._id}") EDIT
       .profile-info-right
         span Username:
         h3= profileOwner.userName

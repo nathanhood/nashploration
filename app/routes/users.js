@@ -1,3 +1,4 @@
+/* jshint unused: false */
 'use strict';
 
 var traceur = require('traceur');
@@ -196,5 +197,15 @@ exports.removeQuest = (req, res)=>{
       req.flash('questRemovedFromMyQuests', `${quest.name} has been successfully removed`);
       res.redirect('/quests/view');
     });
+  });
+};
+
+exports.fetchInfo = (req, res)=>{
+  res.render('users/edit', {title: 'Nashploration', profileOwner: res.locals.user});
+};
+
+exports.updateInfo = (req, res)=>{
+  res.locals.user.updateInfo(req.body, updatedUser=>{
+    res.redirect(`/users/${updatedUser.userName}`);
   });
 };

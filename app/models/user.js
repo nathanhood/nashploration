@@ -32,6 +32,20 @@ class User{
     // this.streetViewQuizzes = []; // Object IDs
   }
 
+  updateInfo(userInfo, fn){
+    console.log(userInfo);
+    var value = Object.keys(userInfo)[0];
+    var update = { $set: {} };
+
+    update.$set[value] = userInfo[value];
+
+    users.update({_id: this._id}, update, (err, res)=>{
+      users.findOne({_id: this._id}, (err, user)=>{
+          fn(user);
+      });
+    });
+  }
+
   isPreviousCheckIn(locationId, fn){
     locationId = Mongo.ObjectID(locationId);
 
@@ -332,6 +346,6 @@ class User{
       fn(null);
     }
   }
-}
+} //end of Class
 
 module.exports = User; //exporting Class out
