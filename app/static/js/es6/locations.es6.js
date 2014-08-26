@@ -202,9 +202,9 @@
       locDesc = 'There is no description for this site.';
     }
 
-    var content = '<h3>' + siteName + '</h3>'+
-    '<p>' + locDesc + '</p>'+
-    '<a href="/locations/'+siteURL+'", class="info-window">Show More</a>';
+    var content = '<div class="pop-up-window"><h3 class="pop-up-title">' + siteName + '</h3>'+
+    '<p class="pop-up-description">' + locDesc + '</p>'+
+    '<a href="/locations/'+siteURL+'", class="info-window pop-up-link">Show More</a></div>';
       siteName = new google.maps.InfoWindow();
       siteName.setContent(content);
       allInfoWindows.push(siteName); //since all windows have diff variable names, they are pushed into an array so they can be closed on the opening of another window
@@ -344,10 +344,12 @@ function addCheckInButton(windowName, description, id){
     }
 
     if(w.content.match(windowName)){
-      var content = '<h3>'+windowName+'</h3>'+
-      '<p>'+description+'</p>'+
-      '<a href="/locations/'+siteURL+'", class=info-window>Show More</a>'+ //id is the locations mongo id
-      '<a href="/checkIn/'+id+'", class="checkin-button"> <button>Check In</button></a>'; //onclick="'+checkIn()+'"
+
+      var content = '<div class="pop-up">'+
+      '<h3 class="pop-up-title">'+windowName+'</h3>'+
+      '<p class="pop-up-p">'+description+'</p>'+
+      '<a href="/locations/'+siteURL+'", class="info-window pop-up-link">Show More</a>'+ //id is the locations mongo id
+      '<a href="/checkIn/'+id+'", class="checkin-button"> <button>Check In</button></a>'+'</div>'; //onclick="'+checkIn()+'"
 
       w.setContent(content);
     }

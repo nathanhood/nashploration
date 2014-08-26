@@ -9,6 +9,12 @@
     $('a.group-menu-button').click(showGroupMenu);
     $('a.quest-menu-button').click(showQuestMenu);
     $('a.submit-logout').click(submitLogoutForm);
+    $('a.back-button').click(goBack);
+  }
+
+  function goBack(){
+    parent.history.back();
+    return false;
   }
 
   // FUNCTIONS FOR TEMPLATE PAGE ======================================================

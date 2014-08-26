@@ -1,7 +1,9 @@
 extends ../shared/template
 
 block content
-  .profile-content-wrapper
+  .content-wrapper
+    mixin back('Profile')
+
     .messages
       if (questConfirm)
         p= questConfirm
@@ -36,10 +38,10 @@ block content
         h3= profileOwner.class
     .links
       a(href="/users/#{profileOwner.userName}/checkins")
-        h4 Check-Ins #{profileOwner.checkIns.length}
+        h4 Check-Ins
         img(src="/img/assets/link-placeholder.png")
       a(href="#")
-        h4 Groups #{profileOwner.groups.length}
+        h4 Badges
         img(src="/img/assets/link-placeholder.png")
       a(href="#")
         h4 Leaders

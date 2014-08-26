@@ -1,8 +1,9 @@
 
 block content
-  .messages
-    if (successCheckIn)
-      p= successCheckIn
+
+  if (successCheckIn)
+    .messages
+      p.home-message= successCheckIn
 
   include ../locations/index.jade
 
@@ -10,7 +11,7 @@ block content
     form.checkin-form(action='/checkIn/view-nearby', method='GET')
       input(type='text', name='nearbyCheckIns', hidden)
     a(href='#').checkin-button
-    .profile-wrapper
+    .profile-home-wrapper
       .profile-pic-wrapper
         img(src="#{user.photo.filePath}")
       .class-name-wrapper
