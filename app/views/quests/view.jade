@@ -2,32 +2,38 @@ extends ../shared/template
 
 block content
 
-  .profile-content-wrapper
+  .content-wrapper
+    mixin back('Quest List')
+
     .messages
       if (questRemovedFromMyQuests)
         p= questRemovedFromMyQuests
       if (questUpdateConfirm)
         p= questUpdateConfirm
 
-    h1 View Quests
+    .quest-list-content-wrapper 
 
-    if (createdQuests !== null)
-      h2 Created Quests
-      each quest in createdQuests
-        h3= quest.name
-        a(href='/quests/edit/#{quest._id}') edit
-        p created by #{quest.creator.userName}
+      if (createdQuests !== null)
+        h2 Created Quests
+        each quest in createdQuests
+          .quest-entry
+            a(href='/quests/show/#{quest._id}')
+              h3= quest.name
+            p created by #{quest.creator.userName}
+            a.quest-edit(href='/quests/edit/#{quest._id}') edit
 
-    if (myQuests !== null)
-      h2 Joined Quests
-      each quest in myQuests
-        h3
-         a(href='/quests/show/#{quest._id}')= quest.name
-        p created by #{quest.creator.userName}
+      if (myQuests !== null)
+        h2 Joined Quests
+        each quest in myQuests
+          .quest-entry
+            h3
+             a(href='/quests/show/#{quest._id}')= quest.name
+            p created by #{quest.creator.userName}
 
-    if (completedQuests !== null)
-      h2 Completed Quests
-      each quest in completedQuests
-        h3
-          a(href='/quests/show/#{quest._id}')=quest.name
-        p created by #{quest.creator.userName}
+      if (completedQuests !== null)
+        h2 Completed Quests
+        each quest in completedQuests
+          .quest-entry
+            h3
+              a(href='/quests/show/#{quest._id}')=quest.name
+            p created by #{quest.creator.userName}

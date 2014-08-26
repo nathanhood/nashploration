@@ -2,13 +2,14 @@
 block content
 
   if (successCheckIn)
-    p= successCheckIn
+    .messages
+      p.home-message= successCheckIn
 
   include ../locations/index.jade
 
   .map-bottom-container
     a.checkin-button
-    .profile-wrapper
+    .profile-home-wrapper
       .profile-pic-wrapper
         img(src="#{user.photo.filePath}")
       .class-name-wrapper

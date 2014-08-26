@@ -1,7 +1,9 @@
 extends ../shared/template
 
 block content
-  .profile-content-wrapper
+  .content-wrapper
+    mixin back('Profile')
+
     .messages
       if (questConfirm)
         p= questConfirm
@@ -39,7 +41,7 @@ block content
           h4 Check-Ins
           img(src="/img/assets/link-placeholder.png")
         a(href="#")
-          h4 Groups
+          h4 Badges
           img(src="/img/assets/link-placeholder.png")
         a(href="#")
           h4 Leaders
@@ -64,8 +66,6 @@ block content
             button Join Group
           li
             a.join-group-link(href='#') Join a Group
-          li
-            a(href='#') Find a Group
           li
             a(href='/groups/new') Create a Group
           li
