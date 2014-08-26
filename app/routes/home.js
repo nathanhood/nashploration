@@ -1,7 +1,7 @@
 'use strict';
 
 exports.index = (req, res)=>{
-  res.render('home/index', {title: 'Nashploration'});
+  res.render('home/index', {title: 'Nashploration', registerAndLogin: req.flash('registerAndLogin')});
 };
 
 exports.confirmation = (req, res)=>{

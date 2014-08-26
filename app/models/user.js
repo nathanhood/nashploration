@@ -281,7 +281,7 @@ class User{
     users.findOne({email:fields.email[0]}, (err, u)=>{
       users.findOne({userName:userName}, (err, u2)=>{
         if(u || u2){//if user email or username exists,
-          fn(null); // need error message to display
+          fn(null); 
         }else{
           var user = new User(fields, userName);
           user.password = bcrypt.hashSync(user.password, 8); //hashed/encrypted version of password
