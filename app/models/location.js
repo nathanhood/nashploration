@@ -201,14 +201,36 @@ class Location{
     var allCheckins = [];
     locations.forEach(l=>{
       checkIns.forEach(c=>{
+        console.log(c);
         if(c.locId.equals(l._id)){
-          var checkIn = {location: l, timeStamp: c.timeStamp};
+          var daysFromComment = (Math.abs(new Date() - c.timeStamp) / 86400000).toFixed(0);
+            if(daysFromComment < 1){
+                daysFromComment = 'Today';
+              }else if(daysFromComment === 1){
+                daysFromComment = '1 day ago';
+              }else{
+                daysFromComment = `${daysFromComment} days ago`;
+              }
+          var checkIn = {location: l, timeStamp: daysFromComment};
           allCheckins.push(checkIn);
         }
       });
     });
     fn(allCheckins);
   }
+  //
+  // if(u._id.equals(c.userId)){
+  //   var daysFromComment = (Math.abs(new Date() - c.date) / 86400000).toFixed(0); //milliseconds in a day
+  //     if(daysFromComment < 1){
+  //       daysFromComment = 'Today';
+  //     }else if(daysFromComment === 1){
+  //       daysFromComment = '1 day ago';
+  //     }else{
+  //       daysFromComment = `${daysFromComment} days ago`;
+  //     }
+  //   var userComment = {userName: u.userName, userPhoto: u.photo.filePath, comment: c.comment, daysFromComment: daysFromComment };
+  //   allComments.push(userComment);
+  // }
 
 }//end of Class
 function findCloseLocs(locName, fn){
