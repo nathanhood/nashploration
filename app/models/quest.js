@@ -104,6 +104,19 @@ class Quest{
     }
   }
 
+  static addGroupUser(quest, groupUser){
+    quest.groupUsers.push(groupUser);
+
+    quest.groupUsers = _.uniq(quest.groupUsers, (user)=>{
+      return user.toString();
+    });
+  }
+
+  static updateGroupUsers(quest, fn){
+    quests.update({ _id: quest._id }, { $set: { groupUsers: quest.groupUsers } }, { multi: true }, (err, result)=>{
+      fn(err, result);
+    });
+  }
 
   static removeGroupFromGroupIds(groupId, fn){
     groupId = Mongo.ObjectID(groupId);

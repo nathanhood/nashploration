@@ -9,19 +9,22 @@ var Quest = traceur.require(__dirname + '/../models/quest.js');
 
 
 exports.new = (req, res)=>{
-  var code = Group.groupCode();
-  res.render('groups/create-group.jade', {title: 'Nashploration', groupCode:code});
+  res.render('groups/create-group.jade', {title: 'Nashploration'});
 };
 
 exports.create = (req, res)=>{
   var user = res.locals.user;
   var group = new Group(user._id, req.body);
-  Group.inviteGroupMembers(req.body, user, ()=>{
-    group.save(()=>{
-      user.createdGroups.push(group._id);
-      user.save(()=>{
-        req.flash('groupConfirmation', `Group ${group.name} has been created and your invitations have been sent!`);
-        res.redirect(`/users/${user.userName}`);
+  group.save(()=>{
+    var groupCode = Group.groupCode(group._id);
+    Group.inviteGroupMembers(req.body, groupCode, user, ()=>{
+      group.groupCode = groupCode;
+      group.save(()=>{
+        user.createdGroups.push(group._id);
+        user.save(()=>{
+          req.flash('groupConfirmation', `Group ${group.name} has been created and your invitations have been sent!\nGroup Code: ${group.groupCode}`);
+          res.redirect(`/users/${user.userName}`);
+        });
       });
     });
   });

@@ -37,11 +37,13 @@ exports.create = (req, res)=>{
           quest.save(()=>{
             quest.photo = quest.processPhoto(files.photo[0]);
             quest.save(()=>{
-              user.createdQuests.push(quest._id);
-              user.save(()=>{
-                User.updateQuestOnManyUsers(groupUsers, quest._id, (err, result)=>{
-                  req.flash('questConfirm', 'Quest successfully created!');
-                  res.redirect(`/users/${res.locals.user.userName}`);
+              Group.updateQuestOnManyGroups(groupIds, quest._id, ()=>{
+                user.createdQuests.push(quest._id);
+                user.save(()=>{
+                  User.updateQuestOnManyUsers(groupUsers, quest._id, (err, result)=>{
+                    req.flash('questConfirm', 'Quest successfully created!');
+                    res.redirect(`/users/${res.locals.user.userName}`);
+                  });
                 });
               });
             });

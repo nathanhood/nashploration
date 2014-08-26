@@ -7,6 +7,7 @@ var Quest = traceur.require(__dirname + '/../models/quest.js');
 var Group = traceur.require(__dirname + '/../models/group.js');
 
 var multiparty = require('multiparty');
+var async = require('async');
 
 
 exports.index = (req, res)=>{
@@ -56,12 +57,17 @@ exports.register = (req, res)=>{
               });
             } else {
               group.joinGroup(u);
-              u.save(()=>{
-                group.save(()=>{
-                  res.locals.user = u;
-                  req.session.userId = u._id;
-                  req.flash('joinedGroup', `You successfully joined the group ${group.name}`);
-                  res.redirect(`/users/${u.userName}`);
+              Quest.findManyById(group.quests, (quests)=>{
+                quests.forEach((quest, i)=>{ Quest.addGroupUser(quests[i], u._id); });
+                async.map(quests, Quest.updateGroupUsers, ()=>{
+                  u.save(()=>{
+                    group.save(()=>{
+                      res.locals.user = u;
+                      req.session.userId = u._id;
+                      req.flash('joinedGroup', `You successfully joined the group ${group.name}`);
+                      res.redirect(`/users/${u.userName}`);
+                    });
+                  });
                 });
               });
             }
@@ -81,12 +87,17 @@ exports.login = (req, res)=>{
       User.login(req.body, u=>{
         if (u) {
           group.joinGroup(u);
-          u.save(()=>{
-            group.save(()=>{
-              res.locals.user = u;
-              req.session.userId = u._id;
-              req.flash('joinedGroup', `You successfully joined the group ${group.name}`);
-              res.redirect(`/users/${u.userName}`);
+          Quest.findManyById(group.quests, (quests)=>{
+            quests.forEach((quest, i)=>{ Quest.addGroupUser(quests[i], u._id); });
+            async.map(quests, Quest.updateGroupUsers, ()=>{
+              u.save(()=>{
+                group.save(()=>{
+                  res.locals.user = u;
+                  req.session.userId = u._id;
+                  req.flash('joinedGroup', `You successfully joined the group ${group.name}`);
+                  res.redirect(`/users/${u.userName}`);
+                });
+              });
             });
           });
         } else {
