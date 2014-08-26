@@ -41,7 +41,7 @@ exports.register = (req, res)=>{
 
   form.parse(req, (err, fields, files)=>{
     console.log('IN ROUTE');
-    console.log(files.photo);
+    console.log(files);
     var photoObj = files.photo[0];
     var userName = fields.userName[0].split(' ').map(w=>w.trim()).map(w=>w.toLowerCase()).join('');
     Group.findByGroupCode(fields.groupCode[0], group=>{

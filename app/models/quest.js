@@ -24,7 +24,7 @@ class Quest{
     } else {
       this.isPrivate = false;
     }
-    this.photo = null;
+    this.photo = {fileName: null};
   }
 
   save(fn){
@@ -74,7 +74,7 @@ class Quest{
 
   processPhoto(photo) {
     if(photo.size) {
-      if (this.photo.fileName) {
+      if (this.photo.fileName !== null) {
         fs.unlinkSync(`${__dirname}/../static/img/${this._id}/${this.photo.fileName}`);
       }
       var name = crypto.randomBytes(12).toString('hex') + path.extname(photo.originalFilename).toLowerCase();
