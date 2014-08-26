@@ -22,6 +22,10 @@ html, body, #map {
   width: 100%;
 }
 
+a {
+  text-decoration: none;
+}
+
 .clear {
   width:100%;
   clear:both;
@@ -53,6 +57,51 @@ body {
   margin: 0;
   padding: 0;
   width: 100%;
+}
+
+.content-wrapper {
+  width: 90%;
+  margin: 0 auto;
+  padding: 70px 0 0 0;
+  max-width: 600px;
+}
+
+.back-wrapper {
+  border-bottom: 1px solid darken(@offwhite, 20%);
+  width: 100%;
+  margin: 0 auto;
+  padding: 10px 0px 10px 0px;
+  text-align: center;
+  font-size: 1.25em;
+  color: @base-color;
+
+  a {
+    float:left;
+    color:@base-color;
+  }
+
+  h2 {
+    font-weight: bold;
+  }
+
+}
+
+.messages {
+  position:absolute;
+  color:#fff;
+  width: 80%;
+  max-width: 300px;
+  bottom: 100px;
+  left: 25px;
+  margin: 0 auto;
+  z-index: 100000;
+
+  p.home-message {
+    background-color: @base-complement;
+    padding: 15px;
+    border: 1px solid @base-color;
+    border-radius: 2px;
+  }
 }
 
 /* ======================================== NAVIGATION CSS ======================================== */
@@ -304,12 +353,25 @@ header {
   }
 }
 
+@media screen and (min-width: 600px){
+  header {
+    a.logo-link {
+      h1.logo {
+      height: 60px;
+      width: 400px;
+      background-image: url('/img/assets/logo-full.png');
+      background-size: 175px auto;
+    }
+    }
+  }
+}
+
 /* ======================================== MAP INDEX CSS ======================================== */
 
 #map-filter {
   position:absolute;
   padding: 5px;
-  border-radius: 3px;
+  border-radius: 2px;
   background-color:@base-complement;
   top: 90px;
   right: 10px;
@@ -343,7 +405,7 @@ header {
     float:left;
   }
 
-  .profile-wrapper {
+  .profile-home-wrapper {
     display:inline-block;
     width: 230px;
     padding-top: 0px;
@@ -396,173 +458,271 @@ header {
   }
 }
 
+.pop-up-window {
+  // background: @base-color;
+}
+
+h3.pop-up-title {
+  margin: 10px 0;
+  padding: 0 0 10px 0;
+  font-family: "adobe-garamond-pro";
+  color:@base-color;
+  border-bottom: 1px solid darken(@offwhite, 20%)
+}
+
+p.pop-up-description {
+  line-height: 1.3;
+  font-size: .9em;
+  margin: 0 0 5px 0;
+}
+
+a.pop-up-link {
+  display:inline-block;
+  padding: 10px 15px;
+  background: @base-complement;
+  border-radius: 2px;
+  color:#fff;
+  margin: 5px 0;
+}
+
 
 /* ======================================== USER PROFILE CSS ======================================== */
 
-.profile-content-wrapper {
-  width: 90%;
-  margin: 0 auto;
-  padding: 70px 0 0 0;
-  max-width: 600px;
-
-  .profile-wrapper {
+.profile-wrapper {
     padding: 15px;
     margin: 0 0 15px 0;
     border-bottom: 1px solid darken(@offwhite, 20%);
-
-    .profile-info-left {
-      display:inline-block;
-      width: 40%;
-      margin: 0 10px 0 0;
-      text-align:center;
-      float:left;
-
-      .profile-pic {
-        width: 80px;
-        height: 80px;
-        margin: 0 auto;
-        border: 2px solid #fff;
-        border-radius: 50%;
-        box-shadow: 0px 0px 5px @base-color;
-        background-size: cover;
-        background-position: center;
-      }
-
-      a {
-        display:block;
-        margin-top: 20px;
-        text-decoration: none;
-        color: lighten(@dark-base, 10%);
-      }
-    }
-
-    .profile-info-right {
-      display:inline-block;
-      width: 50%;
-
-      span {
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        font-size: .75em;
-      }
-
-      h3 {
-        font-size: 1.5em;
-        color: lighten(@dark-base, 10%);
-        font-weight:bold;
-        margin-bottom: 10px;
-      }
-    }
-  }
-
-  .links {
-    a {
-      display:inline-block;
-      width: 33%;
-      text-align: center;
-      text-decoration: none;
-      color:lighten(@dark-base, 10%);
-
-      img {
-        width: 70%;
-        height: auto;
-        max-width: 90px;
-        margin: 10px 0 0 0;
-      }
-    }
-  }
-
-  .quest-group-menu-buttons {
-    padding: 20px 0 5px 0;
-    a {
-      width: 50%;
-      display:inline-block;
-      background: ;
-      text-align:center;
-      color: @base-color;
-      padding: 10px;
-      border: 1px solid @base-color;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    a:hover {
-      background: darken(@offwhite, 5%);
-    }
-
-    a.active-button {
-      background: @base-color;
-      color: @offwhite;
-    }
-
-    a.quest-menu-button {
-      border-top-left-radius: 3px;
-      border-bottom-left-radius: 3px;
-    }
-
-    a.group-menu-button {
-      border-top-right-radius: 3px;
-      border-bottom-right-radius: 3px;
-    }
-  }
-
-  .quest-group-menus {
-    padding-top: 20px;
-    ul {
-      text-align: center;
-
-      li:first-child {
-        border-top: 1px solid darken(@offwhite, 20%);
-      }
-
-      li {
-        border-bottom: 1px solid darken(@offwhite, 20%);
-
-        a {
-          font-size: 1.25em;
-          display:block;
-          text-decoration: none;
-          color: @base-color;
-          font-weight: bold;
-          padding: 20px;
-        }
-
-        a:hover {
-          box-shadow: inset 0px 0px 10px darken(@offwhite, 5%);
-        }
-      }
-    }
-  }
-
 }
 
-.back-wrapper {
-  border-bottom: 1px solid darken(@offwhite, 20%);
-  width: 90%;
-  margin: 0 auto;
-  padding: 80px 0px 10px 0px;
-  text-align: center;
-  font-size: 1.25em;
-  color: @base-color;
+.profile-info-left {
+  display:inline-block;
+  width: 40%;
+  margin: 0 10px 0 0;
+  text-align:center;
+  float:left;
+
+  .profile-pic {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0px 0px 5px @base-color;
+    background-size: cover;
+    background-position: center;
+  }
 
   a {
-    float:left;
-    color:@base-color;
+    display:block;
+    margin-top: 20px;
+    text-decoration: none;
+    color: lighten(@dark-base, 10%);
+  }
+}
+
+.profile-info-right {
+    display:inline-block;
+    width: 50%;
+
+    span {
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: .75em;
+    }
+
+    h3 {
+      font-size: 1.35em;
+      color: lighten(@dark-base, 10%);
+      font-weight:bold;
+      margin-bottom: 10px;
+    }
   }
 
-  h2 {
+.links {
+  a {
+    display:inline-block;
+    width: 33%;
+    text-align: center;
+    text-decoration: none;
+    color:lighten(@dark-base, 10%);
     font-weight: bold;
+
+    img {
+      width: 70%;
+      height: auto;
+      max-width: 90px;
+      margin: 10px 0 0 0;
+    }
+  }
+}
+
+.quest-group-menu-buttons {
+  padding: 20px 0 5px 0;
+
+  a {
+    width: 50%;
+    display:inline-block;
+    background: ;
+    text-align:center;
+    color: @base-color;
+    padding: 10px;
+    border: 1px solid @base-color;
+    font-weight: bold;
+    text-decoration: none;
   }
 
+  a:hover {
+    background: darken(@offwhite, 5%);
+  }
+
+  a.active-button {
+    background: @base-color;
+    color: @offwhite;
+  }
+
+  a.quest-menu-button {
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+  }
+
+  a.group-menu-button {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+  }
+}
+
+.quest-group-menus {
+  padding-top: 20px;
+  ul {
+    text-align: center;
+
+    li:first-child {
+      border-top: 1px solid darken(@offwhite, 20%);
+    }
+
+    li {
+      border-bottom: 1px solid darken(@offwhite, 20%);
+
+      a {
+        font-size: 1.25em;
+        display:block;
+        text-decoration: none;
+        color: @base-color;
+        font-weight: bold;
+        padding: 20px;
+      }
+
+      a:hover {
+        box-shadow: inset 0px 0px 10px darken(@offwhite, 5%);
+      }
+    }
+  }
 }
 
 
 /* ======================================== CHECK IN CSS ======================================== */
 .checkin-wrapper {
+  text-align: left;
 
+  .checkin-content-wrapper {
+    padding: 10px 0 0 0;
 
+    h1 {
+      color: @base-color;
+      font-size:1.3em;
+      font-weight: bold;
+      margin: 5px 0;
+    }
+
+    p {
+      font-size: .75em;
+      line-height: 1.5;
+    }
+
+    textarea {
+      width: 100%;
+      border-radius: 2px;
+      background-color: @offwhite;
+      margin: 10px 0 0 0;
+    }
+
+    button {
+      display:block;
+      width: 70%;
+      margin: 0 auto;
+    }
+  }
 }
 
+/* ======================================== QUEST LIST CSS ======================================== */
+
+.quest-list-content-wrapper {
+  h2 {
+      color: @base-color;
+      font-size: .8em;
+      margin: 5px 0;
+      padding: 5px 0 8px 0;
+      text-align: center;
+      border-bottom: 2px solid @base-color;
+      text-transform: uppercase;
+  }
+
+  .quest-entry {
+    margin: 10px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid darken(@offwhite, 20%);
+
+    p {
+      display:inline-block;
+      margin: 0 10px 0 0;
+    }
+
+    h3:hover {
+      color: lighten(@base-color, 10%);
+      text-decoration: underline;
+    }
+
+    a.quest-edit {
+      display:inline-block;
+      text-decoration: none;
+      color:@base-color;
+      border: 1px solid @base-color;
+      padding: 2px 10px;
+      border-radius: 2px;
+    }
+
+    a {
+      color: @base-color;
+    }
+
+    a.quest-edit:hover {
+      background-color:@base-complement;
+      border: 1px solid @base-complement;
+      color:#fff;
+    }
+
+    h3 {
+      color: @base-color;
+      padding: 5px 0;
+      font-size: 1.5em;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+  }
+}
+
+/* ======================================== QUEST SHOW CSS ======================================== */
+
+.quest-show-content-wrapper {
+  h1 {
+    font-size: 1.5em;
+    color:@base-color;
+    font-weight:bold;
+    margin: 10px 0;
+  }
+
+}
 
 
 
@@ -597,7 +757,7 @@ header {
 
   a {
     color: @base-complement;
-    border-radius: 3px;
+    border-radius: 2px;
     border: 2px solid @base-complement;
     padding: 15px 30px;
     margin-top: 10px;
@@ -652,7 +812,7 @@ button {
   padding: 10px 20px;
   background-color: @base-complement;
   color:#fff;
-  border-radius: 3px;
+  border-radius: 2px;
 
 }
 
