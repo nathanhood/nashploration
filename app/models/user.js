@@ -113,19 +113,11 @@ class User{
     }
   }
 
-  updatePhoto(photo, fn){
-    if (this.photo.origFileName) {
-      fs.unlinkSync(`${__dirname}/../static/img/${this._id}/${this.photo.fileName}`);
-    }
-
-    this.processPhoto(photo, (photo)=>{
-      this.photo = photo;
-      fn();
-    });
-  }
-
-  processPhoto(photo, fn) {
+  processPhoto(photo) {
     if(photo.size) {
+      if (this.photo.fileName) {
+        fs.unlinkSync(`${__dirname}/../static/img/${this._id}/${this.photo.fileName}`);
+      }
       var name = crypto.randomBytes(12).toString('hex') + path.extname(photo.originalFilename).toLowerCase();
       var file = `/img/${this._id}/${name}`;
 
@@ -139,9 +131,9 @@ class User{
 
       if(!fs.existsSync(userDir)){fs.mkdirSync(userDir);}
       fs.renameSync(photo.path, fullDir);
-      fn(newPhoto);
+      return newPhoto;
     } else {
-      fn({filePath: '/img/assets/placeholder.png'});
+      return {filePath: '/img/assets/placeholder.png'};
     }
   }
 
@@ -341,6 +333,30 @@ class User{
       fn(null);
     }
   }
+
+
+  static matchUserToComment(users, checkIns, fn){
+    var allComments = [];
+    checkIns.forEach(c=>{
+      users.forEach(u=>{
+        if(u._id.equals(c.userId)){
+          var daysFromComment = (Math.abs(new Date() - c.date) / 86400000).toFixed(0); //milliseconds in a day
+            if(daysFromComment < 1){
+              daysFromComment = 'Today';
+            }else if(daysFromComment === 1){
+              daysFromComment = '1 day ago';
+            }else{
+              daysFromComment = `${daysFromComment} days ago`;
+            }
+          var userComment = {userName: u.userName, userPhoto: u.photo.filePath, comment: c.comment, daysFromComment: daysFromComment };
+          allComments.push(userComment);
+        }
+      });
+    });
+
+    fn(allComments);
+  }
+
 
   static findById(id, fn){
     Base.findById(id, users, User, fn);

@@ -20,7 +20,7 @@ block content
       button.submit-quest-changes Save Changes
 
     .group-quest-options
-      if(groups.length > 0)
+      if(groups)
         h3 Add Groups
         each group in groups
           label(for='#{group._id}')= group.name
