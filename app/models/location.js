@@ -143,11 +143,13 @@ class Location{
   }
 
   static findManyById(locationIds, fn){
-    if(typeof locationIds === 'string'){
+    if(typeof locationIds === 'string' && locationIds.length >= 24){
       locationIds = locationIds.split(',');
         locationIds = locationIds.map(id=>{
           return Mongo.ObjectID(id);
       });
+    } else {
+      locationIds = [null];
     }
 
     locations.find({_id: { $in: locationIds } }).toArray((err, locations)=>{
