@@ -72,7 +72,7 @@ class Quest{
     return quest[0];
   }
 
-  processPhoto(photo, fn) {
+  processPhoto(photo) {
     if (this.photo.fileName) {
       fs.unlinkSync(`${__dirname}/../static/img/${this._id}/${this.photo.fileName}`);
     }

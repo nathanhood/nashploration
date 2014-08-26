@@ -113,18 +113,10 @@ class User{
     }
   }
 
-  updatePhoto(photo, fn){
-    if (this.photo.origFileName) {
+  processPhoto(photo) {
+    if (this.photo.fileName) {
       fs.unlinkSync(`${__dirname}/../static/img/${this._id}/${this.photo.fileName}`);
     }
-
-    this.processPhoto(photo, (photo)=>{
-      this.photo = photo;
-      fn();
-    });
-  }
-
-  processPhoto(photo, fn) {
     if(photo.size) {
       var name = crypto.randomBytes(12).toString('hex') + path.extname(photo.originalFilename).toLowerCase();
       var file = `/img/${this._id}/${name}`;
@@ -139,9 +131,9 @@ class User{
 
       if(!fs.existsSync(userDir)){fs.mkdirSync(userDir);}
       fs.renameSync(photo.path, fullDir);
-      fn(newPhoto);
+      return newPhoto;
     } else {
-      fn({filePath: '/img/assets/placeholder.png'});
+      return {filePath: '/img/assets/placeholder.png'};
     }
   }
 
