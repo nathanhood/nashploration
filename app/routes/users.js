@@ -40,6 +40,8 @@ exports.register = (req, res)=>{
   var form = new multiparty.Form();
 
   form.parse(req, (err, fields, files)=>{
+    console.log('IN ROUTE');
+    console.log(files);
     var photoObj = files.photo[0];
     var userName = fields.userName[0].split(' ').map(w=>w.trim()).map(w=>w.toLowerCase()).join('');
     Group.findByGroupCode(fields.groupCode[0], group=>{
@@ -239,9 +241,18 @@ exports.changePhoto = (req, res)=>{
 
 exports.fetchCheckins = (req, res)=>{
   User.findByUserName(req.params.userName, user=>{
+    console.log('USERRRRRR');
+    console.log(user);
     user.findCheckins((checkInsWithTime, locIdsArray)=>{
+      console.log('CHECKINSWITHTIME');
+      console.log(checkInsWithTime);
+      console.log(locIdsArray);
       Location.findManyById(locIdsArray, locations=>{
+        console.log('ALL LOCATIONSSSS');
+        console.log(locations);
         Location.matchCheckInWithLoc(checkInsWithTime, locations, locationsWithTime=>{
+          console.log('IN ROUTEEEEE');
+          console.log(locationsWithTime);
           res.render('users/checkIns', {title: 'Nashploration', checkIns: locationsWithTime});
         });
       });

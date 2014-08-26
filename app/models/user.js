@@ -21,7 +21,7 @@ class User{
     this.badges = []; // Object IDs
     this.class = 'Explorer';
     this.groups = []; // Object IDs
-    this.photo = null; // add photo object from processPhoto
+    this.photo = {fileName: null}; // add photo object from processPhoto
     this.checkIns = []; // Location IDs
     this.createdGroups = []; //Object IDs
     this.createdQuests = [];
@@ -115,7 +115,7 @@ class User{
 
   processPhoto(photo) {
     if(photo.size) {
-      if (this.photo.fileName) {
+      if (this.photo.fileName !== null) {
         fs.unlinkSync(`${__dirname}/../static/img/${this._id}/${this.photo.fileName}`);
       }
       var name = crypto.randomBytes(12).toString('hex') + path.extname(photo.originalFilename).toLowerCase();
@@ -133,7 +133,7 @@ class User{
       fs.renameSync(photo.path, fullDir);
       return newPhoto;
     } else {
-      return {filePath: '/img/assets/placeholder.png'};
+      return {filePath: '/img/assets/placeholder.png', fileName: null};
     }
   }
 
