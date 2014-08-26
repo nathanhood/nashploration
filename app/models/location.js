@@ -175,6 +175,40 @@ class Location{
     fn(ids);
   }
 
+  static matchUserToComment(users, checkIns, fn){
+    var allComments = [];
+    checkIns.forEach(c=>{
+      users.forEach(u=>{
+        if(u._id.equals(c.userId)){
+          var daysFromComment = (Math.abs(new Date() - c.date) / 86400000).toFixed(0); //milliseconds in a day
+            if(daysFromComment < 1){
+              daysFromComment = 'Today';
+            }else if(daysFromComment >= 1 && daysFromComment < 2){
+              daysFromComment = '1 day ago';
+            }else{
+              daysFromComment = `${daysFromComment} days ago`;
+            }
+          var userComment = {userName: u.userName, userId: u._id, userPhoto: u.photo.filePath, comment: c.comment, daysFromComment: daysFromComment };
+          allComments.push(userComment);
+        }
+      });
+    });
+
+    fn(allComments);
+  }
+
+  static matchCheckInWithLoc(checkIns, locations, fn){
+    var allCheckins = [];
+    locations.forEach(l=>{
+      checkIns.forEach(c=>{
+        if(c.locId.equals(l._id)){
+          var checkIn = {location: l, timeStamp: c.timeStamp};
+          allCheckins.push(checkIn);
+        }
+      });
+    });
+    fn(allCheckins);
+  }
 
 }//end of Class
 function findCloseLocs(locName, fn){

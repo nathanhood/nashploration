@@ -211,8 +211,6 @@ exports.updateInfo = (req, res)=>{
 };
 
 exports.changePhoto = (req, res)=>{
-
-
   var form = new multiparty.Form();
 
   form.parse(req, (err, fields, files)=>{
@@ -222,5 +220,16 @@ exports.changePhoto = (req, res)=>{
       });
     });
   });
+};
 
+exports.fetchCheckins = (req, res)=>{
+  User.findByUserName(req.params.userName, user=>{
+    user.findCheckins((checkInsWithTime, locIdsArray)=>{
+      Location.findManyById(locIdsArray, locations=>{
+        Location.matchCheckInWithLoc(checkInsWithTime, locations, locationsWithTime=>{
+          res.render('users/checkIns', {title: 'Nashploration', checkIns: locationsWithTime});
+        });
+      });
+    });
+  });
 };
