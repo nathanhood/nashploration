@@ -318,7 +318,6 @@ function checkCloseLocs(pos){
   });
 }
 
-
 var checkInIcon = {
     url: '/img/pin-dot.svg',
     scaledSize: new google.maps.Size(40,40)
