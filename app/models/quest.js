@@ -73,6 +73,9 @@ class Quest{
   }
 
   processPhoto(photo, fn) {
+    if (this.photo.fileName) {
+      fs.unlinkSync(`${__dirname}/../static/img/${this._id}/${this.photo.fileName}`);
+    }
     if(photo.size) {
       var name = crypto.randomBytes(12).toString('hex') + path.extname(photo.originalFilename).toLowerCase();
       var file = `/img/${this._id}/${name}`;
