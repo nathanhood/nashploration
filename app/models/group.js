@@ -10,10 +10,11 @@ var async = require('async');
 class Group {
   constructor(ownerId, obj){
     this.name = obj.title;
-    this.groupCode = obj.code;
+    this.groupCode = null;
     this.owner = ownerId;
     this.members = [];
     this.isLocked = false;
+    this.quests = [];
     this.description = obj.description;
   }
 
@@ -24,6 +25,14 @@ class Group {
     if (!exists) {
       this.members.push(user._id);
       user.groups.push(this._id);
+    }
+    if (this.quests.length > 0) {
+      this.quests.forEach(quest=>{
+        user.myQuests.push(quest);
+      });
+      user.myQuests = _.uniq(user.myQuests, (questId)=>{
+        return questId.toString();
+      });
     }
   }
 
@@ -49,6 +58,16 @@ class Group {
     groups.find({owner: userId}).toArray((err, owner)=>{
       fn(owner);
     });
+  }
+
+  static updateQuestOnManyGroups(groupIds, questId, fn){
+    if (groupIds) {
+      groups.update({_id: { $in: groupIds } }, { $push: { quests: questId } }, { multi: true }, (err, result)=>{
+        fn(err, result);
+      });
+    } else {
+      fn(null);
+    }
   }
 
   static findByGroupCode(code, fn){
@@ -83,7 +102,7 @@ class Group {
   }
 
   static findManyById(groupIds, fn){
-    if(typeof groupIds === 'string'){
+    if(typeof groupIds === 'string' && groupIds.length >= 24){
       groupIds = groupIds.split(',');
         groupIds = groupIds.map(id=>{
           return Mongo.ObjectID(id);
@@ -146,13 +165,9 @@ class Group {
     return ids;
   }
 
-  static groupCode(){
-    var text='';
-    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for ( var i=0; i < 5; i++ ) {
-      text += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-    return text;
+  static groupCode(groupId){
+    var code = groupId.toString().substr(-5, 5);
+    return code;
   }
 
   static sendGroupInvitation(obj, user, group, fn){
@@ -166,7 +181,7 @@ class Group {
     sendVerificationEmail(message, ()=>fn());
   }
 
-  static inviteGroupMembers(body, user, fn){
+  static inviteGroupMembers(body, groupCode, user, fn){
     var emails = body.emails.split(',');
     var names = body.names.split(',');
     var members = [];
@@ -175,7 +190,7 @@ class Group {
       message.ownerName = user.nickName;
       message.email = email;
       message.name = names[i];
-      message.code = body.code;
+      message.code = groupCode;
       message.groupTitle = body.title;
       message.description = body.description;
       members.push(message);

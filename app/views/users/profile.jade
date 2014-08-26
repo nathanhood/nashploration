@@ -7,8 +7,6 @@ block content
         p= questConfirm
       if (unknownProfile)
         p= unknownProfile
-      if (groupConfirmation)
-        p= groupConfirmation
       if (joinedGroup)
         p= joinedGroup
       if (invalideGroupCode)
@@ -19,7 +17,10 @@ block content
         p= alreadyInMyQuests
       if (addedToMyQuests)
         p= addedToMyQuests
-
+    //Don't want groupConfirmation to fade out like other messages
+    .group-confirmation-container
+      if (groupConfirmation)
+        p= groupConfirmation
 
     .profile-wrapper
       .profile-info-left

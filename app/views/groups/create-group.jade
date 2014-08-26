@@ -2,33 +2,32 @@ extends ../shared/template
 
 block content
 
+  .profile-content-wrapper
+    h1 New Group
 
-  h1 New Group
+    .error-messages
 
-  .error-messages
+    form#new-group-form(action='/groups/create', method='POST')
+      input(type='text', name='title', placeholder='Group Name Here')
+      input(type='text', name='description', placeholder='Group Description Here', maxlength='140')
+      input(type='text', name='names', hidden=true)
+      input(type='text', name='emails', hidden=true)
 
-  form#new-group-form(action='/groups/create', method='POST')
-    input(type='text', name='title', placeholder='Group Name Here')
-    input(type='text', name='description', placeholder='Group Description Here', maxlength='140')
-    input(type='text', name='names', hidden=true)
-    input(type='text', name='emails', hidden=true)
-    input(type='text', name='code', hidden=true, value='#{groupCode}')
 
-  span#group-code Group Code: #{groupCode}
-  span#total-group-members Members: 0
-  #add-member-form(hidden=true)
-    input(type='email', name='email', placeholder='Member Email')
-    input(type='text', name='name', placeholder='Member Name')
+    span#total-group-members Members: 0
+    #add-member-form(hidden=true)
+      input(type='email', name='email', placeholder='Member Email')
+      input(type='text', name='name', placeholder='Member Name')
+      br
+      button#close-member-button Close
+      button#add-member-button Add
     br
-    button#close-member-button Close
-    button#add-member-button Add
-  br
 
-  #add-group-member
-    span Group Members
-    button + Add a Member
-  br
-  button#build-group Build Group
+    #add-group-member
+      span Group Members
+      button + Add a Member
+    br
+    button#build-group Build Group
 
 block scripts
   script(src='/js/es6/compiled/create-group.js')

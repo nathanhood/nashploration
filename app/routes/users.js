@@ -8,6 +8,7 @@ var Quest = traceur.require(__dirname + '/../models/quest.js');
 var Group = traceur.require(__dirname + '/../models/group.js');
 
 var multiparty = require('multiparty');
+var async = require('async');
 
 
 exports.index = (req, res)=>{
@@ -44,26 +45,29 @@ exports.register = (req, res)=>{
     Group.findByGroupCode(fields.groupCode[0], group=>{
       User.register(fields, userName, (u)=>{
         if (u) {
-          u.processPhoto(photoObj, (newPhoto)=>{
-            u.photo = newPhoto;
-            if (!group) {
-              u.save(()=>{
-                res.locals.user = u;
-                req.session.userId = u._id;
-                res.redirect(`/users/${u.userName}`);
-              });
-            } else {
-              group.joinGroup(u);
-              u.save(()=>{
-                group.save(()=>{
-                  res.locals.user = u;
-                  req.session.userId = u._id;
-                  req.flash('joinedGroup', `You successfully joined the group ${group.name}`);
-                  res.redirect(`/users/${u.userName}`);
+          u.photo = u.processPhoto(photoObj);
+          if (!group) {
+            u.save(()=>{
+              res.locals.user = u;
+              req.session.userId = u._id;
+              res.redirect(`/users/${u.userName}`);
+            });
+          } else {
+            group.joinGroup(u);
+            Quest.findManyById(group.quests, (quests)=>{
+              quests.forEach((quest, i)=>{ Quest.addGroupUser(quests[i], u._id); });
+              async.map(quests, Quest.updateGroupUsers, ()=>{
+                u.save(()=>{
+                  group.save(()=>{
+                    res.locals.user = u;
+                    req.session.userId = u._id;
+                    req.flash('joinedGroup', `You successfully joined the group ${group.name}`);
+                    res.redirect(`/users/${u.userName}`);
+                  });
                 });
               });
-            }
-          });
+            });
+          }
         } else {
           res.redirect('/');
         }
@@ -79,11 +83,17 @@ exports.login = (req, res)=>{
       User.login(req.body, u=>{
         if (u) {
           group.joinGroup(u);
-          u.save(()=>{
-            group.save(()=>{
-              res.locals.user = u;
-              req.session.userId = u._id;
-              res.redirect(`/users/${u.userName}`);
+          Quest.findManyById(group.quests, (quests)=>{
+            quests.forEach((quest, i)=>{ Quest.addGroupUser(quests[i], u._id); });
+            async.map(quests, Quest.updateGroupUsers, ()=>{
+              u.save(()=>{
+                group.save(()=>{
+                  res.locals.user = u;
+                  req.session.userId = u._id;
+                  req.flash('joinedGroup', `You successfully joined the group ${group.name}`);
+                  res.redirect(`/users/${u.userName}`);
+                });
+              });
             });
           });
         } else {
@@ -122,6 +132,12 @@ exports.bounce = (req, res, next)=>{
 exports.logout = (req, res)=>{
   req.session.userId = null;
   res.redirect('/');
+};
+
+exports.viewNearbyCheckIns = (req, res)=>{
+  Location.findManyById(req.query.nearbyCheckIns, locations=>{
+    res.render('users/checkIn-list', {title: 'Nashploration', locations:locations});
+  });
 };
 
 exports.showCheckIn = (req, res)=>{
@@ -214,10 +230,9 @@ exports.changePhoto = (req, res)=>{
   var form = new multiparty.Form();
 
   form.parse(req, (err, fields, files)=>{
-    res.locals.user.updatePhoto(files.photo[0], ()=>{
-      res.locals.user.save(()=>{
-        res.redirect(`/users/edit/${res.locals.user._id}`);
-      });
+    res.locals.user.photo = res.locals.user.processPhoto(files.photo[0]);
+    res.locals.user.save(()=>{
+      res.redirect(`/users/edit/${res.locals.user._id}`);
     });
   });
 };

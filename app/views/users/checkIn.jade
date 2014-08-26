@@ -2,6 +2,12 @@ extends ../shared/template
 include ../shared/back.jade
 
 block content
+
+  .checkin-wrapper
+    mixin back('Check In')
+
+  h1= location.name
+
   form(action='/users/checkin/#{location._id}/?lat=#{location.loc[1]}&lng=#{location.loc[0]}', method='POST')
    textarea(rows='5', columns='50', name='comment')
    button Check In

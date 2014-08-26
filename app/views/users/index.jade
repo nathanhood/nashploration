@@ -7,7 +7,9 @@ block content
   include ../locations/index.jade
 
   .map-bottom-container
-    a.checkin-button
+    form.checkin-form(action='/checkIn/view-nearby', method='GET')
+      input(type='text', name='nearbyCheckIns', hidden)
+    a(href='#').checkin-button
     .profile-wrapper
       .profile-pic-wrapper
         img(src="#{user.photo.filePath}")
@@ -16,9 +18,6 @@ block content
         p.class-name= user.class
       .class-icon-wrapper
         img(src="/img/assets/placeholder-class-icon.png")
-
-  //- form(method='POST', action='/logout')
-  //-   button Logout
 
   #map-filter
     select

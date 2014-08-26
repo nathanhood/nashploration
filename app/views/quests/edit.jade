@@ -3,12 +3,31 @@ extends ../shared/template
 block content
 
   .profile-content-wrapper
-    h1.quest-name(data-id='#{quest._id}') Edit Quest Page
+    h1.quest-name(data-id='#{quest._id}') Edit #{quest.name}
     p= quest.description
 
+    img(src='#{quest.photo.filePath}')
+    form(action='/quests/update/#{quest._id}', method='POST', enctype='multipart/form-data')
+      label Choose New Quest Image
+        input(type='file', name='photo')
+      input#selected-groups(type='text', name='groupIds', hidden=true)
+      if (quest.isPrivate)
+        label Make Quest Public
+          input(type='checkbox', name='isPrivate', value='false')
+      else
+        label Make Quest Private
+          input(type='checkbox', name='isPrivate', value='true')
+      button.submit-quest-changes Save Changes
 
+    .group-quest-options
+      if(groups)
+        h3 Add Groups
+        each group in groups
+          label(for='#{group._id}')= group.name
+          input(type="checkbox", id='#{group._id}', class='group-to-quest', value='#{group.name}')
+      else
+        h3 All your groups are a part of this quest
     .quest-destinations-container
-      button.add-quest-locations Add Locations
       h2 Quest Locations
       ul.quest-destinations
 

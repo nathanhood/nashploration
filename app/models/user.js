@@ -51,6 +51,10 @@ class User{
     });
   }
 
+  isInActiveQuest(locationId){
+    return this._id.toString() === locationId.toString();
+  }
+
   findCheckins(fn){
     var locationIds = [];
     this.checkIns.forEach(l=>{
@@ -109,28 +113,10 @@ class User{
     }
   }
 
-  updatePhoto(photo, fn){
-    fs.unlinkSync(`${__dirname}/../static/img/${this._id}/${this.photo.fileName}`);
-    fs.rmdirSync(`${__dirname}/../static/img/${this._id}`);
-    var name = crypto.randomBytes(12).toString('hex') + path.extname(photo.originalFilename).toLowerCase();
-    var file = `/img/${this._id}/${name}`;
-
-    var newPhoto = {};
-    newPhoto.fileName = name;
-    newPhoto.filePath = file;
-    newPhoto.origFileName = photo.originalFilename;
-
-    var userDir = `${__dirname}/../static/img/${this._id}`;
-    var fullDir = `${userDir}/${name}`;
-
-    if(!fs.existsSync(userDir)){fs.mkdirSync(userDir);}
-    fs.renameSync(photo.path, fullDir);
-
-    this.photo = newPhoto;
-    fn();
-  }
-
-  processPhoto(photo, fn) {
+  processPhoto(photo) {
+    if (this.photo.fileName) {
+      fs.unlinkSync(`${__dirname}/../static/img/${this._id}/${this.photo.fileName}`);
+    }
     if(photo.size) {
       var name = crypto.randomBytes(12).toString('hex') + path.extname(photo.originalFilename).toLowerCase();
       var file = `/img/${this._id}/${name}`;
@@ -145,9 +131,9 @@ class User{
 
       if(!fs.existsSync(userDir)){fs.mkdirSync(userDir);}
       fs.renameSync(photo.path, fullDir);
-      fn(newPhoto);
+      return newPhoto;
     } else {
-      fn({filePath: '/img/assets/placeholder.png'});
+      return {filePath: '/img/assets/placeholder.png'};
     }
   }
 
@@ -243,6 +229,28 @@ class User{
     return activeQuestId.equals(questId);
   }
 
+  static findUsersWithoutQuest(users, userIds, questId){
+    if (users && userIds) {
+      var unavailableUsers = [];
+      users.forEach(user=>{
+        user.myQuests.forEach(quest=>{
+          if (quest.equals(questId)) {
+            unavailableUsers.push(user);
+          }
+        });
+      });
+
+      unavailableUsers.forEach(user=>{
+        _.remove(userIds, id=>{
+          return user._id.equals(id);
+        });
+      });
+      return userIds;
+    } else {
+      return null;
+    }
+  }
+
   static removeGroupFromUsersGroups(groupId, fn){
     groupId = Mongo.ObjectID(groupId);
     users.update({ groups: groupId }, { $pull: { groups: groupId } }, { multi: true },
@@ -257,6 +265,16 @@ class User{
       (err, res)=>{
         fn(err, res);
     });
+  }
+
+  static updateQuestOnManyUsers(userIds, questId, fn){
+    if (userIds) {
+      users.update({_id: { $in: userIds } }, { $push: { myQuests: questId } }, { multi: true }, (err, result)=>{
+        fn(err, result);
+      });
+    } else {
+      fn(null);
+    }
   }
 
   static register(fields, userName, fn){
@@ -293,7 +311,7 @@ class User{
   }
 
   static findManyById(userIds, fn){
-    if (userIds.length) {
+    if (userIds) {
       users.find({_id: { $in: userIds } }).toArray((err, users)=>{
         fn(users);
       });

@@ -1,0 +1,23 @@
+extends ../shared/template
+
+
+block content
+
+  .profile-content-wrapper
+    h1 Nearby Check Ins
+
+    if (locations.length > 0)
+      ul.checkin-list
+        each location in locations
+          if (user.isInActiveQuest(location._id))
+            li= location.name
+              p= location.address
+              a(href='/checkIn/#{location._id}') Check In
+              h3 Active Quest Check In
+          else
+            li= location.name
+              p= location.address
+              a(href='/checkIn/#{location._id}') Check In
+
+    else
+      h3 There are no locations nearby. Keep trecking.

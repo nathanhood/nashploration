@@ -12,6 +12,12 @@
     $('body').on('click', '.info-window', showStreetView);
     fadeConfirmMessage();
     // findLocation();
+    $('.checkin-button').click(submitCheckInListForm);
+  }
+
+  function submitCheckInListForm(event){
+    $('form.checkin-form').submit();
+    event.preventDefault();
   }
 
   var allMarkers = [];
@@ -302,13 +308,15 @@ function checkCloseLocs(pos){
   }
 
   $.ajax(`/getCloseLocs/${currentLat}/${currentLong}`).done(function(data){
+    var nearbyIds = []; // for nearby checkins list page
     data.forEach(i=>{
+      nearbyIds.push(i._id);
       addCheckInMarkers(i.loc);
       addCheckInButton(i.name, i.description, i._id);
     });
+    $('.checkin-form input').val(nearbyIds);
   });
 }
-
 
 var checkInIcon = {
     url: '/img/pin-dot.svg',

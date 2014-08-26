@@ -1,32 +1,52 @@
 'use strict';
 
-var quests = global.nss.db.collection('quests');
 var _ = require('lodash');
+var crypto = require('crypto');
+var path = require('path');
+var fs = require('fs');
+var Mongo = require('mongodb');
 var traceur = require('traceur');
+
+var quests = global.nss.db.collection('quests');
 var Base = traceur.require(__dirname + '/../models/base.js');
 
 
 class Quest{
-  constructor(userId, locationIds, body, groupUsers, groupIds){
-    this.name = body.name;
-    this.description = body.description;
-    this.users = groupUsers;
+  constructor(userId, locationIds, fields, groupUsers, groupIds){
+    this.name = fields.name[0];
+    this.description = fields.description[0];
+    this.groupUsers = groupUsers;
     this.groupIds = groupIds;
     this.creator = userId;
     this.checkIns = locationIds;
-    if (body.isPrivate === 'true') {
+    if (fields.isPrivate) {
       this.isPrivate = true;
     } else {
       this.isPrivate = false;
     }
-  //   this.image = files.image[0].originalFilename OR default image path;
+    this.photo = null;
   }
-
 
   save(fn){
     quests.save(this, ()=>{
       _.create(Quest.prototype, this);
       fn();
+    });
+  }
+
+  addGroupUsers(groupUsers){
+    groupUsers.forEach(user=>{
+      this.groupUsers.push(user);
+    });
+
+    this.groupUsers = _.uniq(this.groupUsers, (user)=>{
+      return user.toString();
+    });
+  }
+
+  addGroupIds(groupIds){
+    groupIds.forEach(group=>{
+      this.groupIds.push(group);
     });
   }
 
@@ -50,6 +70,63 @@ class Quest{
       return quest.questId.equals(this._id);
     });
     return quest[0];
+  }
+
+  processPhoto(photo) {
+    if (this.photo.fileName) {
+      fs.unlinkSync(`${__dirname}/../static/img/${this._id}/${this.photo.fileName}`);
+    }
+    if(photo.size) {
+      var name = crypto.randomBytes(12).toString('hex') + path.extname(photo.originalFilename).toLowerCase();
+      var file = `/img/${this._id}/${name}`;
+
+      var newPhoto = {};
+      newPhoto.fileName = name;
+      newPhoto.filePath = file;
+      newPhoto.origFileName = photo.originalFilename;
+
+      var userDir = `${__dirname}/../static/img/${this._id}`;
+      var fullDir = `${userDir}/${name}`;
+
+      if(!fs.existsSync(userDir)){fs.mkdirSync(userDir);}
+      fs.renameSync(photo.path, fullDir);
+      return newPhoto;
+    } else {
+      return {fileName: null, filePath: '/img/assets/quest-placeholder.png', origFileName: null};
+    }
+  }
+
+  findUnAddedGroupIds(groups){
+    if (groups.length > 0){
+      this.groupIds.forEach(id=>{
+        _.remove(groups, group=>{
+          return group._id.equals(id);
+        });
+      });
+      return groups;
+    }
+  }
+
+  static addGroupUser(quest, groupUser){
+    quest.groupUsers.push(groupUser);
+
+    quest.groupUsers = _.uniq(quest.groupUsers, (user)=>{
+      return user.toString();
+    });
+  }
+
+  static updateGroupUsers(quest, fn){
+    quests.update({ _id: quest._id }, { $set: { groupUsers: quest.groupUsers } }, { multi: true }, (err, result)=>{
+      fn(err, result);
+    });
+  }
+
+  static removeGroupFromGroupIds(groupId, fn){
+    groupId = Mongo.ObjectID(groupId);
+    quests.update({ groupIds: groupId }, { $pull: { groupIds: groupId } }, { multi: true },
+      (err, res)=>{
+        fn(err, res);
+    });
   }
 
   static separateCheckIns(locations, obj){

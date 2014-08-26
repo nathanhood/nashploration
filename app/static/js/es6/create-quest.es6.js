@@ -40,13 +40,10 @@
     if (!questTitle) {
       noTitleAlert();
     }
-    if (!groups) {
-      noGroupsAlert();
-    }
     if (!locations) {
       noLocationsAlert();
     }
-    if (questTitle && groups && locations) {
+    if (questTitle && locations) {
       $('form').submit();
     }
   }
