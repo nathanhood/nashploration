@@ -28,7 +28,8 @@ class Location{
   }
 
   saveComment(comment, coords, userId, fn){
-    var checkIn = {userId: userId, coordinates: coords, comment: comment};
+    var date = new Date();
+    var checkIn = {userId: userId, coordinates: coords, comment: comment, date: date};
     this.checkIns.push(checkIn);
     fn();
   }
@@ -81,14 +82,8 @@ class Location{
     });
   }
 
-  static searchByName(query, fn){
-    locations.find({ name: { $regex: query, $options: 'i'} }).toArray((err, results)=>{
-      fn(results);
-    });
-  }
-
-  static searchByDescription(query, fn){
-    locations.find({ description: {$regex: query, $options: 'i'} }).toArray((err, results)=>{
+  static searchByNameAndDesc(query, fn){
+    locations.find( { $or: [ { name: { $regex: query, $options: 'i'} }, { description: {$regex: query, $options: 'i'} } ] }).sort({name: 1}).toArray((err, results)=>{
       fn(results);
     });
   }
@@ -160,6 +155,18 @@ class Location{
     });
   }
 
+  static findAllCheckInIds(checkIns, fn){
+    var checkInIds = [];
+      checkIns.forEach(c=>{
+        checkInIds.push(c.locId);
+      });
+
+    locations.find({_id: { $in: checkInIds } }).toArray((err, locations)=>{
+      fn(locations);
+    });
+  }
+
+
   static accumulateLocationIds(locations, fn){
     var ids = [];
     locations.forEach(location=>{
@@ -168,6 +175,40 @@ class Location{
     fn(ids);
   }
 
+  static matchUserToComment(users, checkIns, fn){
+    var allComments = [];
+    checkIns.forEach(c=>{
+      users.forEach(u=>{
+        if(u._id.equals(c.userId)){
+          var daysFromComment = (Math.abs(new Date() - c.date) / 86400000).toFixed(0); //milliseconds in a day
+            if(daysFromComment < 1){
+              daysFromComment = 'Today';
+            }else if(daysFromComment >= 1 && daysFromComment < 2){
+              daysFromComment = '1 day ago';
+            }else{
+              daysFromComment = `${daysFromComment} days ago`;
+            }
+          var userComment = {userName: u.userName, userId: u._id, userPhoto: u.photo.filePath, comment: c.comment, daysFromComment: daysFromComment };
+          allComments.push(userComment);
+        }
+      });
+    });
+
+    fn(allComments);
+  }
+
+  static matchCheckInWithLoc(checkIns, locations, fn){
+    var allCheckins = [];
+    locations.forEach(l=>{
+      checkIns.forEach(c=>{
+        if(c.locId.equals(l._id)){
+          var checkIn = {location: l, timeStamp: c.timeStamp};
+          allCheckins.push(checkIn);
+        }
+      });
+    });
+    fn(allCheckins);
+  }
 
 }//end of Class
 function findCloseLocs(locName, fn){

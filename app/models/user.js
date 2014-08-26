@@ -32,11 +32,42 @@ class User{
     // this.streetViewQuizzes = []; // Object IDs
   }
 
+  updateInfo(userInfo, fn){
+    var value = Object.keys(userInfo)[0];
+
+    var update = { $set: {} };
+
+    if(value === 'password'){
+      var password = bcrypt.hashSync(userInfo.password, 8);
+      update.$set[value] = password;
+    }else{
+      update.$set[value] = userInfo[value];
+    }
+
+    users.update({_id: this._id}, update, (err, res)=>{
+      users.findOne({_id: this._id}, (err, user)=>{
+          fn(user);
+      });
+    });
+  }
+
+  isInActiveQuest(locationId){
+    return this._id.toString() === locationId.toString();
+  }
+
+  findCheckins(fn){
+    var locationIds = [];
+    this.checkIns.forEach(l=>{
+      locationIds.push(l.locId);
+    });
+    fn(this.checkIns, locationIds);
+  }
+
   isPreviousCheckIn(locationId, fn){
     locationId = Mongo.ObjectID(locationId);
 
     var previousCheckIn = this.checkIns.some(checkIn=>{
-      return checkIn.equals(locationId);
+      return checkIn.locId.equals(locationId);
     });
 
     fn(previousCheckIn);
@@ -59,19 +90,38 @@ class User{
     if(isInQuestArray === true && isInActiveQuestArray === false){
       this.activeQuest.questLocs.push(locationId);
     }
+
   }
 
   updateCheckIns(locationId){
     var isInCheckInsArray = false;
+
     if (this.checkIns.length) {
-      isInCheckInsArray = this.checkIns.some(checkInId=>{
-        return checkInId.equals(locationId);
-      });
+      var checkInLocIds = [];
+        this.checkIns.forEach(c=>{
+          checkInLocIds.push(c.locId);
+        });
+
+        isInCheckInsArray = checkInLocIds.some(checkInId=>{
+          return checkInId.equals(locationId);
+        });
     }
 
     if(isInCheckInsArray === false){
-      this.checkIns.push(locationId);
+      var checkIn = {timeStamp: new Date(), locId: locationId};
+      this.checkIns.push(checkIn);
     }
+  }
+
+  updatePhoto(photo, fn){
+    if (this.photo.origFileName) {
+      fs.unlinkSync(`${__dirname}/../static/img/${this._id}/${this.photo.fileName}`);
+    }
+
+    this.processPhoto(photo, (photo)=>{
+      this.photo = photo;
+      fn();
+    });
   }
 
   processPhoto(photo, fn) {
@@ -278,6 +328,20 @@ class User{
     }
   }
 
+  static findManyCheckInCommentsById(checkInObjs, fn){
+    if (checkInObjs.length) {
+      var userIdsArray = [];
+      checkInObjs.forEach(c=>{
+        userIdsArray.push(c.userId);
+      });
+      users.find({_id: { $in: userIdsArray } }).toArray((err, users)=>{
+        fn(users);
+      });
+    } else {
+      fn(null);
+    }
+  }
+
   static findById(id, fn){
     Base.findById(id, users, User, fn);
   }
@@ -294,7 +358,7 @@ class User{
   }
 
   static searchByName(query, fn){
-    users.find({ userName: { $regex: query, $options: 'i'}}).toArray((err, results)=>{
+    users.find({ userName: { $regex: query, $options: 'i'}}).sort({name: 1}).toArray((err, results)=>{
       fn(results);
     });
   }
@@ -320,6 +384,6 @@ class User{
       fn(null);
     }
   }
-}
+} //end of Class
 
 module.exports = User; //exporting Class out

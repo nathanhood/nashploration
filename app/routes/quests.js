@@ -10,6 +10,12 @@ var Location = traceur.require(__dirname + '/../models/location.js');
 
 var multiparty = require('multiparty');
 
+exports.index = (req, res)=>{
+  Quest.findAllPublic(quests=>{
+    res.render('quests/index', {title: 'Nashploration', quests: quests});
+  });
+};
+
 exports.new = (req, res)=>{
   var userId = res.locals.user._id;
   Group.findAllByOwnerId(userId, groups=>{

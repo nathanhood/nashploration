@@ -1,0 +1,17 @@
+extends ../shared/template
+
+block content
+  br
+  br
+  br
+  br
+  br
+  br
+  br
+  h1 All Check Ins
+  if(checkIns)
+    each checkIn in checkIns
+      h3= checkIn.timeStamp
+      h3= checkIn.location.name
+    else
+      h3 You haven't checked in anywhere yet. Get out there and nashplore!
