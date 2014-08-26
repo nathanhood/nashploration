@@ -115,26 +115,13 @@ class User{
 
   updatePhoto(photo, fn){
     if (this.photo.origFileName) {
-      console.log('====== INSIDE ORIG FILENAME =======');
       fs.unlinkSync(`${__dirname}/../static/img/${this._id}/${this.photo.fileName}`);
-      fs.rmdirSync(`${__dirname}/../static/img/${this._id}`);
     }
-    var name = crypto.randomBytes(12).toString('hex') + path.extname(photo.originalFilename).toLowerCase();
-    var file = `/img/${this._id}/${name}`;
 
-    var newPhoto = {};
-    newPhoto.fileName = name;
-    newPhoto.filePath = file;
-    newPhoto.origFileName = photo.originalFilename;
-
-    var userDir = `${__dirname}/../static/img/${this._id}`;
-    var fullDir = `${userDir}/${name}`;
-
-    if(!fs.existsSync(userDir)){fs.mkdirSync(userDir);}
-    fs.renameSync(photo.path, fullDir);
-
-    this.photo = newPhoto;
-    fn();
+    this.processPhoto(photo, (photo)=>{
+      this.photo = photo;
+      fn();
+    });
   }
 
   processPhoto(photo, fn) {
