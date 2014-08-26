@@ -56,7 +56,7 @@ function load(app, fn){
   app.get('/dashboard', dbg, users.index);
   app.get('/users/:userName', dbg, users.profile);
   app.get('/users/edit/:userId', dbg, users.fetchInfo);
-  app.get('/users/edit/password/:userId', dbg, users.changePassword);
+  app.post('/users/edit/photo/:userId', dbg, users.changePhoto);
   app.post('/users/edit/:userId', dbg, users.updateInfo);
   app.post('/users/checkin/:locationId', dbg, users.checkIn);
   app.post('/users/add-active-quest/:questId', dbg, users.addActiveQuest);

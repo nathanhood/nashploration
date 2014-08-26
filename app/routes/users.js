@@ -210,7 +210,17 @@ exports.updateInfo = (req, res)=>{
   });
 };
 
-exports.changePassword = (req, res)=>{
-  console.log(req.body);
+exports.changePhoto = (req, res)=>{
+
+
+  var form = new multiparty.Form();
+
+  form.parse(req, (err, fields, files)=>{
+    res.locals.user.updatePhoto(files.photo[0], ()=>{
+      res.locals.user.save(()=>{
+        res.redirect(`/users/edit/${res.locals.user._id}`);
+      });
+    });
+  });
 
 };

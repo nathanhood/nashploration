@@ -38,15 +38,12 @@ class User{
     var update = { $set: {} };
 
     if(value === 'password'){
-      console.log('=======');
-      console.log(userInfo);
       var password = bcrypt.hashSync(userInfo.password, 8);
       update.$set[value] = password;
     }else{
       update.$set[value] = userInfo[value];
     }
-    console.log('IN MODEL');
-    console.log(update);
+
     users.update({_id: this._id}, update, (err, res)=>{
       users.findOne({_id: this._id}, (err, user)=>{
           fn(user);
@@ -102,6 +99,27 @@ class User{
       var checkIn = {timeStamp: new Date(), locId: locationId};
       this.checkIns.push(checkIn);
     }
+  }
+
+  updatePhoto(photo, fn){
+    fs.unlinkSync(`${__dirname}/../static/img/${this._id}/${this.photo.fileName}`);
+    fs.rmdirSync(`${__dirname}/../static/img/${this._id}`);
+    var name = crypto.randomBytes(12).toString('hex') + path.extname(photo.originalFilename).toLowerCase();
+    var file = `/img/${this._id}/${name}`;
+
+    var newPhoto = {};
+    newPhoto.fileName = name;
+    newPhoto.filePath = file;
+    newPhoto.origFileName = photo.originalFilename;
+
+    var userDir = `${__dirname}/../static/img/${this._id}`;
+    var fullDir = `${userDir}/${name}`;
+
+    if(!fs.existsSync(userDir)){fs.mkdirSync(userDir);}
+    fs.renameSync(photo.path, fullDir);
+
+    this.photo = newPhoto;
+    fn();
   }
 
   processPhoto(photo, fn) {
