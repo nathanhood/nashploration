@@ -1,3 +1,4 @@
+/* jshint unused: false */
 'use strict';
 
 var traceur = require('traceur');
@@ -17,8 +18,7 @@ exports.index = (req, res)=>{
 exports.profile = (req, res)=>{
   User.findByUserName(req.params.userName, user=>{
     if (user) {
-      if (res.locals.user._id.equals(user._id)) {
-        res.render('users/profile', {title: 'Nashploration', userProfile: user, otherProfile: null,
+        res.render('users/profile', {title: 'Nashploration', profileOwner: user,
         unknownProfile: req.flash('unknownProfile'),
         groupConfirmation: req.flash('groupConfirmation'),
         joinedGroup: req.flash('joinedGroup'),
@@ -28,9 +28,7 @@ exports.profile = (req, res)=>{
         addedToMyQuests: req.flash('addedToMyQuests'),
         alreadyInMyQuests: req.flash('alreadyInMyQuests')
         });
-      } else {
-        res.render('users/profile', {title: 'Nashploration', userProfile: null, otherProfile: user});
-      }
+
     } else {
       req.flash('unknownProfile', `There is no one with the username ${req.params.userName}.`);
       res.redirect(`/users/${res.locals.user.userName}`);
@@ -138,6 +136,12 @@ exports.logout = (req, res)=>{
   res.redirect('/');
 };
 
+exports.viewNearbyCheckIns = (req, res)=>{
+  Location.findManyById(req.query.nearbyCheckIns, locations=>{
+    res.render('users/checkIn-list', {title: 'Nashploration', locations:locations});
+  });
+};
+
 exports.showCheckIn = (req, res)=>{
   res.locals.user.isPreviousCheckIn(req.params.locationId, prevCheckInStatus=>{ //checks if location has already been checked into..used to alert user that multiple checkins to same location do not count
     Location.findById(req.params.locationId, (err, location)=>{
@@ -154,6 +158,7 @@ exports.checkIn = (req, res)=>{
       Quest.findById(res.locals.user.activeQuest.questId, (err,quest)=>{
         if (quest) {
           res.locals.user.updateActiveQuest(quest.checkIns, location._id);
+          //TODO add check for completed quest...if completed send flash message
         }
         res.locals.user.updateCheckIns(location._id);
         res.locals.user.save(()=>{
@@ -209,6 +214,40 @@ exports.removeQuest = (req, res)=>{
     Quest.findById(req.params.questId, (err, quest)=>{
       req.flash('questRemovedFromMyQuests', `${quest.name} has been successfully removed`);
       res.redirect('/quests/view');
+    });
+  });
+};
+
+exports.fetchInfo = (req, res)=>{
+  res.render('users/edit', {title: 'Nashploration', profileOwner: res.locals.user});
+};
+
+exports.updateInfo = (req, res)=>{
+  res.locals.user.updateInfo(req.body, updatedUser=>{
+    res.redirect(`/users/edit/${updatedUser._id}`);
+  });
+};
+
+exports.changePhoto = (req, res)=>{
+  var form = new multiparty.Form();
+
+  form.parse(req, (err, fields, files)=>{
+    res.locals.user.updatePhoto(files.photo[0], ()=>{
+      res.locals.user.save(()=>{
+        res.redirect(`/users/edit/${res.locals.user._id}`);
+      });
+    });
+  });
+};
+
+exports.fetchCheckins = (req, res)=>{
+  User.findByUserName(req.params.userName, user=>{
+    user.findCheckins((checkInsWithTime, locIdsArray)=>{
+      Location.findManyById(locIdsArray, locations=>{
+        Location.matchCheckInWithLoc(checkInsWithTime, locations, locationsWithTime=>{
+          res.render('users/checkIns', {title: 'Nashploration', checkIns: locationsWithTime});
+        });
+      });
     });
   });
 };

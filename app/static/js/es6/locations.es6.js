@@ -10,7 +10,14 @@
     fetchLocations();
     $('#map-filter select').on('change', filterLocations);
     $('body').on('click', '.info-window', showStreetView);
+    fadeConfirmMessage();
     // findLocation();
+    $('.checkin-button').click(submitCheckInListForm);
+  }
+
+  function submitCheckInListForm(event){
+    $('form.checkin-form').submit();
+    event.preventDefault();
   }
 
   var allMarkers = [];
@@ -107,8 +114,7 @@
     var startLatLng = new google.maps.LatLng(36.1667, -86.7833);
     var mapOptions = {
       zoom: 14,
-      center: startLatLng,
-      draggableCursor: 'crosshair'
+      center: startLatLng
     };
       map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
@@ -302,10 +308,13 @@ function checkCloseLocs(pos){
   }
 
   $.ajax(`/getCloseLocs/${currentLat}/${currentLong}`).done(function(data){
+    var nearbyIds = []; // for nearby checkins list page
     data.forEach(i=>{
+      nearbyIds.push(i._id);
       addCheckInMarkers(i.loc);
       addCheckInButton(i.name, i.description, i._id);
     });
+    $('.checkin-form input').val(nearbyIds);
   });
 }
 
@@ -369,6 +378,10 @@ function ajax(url, type, data={}, success=r=>console.log(r), dataType='html'){
 $.ajax({url:url, type:type, dataType:dataType, data:data, success:success});
 }
 
-
+function fadeConfirmMessage(){
+  setTimeout(function(){
+    $('.messages').fadeOut('slow');
+  }, 4000);
+}
 
 })();

@@ -50,18 +50,23 @@ function load(app, fn){
 
   /* ------ Secure Requests Below This Point ---- */
 
+  app.get('/checkIn/view-nearby', dbg, users.viewNearbyCheckIns);
   app.get('/checkIn/:locationId', dbg, users.showCheckIn); //gets checkin page
 
   /* ------------ Users ------------ */
   app.get('/dashboard', dbg, users.index);
   app.get('/users/:userName', dbg, users.profile);
+  app.get('/users/edit/:userId', dbg, users.fetchInfo);
+  app.get('/users/:userName/checkins', dbg, users.fetchCheckins);
+  app.post('/users/edit/photo/:userId', dbg, users.changePhoto);
+  app.post('/users/edit/:userId', dbg, users.updateInfo);
   app.post('/users/checkin/:locationId', dbg, users.checkIn);
   app.post('/users/add-active-quest/:questId', dbg, users.addActiveQuest);
   app.post('/users/add-quest/:questId', dbg, users.addQuest);
   app.post('/users/remove-quest/:questId', dbg, users.removeQuest);
 
-
   /* ----------- Quests ------------- */
+  app.get('/quests', dbg, quests.index);
   app.get('/quests/new', dbg, quests.new);
   app.get('/quests/view', dbg, quests.view);
   app.get('/quests/show/:questId', dbg, quests.show);
