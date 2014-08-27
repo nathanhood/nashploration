@@ -52,9 +52,15 @@
 
     var box = readData.find('.infobox').toArray();
 
-    var info = readData.find('p').first()[0].textContent;
+    var info = readData.find('p').toArray();
+    console.log(info);
+    info.forEach(p=>{
+      var $div = $('<div></div>');
+      $div.text(p.textContent);
+      $('#wiki-description').append($div);
 
-    $('#wiki-description').text(info);
+    });
+
 
     var imageURL = readData.find('img').toArray();
     imageURL.forEach(i=>{
