@@ -26,6 +26,11 @@ function load(app, fn){
   app.get('/', dbg, home.index);
   app.get('/confirmation/:groupCode', dbg, home.confirmation);
 
+  /* -------- FORGOT PASSWORD ----------- */
+  app.get('/forgot-password', dbg, home.forgotPassword);
+  app.post('/authenticate-email', dbg, home.authenticateEmail);
+  app.post('/send-password-reset', dbg, home.resetPassword);
+
   app.post('/register', dbg, users.register);
   app.post('/login', dbg, users.login);
   app.post('/logout', dbg, users.logout);
