@@ -170,10 +170,15 @@ exports.checkIn = (req, res)=>{
         user.updateCheckIns(location._id);
         Quest.findManyById(user.completedQuests, quests=>{
           user.calculateUserScore(quests);
+          var upgradedClass = user.updateBadgeAndClass();
           user.save(()=>{
             location.save(()=>{
-            if (isCompleted) {
-              res.redirect('/quests/confirmation');
+            if (isCompleted && upgradedClass) {
+              res.redirect('/quests/class-quest-confirmation');
+            } else if (isCompleted && !upgradedClass) {
+              res.redirect('/quests/quest-confirmation');
+            } else if (upgradedClass && !isCompleted) {
+              res.redirect('/quests/class-confirmation');
             } else {
               req.flash('checkInSuccess', `You successfully checked into ${location.name}!`);
               res.redirect('/dashboard');

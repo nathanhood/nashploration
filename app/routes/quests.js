@@ -134,8 +134,16 @@ exports.updateQuest = (req, res)=>{
   });
 };
 
-exports.confirmation = (req, res)=>{
-  res.render('quests/confirmation', {title: 'Nashploration'});
+exports.questConfirmation = (req, res)=>{
+  res.render('quests/quest-confirmation', {title: 'Nashploration'});
+};
+
+exports.upgradedClassConfirmation = (req, res)=>{
+  res.render('quests/class-confirmation', {title: 'Nashploration'});
+};
+
+exports.upgradedClassAndQuestConfirmation = (req, res)=>{
+  res.render('quests/class-quest-confirmation', {title: 'Nashploration'});
 };
 
 exports.questMap = (req, res)=>{

@@ -74,7 +74,9 @@ function load(app, fn){
   app.get('/quests', dbg, quests.index);
   app.get('/quests/new', dbg, quests.new);
   app.get('/quests/view', dbg, quests.view);
-  app.get('/quests/confirmation', dbg, quests.confirmation);
+  app.get('/quests/quest-confirmation', dbg, quests.questConfirmation);
+  app.get('/quests/class-confirmation', dbg, quests.upgradedClassConfirmation);
+  app.get('/quests/class-quest-confirmation', dbg, quests.upgradedClassAndQuestConfirmation);
   app.get('/quests/show/:questId', dbg, quests.show);
   app.get('/quests/edit/:questId', dbg, quests.edit);
   app.post('/quests/create', dbg, quests.create);
