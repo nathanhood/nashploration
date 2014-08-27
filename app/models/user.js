@@ -30,6 +30,7 @@ class User{
     this.startedQuests = [];
     this.myQuests = [];
     this.completedQuests = []; // Object IDs
+    this.points = 0;
     // this.streetViewQuizzes = []; // Object IDs
   }
 
@@ -112,6 +113,27 @@ class User{
       var checkIn = {timeStamp: new Date(), locId: locationId};
       this.checkIns.push(checkIn);
     }
+  }
+
+  calculateUserScore(quests){
+    var points = 0;
+    if (quests.length > 0) {
+      quests.forEach(quest=>{
+        points += (quest.checkIns.length * 3);
+      });
+    }
+    points += (this.checkIns.length * 5);
+    this.points = points;
+  }
+
+  isActiveQuestComplete(quest){
+    return quest.checkIns.length === this.activeQuest.questLocs.length;
+  }
+
+  addCompletedQuest(){
+    this.completedQuests.push(this.activeQuest.questId);
+    this.activeQuest.questId = null;
+    this.activeQuest.questLocs = [];
   }
 
   processPhoto(photo) {
@@ -383,6 +405,12 @@ class User{
       }
     });
   }
+
+  // static findLeaders(fn){
+  //   users.find({}).sort( { checkIns: -1 } ).limit(10).toArray((err, users)=>{
+  //     fn(users);
+  //   });
+  // }f
 
   static searchByName(query, fn){
     users.find({ userName: { $regex: query, $options: 'i'}}).sort({name: 1}).toArray((err, results)=>{

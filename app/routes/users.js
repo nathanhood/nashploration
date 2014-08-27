@@ -155,19 +155,30 @@ exports.showCheckIn = (req, res)=>{
 
 exports.checkIn = (req, res)=>{
   var currLoc = {lat: req.query.lat, lng: req.query.lng};
-
+  var user = res.locals.user;
   Location.findById(req.params.locationId, (err, location)=>{
     location.saveComment(req.body.comment, currLoc, res.locals.user._id, ()=>{
-      Quest.findById(res.locals.user.activeQuest.questId, (err,quest)=>{
+      Quest.findById(user.activeQuest.questId, (err,quest)=>{
+        var isCompleted = false;
         if (quest) {
-          res.locals.user.updateActiveQuest(quest.checkIns, location._id);
-          //TODO add check for completed quest...if completed send flash message
+          user.updateActiveQuest(quest.checkIns, location._id);
+          isCompleted = user.isActiveQuestComplete(quest);
+          if (isCompleted) {
+            user.addCompletedQuest();
+          }
         }
-        res.locals.user.updateCheckIns(location._id);
-        res.locals.user.save(()=>{
-          location.save(()=>{
-          req.flash('checkInSuccess', `You successfully checked into ${location.name}!`);
-          res.redirect('/dashboard');
+        user.updateCheckIns(location._id);
+        Quest.findManyById(user.completedQuests, quests=>{
+          user.calculateUserScore(quests);
+          user.save(()=>{
+            location.save(()=>{
+            if (isCompleted) {
+              res.redirect('/quests/confirmation');
+            } else {
+              req.flash('checkInSuccess', `You successfully checked into ${location.name}!`);
+              res.redirect('/dashboard');
+            }
+            });
           });
         });
       });
@@ -242,20 +253,18 @@ exports.changePhoto = (req, res)=>{
   });
 };
 
+// exports.leaderBoard = (req, res)=>{
+//   User.findLeaders(users=>{
+//     console.log(users);
+//   });
+// };
+// app.get('/users/leaders', dbg, users.leaderBoard);
+
 exports.fetchCheckins = (req, res)=>{
   User.findByUserName(req.params.userName, user=>{
-    console.log('USERRRRRR');
-    console.log(user);
     user.findCheckins((checkInsWithTime, locIdsArray)=>{
-      console.log('CHECKINSWITHTIME');
-      console.log(checkInsWithTime);
-      console.log(locIdsArray);
       Location.findManyById(locIdsArray, locations=>{
-        console.log('ALL LOCATIONSSSS');
-        console.log(locations);
         Location.matchCheckInWithLoc(checkInsWithTime, locations, locationsWithTime=>{
-          console.log('IN ROUTEEEEE');
-          console.log(locationsWithTime);
           res.render('users/checkIns', {title: 'Nashploration', checkIns: locationsWithTime});
         });
       });

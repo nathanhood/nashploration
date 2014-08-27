@@ -60,8 +60,8 @@ function load(app, fn){
 
   /* ------------ Users ------------ */
   app.get('/dashboard', dbg, users.index);
-  app.get('/users/:userName', dbg, users.profile);
   app.get('/users/edit/:userId', dbg, users.fetchInfo);
+  app.get('/users/:userName', dbg, users.profile);
   app.get('/users/:userName/checkins', dbg, users.fetchCheckins);
   app.post('/users/edit/photo/:userId', dbg, users.changePhoto);
   app.post('/users/edit/:userId', dbg, users.updateInfo);
@@ -74,6 +74,7 @@ function load(app, fn){
   app.get('/quests', dbg, quests.index);
   app.get('/quests/new', dbg, quests.new);
   app.get('/quests/view', dbg, quests.view);
+  app.get('/quests/confirmation', dbg, quests.confirmation);
   app.get('/quests/show/:questId', dbg, quests.show);
   app.get('/quests/edit/:questId', dbg, quests.edit);
   app.post('/quests/create', dbg, quests.create);
