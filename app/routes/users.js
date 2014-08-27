@@ -71,6 +71,7 @@ exports.register = (req, res)=>{
             });
           }
         } else {
+          req.flash('registerAndLogin', 'That username and/or email already exists. Please try again.');
           res.redirect('/');
         }
       });
@@ -99,6 +100,7 @@ exports.login = (req, res)=>{
             });
           });
         } else {
+          req.flash('registerAndLogin', 'No account exists with those credentials');
           res.redirect('/');
         }
       });
@@ -110,6 +112,7 @@ exports.login = (req, res)=>{
         req.session.userId = u._id;
         res.redirect('/dashboard');
       } else {
+        req.flash('registerAndLogin', 'No account exists with those credentials');
         res.redirect('/');
       }
     });
