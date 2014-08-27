@@ -8,6 +8,7 @@
 
   function init(){
     showStreetView();
+    // callWikipediaAPI('tennessee');
   }
 
 
@@ -37,14 +38,29 @@
 
 
 
-  function wikiTest() {
-    $.getJSON(`http://en.wikipedia.org/w/api.php?action=parse&format=json&page=Tennessee&callback=?`).done(function(data){
-      var stuff = data.parse.text;
-      $('#wiki').append(stuff['*']);
+    function wikiTest() {
+    $.getJSON(`http://en.wikipedia.org/w/api.php?action=parse&format=json&page=Tennessee&prop=text|images&callback=?`).done(function(data){
+      // console.log(data);
+      wikipediaHTMLResult(data);
     });
   }
 
 
+  function wikipediaHTMLResult (data) {
 
+    var readData = $('<div>' + data.parse.text['*'] + '</div>');
+
+    var box = readData.find('.infobox').toArray();
+
+    var info = readData.find('p').first()[0].textContent;
+
+    $('#wiki-description').text(info);
+
+    var imageURL = readData.find('img').toArray();
+    imageURL.forEach(i=>{
+      $('#wiki').append('<div><img src="'+ i.src + '"/></div>');
+    });
+
+  }
 
 })();
