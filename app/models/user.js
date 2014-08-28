@@ -284,6 +284,13 @@ class User{
     this.password = bcrypt.hashSync(password, 8);
   }
 
+  static sortUsersByPoints(users){
+    users.sort((a, b)=>{
+      return b.points - a.points;
+    });
+    return users;
+  }
+
   static findUsersWithoutQuest(users, userIds, questId){
     if (users && userIds) {
       var unavailableUsers = [];
@@ -365,6 +372,12 @@ class User{
     });
   }
 
+  static findManyUsersByGroup(groupObj, fn){
+    users.find({_id: { $in: groupObj.members } }).toArray((err, users)=>{
+      fn(users);
+    });
+  }
+
   static findManyById(userIds, fn){
     if (userIds) {
       users.find({_id: { $in: userIds } }).toArray((err, users)=>{
@@ -434,11 +447,11 @@ class User{
     });
   }
 
-  // static findLeaders(fn){
-  //   users.find({}).sort( { checkIns: -1 } ).limit(10).toArray((err, users)=>{
-  //     fn(users);
-  //   });
-  // }f
+  static findLeaders(fn){
+    users.find({}).sort( { points: -1 } ).limit(10).toArray((err, users)=>{
+      fn(users);
+    });
+  }
 
   static searchByName(query, fn){
     users.find({ userName: { $regex: query, $options: 'i'}}).sort({name: 1}).toArray((err, results)=>{

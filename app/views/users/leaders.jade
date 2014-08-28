@@ -1,0 +1,29 @@
+extends ../shared/template
+
+block content
+
+  .content-wrapper
+    h1 Leader Board
+    button.show-main-rankings View Overall Rankings
+    if (groups.length > 0)
+      h2 View Rankings of your groups
+        each group in groups
+          h4.group-name= group.name
+          button.show-group-rankings(data-id='#{group._id}') view
+
+    .group-leader-list(hidden)
+      ol
+    .main-leader-list
+      h2 Overall Leaders
+      ol
+        each leader in leaders
+          p.leader-listing
+            h3.leader-name Name: #{leader.userName}
+            img.leader-image(src='#{leader.photo.filePath}')
+            p.leader-points Points: #{leader.points}
+            p.leader-class Class: #{leader.class}
+            img.badge-image(src='#{leader.badges[leader.badges.length - 1].filePath}')
+
+
+block scripts
+  script(src='/js/es6/compiled/leaders.js')

@@ -40,8 +40,7 @@ exports.register = (req, res)=>{
   var form = new multiparty.Form();
 
   form.parse(req, (err, fields, files)=>{
-    console.log('IN ROUTE');
-    console.log(files);
+
     var photoObj = files.photo[0];
     var userName = fields.userName[0].split(' ').map(w=>w.trim()).map(w=>w.toLowerCase()).join('');
     Group.findByGroupCode(fields.groupCode[0], group=>{
@@ -258,12 +257,14 @@ exports.changePhoto = (req, res)=>{
   });
 };
 
-// exports.leaderBoard = (req, res)=>{
-//   User.findLeaders(users=>{
-//     console.log(users);
-//   });
-// };
-// app.get('/users/leaders', dbg, users.leaderBoard);
+exports.leaderBoard = (req, res)=>{
+  var user = res.locals.user;
+  User.findLeaders(leaders=>{
+    Group.findManyById(user.groups, groups=>{
+      res.render('users/leaders', {title: 'Nashploration', leaders:leaders, groups:groups});
+    });
+  });
+};
 
 exports.fetchCheckins = (req, res)=>{
   User.findByUserName(req.params.userName, user=>{

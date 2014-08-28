@@ -137,3 +137,16 @@ exports.sendInvitation = (req, res)=>{
     });
   });
 };
+
+exports.leaderBoard = (req, res)=>{
+  Group.findByGroupId(req.body.groupId, group=>{
+    User.findManyById(group.members, members=>{
+      if (members) {
+        members = User.sortUsersByPoints(members);
+        res.send(members);
+      } else {
+        res.send([]);
+      }
+    });
+  });
+};

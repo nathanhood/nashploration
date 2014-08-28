@@ -60,6 +60,7 @@ function load(app, fn){
 
   /* ------------ Users ------------ */
   app.get('/dashboard', dbg, users.index);
+  app.get('/users/leaders', dbg, users.leaderBoard);
   app.get('/users/edit/:userId', dbg, users.fetchInfo);
   app.get('/users/:userName', dbg, users.profile);
   app.get('/users/:userName/checkins', dbg, users.fetchCheckins);
@@ -89,6 +90,7 @@ function load(app, fn){
   app.get('/groups/view', dbg, groups.view);
   app.get('/groups/show/:groupId', dbg, groups.show);
   app.get('/groups/edit/:groupId', dbg, groups.edit);
+  app.post('/groups/leader-board', dbg, groups.leaderBoard);
   app.post('/groups/update-name', dbg, groups.updateName);
   app.post('/groups/update-description', dbg, groups.updateDescription);
   app.post('/groups/send-invitation', dbg, groups.sendInvitation);
