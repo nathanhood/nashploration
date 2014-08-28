@@ -97,7 +97,7 @@ class Quest{
   }
 
   findUnAddedGroupIds(groups){
-    if (groups.length > 0){
+    if (groups.length > 0 && this.groupIds){
       this.groupIds.forEach(id=>{
         _.remove(groups, group=>{
           return group._id.equals(id);
