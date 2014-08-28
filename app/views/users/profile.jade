@@ -4,25 +4,32 @@ block content
   .content-wrapper
     mixin back('Profile')
 
-    .messages
-      if (questConfirm)
+    if (questConfirm.length > 0)
+      .messages
         p= questConfirm
-      if (unknownProfile)
+    if (unknownProfile.length > 0)
+      .messages
         p= unknownProfile
-      if (joinedGroup)
+    if (joinedGroup.length > 0)
+      .messages
         p= joinedGroup
-      if (invalideGroupCode)
+    if (invalideGroupCode.length > 0)
+      .messages
         p= invalideGroupCode
-      if (groupMemberExists)
+    if (groupMemberExists.length > 0)
+      .messages
         p= groupMemberExists
-      if (alreadyInMyQuests)
+    if (alreadyInMyQuests.length > 0)
+      .messages
         p= alreadyInMyQuests
-      if (addedToMyQuests)
+    if (addedToMyQuests.length > 0)
+      .messages
         p= addedToMyQuests
-    //Don't want groupConfirmation to fade out like other messages
+        
     .group-confirmation-container
-      if (groupConfirmation)
-        p= groupConfirmation
+      if (groupConfirmation.length > 0)
+        .messages
+          p= groupConfirmation
 
     .profile-wrapper
       .profile-info-left
@@ -63,11 +70,9 @@ block content
         li.join-group-form(hidden)
           form(action='/groups/join-group', method='POST')
             input.group-code(type='text', name='groupCode', placeholder='Enter Group Code Here')
-          button Join Group
+            button Join Group
         li
           a.join-group-link(href='#') Join a Group
-        li
-          a(href='#') Find a Group
         li
           a(href='/groups/new') Create a Group
         li
