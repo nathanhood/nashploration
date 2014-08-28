@@ -5,10 +5,12 @@ block content
   .content-wrapper
     mixin back('Quest List')
 
-    .messages
-      if (questRemovedFromMyQuests)
+
+    if (questRemovedFromMyQuests.length > 0)
+      .messages
         p= questRemovedFromMyQuests
-      if (questUpdateConfirm)
+    if (questUpdateConfirm.length > 0)
+      .messages
         p= questUpdateConfirm
 
     .quest-list-content-wrapper 

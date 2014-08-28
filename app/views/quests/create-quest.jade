@@ -8,41 +8,52 @@ block content
 
     .error-messages
 
-    form(action='/quests/create', method='POST', enctype='multipart/form-data')
-      input#quest-title(type='text', name='name', placeholder='Quest Name Here')
-      textarea#quest-description(type='text', name='description', placeholder='Quest Description Here')
-      label Make Quest Private (viewable only by the group)
-        input(type='checkbox', name='isPrivate', value='true')
-      label Choose a Quest Image
-        input(type='file', name='photo')
-      input#selected-groups(type='text', name='groupIds', hidden=true)
-      input#location-ids(type='text', name='locations', hidden=true)
+    .create-quest-wrapper
 
-      button#add-location(hidden=true) Add Location
-      button#view-current-quest View Quest
-      button#add-group-to-quest(hidden=true) Add Group(s)
-      button#cancel-group-to-quest(hidden=true) Cancel Group
-      button#confirm-group-to-quest(hidden=true) Confirm Group(s)
-      button#clear-group-to-quest(hidden=true) Clear Group(s)
+      form.create-quest(action='/quests/create', method='POST', enctype='multipart/form-data')
+        input#quest-title(type='text', name='name', placeholder='Quest Name Here')
+        textarea#quest-description(type='text', name='description', placeholder='Quest Description Here')
+        .left
+          if(groups.length > 0)
+            input(type='checkbox', name='isPrivate', value='true')
+            p.checkbox-label Make quest private to selected group(s)
+            .clear
+            button#add-group-to-quest Add Group(s) to Quest
+            button#cancel-group-to-quest(hidden=true) Clear
+            button#confirm-group-to-quest(hidden=true) Confirm Group(s)
+            button#clear-group-to-quest(hidden=true) Clear Group(s)
 
-      .group-quest-options(hidden=true)
-        if(groups.length > 0)
-          each group in groups
-            label(for='#{group._id}')= group.name
-            input(type="checkbox", id='#{group._id}', class='group-to-quest', value='#{group.name}')
-      ul#quest-groups-list(hidden)
+        .right
+          p Choose quest image
+          input(type='file', name='photo')
+        .clear
+        input#selected-groups(type='text', name='groupIds', hidden=true)
+        input#location-ids(type='text', name='locations', hidden=true)
+
+        .group-quest-options(hidden=true)
+          if(groups.length > 0)
+            p.medium Select from your created groups
+            each group in groups
+              .group
+                label(for='#{group._id}')= group.name
+                input(type="checkbox", id='#{group._id}', class='group-to-quest', value='#{group.name}')
+            p.small *Everyone in selected groups will be added to this quest.
+        ul#quest-groups-list(hidden)
+      .border
+
+      button#add-location(hidden=true) Return to Map
+      button#view-quest-list List All Locations
+      button(hidden=true)#view-quest-map View Locations on Map
+      
+      button#submit-quest-form Finalize Quest
+      button#view-current-quest Review Quest Details
+
       #quest-list(hidden)
         ul
 
-  button#view-quest-list View List
-  button(hidden=true)#view-quest-map View Map
-
-
-  ol#quest-locations-listing(hidden=true)
+      ol#quest-locations-listing(hidden=true)
 
   #create-quest-map
-
-  button#submit-quest-form Build Quest
 
 block scripts
   script(src='/js/es6/compiled/create-quest.js')

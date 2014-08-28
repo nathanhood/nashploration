@@ -26,9 +26,24 @@ a {
   text-decoration: none;
 }
 
+input, textarea {
+  border-radius: 2px;
+  background-color: @offwhite;
+  border: 1px solid darken(@offwhite, 20%);
+  padding: 10px;
+}
+
 .clear {
   width:100%;
   clear:both;
+}
+
+.inline {
+  display:inline-block;
+}
+
+.hidden {
+  display:none !important;
 }
 
 body {
@@ -66,6 +81,11 @@ body {
   max-width: 600px;
 }
 
+.border {
+  margin: 20px 0;
+  border-bottom: 1px solid darken(@offwhite, 20%);
+}
+
 .back-wrapper {
   border-bottom: 1px solid darken(@offwhite, 20%);
   width: 100%;
@@ -86,7 +106,7 @@ body {
 
 }
 
-.messages {
+.home-messages {
   position:absolute;
   color:#fff;
   width: 80%;
@@ -102,6 +122,15 @@ body {
     border: 1px solid @base-color;
     border-radius: 2px;
   }
+}
+
+.messages, .error-message {
+  padding: 15px;
+  background: @base-complement;
+  color:#fff;
+  display:block;
+  text-align:center;
+  font-size: 1.2em;
 }
 
 /* ======================================== NAVIGATION CSS ======================================== */
@@ -595,13 +624,26 @@ a.pop-up-link {
   padding-top: 20px;
   ul {
     text-align: center;
-
-    li:first-child {
-      border-top: 1px solid darken(@offwhite, 20%);
-    }
+    border-top: 1px solid darken(@offwhite, 20%);
 
     li {
       border-bottom: 1px solid darken(@offwhite, 20%);
+
+      input {
+        margin: 10px 10px 0 0;
+        display:inline;
+        width: 60%;
+      }
+
+      button {
+        display:inline;
+        width: 25%;
+        margin: 0 0 10px 0;
+      }
+
+      button:hover {
+        background: darken(@base-complement, 10%);
+      }
 
       a {
         font-size: 1.25em;
@@ -619,6 +661,57 @@ a.pop-up-link {
   }
 }
 
+@media screen and (min-width: 600px){
+  .profile-info-left {
+    .profile-pic {
+      width: 110px;
+      height: 110px;
+    }
+  }
+}
+
+/* ======================================== EDIT PROFILE CSS ======================================== */
+
+.profile-edit-wrapper {
+  color:@base-color;
+
+  img {
+    width: 110px;
+    height: 110px;
+    margin: 0 auto;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0px 0px 5px @base-color;
+    background-size: cover;
+    background-position: center;
+    margin-top: 20px;
+    float:left;
+  }
+
+  form.edit-photo {
+    display:inline-block;
+  }
+
+  input {
+    margin: 10px 10px 20px 0;
+  }
+
+  a.submit-edits {
+    display:inline-block;
+    padding: 10px 20px;
+    border: 1px solid @base-color;
+    border-radius:2px;
+    color:@base-color;
+    font-size:1.25em;
+  }
+
+  a.submit-edits:hover {
+    background-color: @base-complement;
+    border: 1px solid @base-complement;
+    color:#fff;
+  }
+
+}
 
 /* ======================================== CHECK IN CSS ======================================== */
 .checkin-wrapper {
@@ -652,6 +745,135 @@ a.pop-up-link {
       margin: 0 auto;
     }
   }
+}
+
+/* ======================================== ALL CHECK INS CSS ======================================== */
+
+.all-checkins-wrapper {
+  padding: 15px 0 0 0;
+
+  h3 {
+    font-size:1.25em;
+    font-weight: bold;
+    color:@base-color;
+    text-align:center;
+    line-height: 1.5;
+  }
+}
+
+
+/* ======================================== CREATE QUEST CSS ======================================== */
+
+#create-quest-map {
+  margin: 20px 0 0 0;
+  width: 100%;
+  height: 40%;
+
+  .pop-up-window a.show-more {
+    margin: 0 10px 0 0;
+    color:@base-color;
+  }
+
+  .pop-up-window a.show-more:hover {
+    text-decoration: underline;
+  }
+}
+
+.create-quest-wrapper {
+  padding: 15px 0 0 0;
+  color:@base-color;
+
+  input, textarea {
+    width: 100%;
+    margin: 0 auto 10px auto;
+    max-wdith: 300px;
+  }
+
+  input[type="checkbox"] {
+    width: 20px;
+  }
+
+  p.checkbox-label, input[type="checkbox"] {
+    display:inline;
+    font-size: .8em;
+  }
+
+  .left, .right {
+    display:inline-block;
+    width: 50%;
+  }
+
+  .left {
+    float:left;
+  }
+
+  .right {
+    float:right;
+  }
+
+  p.medium {
+    padding: 0 0 10px 0;
+    font-weight: bold;
+  }
+
+  p.small {
+    font-size: .75em;
+    margin: 5px 0 0 0;
+  }
+
+  button#submit-quest-form, button#view-current-quest {
+    display:block;
+    float:right;
+  }
+
+  ol#quest-locations-listing {
+    list-style-type: none;
+    margin: 0;
+    padding: 20px 0 0 0;
+    width: 100%;
+  }
+
+  #quest-locations-listing li {
+    margin: 3px;
+    padding: 20px 10px;
+    border-bottom: 1px solid darken(@offwhite, 20%);
+
+    p.name {
+      font-size: 1em;
+      margin: 0 0 5px 0;
+      text-decoration: underline;
+    }
+
+    p.description {
+      font-size: .8em;
+      line-height: 1.5;
+    }
+  }
+
+  p.location-in-quest {
+    background: @base-color;
+    color: white;
+    padding: 10px 10px;
+    border-radius: 2px;
+    margin: 5px 0;
+  }
+
+  #quest-list ul {
+    margin: 20px 0 0 0;
+
+    li {
+      padding: 15px;
+      border-top: 1px solid darken(@offwhite, 10%);
+
+      button {
+        float:right;
+        margin: -3px 0 0 0;
+        padding: 5px 10px;
+      }
+    }
+  }
+
+
 }
 
 /* ======================================== QUEST LIST CSS ======================================== */
@@ -721,11 +943,72 @@ a.pop-up-link {
     font-weight:bold;
     margin: 10px 0;
   }
-
 }
 
+/* ======================================== QUEST EDIT CSS ======================================== */
 
+.quest-edit-wrapper {
+  h1.quest-name {
+    color:@base-color;
+    font-weight: bold;
+    font-size: 1.5em;
+    margin: 10px 0;
+  }
 
+  img {
+    width: 150px;
+    height: auto;
+    margin: 10px 0 0 0;
+  }
+}
+
+/* ======================================== CREATE GROUP CSS ======================================== */
+
+.create-group-wrapper {
+  input {
+    display:block;
+    width: 200px;
+    margin: 20px auto 0 auto;
+  }
+
+  button#build-group {
+    font-size: 1em;
+    display:block;
+    margin: 0 auto;
+  }
+}
+
+/* ======================================== MANAGE GROUPS CSS ======================================== */
+
+.manage-groups-wrapper {
+  padding: 15px 0 0 0;
+  color:@base-color;
+
+  h2 {
+    font-size: 1em;
+    font-weight: bold;
+  }
+
+  li {
+    padding: 10px;
+    margin: 0 0 10px 0;
+    border-bottom: 1px solid darken(@offwhite, 20%)
+  }
+
+  p.group-name {
+    margin: 10px;
+  }
+
+  a.edit {
+    display:inline-block;
+    padding: 5px 10px;
+    font-size: .8em;
+    background:@base-complement;
+    color:#fff;
+    margin: 0 0 10px 0;
+  }
+
+}
 
 
 
@@ -823,26 +1106,6 @@ button {
 }
 
 /* ======================================== NATHAN EDITS ======================================== */
-
-#quest-locations-listing {
-  background: white;
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  width: 60%;
-}
-
-#quest-locations-listing li {
-  margin: 3px;
-  padding: 0.4em;
-  border-bottom: 1px solid black;
-}
-
-.location-in-quest {
-  background: @base-complement;
-  color: white;
-}
-
 #group-code {
   margin-right: 15px;
 }
@@ -853,7 +1116,3 @@ button {
   border-radius: 50%;
 }
 
-#quest-map-canvas {
-  width: 100%;
-  height: 40%;
-}
