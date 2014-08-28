@@ -60,8 +60,9 @@ function load(app, fn){
 
   /* ------------ Users ------------ */
   app.get('/dashboard', dbg, users.index);
-  app.get('/users/:userName', dbg, users.profile);
+  app.get('/users/leaders', dbg, users.leaderBoard);
   app.get('/users/edit/:userId', dbg, users.fetchInfo);
+  app.get('/users/:userName', dbg, users.profile);
   app.get('/users/:userName/checkins', dbg, users.fetchCheckins);
   app.post('/users/edit/photo/:userId', dbg, users.changePhoto);
   app.post('/users/edit/:userId', dbg, users.updateInfo);
@@ -74,6 +75,9 @@ function load(app, fn){
   app.get('/quests', dbg, quests.index);
   app.get('/quests/new', dbg, quests.new);
   app.get('/quests/view', dbg, quests.view);
+  app.get('/quests/quest-confirmation', dbg, quests.questConfirmation);
+  app.get('/quests/class-confirmation', dbg, quests.upgradedClassConfirmation);
+  app.get('/quests/class-quest-confirmation', dbg, quests.upgradedClassAndQuestConfirmation);
   app.get('/quests/show/:questId', dbg, quests.show);
   app.get('/quests/edit/:questId', dbg, quests.edit);
   app.post('/quests/create', dbg, quests.create);
@@ -86,6 +90,7 @@ function load(app, fn){
   app.get('/groups/view', dbg, groups.view);
   app.get('/groups/show/:groupId', dbg, groups.show);
   app.get('/groups/edit/:groupId', dbg, groups.edit);
+  app.post('/groups/leader-board', dbg, groups.leaderBoard);
   app.post('/groups/update-name', dbg, groups.updateName);
   app.post('/groups/update-description', dbg, groups.updateDescription);
   app.post('/groups/send-invitation', dbg, groups.sendInvitation);

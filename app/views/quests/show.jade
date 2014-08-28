@@ -2,10 +2,10 @@ extends ../shared/template
 
 block content
 
-  .messages
-
   .content-wrapper
     mixin back('Quest Details')
+
+    .messages
 
     .quest-show-content-wrapper
       h1.quest-name(data-id='#{quest._id}')= quest.name
@@ -13,14 +13,14 @@ block content
       // TODO if (quest.isPublic)
       if (!user.isCompletedQuest(quest._id))
         if (!user.isActiveQuest(quest._id))
-          form(action='/users/add-active-quest/#{quest._id}', method='POST')
-            button.make-active-quest Begin Voyage
+          form.inline(action='/users/add-active-quest/#{quest._id}', method='POST')
+            button.make-active-quest Make this your active quest
         else
           p This is your current quest
 
         if (!user.isInMyQuests(quest._id))
-          form(action='/users/add-quest/#{quest._id}', method='POST')
-            button.add-quest Save Voyage For Later
+          form.inline(action='/users/add-quest/#{quest._id}', method='POST')
+            button.add-quest Save this quest for later
         else
           form.remove-quest-form(action='/users/remove-quest/#{quest._id}', method='POST')
             button.remove-quest Remove Quest
@@ -30,6 +30,7 @@ block content
           button.make-active-quest Begin Voyage Again!
         form(action='/users/add-quest/#{quest._id}', method='POST')
           button.add-quest Save Voyage Again For Later
+      .border
       p= quest.description
 
       .quest-progress-container

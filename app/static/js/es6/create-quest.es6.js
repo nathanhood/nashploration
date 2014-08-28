@@ -34,16 +34,20 @@
   function submitQuest(){
     $('.error-messages').empty();
 
-    var questTitle = $('#quest-title').val();
+    var questTitle = $('#quest-title').val().trim();
     var groups = $('#selected-groups').val();
     var locations = $('#location-ids').val();
+    var description = $('#quest-description').val().trim();
     if (!questTitle) {
       noTitleAlert();
     }
     if (!locations) {
       noLocationsAlert();
     }
-    if (questTitle && locations) {
+    if (!description) {
+      noDescriptionAlert();
+    }
+    if (questTitle && locations && description) {
       $('form').submit();
     }
   }
@@ -71,6 +75,13 @@
     $('.error-messages').append(message);
   }
 
+  function noDescriptionAlert(){
+    var message = `<div class="error-message">
+                   <p>Please add a description to your quest</p>
+                   </div>`;
+    $('.error-messages').append(message);
+  }
+
 
 //=======ajax call to fetch locations from the database: Richmond
   function fetchLocations() {
@@ -91,15 +102,15 @@
   function buildLocationsListing(location){
     var description = 'no description';
     if (location.description !== null) {
-      description = `${location.description.substr(0, 40)}...`;
+      description = `${location.description.substr(0, 140)}...`;
     }
     var listing = `<li class="location-listing">
-                  <p>${location.name}</p>
-                  <p>${description}</p>
-                  <button class="add-location-button", data-id=${location._id}>
-                  Add To List
-                  </button>
-                  <span class="location-in-quest", hidden=true>In Quest</span>
+                    <p class="name">${location.name}</p>
+                    <p class="description">${description}</p>
+                    <button class="add-location-button", data-id=${location._id}>
+                      Add To List
+                    </button>
+                    <p class="location-in-quest", hidden=true>In Quest</p>
                   </li>`;
     $('#quest-locations-listing').append(listing);
   }
@@ -201,11 +212,11 @@
       locDesc = 'There is no description for this site.';
     }
 
-    var content = '<h3>' + siteName + '</h3>'+
-    '<p>' + locDesc + '</p>'+
-    '<a href="/locations/'+siteURL+'", class="info-window">Show More</a>'+
+    var content = '<div class="pop-up-window"><h3 class="pop-up-title">' + siteName + '</h3>'+
+    '<p class="pop-up-description">' + locDesc + '</p>'+
+    '<a href="/locations/'+siteURL+'", class="info-window show-more">Show More</a>'+
     '<button class=add-to-quest data-id='+locationId+'>Add To Quest</button>'+
-    '<button class=remove-from-quest data-id='+locationId+'>Remove From Quest</button>';
+    '<button class=remove-from-quest data-id='+locationId+'>Remove From Quest</button></div>';
       siteName = new google.maps.InfoWindow();
       siteName.setContent(content);
       allInfoWindows.push(siteName); //since all windows have diff variable names, they are pushed into an array so they can be closed on the opening of another window
@@ -221,34 +232,46 @@
 
 //============= Viewing Locations vs Quest Information
 
-  function viewAddLocationsToQuest(){
-    $('#create-quest-map').fadeIn('slow');
-    $('#view-quest-list').fadeIn('slow');
-    $('#quest-list').fadeOut();
-    $('#quest-groups-list').fadeOut();
+    function viewAddLocationsToQuest(){
+      $('#view-quest-list').show();
+      $('#quest-list').fadeOut(function(){
+        $('.empty-quest-notification').remove();
+        $('#create-quest-map').fadeIn();
+      });
 
-    $('#add-group-to-quest').hide();
-    $('#cancel-group-to-quest').hide();
-    $('#confirm-group-to-quest').hide();
-    $('#clear-group-to-quest').hide();
-    $('.group-quest-options').hide();
+      $('#cancel-group-to-quest').hide();
+      $('#confirm-group-to-quest').hide();
+      $('#clear-group-to-quest').hide();
+      $('.group-quest-options').hide();
 
-    $('#view-current-quest').show();
-    $('#add-location').hide();
-  }
+      $('#view-current-quest').show();
+      $('#add-location').hide();
 
-  function showQuestAndGroups(){
-    $('#create-quest-map').fadeOut('slow');
-    $('#quest-locations-listing').fadeOut('slow');
-    $('#view-quest-list').fadeOut('slow');
-    $('#quest-list').fadeIn('slow');
-    $('#quest-groups-list').fadeIn('slow');
+    }
 
-    $('#view-quest-map').hide();
-    $('#add-group-to-quest').show();
-    $('#view-current-quest').hide();
-    $('#add-location').show();
-  }
+    function showQuestAndGroups(){
+      if ($('#quest-locations-listing').css('display') === 'none') {
+        $('#create-quest-map').fadeOut(function(){
+          $('#quest-list').fadeIn();
+        });
+      } else {
+        $('#quest-locations-listing').fadeOut(function(){
+          $('#quest-list').fadeIn();
+        });
+      }
+      $('#view-quest-list').hide();
+      $('#quest-groups-list').fadeIn();
+
+      $('#view-quest-map').hide();
+      $('#view-current-quest').hide();
+      $('#add-location').show();
+      if ($('#quest-list ul li').length === 0){
+        $('#quest-list ul').append('<li class="empty-quest-notification">There are currently no locations added to this quest.</li>');
+      } else {
+        $('.empty-quest-notification').remove();
+      }
+    }
+
 
 //========== Adding Locations to Quest List And Hidden Form (questLocations array)
 
@@ -328,12 +351,14 @@
     var map = $('#create-quest-map');
     $(this).hide();
     if (button === 'view-quest-map') {
-      list.fadeOut();
-      map.fadeIn();
+      list.fadeOut(function(){
+        map.fadeIn();
+      });
       $('#view-quest-list').show();
     } else if (button === 'view-quest-list'){
-      map.fadeOut();
-      list.fadeIn();
+      map.fadeOut(function(){
+        list.fadeIn();
+      });
       $('#view-quest-map').show();
     }
   }
@@ -362,7 +387,7 @@
     var locationListingNotification = $('.location-listing').children(`button[data-id=${locationId}]`).siblings('.location-in-quest');
     if (isLocationInQuest(locationId)) {
       locationListingButton.hide();
-      locationListingNotification.show();
+      locationListingNotification.show().css('display', 'inline-block');
     } else {
       locationListingButton.show();
       locationListingNotification.hide();
@@ -379,13 +404,17 @@
 
   //============ Add Group To Quest ===============
 
-  function showGroupOptions(){
-    $('.group-quest-options').show();
-    $('#cancel-group-to-quest, #confirm-group-to-quest').show();
-    $('#add-group-to-quest, #change-group-to-quest').hide();
+  function showGroupOptions(event){
+    event.preventDefault();
+    $('input#location-ids').next('.border').remove();
+    $('input#location-ids').after('<div class="border"></div>');
+    $('#cancel-group-to-quest, #confirm-group-to-quest, .group-quest-options').show();
+    $('#add-group-to-quest, #change-group-to-quest, #quest-groups-list, #clear-group-to-quest').hide();
   }
 
-  function hideGroupOptions(){
+  function hideGroupOptions(event){
+    event.preventDefault();
+    $('input#location-ids').next('.border').remove();
     $('.group-quest-options').hide();
     $('#cancel-group-to-quest, #confirm-group-to-quest').hide();
     $('#add-group-to-quest').show();
@@ -395,7 +424,9 @@
     });
   }
 
-  function clearGroupOptions(){
+  function clearGroupOptions(event){
+    event.preventDefault();
+    $('input#location-ids').next('.border').remove();
     $('#selected-groups').val('');
     $('#quest-groups-list').empty();
     $('#clear-group-to-quest').hide();
@@ -406,24 +437,33 @@
     });
   }
 
-  function confirmGroup(){
+  function confirmGroup(event){
+    event.preventDefault();
     var groupIds = [];
+    $('#quest-groups-list').empty();
     $('.group-to-quest:checked').each((i, input)=>{
       var groupId = $(input).attr('id');
       groupIds.push(groupId);
       var groupName = $(input).val();
       var listItem = `<li>${groupName}</li>`;
+
       $('#quest-groups-list').append(listItem);
     });
+    if(groupIds.length === 0){
+      $('input#location-ids').next('.border').remove();
+      $('#clear-group-to-quest').hide();
+    } else {
+      $('#quest-groups-list').prepend('<li>Added Groups:</li>');
+      $('#clear-group-to-quest').hide();
+    }
     $('#selected-groups').val(groupIds);
     var selected = $('#selected-groups').val();
     showClearGroupOptions();
   }
 
   function showClearGroupOptions(){
-    $('.group-quest-options').hide();
-    $('#cancel-group-to-quest, #confirm-group-to-quest').hide();
-    $('#clear-group-to-quest').show();
+    $('#quest-groups-list, #add-group-to-quest').show();
+    $('#cancel-group-to-quest, #confirm-group-to-quest, .group-quest-options').hide();
   }
 
 

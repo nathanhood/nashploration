@@ -2,34 +2,40 @@ extends ../shared/template
 
 block content
 
-  .profile-content-wrapper
-    h1.quest-name(data-id='#{quest._id}') Edit #{quest.name}
-    p= quest.description
+  .content-wrapper
+    mixin back('Edit Quest')
 
-    img(src='#{quest.photo.filePath}')
-    form(action='/quests/update/#{quest._id}', method='POST', enctype='multipart/form-data')
-      label Choose New Quest Image
+    .quest-edit-wrapper
+
+      h1.quest-name(data-id='#{quest._id}') Edit #{quest.name}
+      p= quest.description
+
+      img(src='#{quest.photo.filePath}')
+      form(action='/quests/update/#{quest._id}', method='POST', enctype='multipart/form-data')
+        p Edit Quest Image
         input(type='file', name='photo')
-      input#selected-groups(type='text', name='groupIds', hidden=true)
-      if (quest.isPrivate)
-        label Make Quest Public
+        input#selected-groups(type='text', name='groupIds', hidden=true)
+        .border
+        if (quest.isPrivate)
+          p Make Quest Public
           input(type='checkbox', name='isPrivate', value='false')
-      else
-        label Make Quest Private
+        else
+          p.inline Make Quest Private
           input(type='checkbox', name='isPrivate', value='true')
-      button.submit-quest-changes Save Changes
+        .border
+        button.submit-quest-changes Save Changes
 
-    .group-quest-options
-      if(groups)
-        h3 Add Groups
-        each group in groups
-          label(for='#{group._id}')= group.name
-          input(type="checkbox", id='#{group._id}', class='group-to-quest', value='#{group.name}')
-      else
-        h3 All your groups are a part of this quest
-    .quest-destinations-container
-      h2 Quest Locations
-      ul.quest-destinations
+      .group-quest-options
+        if(groups)
+          h3 Add Groups
+          each group in groups
+            label(for='#{group._id}')= group.name
+            input(type="checkbox", id='#{group._id}', class='group-to-quest', value='#{group.name}')
+        else
+          h3 All your groups are a part of this quest
+      .quest-destinations-container
+        h2 Quest Locations
+        ul.quest-destinations
 
   #quest-map-canvas
 

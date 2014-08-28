@@ -19,8 +19,8 @@ class User{
     this.password = fields.password[0];
     this.userName = userName;
     this.nickName = fields.nickName[0];
-    this.badges = []; // Object IDs
-    this.class = 'Explorer';
+    this.badges = [{name: 'Couch Potato', filePath: '/img/assets/logo-icon.png'}]; // Object IDs
+    this.class = 'Couch Potato';
     this.groups = []; // Object IDs
     this.photo = {fileName: null}; // add photo object from processPhoto
     this.checkIns = []; // Location IDs
@@ -30,6 +30,7 @@ class User{
     this.startedQuests = [];
     this.myQuests = [];
     this.completedQuests = []; // Object IDs
+    this.points = 0;
     // this.streetViewQuizzes = []; // Object IDs
   }
 
@@ -111,6 +112,55 @@ class User{
     if(isInCheckInsArray === false){
       var checkIn = {timeStamp: new Date(), locId: locationId};
       this.checkIns.push(checkIn);
+    }
+  }
+
+  calculateUserScore(quests){
+    var points = 0;
+    if (quests.length > 0) {
+      quests.forEach(quest=>{
+        points += (quest.checkIns.length * 3);
+      });
+    }
+    points += (this.checkIns.length * 5);
+    this.points = points;
+  }
+
+  isActiveQuestComplete(quest){
+    return quest.checkIns.length === this.activeQuest.questLocs.length;
+  }
+
+  addCompletedQuest(){
+    this.completedQuests.push(this.activeQuest.questId);
+    this.activeQuest.questId = null;
+    this.activeQuest.questLocs = [];
+  }
+
+  updateBadgeAndClass(){
+    var currentClass = this.class;
+
+    if (this.points >= 5 && this.points < 25) {
+      this.class = 'Traveler';
+    } else if (this.points >= 25 && this.points < 50) {
+      this.class = 'Pioneer';
+    } else if (this.points >= 50 && this.points < 75) {
+      this.class = 'Scout';
+    } else if (this.points >= 75 && this.points < 125) {
+      this.class =  'Ranger';
+    } else if (this.points >=  125 && this.points < 250) {
+      this.class = 'Pathfinder';
+    } else if (this.points >= 250 && this.points < 500) {
+      this.class = 'Adventurer';
+    } else if (this.points >= 500) {
+      this.class = 'Nashplorer';
+    }
+
+    if (currentClass !== this.class) {
+      // this.badges.push({name: this.class, filePath: `/img/assets/${this.class.toLowerCase()}.png`});
+      this.badges.push({name: this.class, filePath: '/img/assets/placeholder.png'});
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -234,6 +284,13 @@ class User{
     this.password = bcrypt.hashSync(password, 8);
   }
 
+  static sortUsersByPoints(users){
+    users.sort((a, b)=>{
+      return b.points - a.points;
+    });
+    return users;
+  }
+
   static findUsersWithoutQuest(users, userIds, questId){
     if (users && userIds) {
       var unavailableUsers = [];
@@ -315,6 +372,12 @@ class User{
     });
   }
 
+  static findManyUsersByGroup(groupObj, fn){
+    users.find({_id: { $in: groupObj.members } }).toArray((err, users)=>{
+      fn(users);
+    });
+  }
+
   static findManyById(userIds, fn){
     if (userIds) {
       users.find({_id: { $in: userIds } }).toArray((err, users)=>{
@@ -381,6 +444,12 @@ class User{
       } else {
         fn(null);
       }
+    });
+  }
+
+  static findLeaders(fn){
+    users.find({}).sort( { points: -1 } ).limit(10).toArray((err, users)=>{
+      fn(users);
     });
   }
 

@@ -4,7 +4,7 @@ extends ../shared/template
 block content
 
   .content-wrapper
-    h1 Nearby Check Ins
+    mixin back('Nearby Check Ins')
 
     if (locations.length > 0)
       ul.checkin-list

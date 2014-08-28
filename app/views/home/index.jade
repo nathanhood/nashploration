@@ -3,9 +3,11 @@ extends ../shared/template
 block content
 
   #index-container
-    .messages
-      if (registerAndLogin)
+
+    if (registerAndLogin.length > 0)  
+      .messages
         p= registerAndLogin
+
     #register
       form(method='POST', action='/register', enctype='multipart/form-data')
         input.form-control.username(type='text', name='userName', placeholder='Username', required)

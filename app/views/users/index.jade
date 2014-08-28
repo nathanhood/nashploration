@@ -1,15 +1,15 @@
 
 block content
 
-  if (successCheckIn)
-    .messages
+  if (successCheckIn.length > 0)
+    .home-messages
       p.home-message= successCheckIn
 
   include ../locations/index.jade
 
   .map-bottom-container
     form.checkin-form(action='/checkIn/view-nearby', method='GET')
-      input(type='text', name='nearbyCheckIns', hidden)
+      input.hidden(type='text', name='nearbyCheckIns', hidden)
     a(href='#').checkin-button
     .profile-home-wrapper
       .profile-pic-wrapper

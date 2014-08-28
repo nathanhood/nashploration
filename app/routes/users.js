@@ -40,8 +40,7 @@ exports.register = (req, res)=>{
   var form = new multiparty.Form();
 
   form.parse(req, (err, fields, files)=>{
-    console.log('IN ROUTE');
-    console.log(files);
+
     var photoObj = files.photo[0];
     var userName = fields.userName[0].split(' ').map(w=>w.trim()).map(w=>w.toLowerCase()).join('');
     Group.findByGroupCode(fields.groupCode[0], group=>{
@@ -155,19 +154,35 @@ exports.showCheckIn = (req, res)=>{
 
 exports.checkIn = (req, res)=>{
   var currLoc = {lat: req.query.lat, lng: req.query.lng};
-
+  var user = res.locals.user;
   Location.findById(req.params.locationId, (err, location)=>{
     location.saveComment(req.body.comment, currLoc, res.locals.user._id, ()=>{
-      Quest.findById(res.locals.user.activeQuest.questId, (err,quest)=>{
+      Quest.findById(user.activeQuest.questId, (err,quest)=>{
+        var isCompleted = false;
         if (quest) {
-          res.locals.user.updateActiveQuest(quest.checkIns, location._id);
-          //TODO add check for completed quest...if completed send flash message
+          user.updateActiveQuest(quest.checkIns, location._id);
+          isCompleted = user.isActiveQuestComplete(quest);
+          if (isCompleted) {
+            user.addCompletedQuest();
+          }
         }
-        res.locals.user.updateCheckIns(location._id);
-        res.locals.user.save(()=>{
-          location.save(()=>{
-          req.flash('checkInSuccess', `You successfully checked into ${location.name}!`);
-          res.redirect('/dashboard');
+        user.updateCheckIns(location._id);
+        Quest.findManyById(user.completedQuests, quests=>{
+          user.calculateUserScore(quests);
+          var upgradedClass = user.updateBadgeAndClass();
+          user.save(()=>{
+            location.save(()=>{
+            if (isCompleted && upgradedClass) {
+              res.redirect('/quests/class-quest-confirmation');
+            } else if (isCompleted && !upgradedClass) {
+              res.redirect('/quests/quest-confirmation');
+            } else if (upgradedClass && !isCompleted) {
+              res.redirect('/quests/class-confirmation');
+            } else {
+              req.flash('checkInSuccess', `You successfully checked into ${location.name}!`);
+              res.redirect('/dashboard');
+            }
+            });
           });
         });
       });
@@ -242,20 +257,20 @@ exports.changePhoto = (req, res)=>{
   });
 };
 
+exports.leaderBoard = (req, res)=>{
+  var user = res.locals.user;
+  User.findLeaders(leaders=>{
+    Group.findManyById(user.groups, groups=>{
+      res.render('users/leaders', {title: 'Nashploration', leaders:leaders, groups:groups});
+    });
+  });
+};
+
 exports.fetchCheckins = (req, res)=>{
   User.findByUserName(req.params.userName, user=>{
-    console.log('USERRRRRR');
-    console.log(user);
     user.findCheckins((checkInsWithTime, locIdsArray)=>{
-      console.log('CHECKINSWITHTIME');
-      console.log(checkInsWithTime);
-      console.log(locIdsArray);
       Location.findManyById(locIdsArray, locations=>{
-        console.log('ALL LOCATIONSSSS');
-        console.log(locations);
         Location.matchCheckInWithLoc(checkInsWithTime, locations, locationsWithTime=>{
-          console.log('IN ROUTEEEEE');
-          console.log(locationsWithTime);
           res.render('users/checkIns', {title: 'Nashploration', checkIns: locationsWithTime});
         });
       });
