@@ -232,45 +232,46 @@
 
 //============= Viewing Locations vs Quest Information
 
-  function viewAddLocationsToQuest(){
-    $('#view-quest-list').show();
-    $('#quest-list').fadeOut(function(){
-      $('.empty-quest-notification').remove();
-      $('#create-quest-map').fadeIn();
-    });
-
-    $('#cancel-group-to-quest').hide();
-    $('#confirm-group-to-quest').hide();
-    $('#clear-group-to-quest').hide();
-    $('.group-quest-options').hide();
-
-    $('#view-current-quest').show();
-    $('#add-location').hide();
-
-  }
-
-  function showQuestAndGroups(){
-    if ($('#quest-locations-listing').css('display') === 'none') {
-      $('#create-quest-map').fadeOut(function(){
-        $('#quest-list').fadeIn();
+    function viewAddLocationsToQuest(){
+      $('#view-quest-list').show();
+      $('#quest-list').fadeOut(function(){
+        $('.empty-quest-notification').remove();
+        $('#create-quest-map').fadeIn();
       });
-    } else {
-      $('#quest-locations-listing').fadeOut(function(){
-        $('#quest-list').fadeIn();
-      });
-    }
-    $('#view-quest-list').hide();
-    $('#quest-groups-list').fadeIn();
 
-    $('#view-quest-map').hide();
-    $('#view-current-quest').hide();
-    $('#add-location').show();
-    if ($('#quest-list ul li').length === 0){
-      $('#quest-list ul').append('<li class="empty-quest-notification">There are currently no locations added to this quest.</li>');
-    } else {
-      $('.empty-quest-notification').remove();
+      $('#cancel-group-to-quest').hide();
+      $('#confirm-group-to-quest').hide();
+      $('#clear-group-to-quest').hide();
+      $('.group-quest-options').hide();
+
+      $('#view-current-quest').show();
+      $('#add-location').hide();
+
     }
-  }
+
+    function showQuestAndGroups(){
+      if ($('#quest-locations-listing').css('display') === 'none') {
+        $('#create-quest-map').fadeOut(function(){
+          $('#quest-list').fadeIn();
+        });
+      } else {
+        $('#quest-locations-listing').fadeOut(function(){
+          $('#quest-list').fadeIn();
+        });
+      }
+      $('#view-quest-list').hide();
+      $('#quest-groups-list').fadeIn();
+
+      $('#view-quest-map').hide();
+      $('#view-current-quest').hide();
+      $('#add-location').show();
+      if ($('#quest-list ul li').length === 0){
+        $('#quest-list ul').append('<li class="empty-quest-notification">There are currently no locations added to this quest.</li>');
+      } else {
+        $('.empty-quest-notification').remove();
+      }
+    }
+
 
 //========== Adding Locations to Quest List And Hidden Form (questLocations array)
 
