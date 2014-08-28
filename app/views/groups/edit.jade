@@ -5,10 +5,10 @@ block content
   .content-wrapper
     mixin back('Edit Group')
 
-    .messages
-      if (deleteGroupError)
+    if (deleteGroupError.length > 0)
+      .messages
         p= deleteGroupError
-        
+
     form#delete-group-form(action='/groups/delete', method='POST')
       input(type='text', name='groupId', value='#{group._id}' hidden)
       input(type='text', name='groupName', value='#{group.name}', hidden)

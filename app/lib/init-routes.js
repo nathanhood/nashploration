@@ -26,6 +26,11 @@ function load(app, fn){
   app.get('/', dbg, home.index);
   app.get('/confirmation/:groupCode', dbg, home.confirmation);
 
+  /* -------- FORGOT PASSWORD ----------- */
+  app.get('/forgot-password', dbg, home.forgotPassword);
+  app.post('/authenticate-email', dbg, home.authenticateEmail);
+  app.post('/send-password-reset', dbg, home.resetPassword);
+
   app.post('/register', dbg, users.register);
   app.post('/login', dbg, users.login);
   app.post('/logout', dbg, users.logout);
@@ -55,8 +60,8 @@ function load(app, fn){
 
   /* ------------ Users ------------ */
   app.get('/dashboard', dbg, users.index);
-  app.get('/users/:userName', dbg, users.profile);
   app.get('/users/edit/:userId', dbg, users.fetchInfo);
+  app.get('/users/:userName', dbg, users.profile);
   app.get('/users/:userName/checkins', dbg, users.fetchCheckins);
   app.post('/users/edit/photo/:userId', dbg, users.changePhoto);
   app.post('/users/edit/:userId', dbg, users.updateInfo);
@@ -69,6 +74,9 @@ function load(app, fn){
   app.get('/quests', dbg, quests.index);
   app.get('/quests/new', dbg, quests.new);
   app.get('/quests/view', dbg, quests.view);
+  app.get('/quests/quest-confirmation', dbg, quests.questConfirmation);
+  app.get('/quests/class-confirmation', dbg, quests.upgradedClassConfirmation);
+  app.get('/quests/class-quest-confirmation', dbg, quests.upgradedClassAndQuestConfirmation);
   app.get('/quests/show/:questId', dbg, quests.show);
   app.get('/quests/edit/:questId', dbg, quests.edit);
   app.post('/quests/create', dbg, quests.create);

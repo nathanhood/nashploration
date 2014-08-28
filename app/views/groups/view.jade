@@ -1,10 +1,11 @@
 extends ../shared/template
 
 block content
+  
   .content-wrapper
     mixin back('Manage Groups')
     
-    if (deleteGroupConfirm)
+    if (deleteGroupConfirm.length > 0)
       .messages
         p= deleteGroupConfirm
 

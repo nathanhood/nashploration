@@ -40,6 +40,8 @@ exports.register = (req, res)=>{
   var form = new multiparty.Form();
 
   form.parse(req, (err, fields, files)=>{
+    console.log('IN ROUTE');
+    console.log(files);
     var photoObj = files.photo[0];
     var userName = fields.userName[0].split(' ').map(w=>w.trim()).map(w=>w.toLowerCase()).join('');
     Group.findByGroupCode(fields.groupCode[0], group=>{
@@ -69,6 +71,7 @@ exports.register = (req, res)=>{
             });
           }
         } else {
+          req.flash('registerAndLogin', 'That username and/or email already exists. Please try again.');
           res.redirect('/');
         }
       });
@@ -97,6 +100,7 @@ exports.login = (req, res)=>{
             });
           });
         } else {
+          req.flash('registerAndLogin', 'No account exists with those credentials');
           res.redirect('/');
         }
       });
@@ -108,6 +112,7 @@ exports.login = (req, res)=>{
         req.session.userId = u._id;
         res.redirect('/dashboard');
       } else {
+        req.flash('registerAndLogin', 'No account exists with those credentials');
         res.redirect('/');
       }
     });
@@ -150,19 +155,35 @@ exports.showCheckIn = (req, res)=>{
 
 exports.checkIn = (req, res)=>{
   var currLoc = {lat: req.query.lat, lng: req.query.lng};
-
+  var user = res.locals.user;
   Location.findById(req.params.locationId, (err, location)=>{
     location.saveComment(req.body.comment, currLoc, res.locals.user._id, ()=>{
-      Quest.findById(res.locals.user.activeQuest.questId, (err,quest)=>{
+      Quest.findById(user.activeQuest.questId, (err,quest)=>{
+        var isCompleted = false;
         if (quest) {
-          res.locals.user.updateActiveQuest(quest.checkIns, location._id);
-          //TODO add check for completed quest...if completed send flash message
+          user.updateActiveQuest(quest.checkIns, location._id);
+          isCompleted = user.isActiveQuestComplete(quest);
+          if (isCompleted) {
+            user.addCompletedQuest();
+          }
         }
-        res.locals.user.updateCheckIns(location._id);
-        res.locals.user.save(()=>{
-          location.save(()=>{
-          req.flash('checkInSuccess', `You successfully checked into ${location.name}!`);
-          res.redirect('/dashboard');
+        user.updateCheckIns(location._id);
+        Quest.findManyById(user.completedQuests, quests=>{
+          user.calculateUserScore(quests);
+          var upgradedClass = user.updateBadgeAndClass();
+          user.save(()=>{
+            location.save(()=>{
+            if (isCompleted && upgradedClass) {
+              res.redirect('/quests/class-quest-confirmation');
+            } else if (isCompleted && !upgradedClass) {
+              res.redirect('/quests/quest-confirmation');
+            } else if (upgradedClass && !isCompleted) {
+              res.redirect('/quests/class-confirmation');
+            } else {
+              req.flash('checkInSuccess', `You successfully checked into ${location.name}!`);
+              res.redirect('/dashboard');
+            }
+            });
           });
         });
       });
@@ -236,6 +257,13 @@ exports.changePhoto = (req, res)=>{
     });
   });
 };
+
+// exports.leaderBoard = (req, res)=>{
+//   User.findLeaders(users=>{
+//     console.log(users);
+//   });
+// };
+// app.get('/users/leaders', dbg, users.leaderBoard);
 
 exports.fetchCheckins = (req, res)=>{
   User.findByUserName(req.params.userName, user=>{

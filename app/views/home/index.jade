@@ -3,6 +3,9 @@ extends ../shared/template
 block content
 
   #index-container
+    .messages
+      if (registerAndLogin)
+        p= registerAndLogin
     #register
       form(method='POST', action='/register', enctype='multipart/form-data')
         input.form-control.username(type='text', name='userName', placeholder='Username', required)
@@ -13,7 +16,7 @@ block content
         .clear
         input.form-control.email(type='email', name='email', placeholder='Email', required)
         .clear
-        input.form-control.password(type='password', name='password', placeholder='Password', required)
+        input.form-control.password(type='password', name='password', placeholder='Password', pattern='{6,}', title='6 characters minimum', required)
         .clear
         input(type='file', name='photo')
         .clear
@@ -27,3 +30,4 @@ block content
         input.form-control.password(type='password', name='password', placeholder='Password', required)
         .clear
         button Login
+      a(href='/forgot-password') Forgot Password
