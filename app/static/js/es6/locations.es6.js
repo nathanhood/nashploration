@@ -246,10 +246,11 @@
     scale: 5
   };
 //========Used to find users current location: Richmond
+// var pos;
 //   function findLocation(){
 //   if(navigator.geolocation) {
 //     navigator.geolocation.getCurrentPosition(function(position) {
-//       var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+//        pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 //       var marker = new google.maps.Marker({
 //         map: map,
 //         position: pos,
@@ -288,7 +289,7 @@
 
 //TODO change timed function to findLocation()
 //   window.setInterval(function(){
-//   checkCloseLocs();
+//   checkCloseLocs(pos);
 // }, 10000);
 
 //TODO pass in pos once mongo geo spatial is working
