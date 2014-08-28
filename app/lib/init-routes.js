@@ -64,6 +64,7 @@ function load(app, fn){
   app.get('/users/edit/:userId', dbg, users.fetchInfo);
   app.get('/users/:userName', dbg, users.profile);
   app.get('/users/:userName/checkins', dbg, users.fetchCheckins);
+  app.get('/users/:userName/badges', dbg, users.showBadges);
   app.post('/users/edit/photo/:userId', dbg, users.changePhoto);
   app.post('/users/edit/:userId', dbg, users.updateInfo);
   app.post('/users/checkin/:locationId', dbg, users.checkIn);

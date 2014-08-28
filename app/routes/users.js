@@ -277,3 +277,7 @@ exports.fetchCheckins = (req, res)=>{
     });
   });
 };
+
+exports.showBadges = (req, res)=>{
+  res.render('users/badges', {title: 'Nashploration'});
+};
