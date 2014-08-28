@@ -235,6 +235,7 @@
   function viewAddLocationsToQuest(){
     $('#view-quest-list').show();
     $('#quest-list').fadeOut(function(){
+      $('.empty-quest-notification').remove();
       $('#create-quest-map').fadeIn();
     });
 
@@ -245,6 +246,7 @@
 
     $('#view-current-quest').show();
     $('#add-location').hide();
+
   }
 
   function showQuestAndGroups(){

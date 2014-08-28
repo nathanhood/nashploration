@@ -38,13 +38,13 @@ block content
                 label(for='#{group._id}')= group.name
                 input(type="checkbox", id='#{group._id}', class='group-to-quest', value='#{group.name}')
             p.small *Everyone in selected groups will be added to this quest.
-        ul#quest-groups-list(hidden)
+      ul#quest-groups-list(hidden)
       .border
 
       button#add-location(hidden=true) Return to Map
       button#view-quest-list List All Locations
       button(hidden=true)#view-quest-map View Locations on Map
-      
+
       button#submit-quest-form Finalize Quest
       button#view-current-quest Review Quest Details
 
