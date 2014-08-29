@@ -327,7 +327,7 @@ var checkInIcon = {
 //==== changes the icons for the markers that are within range of checkin: Richmond
 var closeMarkers = [];
 function addCheckInMarkers(coords){
-    allMarkers.forEach(m=>{ // loops thourgh the global array of markers and matches on the site coordinates. When it finds a match it changes the marker icon.
+    allMarkers.forEach(m=>{ // loops through the global array of markers and matches on the site coordinates. When it finds a match it changes the marker icon.
       if(m.position.k.toFixed(6) === coords[1].toFixed(6) && m.position.B.toFixed(6) === coords[0].toFixed(6)){
         // m.setAnimation(google.maps.Animation.BOUNCE);
         toggleBounce(m);
