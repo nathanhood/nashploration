@@ -10,29 +10,34 @@ block content
     mixin back('Edit Profile')
 
     .profile-edit-wrapper
-      img(src='#{profileOwner.photo.filePath}')
-      form.edit-photo(action='/users/edit/photo/#{profileOwner._id}', method='POST', enctype='multipart/form-data')
-        input(type='file', name='photo')
-        button Submit
-      .clear
+      .edit-profil-pic-wrapper
+        img(src='#{profileOwner.photo.filePath}')
+        form.edit-photo(action='/users/edit/photo/#{profileOwner._id}', method='POST', enctype='multipart/form-data')
+          input(type='file', name='photo')
+          button Submit
+        .clear
       .border
-      p Username
+      p.label Username
       form(action='/users/edit/#{profileOwner._id}', method='POST')
         input(type='text', name='userName', value='#{profileOwner.userName}')
         button Submit
-      p Nickname
+      .border
+      p.label Nickname
       form(action='/users/edit/#{profileOwner._id}', method='POST')
         input(type='text', name='nickName', value='#{profileOwner.nickName}')
         button Submit
-      p Email
+      .border
+      p.label Email
       form(action='/users/edit/#{profileOwner._id}', method='POST')
         input(type='text', name='email', value='#{profileOwner.email}')
         button Submit
-      p Password
+      .border
+      p.label Password
       form(name='passwordCheck', onsubmit='return validatePassword();', action='/users/edit/#{profileOwner._id}}', method='POST')
         input(type='password', id='password', name='password', placeholder="Enter new password")
         input(type='password', id='passwordConfirmation', name='passwordConfirmation', placeholder="Confirm password")
         button Submit
+      .border
       a.submit-edits(href='/users/#{profileOwner.userName}') Save Changes
 
   script.

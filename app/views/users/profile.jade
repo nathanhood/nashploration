@@ -34,8 +34,6 @@ block content
     .profile-wrapper
       .profile-info-left
         .profile-pic(style='background-image: url("#{profileOwner.photo.filePath}")')
-        if(user.isOwner(profileOwner._id))
-          a.edit-profile(href="/users/edit/#{profileOwner._id}") EDIT
       .profile-info-right
         span Username:
         h3= profileOwner.userName
@@ -77,6 +75,8 @@ block content
           a(href='/groups/new') Create a Group
         li
           a(href='/groups/view') Manage Groups
+      if(user.isOwner(profileOwner._id))
+        a.edit-profile(href="/users/edit/#{profileOwner._id}") EDIT PROFILE
 
 block scripts
   script(src='/js/es6/compiled/profile.js')

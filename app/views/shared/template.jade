@@ -27,7 +27,7 @@ html
             li
               a(href="#") About
             li
-              a(href="#") Settings
+              a(href="/users/edit/#{user._id}") Settings
             li
               form.logout-form(action='/logout', method='POST')
                 a.submit-logout(href="#") Logout

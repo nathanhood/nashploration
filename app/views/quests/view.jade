@@ -16,16 +16,16 @@ block content
     .quest-list-content-wrapper 
 
       if (createdQuests !== null)
-        h2 Created Quests
+        p.label.headline Created Quests
         each quest in createdQuests
           .quest-entry
             a(href='/quests/show/#{quest._id}')
-              h3= quest.name
-            p created by #{quest.creator.userName}
+              h3.quest-name= quest.name
+            .clear
             a.quest-edit(href='/quests/edit/#{quest._id}') edit
 
       if (myQuests !== null)
-        h2 Joined Quests
+        p.label.headline Joined Quests
         each quest in myQuests
           .quest-entry
             h3
@@ -33,7 +33,7 @@ block content
             p created by #{quest.creator.userName}
 
       if (completedQuests !== null)
-        h2 Completed Quests
+        p.label.headline Completed Quests
         each quest in completedQuests
           .quest-entry
             h3
