@@ -160,7 +160,6 @@
       checkInMarkers.push(latLng);
       allMarkers.push(latLng);
       infoWindows(locName, latLng, locDesc); //passing in coords because latLng is now a google Marker Object..coords is used to set the data of the infowindow "Show More" link
-
   }
 
   var questIcon = {
