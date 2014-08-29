@@ -42,6 +42,7 @@ function load(app, fn){
   app.get('/getAndrewJacksonLocations', dbg, locations.getAndrewJacksonLocations);
   app.post('/addHistory', dbg, locations.addHistory);
 
+  app.get('/locations/show/:locationId', dbg, locations.locationDetailsById);
   app.get('/locations/:location', dbg, locations.locationDetails);
   app.get('/getQuestLocations/:questId', dbg, locations.getQuestLocations);
 
@@ -64,6 +65,7 @@ function load(app, fn){
   app.get('/users/edit/:userId', dbg, users.fetchInfo);
   app.get('/users/:userName', dbg, users.profile);
   app.get('/users/:userName/checkins', dbg, users.fetchCheckins);
+  app.get('/users/:userName/badges', dbg, users.showBadges);
   app.post('/users/edit/photo/:userId', dbg, users.changePhoto);
   app.post('/users/edit/:userId', dbg, users.updateInfo);
   app.post('/users/checkin/:locationId', dbg, users.checkIn);

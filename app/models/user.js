@@ -19,7 +19,7 @@ class User{
     this.password = fields.password[0];
     this.userName = userName;
     this.nickName = fields.nickName[0];
-    this.badges = [{name: 'Couch Potato', filePath: '/img/assets/logo-icon.png'}]; // Object IDs
+    this.badges = [{name: 'Couch Potato', filePath: '/img/assets/couch_potato.png'}]; // Object IDs
     this.class = 'Couch Potato';
     this.groups = []; // Object IDs
     this.photo = {fileName: null}; // add photo object from processPhoto
@@ -53,8 +53,15 @@ class User{
     });
   }
 
-  isInActiveQuest(locationId){
-    return this._id.toString() === locationId.toString();
+  isInActiveQuest(locationId, quest){
+    if (quest){
+      var isActive = quest.checkIns.some(id=>{
+        return id.toString() === locationId.toString();
+      });
+      return isActive;
+    } else {
+      return false;
+    }
   }
 
   findCheckins(fn){

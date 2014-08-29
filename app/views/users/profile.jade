@@ -25,7 +25,7 @@ block content
     if (addedToMyQuests.length > 0)
       .messages
         p= addedToMyQuests
-        
+
     .group-confirmation-container
       if (groupConfirmation.length > 0)
         .messages
@@ -47,9 +47,9 @@ block content
       a(href="/users/#{profileOwner.userName}/checkins")
         h4 Check-Ins
         img(src="/img/assets/link-placeholder.png")
-      a(href="#")
+      a(href="/users/#{profileOwner.userName}/badges")
         h4 Badges
-        img(src="/img/assets/link-placeholder.png")
+        img(src="#{profileOwner.badges[profileOwner.badges.length -1].filePath}")
       a(href="/users/leaders")
         h4 Leaders
         img(src="/img/assets/link-placeholder.png")

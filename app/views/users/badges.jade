@@ -1,0 +1,11 @@
+extends ../shared/template
+
+block content
+
+  .content-wrapper
+    mixin back('Your Badges')
+
+    ul.badge-list
+      each badge in user.badges
+        li
+          img(src="#{badge.filePath}")
