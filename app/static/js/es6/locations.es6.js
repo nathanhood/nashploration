@@ -143,7 +143,7 @@
 
   var checkInMarker = {
       url: '/img/checkin-pin.svg',
-      scaledSize: new google.maps.Size(40,40)
+      scaledSize: new google.maps.Size(70,40)
     };
 
   var checkInMarkers = [];
@@ -165,7 +165,7 @@
 
   var questIcon = {
       url: '/img/pin-filled.svg',
-      scaledSize: new google.maps.Size(40,40)
+      scaledSize: new google.maps.Size(70,40)
     };
 
   var questMarkers = [];
