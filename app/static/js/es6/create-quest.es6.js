@@ -9,7 +9,7 @@
   function init(){
     fetchLocations();
 
-    $('#map-filter select').on('change', filterLocations);
+    $('#create-quest-map-filter select').on('change', filterLocations);
     $('#view-quest-map').click(toggleMapAndList);
     $('#view-quest-list').click(toggleMapAndList);
     $('#add-location').click(viewAddLocationsToQuest);
@@ -87,8 +87,7 @@
   function fetchLocations() {
     $.ajax('/getAllLocations').done(function(data){
       initMap();
-
-      data.all.forEach(d=>{
+      data.forEach(d=>{
         placeMarkers(d.loc, d.name, d.description, d._id);
         buildLocationsListing(d);
       });
@@ -117,12 +116,12 @@
 
 //===========filtering map :Nathan
   function filterLocations() {
-    var filter = $('#map-filter').find('option:selected').text();
+    var filter = $('#create-quest-map-filter').find('option:selected').text();
     switch(filter) {
       case 'All':
         $.ajax('/getAllLocations').done(function(data){
           clearMap();
-          data.all.forEach(d=>{
+          data.forEach(d=>{
             placeMarkers(d.loc, d.name, d.description, d._id);
           });
           resizeMap();
@@ -237,6 +236,7 @@
       $('#quest-list').fadeOut(function(){
         $('.empty-quest-notification').remove();
         $('#create-quest-map').fadeIn();
+        $('#create-quest-map-filter').fadeIn();
       });
 
       $('#cancel-group-to-quest').hide();
@@ -251,6 +251,7 @@
 
     function showQuestAndGroups(){
       if ($('#quest-locations-listing').css('display') === 'none') {
+        $('#create-quest-map-filter').fadeOut();
         $('#create-quest-map').fadeOut(function(){
           $('#quest-list').fadeIn();
         });
@@ -353,9 +354,11 @@
     if (button === 'view-quest-map') {
       list.fadeOut(function(){
         map.fadeIn();
+        $('#create-quest-map-filter').fadeIn();
       });
       $('#view-quest-list').show();
     } else if (button === 'view-quest-list'){
+      $('#create-quest-map-filter').fadeOut();
       map.fadeOut(function(){
         list.fadeIn();
       });

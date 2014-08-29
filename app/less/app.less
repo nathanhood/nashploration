@@ -852,18 +852,147 @@ a.edit-profile:hover {
 
 .all-checkins-wrapper {
   padding: 15px 0 0 0;
+  text-align: left;
 
-  h3 {
+  li {
+    border-bottom: 1px solid darken(@offwhite, 20%);
+    padding: 10px 0;
+  }
+
+  li h3 {
     font-size:1.25em;
     font-weight: bold;
-    color:@base-color;
+    color: @base-color;
     text-align:center;
     line-height: 1.5;
+    display: inline-block;
+  }
+
+  li a {
+    button {
+      float:right;
+      padding: 5px 10px;
+      margin-top: 15px;
+    }
+  }
+
+}
+
+@media screen and (max-width: 650px){
+  .checkins-listing {
+    li h3 {
+      font-size: 1em;
+      display: block;
+      text-align: left;
+    }
+
+    li {
+     padding: 20px 0;
+    }
+
+    li a {
+      button {
+        margin-top: 5px;
+      }
+    }
   }
 }
 
 
+/* ====================================== NEARBY CHECKINS LIST CSS ================================= */
+
+
+.nearby-checkins-wrapper {
+  padding: 15px 0 0 0;
+  text-align: left;
+
+  li {
+    border-bottom: 1px solid darken(@offwhite, 20%);
+    padding: 15px 0;
+  }
+
+  li h3 {
+    font-size:1.15em;
+    font-weight: bold;
+    color: @base-color;
+    text-align:center;
+    line-height: 1.5;
+    display: inline-block;
+  }
+
+  li a {
+    button {
+      float:right;
+      padding: 5px 10px;
+      margin-top: 5px;
+    }
+  }
+
+  li.active-quest-checkin a button {
+    margin-top: -15px;
+  }
+
+  li p {
+    display: inline-block;
+  }
+
+}
+
+@media screen and (max-width: 680px){
+  .nearby-checkin-list {
+    li h3 {
+      font-size: 1em;
+      display: block;
+      text-align: left;
+    }
+
+    li {
+     padding: 20px 0;
+    }
+
+    li a {
+      button {
+        float: none;
+      }
+    }
+
+    li.active-quest-checkin p {
+      display: block;
+      margin-bottom: 15px;
+    }
+  }
+}
+
+
+/* ====================================== BADGES CSS =============================================== */
+
+
+.badge-list li {
+  display: inline-block;
+  width: 50%;
+  text-align: center;
+  margin: 25px 0 0 0;
+}
+
+@media screen and (max-width: 680px){
+  .badge-list li {
+    width: 100%;
+  }
+}
+
+
+
 /* ======================================== CREATE QUEST CSS ======================================== */
+
+#create-quest-map-filter {
+  position:absolute;
+  padding: 5px;
+  border-radius: 2px;
+  background-color:@base-complement;
+  top: 425px;
+  left: 80px;
+  z-index:5;
+}
 
 #create-quest-map {
   margin: 20px 0 0 0;
@@ -1197,6 +1326,8 @@ textarea.group-description-input {
 
 
 
+
+
 /* ======================================== OLD CSS ======================================== */
 
 
@@ -1280,6 +1411,7 @@ button {
   width: 400px;
 }
 
+
 /* ======================================== NATHAN EDITS ======================================== */
 #group-code {
   margin-right: 15px;
@@ -1290,4 +1422,3 @@ button {
   height: auto;
   border-radius: 50%;
 }
-

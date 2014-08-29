@@ -23,7 +23,7 @@
   var allMarkers = [];
 //=======ajax call to fetch locations from the database: Richmond
   function fetchLocations() {
-    $.ajax('/getAllLocations').done(function(data){
+    $.ajax('/getFilteredLocations').done(function(data){
       initMap();
 
       if(data.quest){

@@ -6,18 +6,25 @@ block content
   .content-wrapper
     mixin back('Nearby Check Ins')
 
-    if (locations.length > 0)
-      ul.checkin-list
-        each location in locations
-          if (user.isInActiveQuest(location._id))
-            li= location.name
-              p= location.address
-              a(href='/checkIn/#{location._id}') Check In
-              h3 Active Quest Check In
-          else
-            li= location.name
-              p= location.address
-              a(href='/checkIn/#{location._id}') Check In
+    .nearby-checkins-wrapper
+      if (locations.length > 0)
+        ul.nearby-checkin-list
+          each location in locations
+            if (user.isInActiveQuest(location._id, quest))
+              li.active-quest-checkin
+                h3= location.name
+                p *This location is in your active quest
+                a(href='/checkIn/#{location._id}')
+                  button check in
+                a(href='/locations/show/#{location._id}')
+                  button show more
+            else
+              li
+                h3= location.name
+                a(href='/checkIn/#{location._id}')
+                  button check in
+                a(href='/locations/show/#{location._id}')
+                  button show more
 
-    else
-      h3 There are no locations nearby. Keep trecking.
+      else
+        h3 There are no locations nearby. Keep trecking!

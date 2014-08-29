@@ -37,11 +37,13 @@ function load(app, fn){
 
   /* ------ MAP ------*/
   app.get('/allLocations', dbg, locations.index);
-  app.get('/getAllLocations', dbg, locations.getLocations); //ajax call to get locations from db
+  app.get('/getFilteredLocations', dbg, locations.getLocations); //ajax call to get locations from db
+  app.get('/getAllLocations', dbg, locations.getAllLocations); //ajax call to get all locations for building quest
   app.get('/getCivilWarLocations', dbg, locations.getCivilWarLocations); //ajax call to get locations from db
   app.get('/getAndrewJacksonLocations', dbg, locations.getAndrewJacksonLocations);
   app.post('/addHistory', dbg, locations.addHistory);
 
+  app.get('/locations/show/:locationId', dbg, locations.locationDetailsById);
   app.get('/locations/:location', dbg, locations.locationDetails);
   app.get('/getQuestLocations/:questId', dbg, locations.getQuestLocations);
 
