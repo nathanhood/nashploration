@@ -5,9 +5,13 @@ block content
     mixin back('All Check Ins')
 
     .all-checkins-wrapper
-      if(checkIns)
-        each checkIn in checkIns
-          h3= checkIn.timeStamp
-          h3= checkIn.location.name
-        else
-          h3 You haven't checked in anywhere yet. Get out there and nashplore!
+      ul.checkins-listing
+        if(checkIns)
+          each checkIn in checkIns
+            li
+              h3= checkIn.location.name
+              a(href='/locations/show/#{checkIn.location._id}')
+                button(data-id='#{checkIn.location._id}') show more
+              p= checkIn.timeStamp
+          else
+            h3 You haven't checked in anywhere yet. Get out there and nashplore!

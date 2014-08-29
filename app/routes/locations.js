@@ -21,7 +21,7 @@ exports.index = (req, res)=>{ //this renders the dashboard
 
 exports.getLocations = (req, res)=>{
   var locationsObj = {};
-  
+
   if(res.locals.user.checkIns.length > 1 && res.locals.user.activeQuest.questId !== null){
     Location.findAll(locations=>{
       Location.findAllCheckInIds(res.locals.user.checkIns, allCheckIns=>{
@@ -102,6 +102,15 @@ exports.getAndrewJacksonLocations = (req, res)=>{
   });
 };
 
+exports.locationDetailsById = (req, res)=>{
+  Location.findById(req.params.locationId, (err, location)=>{
+    User.findManyCheckInCommentsById(location.checkIns, users=>{
+      User.matchUserToComment(users, location.checkIns, comments=>{
+        res.render('locations/detail', {title: `${location.name}`, location: location, comments: comments});
+      });
+    });
+  });
+};
 
 exports.locationDetails = (req, res)=>{
   Location.findCoordinates(req.params, location=>{

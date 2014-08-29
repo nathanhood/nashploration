@@ -751,13 +751,49 @@ a.pop-up-link {
 
 .all-checkins-wrapper {
   padding: 15px 0 0 0;
+  text-align: left;
 
-  h3 {
+  li {
+    border-bottom: 1px solid darken(@offwhite, 20%);
+    padding: 10px 0;
+  }
+
+  li h3 {
     font-size:1.25em;
     font-weight: bold;
-    color:@base-color;
+    color: @base-color;
     text-align:center;
     line-height: 1.5;
+    display: inline-block;
+  }
+
+  li a {
+    button {
+      float:right;
+      padding: 5px 10px;
+      margin-top: 15px;
+    }
+  }
+
+}
+
+@media screen and (max-width: 600px){
+  .checkins-listing {
+    li h3 {
+      font-size: 1em;
+      display: block;
+      text-align: left;
+    }
+
+    li {
+     padding: 20px 0;
+    }
+
+    li a {
+      button {
+        margin-top: 5px;
+      }
+    }
   }
 }
 
@@ -1022,6 +1058,8 @@ a.pop-up-link {
 
 
 
+
+
 /* ======================================== OLD CSS ======================================== */
 
 
@@ -1105,6 +1143,7 @@ button {
   width: 400px;
 }
 
+
 /* ======================================== NATHAN EDITS ======================================== */
 #group-code {
   margin-right: 15px;
@@ -1115,4 +1154,3 @@ button {
   height: auto;
   border-radius: 50%;
 }
-

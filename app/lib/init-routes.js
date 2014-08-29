@@ -42,6 +42,7 @@ function load(app, fn){
   app.get('/getAndrewJacksonLocations', dbg, locations.getAndrewJacksonLocations);
   app.post('/addHistory', dbg, locations.addHistory);
 
+  app.get('/locations/show/:locationId', dbg, locations.locationDetailsById);
   app.get('/locations/:location', dbg, locations.locationDetails);
   app.get('/getQuestLocations/:questId', dbg, locations.getQuestLocations);
 
