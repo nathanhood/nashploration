@@ -525,8 +525,6 @@ header {
       img {
         width: 100%;
         height: auto;
-        border-radius: 50%;
-        border: 2px solid #fff;
         box-shadow: 0px 0px 5px @base-color;
       }
     }
@@ -916,7 +914,6 @@ a.edit-profile:hover {
 
 
 .nearby-checkins-wrapper {
-  padding: 15px 0 0 0;
   text-align: left;
 
   li {
@@ -928,9 +925,22 @@ a.edit-profile:hover {
     font-size:1.15em;
     font-weight: bold;
     color: @base-color;
-    text-align:center;
+    text-align:left;
     line-height: 1.5;
-    display: inline-block;
+    display: inline;
+    margin: 0 7px 0 0;
+    width: 70%;
+  }
+
+  a.show-more {
+    display:inline;
+    text-decoration: underline;
+    color: lighten(@base-color, 10%)
+  }
+
+  .location-wrapper {
+    width: 75%;
+    display:inline-block;
   }
 
   li a {
@@ -951,30 +961,57 @@ a.edit-profile:hover {
 
 }
 
-@media screen and (max-width: 680px){
-  .nearby-checkin-list {
-    li h3 {
-      font-size: 1em;
-      display: block;
-      text-align: left;
-    }
+@media screen and (max-width: 450px){
 
-    li {
-     padding: 20px 0;
+  .nearby-checkin-list {
+
+    .location-wrapper {
+      display:block;
+      width: 100%;
+
+      li h3 {
+        font-size: 1em;
+        display: block;
+        text-align: left;
+      }
+    }
+    
+    a.show-more {
+      display:block;
     }
 
     li a {
       button {
-        float: none;
+        margin-top: -15px;
       }
-    }
-
-    li.active-quest-checkin p {
-      display: block;
-      margin-bottom: 15px;
     }
   }
 }
+
+// @media screen and (max-width: 680px){
+//   .nearby-checkin-list {
+//     li h3 {
+//       font-size: 1em;
+//       display: block;
+//       text-align: left;
+//     }
+
+//     li {
+//      padding: 20px 0;
+//     }
+
+//     li a {
+//       button {
+//         float: none;
+//       }
+//     }
+
+//     li.active-quest-checkin p {
+//       display: block;
+//       margin-bottom: 15px;
+//     }
+//   }
+// }
 
 
 /* ====================================== BADGES CSS =============================================== */
