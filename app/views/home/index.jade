@@ -4,7 +4,7 @@ block content
 
   #index-container
 
-    if (registerAndLogin.length > 0)  
+    if (registerAndLogin.length > 0)
       .messages
         p= registerAndLogin
 
@@ -18,7 +18,7 @@ block content
         .clear
         input.form-control.email(type='email', name='email', placeholder='Email', required)
         .clear
-        input.form-control.password(type='password', name='password', placeholder='Password', pattern='{6,}', title='6 characters minimum', required)
+        input.form-control.password(type='password', name='password', placeholder='Password', pattern='.{6,}', title='6 characters minimum', required)
         .clear
         input(type='file', name='photo')
         .clear
