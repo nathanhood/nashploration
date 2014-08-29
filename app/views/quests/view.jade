@@ -15,27 +15,36 @@ block content
 
     .quest-list-content-wrapper 
 
+      .quest-list-show-links-wrapper
+        a.quest-list-show-link#created(href="#") CREATED
+        a.quest-list-show-link#joined(href="#") JOINED
+        a.quest-list-show-link#completed(href="#") COMPLETED
+
+
       if (createdQuests !== null)
-        p.label.headline Created Quests
-        each quest in createdQuests
-          .quest-entry
-            a(href='/quests/show/#{quest._id}')
-              h3.quest-name= quest.name
-            .clear
-            a.quest-edit(href='/quests/edit/#{quest._id}') edit
+        .created-quests-wrapper#active-list
+          each quest in createdQuests
+            .quest-entry
+              a(href='/quests/show/#{quest._id}')
+                h3.quest-name= quest.name
+              .clear
+              a.quest-edit(href='/quests/edit/#{quest._id}') edit
 
       if (myQuests !== null)
-        p.label.headline Joined Quests
-        each quest in myQuests
-          .quest-entry
-            h3
-             a(href='/quests/show/#{quest._id}')= quest.name
-            p created by #{quest.creator.userName}
+        .joined-quests-wrapper
+          each quest in myQuests
+            .quest-entry
+              h3
+               a(href='/quests/show/#{quest._id}')= quest.name
+              p created by #{quest.creator.userName}
 
       if (completedQuests !== null)
-        p.label.headline Completed Quests
-        each quest in completedQuests
-          .quest-entry
-            h3
-              a(href='/quests/show/#{quest._id}')=quest.name
-            p created by #{quest.creator.userName}
+        .completed-quests-wrapper
+          each quest in completedQuests
+            .quest-entry
+              h3
+                a(href='/quests/show/#{quest._id}')=quest.name
+              p created by #{quest.creator.userName}
+
+block scripts
+  script(src='/js/es5/view-quests.js')

@@ -50,6 +50,23 @@ input, textarea {
   display:none !important;
 }
 
+a.active-button, a.active-button:hover {
+  background: @base-color !important;
+  color: @offwhite !important;
+}
+
+.active-list {
+  .transition;
+  opacity: 1;
+  display:block;
+}
+
+.inactive-list {
+  .transition;
+  opacity: 0;
+  display:none;
+}
+
 button {
   margin: 5px 5px 0 0 ;
 }
@@ -684,14 +701,10 @@ a.edit-profile:hover {
     background: darken(@offwhite, 5%);
   }
 
-  a.active-button {
-    background: @base-color;
-    color: @offwhite;
-  }
-
   a.quest-menu-button {
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
+    border-right:none;
   }
 
   a.group-menu-button {
@@ -1117,6 +1130,37 @@ a.edit-profile:hover {
       text-align: center;
       border-bottom: 2px solid @base-color;
       text-transform: uppercase;
+  }
+
+  .quest-list-show-links-wrapper {
+    padding: 15px 0;
+    text-align: center;
+
+    a.quest-list-show-link {
+      display:inline-block;
+      width: 33%;
+      color:@base-color;
+      border: 1px solid @base-color;
+      padding: 12px 10px 10px 10px;
+      text-align: center;
+    }
+
+    a.quest-list-show-link:first-child {
+      border-top-left-radius: 3px;
+      border-bottom-left-radius: 3px;
+      border-right:none;
+    }
+
+    a.quest-list-show-link:last-child {
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+      border-left:none;
+    }
+
+    a.quest-list-show-link:hover {
+      background: darken(@offwhite, 5%);
+      color: @base-color;
+    }
   }
 
   .quest-entry {
