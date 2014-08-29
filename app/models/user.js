@@ -53,8 +53,15 @@ class User{
     });
   }
 
-  isInActiveQuest(locationId){
-    return this._id.toString() === locationId.toString();
+  isInActiveQuest(locationId, quest){
+    if (quest){
+      var isActive = quest.checkIns.some(id=>{
+        return id.toString() === locationId.toString();
+      });
+      return isActive;
+    } else {
+      return false;
+    }
   }
 
   findCheckins(fn){

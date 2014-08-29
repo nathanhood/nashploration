@@ -140,7 +140,11 @@ exports.logout = (req, res)=>{
 
 exports.viewNearbyCheckIns = (req, res)=>{
   Location.findManyById(req.query.nearbyCheckIns, locations=>{
-    res.render('users/checkIn-list', {title: 'Nashploration', locations:locations});
+    Quest.findById(res.locals.user.activeQuest.questId, (err, quest)=>{
+      console.log('========== QUEST =========');
+      console.log(quest);
+      res.render('users/checkIn-list', {title: 'Nashploration', locations:locations, quest:quest});
+    });
   });
 };
 

@@ -798,6 +798,77 @@ a.pop-up-link {
 }
 
 
+/* ====================================== NEARBY CHECKINS LIST CSS ================================= */
+
+
+.nearby-checkins-wrapper {
+  padding: 15px 0 0 0;
+  text-align: left;
+
+  li {
+    border-bottom: 1px solid darken(@offwhite, 20%);
+    padding: 15px 0;
+  }
+
+  li h3 {
+    font-size:1.15em;
+    font-weight: bold;
+    color: @base-color;
+    text-align:center;
+    line-height: 1.5;
+    display: inline-block;
+  }
+
+  li a {
+    button {
+      float:right;
+      padding: 5px 10px;
+      margin-top: 5px;
+    }
+  }
+
+  li.active-quest-checkin a button {
+    margin-top: -15px;
+  }
+
+  li p {
+    display: inline-block;
+  }
+
+  // li.active-quest-checkin h3 {
+  //   background-color: lighten(@offwhite, 10%);
+  // }
+
+}
+
+@media screen and (max-width: 680px){
+  .nearby-checkin-list {
+    li h3 {
+      font-size: 1em;
+      display: block;
+      text-align: left;
+    }
+
+    li {
+     padding: 20px 0;
+    }
+
+    li a {
+      button {
+        float: none;
+      }
+    }
+
+    li.active-quest-checkin p {
+      display: block;
+      margin-bottom: 15px;
+    }
+  }
+}
+
+
+
+
 /* ======================================== CREATE QUEST CSS ======================================== */
 
 #create-quest-map {
