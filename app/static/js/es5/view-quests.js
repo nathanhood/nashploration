@@ -18,10 +18,6 @@
 
   function showQuestList(event){
     event.preventDefault();
-    // $('a.quest-list-show-link').click(function(e){
-    //         e.preventDefault(); // prevent the default action of anchor tag
-    //         return false;
-    // });
     var name = $(this).attr('id');
     $('.active-button').removeClass('active-button');
     $(this).addClass('active-button');

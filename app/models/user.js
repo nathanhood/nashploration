@@ -19,7 +19,7 @@ class User{
     this.password = fields.password[0];
     this.userName = userName;
     this.nickName = fields.nickName[0];
-    this.badges = [{name: 'Couch Potato', filePath: '/img/assets/couch_potato.png'}]; // Object IDs
+    this.badges = [{name: 'Couch Potato', filePath: '/img/assets/badges/couch_potato.png'}]; // Object IDs
     this.class = 'Couch Potato';
     this.groups = []; // Object IDs
     this.photo = {fileName: null}; // add photo object from processPhoto
@@ -163,8 +163,7 @@ class User{
     }
 
     if (currentClass !== this.class) {
-      // this.badges.push({name: this.class, filePath: `/img/assets/${this.class.toLowerCase()}.png`});
-      this.badges.push({name: this.class, filePath: '/img/assets/placeholder.png'});
+      this.badges.push({name: this.class, filePath: `/img/assets/badges/${this.class.toLowerCase()}.png`});
       return true;
     } else {
       return false;
