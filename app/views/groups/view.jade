@@ -29,7 +29,7 @@ block content
           each group in createdGroups
             li
               p.group-name.inline= group.name
-              a.edit(href='/groups/edit/#{group._id}') edit
+              a.group-edit(href='/groups/edit/#{group._id}') edit
         else
           li
             p You have not created any groups

@@ -50,6 +50,15 @@ input, textarea {
   display:none !important;
 }
 
+button {
+  margin: 5px 5px 0 0 ;
+}
+
+button:hover {
+  background-color: darken(@base-complement, 10%);
+  cursor: hand;
+}
+
 body {
   background-color: #eee;
   color: @base-color;
@@ -577,9 +586,10 @@ a.pop-up-link {
 /* ======================================== USER PROFILE CSS ======================================== */
 
 .profile-wrapper {
-    padding: 15px;
-    margin: 0 0 15px 0;
-    border-bottom: 1px solid darken(@offwhite, 20%);
+    padding: 15px 0 0 0;
+    margin: 0 auto;
+    width:90%;
+    max-width: 400px;
 }
 
 a.edit-profile {
@@ -602,15 +612,15 @@ a.edit-profile:hover {
 
 .profile-info-left {
   display:inline-block;
-  width: 40%;
-  margin: 0 10px 0 0;
+  width: 50%;
+  margin: 0;
   text-align:center;
   float:left;
 
   .profile-pic {
     width: 80px;
     height: 80px;
-    margin: 0 auto;
+    margin: 25px auto 0 auto;
     border: 2px solid #fff;
     border-radius: 50%;
     box-shadow: 0px 0px 5px @base-color;
@@ -731,9 +741,10 @@ a.edit-profile:hover {
   }
 }
 
-@media screen and (min-width: 550px){
+@media screen and (min-width: 475px){
   .profile-info-left {
     .profile-pic {
+      margin: 0 auto 0 auto;
       width: 130px;
       height: 130px;
     }
@@ -1004,10 +1015,12 @@ a.edit-profile:hover {
       text-decoration: none;
       color:@base-color;
       border: 1px solid @base-color;
-      padding: 2px 10px;
+      padding: 8px 10px 6px 10px;
       border-radius: 2px;
       float:right;
+      font-size: .8em;
       margin-top: -35px;
+      text-transform: uppercase;
     }
 
     a {
@@ -1039,6 +1052,10 @@ a.edit-profile:hover {
     color:@base-color;
     font-weight:bold;
     margin: 10px 0;
+  }
+
+  li {
+    padding: 15px 0;
   }
 }
 
@@ -1097,14 +1114,22 @@ a.edit-profile:hover {
     font-size: 1.25em;
   }
 
-  a.edit {
+  a.group-edit {
     display:inline-block;
     float:right;
-    padding: 5px 10px;
+    padding: 6px 10px 5px 10px;
     font-size: .8em;
-    background:@base-complement;
+    color:@base-color;
+    border: 1px solid @base-color;
+    border-radius: 2px;
+    margin: 8px 0 0 0;
+    text-transform: uppercase;
+  }
+
+  a.group-edit:hover {
+    background-color:@base-complement;
+    border: 1px solid @base-complement;
     color:#fff;
-    margin: 0 0 10px 0;
   }
 
 }
