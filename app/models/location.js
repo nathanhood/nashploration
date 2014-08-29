@@ -45,13 +45,15 @@ class Location{
     needle.get('http://data.nashville.gov/resource/vk65-u7my.json', function(error, response, body) {
 
       var markers = body;
+      var allLocations = [];
       for (var i = 0; i < markers.length; i++) {
         if (markers[i].mapped_location) {
+          var name = markers[i].title.replace(/[0-9-]/g, '');
           var locArray = [];
               locArray[0] = markers[i].mapped_location.longitude * 1;
               locArray[1] = markers[i].mapped_location.latitude * 1;
           var newLocation = {
-              name: markers[i].title,
+              name: name,
               address: markers[i].location,
               loc: locArray, //saved w/ long first so we can use mongo geospatial functions
               description: markers[i].marker_text, //.replace(/s{2,}/g,' '),
@@ -59,8 +61,20 @@ class Location{
               number: markers[i].number * 1,
               isCivilWar: markers[i].civil_war_site
               };
+              if(allLocations.length){
+                allLocations.forEach(a=>{
+                  if(a.loc[0] === newLocation.loc[0] || a.loc[1] === newLocation.loc[1]){
+                    console.log(a);
+                    console.log(newLocation);
+                    console.log(newLocation.loc[0]);
+                    newLocation.loc[0] = (newLocation.loc[0] - 0.00005);
+                    console.log(newLocation.loc[0]);
+                  }
+                });
+              }
+                allLocations.push(newLocation);
 
-          var location = new Location(newLocation);
+            var location = new Location(newLocation);
         }
       }
         locations.ensureIndex({ loc : '2dsphere' }, (err, res)=>{
@@ -111,7 +125,7 @@ class Location{
     var currentLoc = [long, lat];
       // # /3959 converts to radians which mongo needs: Richmond
       //the numerator is in miles
-      locations.find({loc: {$geoWithin: {$centerSphere: [currentLoc,  0.1 / 3959]}}}).toArray((err, locs)=>{
+      locations.find({loc: {$geoWithin: {$centerSphere: [currentLoc,  0.035 / 3959]}}}).toArray((err, locs)=>{
         fn(locs);
       });
   }
