@@ -90,6 +90,12 @@ exports.getLocations = (req, res)=>{
   }
 };
 
+exports.getAllLocations = (req, res)=>{
+  Location.findAll(locations=>{
+    res.send(locations);
+  });
+};
+
 exports.getCivilWarLocations = (req, res)=>{
   Location.filterCivilWarLocations((locations)=>{
     res.send(locations);
