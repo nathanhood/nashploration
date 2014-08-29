@@ -3,7 +3,7 @@ extends ../shared/template
 block content
 
   .content-wrapper
-    h1 Badges
+    mixin back('Your Badges')
 
     ul.badge-list
       each badge in user.badges
