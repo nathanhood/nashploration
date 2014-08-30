@@ -1,0 +1,46 @@
+include ../shared/back.jade
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    title= title
+    script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyArPvnhx4BUiKnrYG6cyNX-YZL21LruNAQ&sensor=false')
+    script(type='text/javascript', src='//use.typekit.net/osj8ghm.js')
+    script(type='text/javascript').
+      try{Typekit.load();}catch(e){}
+    link(href='//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css', rel='stylesheet')
+    link(href='/less/app.css', rel='stylesheet')
+
+  body
+    header#landing-header
+      img.logo-icon(src='/img/assets/logo-icon.png')
+        
+      .account-links
+        a.top-sign-up(href="#register") SIGN UP
+        a#log-in-main.top-sign-up(href="#") LOG IN
+
+    if(registerAndLogin.length > 0)
+      .messages.landing
+        p= registerAndLogin
+    .login-wrapper
+      #login
+        form(method='POST', action='/login')
+          input.form-control.username(type='text', name='userName', placeholder='Username', required)
+          input.form-control.password(type='password', name='password', placeholder='Password', required)
+          button Login
+        a(href='/forgot-password') Forgot Password?
+
+    block content
+
+    script(src='/js/vendor/classie.js')
+    script(src='/js/vendor/jquery-2.1.1.js')
+    script(src='/js/vendor/lodash-2.4.1.js')
+    script(src='/js/vendor/moment-2.6.0.js')
+    script(src='/js/vendor/traceur.js')
+    script(src='/socket.io/socket.io.js')
+    script(src='/js/es5/interface.js')
+    script(src='/js/es6/compiled/main.js')
+    script(src='/js/es6/compiled/sockets.js')
+
+    block scripts

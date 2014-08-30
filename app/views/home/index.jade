@@ -1,35 +1,96 @@
-extends ../shared/template
+extends ../shared/landing-template
 
 block content
 
-  #index-container
+  .hero-div
+    h1.logo Nashploration
+    h2 DISCOVER A NEW WAY TO MAKE LEARNING AN ADVENTURE
+    a.sign-up-main(href="#register") SIGN UP TODAY
+    .clear
+    p.inline Already a member?
+    a#already-login.log-in(href="#") Log in.
 
-    if (registerAndLogin.length > 0)
-      .messages
-        p= registerAndLogin
+  .mission-statement
+    h3 Nashploration is an interactive scavenger hunt app that allows you to discover and learn about historic locations around the city of Nashville.
 
+  .landing-divider
+
+  .game-info-wrapper
+    .nashplorer-badge-wrapper
+      img(src="/img/assets/badges/nashplorer.png" alt="Nashplorer badge")
+    .game-info-content
+      p Join groups, complete quests and check in at historic sites to earn pointsand collect badges. Make your way along the path to become a full fledged NASHPLORER.
+
+  .clear
+  .data-info-wrapper
+    .data-info-content
+      p The locations consist of more than 150 locations procured from the newly released data sets from the city of Nashville. More information about these data sets can be found at nashvilledata.org.
+    .pins-image-wrapper
+      img(src="/img/assets/landing-markers.png")
+
+    .clear
+  .landing-divider
+
+  .who-we-are
+    h2 WHO WE ARE
+    p Nashploration began by being the winning concept at the 2014 Nashville Hack4Change. It’s inception came from a teacher’s goal to make learning about Nashville more interesting and fun for students, along with the idea of a scavenger hunt game to learn about all the historic sites. We are four students at the Nashville Software School who have continued to develop this application for use in the open source environment. We can re-write this once you guys weigh in.
+    .profile-pictures
+      .pic-wrapper
+        a(href="http://github.com/nathanhood")
+          img(src="/img/assets/profile-pics/nathan.jpg")
+          p Nathan Hood
+      .pic-wrapper
+        a(href="http://github.com/richmondwatkins")
+          img(src="/img/assets/profile-pics/richmond.jpg")
+          p Richmond Watkins
+      .pic-wrapper
+        a(href="http://github.com/rachelself")
+          img(src="/img/assets/profile-pics/rachel.jpg")
+          p Rachel Self
+      .pic-wrapper
+        a(href="http://github.com/exactlyaaron")
+          img(src="/img/assets/profile-pics/aaron.jpg")
+          p Aaron Johnson
+
+  .landing-footer
+    p MAKE YOUR ACCOUNT TODAY!
     #register
       form(method='POST', action='/register', enctype='multipart/form-data')
-        input.form-control.username(type='text', name='userName', placeholder='Username', required)
+        input.form-control.username(type='text', name='userName', placeholder='Username (required)', required)
         .clear
-        input.form-control.nickname(type='text', name='nickName', placeholder='Nick Name', required)
+        input.form-control.nickname(type='text', name='nickName', placeholder='Nick Name (required)', required)
         .clear
         input.form-control.group-number(type='text', name='groupCode', placeholder='Group Code')
         .clear
-        input.form-control.email(type='email', name='email', placeholder='Email', required)
+        input.form-control.email(type='email', name='email', placeholder='Email (required)', required)
         .clear
-        input.form-control.password(type='password', name='password', placeholder='Password', pattern='.{6,}', title='6 characters minimum', required)
+        input.form-control.password(type='password', name='password', placeholder='Password (required)', pattern='.{6,}', title='6 characters minimum', required)
         .clear
-        input(type='file', name='photo')
+        button SIGN UP
         .clear
-        button Create Account
-        .clear
+    .footer-logo-icon
+      img.logo-icon(src='/img/assets/logo-icon.png')
 
-    #login
-      form(method='POST', action='/login')
-        input.form-control.username(type='text', name='userName', placeholder='Username', required)
-        .clear
-        input.form-control.password(type='password', name='password', placeholder='Password', required)
-        .clear
-        button Login
-      a(href='/forgot-password') Forgot Password
+
+  //- #index-container
+
+  //-   if (registerAndLogin.length > 0)
+  //-     .messages
+  //-       p= registerAndLogin
+
+  //-   #register
+  //-     form(method='POST', action='/register', enctype='multipart/form-data')
+  //-       input.form-control.username(type='text', name='userName', placeholder='Username', required)
+  //-       .clear
+  //-       input.form-control.nickname(type='text', name='nickName', placeholder='Nick Name', required)
+  //-       .clear
+  //-       input.form-control.group-number(type='text', name='groupCode', placeholder='Group Code')
+  //-       .clear
+  //-       input.form-control.email(type='email', name='email', placeholder='Email', required)
+  //-       .clear
+  //-       input.form-control.password(type='password', name='password', placeholder='Password', pattern='.{6,}', title='6 characters minimum', required)
+  //-       .clear
+  //-       input(type='file', name='photo')
+  //-       .clear
+  //-       button Create Account
+  //-       .clear
