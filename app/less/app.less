@@ -50,6 +50,7 @@ input, textarea {
   display:none !important;
 }
 
+
 a.active-button, a.active-button:hover {
   background: @base-color !important;
   color: @offwhite !important;
@@ -1177,7 +1178,7 @@ a.edit-profile:hover {
 
 }
 
-/* ======================================== QUEST LIST CSS ======================================== */
+/* ======================================== QUEST VIEW CSS ======================================== */
 
 .quest-list-content-wrapper {
   h2 {
@@ -1273,9 +1274,33 @@ a.edit-profile:hover {
     }
 
   }
+
+  .completed-quests-wrapper {
+    p {
+      margin: 20px 0 0 0;
+    }
+
+    img {
+      float:left;
+      width: 75px;
+      height: auto;
+    }
+  }
 }
 
-/* ======================================== QUEST VIEW CSS ======================================== */
+@media screen and (max-width: 400px){
+  .quest-list-content-wrapper {
+    
+    .quest-list-show-links-wrapper {
+
+      a.quest-list-show-link {
+        font-size: .75em;
+      }
+    }
+  }
+}
+
+/* ======================================== QUEST SHOW CSS ======================================== */
 
 .quest-show-content-wrapper {
   h1 {
@@ -1407,14 +1432,29 @@ button.delete-group:hover {
 
 button.edit-group-name, button.edit-group-description {
   float:right;
-  margin-top: -20px;
+}
+
+.group-name-wrapper, .group-description-wrapper {
+  display:inline-block;
+  width: 75%;
+  float:left;
+}
+
+.group-name-container {
+  display:inline-block;
+  width: 75%;
 }
 
 h1.group-name {
-  display:inline-block;
+  display:block;
   width: 75%;
   font-size: 1.25em;
   font-weight:bold;
+}
+
+input.group-name-input {
+  width: 250px;
+  margin: 0 10px 0 0;
 }
 
 p.group-description {
@@ -1432,7 +1472,7 @@ textarea.group-description-input {
 .add-member-info {
   input {
     width: 285px;
-    margin-right: 10px;
+    margin: 20px 10px 10px 0;
   }
 }
 
