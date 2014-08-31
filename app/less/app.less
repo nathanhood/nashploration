@@ -176,6 +176,14 @@ p.label {
   margin: 0 0 5px 0;
 }
 
+span.label {
+  display:inline;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: .7em;
+  margin: 0 0 3px 0;
+}
+
 p.label.headline {
   display:block;
   text-align:center;
@@ -1267,7 +1275,7 @@ a.edit-profile:hover {
   }
 }
 
-/* ======================================== QUEST SHOW CSS ======================================== */
+/* ======================================== QUEST VIEW CSS ======================================== */
 
 .quest-show-content-wrapper {
   h1 {
@@ -1280,6 +1288,10 @@ a.edit-profile:hover {
   li {
     padding: 15px 0;
   }
+
+  // .completed-quests-wrapper, .joined-quests-wrapper {
+  //   display:none;
+  // }
 }
 
 /* ======================================== QUEST EDIT CSS ======================================== */
@@ -1302,9 +1314,23 @@ a.edit-profile:hover {
 /* ======================================== CREATE GROUP CSS ======================================== */
 
 .create-group-wrapper {
-  input {
+  padding: 0 0 50px 0;
+
+  span#total-group-members {
+    font-size: 1.3em;
+  }
+
+  ul.added-members {
+    li {
+      border-bottom: 1px solid darken(@offwhite, 10%);
+      padding: 5px 0;
+      margin: 5px 0;
+    }
+  }
+
+  input, textarea {
     display:block;
-    width: 200px;
+    width: 100%;
     margin: 20px auto 0 auto;
   }
 
