@@ -2,7 +2,7 @@
   'use strict';
   $(document).ready(init);
   function init() {
-    findWindowSize();
+    sizeMarkers();
     fetchLocations();
     $('#map-filter select').on('change', filterLocations);
     $('body').on('click', '.info-window', showStreetView);
@@ -12,29 +12,24 @@
   var defaultMarker;
   var checkInMarker;
   var questIcon;
-  function findWindowSize() {
-    var height = $(window).height();
-    var width = $(window).width();
-    sizeMarkers(height, width);
-  }
-  function sizeMarkers(h, w) {
-    var width = 80;
-    var height = 40;
-    if (w < 321) {
-      height = 30;
-      width = 21;
-    }
+  function sizeMarkers() {
+    var windowWidth = $(window).width();
+    var width = 30;
+    var height = 30;
     defaultMarker = {
-      url: 'img/assets/pins/pin-orange.svg',
-      scaledSize: new google.maps.Size(width, height)
+      url: 'img/assets/pins/pin-orange.png',
+      scaledSize: new google.maps.Size(width, height),
+      optimized: true
     };
     checkInMarker = {
-      url: '/img/assets/pins/pin-blue.svg',
-      scaledSize: new google.maps.Size(width, height)
+      url: '/img/assets/pins/pin-blue.png',
+      scaledSize: new google.maps.Size(width, height),
+      optimized: true
     };
     questIcon = {
-      url: '/img/assets/pins/pin-blue-orange.svg',
-      scaledSize: new google.maps.Size(width, height)
+      url: '/img/assets/pins/pin-blue-orange.png',
+      scaledSize: new google.maps.Size(width, height),
+      optimized: true
     };
   }
   function submitCheckInListForm(event) {
