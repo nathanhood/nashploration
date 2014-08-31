@@ -17,7 +17,7 @@ block content
           input.form-control.group-number(type='text', name='groupCode', placeholder='Group Code', hidden=true, value='#{code}')
           .clear
           button Login
-  
+
       #register
         p.label Register
         form(method='POST', action='/register', enctype='multipart/form-data')
@@ -30,8 +30,6 @@ block content
           input.form-control.email(type='email', name='email', placeholder='Email', required)
           .clear
           input.form-control.password(type='password', name='password', placeholder='Password', required)
-          .clear
-          input(type='file', name='photo')
           .clear
           button Create Account
           .clear
