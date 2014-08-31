@@ -5,6 +5,8 @@ block content
   .content-wrapper
     mixin back('Edit Group')
 
+    .email-invite-messages
+
     if (deleteGroupError.length > 0)
       .messages
         p= deleteGroupError
@@ -16,21 +18,25 @@ block content
 
     .border
     if (user.isOwner(group.owner))
-      .group-name-container
+      .group-name-wrapper
         p.label GROUP NAME
         .clear
-        h1.group-name(data-id='#{group._id}')= group.name
-        button.edit-group-name edit
+        .group-name-container
+          h1.group-name(data-id='#{group._id}')= group.name
+      button.edit-group-name edit
+      .clear
       .group-name-edit-container(hidden)
         input.group-name-input(type='text', value='#{group.name}')
         button.cancel-name cancel
         button.submit-group-name submit
 
       .border
-      .group-description-container
+      .group-description-wrapper
         p.label GROUP DESCRIPTION
-        p.group-description= group.description
-        button.edit-group-description edit
+        .group-description-container
+          p.group-description= group.description
+      button.edit-group-description edit
+      .clear
       .group-description-edit-container(hidden)
         textarea.group-description-input #{group.description}
         button.cancel-description cancel
