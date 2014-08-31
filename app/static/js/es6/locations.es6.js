@@ -23,7 +23,7 @@
   var allMarkers = [];
 //=======ajax call to fetch locations from the database: Richmond
   function fetchLocations() {
-    $.ajax('/getAllLocations').done(function(data){
+    $.ajax('/getFilteredLocations').done(function(data){
       initMap();
 
       if(data.quest){
@@ -126,13 +126,18 @@
 //====adds all historical markers to the map: Richmond
   var markers = []; // made markers global for deletion
   var coordinates = []; // made coordinates global so the map can be resized each time its filtered
+  var defaultMarker = {
+    url: 'img/assets/pins/pin-orange.svg',
+    scaledSize: new google.maps.Size(78,40)
+  };
   function placeMarkers(coords, locName, locDesc){
     var latLng = new google.maps.LatLng(coords[1], coords[0]);
       coordinates.push(latLng);
 
       latLng = new google.maps.Marker({  //latlng is the marker variable name so that each marker has a unique variable(makes infowindows show in correct location)
        position: latLng,
-       map: map
+       map: map,
+       icon: defaultMarker
       });
 
       markers.push(latLng);
@@ -142,8 +147,8 @@
   }
 
   var checkInMarker = {
-      url: '/img/checkin-pin.svg',
-      scaledSize: new google.maps.Size(40,40)
+      url: '/img/assets/pins/pin-blue.svg',
+      scaledSize: new google.maps.Size(78,40)
     };
 
   var checkInMarkers = [];
@@ -164,8 +169,8 @@
   }
 
   var questIcon = {
-      url: '/img/pin-filled.svg',
-      scaledSize: new google.maps.Size(40,40)
+      url: '/img/assets/pins/pin-blue-orange.svg',
+      scaledSize: new google.maps.Size(120,60)
     };
 
   var questMarkers = [];

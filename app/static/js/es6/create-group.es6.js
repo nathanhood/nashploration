@@ -60,6 +60,10 @@
       $('#new-group-form').children('input[name="emails"]').val(emails);
       nameForm.val('');
       emailForm.val('');
+       $('ul.added-members').append(`<li>
+                                        <p><span class="label">Name:</span> ${name}</p>
+                                        <p><span class="label">Email:</span> ${email}</p>
+                                     </li>`);
 
       $('#total-group-members').text(`Members: ${names.length}`);
     }

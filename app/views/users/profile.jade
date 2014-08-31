@@ -34,8 +34,6 @@ block content
     .profile-wrapper
       .profile-info-left
         .profile-pic(style='background-image: url("#{profileOwner.photo.filePath}")')
-        if(user.isOwner(profileOwner._id))
-          a.edit-profile(href="/users/edit/#{profileOwner._id}") EDIT
       .profile-info-right
         span Username:
         h3= profileOwner.userName
@@ -43,6 +41,7 @@ block content
         h3= profileOwner.nickName
         span Class:
         h3= profileOwner.class
+    .border
     .links
       a(href="/users/#{profileOwner.userName}/checkins")
         h4 Check-Ins
@@ -64,8 +63,6 @@ block content
           a(href='/quests/new') Build a Quest
         li
           a(href='/quests/view') View Quests
-        li
-          a(href='#') Completed Quests
       ul.group-menu
         li.join-group-form(hidden)
           form(action='/groups/join-group', method='POST')
@@ -77,6 +74,8 @@ block content
           a(href='/groups/new') Create a Group
         li
           a(href='/groups/view') Manage Groups
+      if(user.isOwner(profileOwner._id))
+        a.edit-profile(href="/users/edit/#{profileOwner._id}") EDIT PROFILE
 
 block scripts
   script(src='/js/es6/compiled/profile.js')

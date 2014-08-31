@@ -5,6 +5,8 @@ block content
   .content-wrapper
     mixin back('Edit Group')
 
+    .email-invite-messages
+    
     if (deleteGroupError.length > 0)
       .messages
         p= deleteGroupError
@@ -14,8 +16,11 @@ block content
       input(type='text', name='groupName', value='#{group.name}', hidden)
     button.delete-group Delete Group
 
+    .border
     if (user.isOwner(group.owner))
       .group-name-container
+        p.label GROUP NAME
+        .clear
         h1.group-name(data-id='#{group._id}')= group.name
         button.edit-group-name edit
       .group-name-edit-container(hidden)
@@ -23,20 +28,25 @@ block content
         button.cancel-name cancel
         button.submit-group-name submit
 
+      .border
       .group-description-container
+        p.label GROUP DESCRIPTION
         p.group-description= group.description
         button.edit-group-description edit
       .group-description-edit-container(hidden)
-        input.group-description-input(type='text', value='#{group.description}')
+        textarea.group-description-input #{group.description}
         button.cancel-description cancel
         button.submit-group-description submit
 
+      .border
       button.add-member-button + Add a Member
       .add-member-info(hidden)
         input(type='email', name='email', placeholder='Email')
         input(type='text', name='name', placeholder='Name')
+        .clear
         button.send-member-invite Send Invitation
 
+      .border
       h2 Group Members
       if (members)
         ul

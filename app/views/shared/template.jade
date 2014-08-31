@@ -27,7 +27,7 @@ html
             li
               a(href="#") About
             li
-              a(href="#") Settings
+              a(href="/users/edit/#{user._id}") Settings
             li
               form.logout-form(action='/logout', method='POST')
                 a.submit-logout(href="#") Logout
@@ -36,7 +36,7 @@ html
 
         img.nav-logo-icon(src="/img/assets/logo-icon.png")
 
-    header
+    header#floating-header
       a.menu-link#showLeftPush(href='#')
         i.fa.fa-bars
       a.logo-link(href='/dashboard')

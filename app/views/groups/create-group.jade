@@ -10,7 +10,7 @@ block content
     .create-group-wrapper
       form#new-group-form(action='/groups/create', method='POST')
         input(type='text', name='title', placeholder='Group Name Here')
-        input(type='text', name='description', placeholder='Group Description Here', maxlength='140')
+        textarea(type='text', name='description', placeholder='Group Description Here', maxlength='140')
         input.hidden(type='text', name='names', hidden=true)
         input.hidden(type='text', name='emails', hidden=true)
       .border
@@ -25,6 +25,7 @@ block content
         button#close-member-button Close
         button#add-member-button Add
       .border
+      ul.added-members
       button#build-group Build Group
 
 block scripts

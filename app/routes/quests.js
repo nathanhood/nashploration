@@ -135,7 +135,10 @@ exports.updateQuest = (req, res)=>{
 };
 
 exports.questConfirmation = (req, res)=>{
-  res.render('quests/quest-confirmation', {title: 'Nashploration'});
+  var user = res.locals.user;
+  Quest.findById(user.completedQuests[user.completedQuests.length -1], (err, quest)=>{
+    res.render('quests/quest-confirmation', {title: 'Nashploration', quest:quest});
+  });
 };
 
 exports.upgradedClassConfirmation = (req, res)=>{
@@ -143,7 +146,10 @@ exports.upgradedClassConfirmation = (req, res)=>{
 };
 
 exports.upgradedClassAndQuestConfirmation = (req, res)=>{
-  res.render('quests/class-quest-confirmation', {title: 'Nashploration'});
+  var user = res.locals.user;
+  Quest.findById(user.completedQuests[user.completedQuests.length -1], (err, quest)=>{
+    res.render('quests/class-quest-confirmation', {title: 'Nashploration', quest: quest});
+  });
 };
 
 exports.questMap = (req, res)=>{

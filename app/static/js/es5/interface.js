@@ -10,6 +10,12 @@
     $('a.quest-menu-button').click(showQuestMenu);
     $('a.submit-logout').click(submitLogoutForm);
     $('a.back-button').click(goBack);
+
+    $('a#log-in-main, a#already-login').click(showLoginForm);
+  }
+
+  function showLoginForm(){
+    $('.login-wrapper').slideToggle();
   }
 
   function goBack(){
@@ -33,8 +39,8 @@
   	event.preventDefault();
   	$('a.group-menu-button').addClass('active-button');
   	$('a.quest-menu-button').removeClass('active-button');
-		$('ul.quest-menu').fadeOut(function(){
-			$('ul.group-menu').fadeIn();
+		$('ul.quest-menu').fadeOut(250, function(){
+			$('ul.group-menu').fadeIn(250);
 		});
   }
 
@@ -42,8 +48,8 @@
   	event.preventDefault();
   	$('a.quest-menu-button').addClass('active-button');
   	$('a.group-menu-button').removeClass('active-button');
-		$('ul.group-menu').fadeOut(function(){
-			$('ul.quest-menu').fadeIn();
+		$('ul.group-menu').fadeOut(250, function(){
+			$('ul.quest-menu').fadeIn(250);
 		});
   }
 

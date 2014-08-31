@@ -3,27 +3,38 @@ extends ../shared/template
 block content
 
   .content-wrapper
-    h1 Leader Board
-    button.show-main-rankings View Overall Rankings
-    if (groups.length > 0)
-      h2 View Rankings of your groups
-        each group in groups
-          h4.group-name= group.name
-          button.show-group-rankings(data-id='#{group._id}') view
+    mixin back('Leaderboard')
 
-    .group-leader-list(hidden)
+    .leaders-menu-buttons
+      a.overall-menu-button.active-button(href="#") Overall
+      a.groups-menu-button(href="#") Groups
+
+    .show-group-list(hidden)
+      ul
+        if (groups.length > 0)
+          each group in groups
+            li
+              .group-leader-name-container
+                h3.group-name= group.name
+              .group-leader-name-button
+                button.show-group-rankings(data-id='#{group._id}') view
+
+      .leaders-lists#group-leaders-list
+        ol
+    .leaders-lists#overall-leaders-list
       ol
-    .main-leader-list
-      h2 Overall Leaders
-      ol
+        h2 Overall Leaders
+        .border
         each leader in leaders
-          p.leader-listing
-            h3.leader-name Name: #{leader.userName}
-            img.leader-image(src='#{leader.photo.filePath}')
-            p.leader-points Points: #{leader.points}
-            p.leader-class Class: #{leader.class}
-            img.badge-image(src='#{leader.badges[leader.badges.length - 1].filePath}')
-
+          li.leader-listing
+            .leader-image-container(style="background-image: url(#{leader.photo.filePath})")
+            .leader-information-container
+              p.label username:
+              p.leader-name #{leader.userName}
+              p.label points:
+              p.leader-points #{leader.points}
+            .leader-badge-container(style="background-image: url(#{leader.badges[leader.badges.length - 1].filePath})")
+          .border
 
 block scripts
   script(src='/js/es6/compiled/leaders.js')
