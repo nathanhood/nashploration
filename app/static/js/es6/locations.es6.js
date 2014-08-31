@@ -7,6 +7,7 @@
   $(document).ready(init);
 
   function init(){
+    sizeMarkers();
     fetchLocations();
     $('#map-filter select').on('change', filterLocations);
     $('body').on('click', '.info-window', showStreetView);
@@ -16,6 +17,37 @@
 
     $('.notification-icon').click(showNotification);
     $('a#dismiss').click(hideNotification);
+  }
+
+  var defaultMarker;
+  var checkInMarker;
+  var questIcon;
+
+  function sizeMarkers() {
+
+    var width = 30;
+    var height = 30;
+
+
+    defaultMarker = {
+      url: 'img/assets/pins/pin-orange.png',
+      scaledSize: new google.maps.Size(width,height),
+      flatten: true,
+      optimized: true
+
+    };
+
+    checkInMarker = {
+      url: '/img/assets/pins/pin-blue.png',
+      scaledSize: new google.maps.Size(width,height),
+      optimized: true
+    };
+
+    questIcon = {
+      url: '/img/assets/pins/pin-blue-orange.png',
+      scaledSize: new google.maps.Size(width,height),
+      optimized: true
+    };
   }
 
   function submitCheckInListForm(event){
@@ -129,9 +161,7 @@
 //====adds all historical markers to the map: Richmond
   var markers = []; // made markers global for deletion
   var coordinates = []; // made coordinates global so the map can be resized each time its filtered
-  var defaultMarker = {
-    url: 'img/assets/pins/pin-orange.png',
-  };
+
   function placeMarkers(coords, locName, locDesc){
     var latLng = new google.maps.LatLng(coords[1], coords[0]);
       coordinates.push(latLng);
@@ -148,9 +178,6 @@
 
   }
 
-  var checkInMarker = {
-      url: '/img/assets/pins/pin-blue.png',
-    };
 
   var checkInMarkers = [];
   function placeCheckInMarkers(coords, locName, locDesc){
@@ -169,9 +196,6 @@
 
   }
 
-  var questIcon = {
-      url: '/img/assets/pins/pin-blue-orange.png',
-    };
 
   var questMarkers = [];
   function placeQuestMarkers(coords, locName, locDesc){
@@ -323,11 +347,6 @@ function checkCloseLocs(pos){
     $('.checkin-form input').val(nearbyIds);
   });
 }
-
-var checkInIcon = {
-    url: '/img/pin-dot.svg',
-    scaledSize: new google.maps.Size(40,40)
-  };
 
 //==== changes the icons for the markers that are within range of checkin: Richmond
 var closeMarkers = [];
