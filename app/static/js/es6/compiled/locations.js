@@ -13,12 +13,12 @@
   var checkInMarker;
   var questIcon;
   function sizeMarkers() {
-    var windowWidth = $(window).width();
     var width = 30;
     var height = 30;
     defaultMarker = {
       url: 'img/assets/pins/pin-orange.png',
       scaledSize: new google.maps.Size(width, height),
+      flatten: true,
       optimized: true
     };
     checkInMarker = {
