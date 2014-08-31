@@ -1990,8 +1990,73 @@ textarea.group-description-input {
   }
 }
 
+/* =================================== FIND QUEST CSS ============================== */
+.find-quest-wrapper {
+  margin-top: 20px;
 
+  .border#input-border {
+    margin: 15px 0 25px 0;
+    border: 1px solid lighten(@base-color, 5%)
+  }
+}
 
+.quest-search {
+  width: 60%;
+  margin: 0 auto 20px auto;
+  display: block;
+}
+
+.quest-search:focus {
+  border: 1px solid darken(@offwhite, 10%);
+}
+
+.available-quests-list {
+
+  h2.quest-name {
+    font-size: 1.6em;
+    display: inline;
+  }
+
+  .quest-description {
+    margin-top: 5px;
+    width: 75%;
+  }
+
+  a.quest-link {
+    button {
+      float: right;
+      padding: 7px 10px;
+      cursor: pointer;
+    }
+  }
+
+  .quest-information-wrapper {
+    width: 75%;
+    display: inline-block;
+    margin: 15px 0 0 15px;
+  }
+
+  .quest-image-wrapper {
+    max-width: 80px;
+    width: 25%;
+    height: 80px;
+    border-radius: 50%;
+    background-position: center;
+    background-size: cover;
+    display: inline-block;
+    float: left;
+  }
+
+  li {
+    min-height: 80px;
+    padding-left: 8%;
+  }
+
+  .border {
+    margin: 10px 0;
+  }
+
+}
 
 
 
