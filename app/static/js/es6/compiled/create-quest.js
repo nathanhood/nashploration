@@ -37,6 +37,22 @@
       $('form').submit();
     }
   }
+  function initiateFilter() {
+    var locations = $('#quest-locations-listing').find('.location-listing');
+    $('input[name="search"]').keyup(function(event) {
+      if ($(this).val() === '') {
+        locations.removeClass('visible').show().addClass('visible');
+      } else {
+        filter(locations, $(this).val());
+      }
+    });
+  }
+  function filter(selector, query) {
+    query = $.trim(query).replace(/ /gi, '|');
+    $(selector).each(function() {
+      ($(this).text().search(new RegExp(query, 'i')) < 0) ? $(this).hide().removeClass('visible') : $(this).show().addClass('visible');
+    });
+  }
   function noGroupsAlert() {
     var message = "<div class=\"error-message\">\n                   <p>Please add at least one group to your quest</p>\n                   </div>";
     $('.error-messages').append(message);
@@ -60,6 +76,7 @@
         placeMarkers(d.loc, d.name, d.description, d._id);
         buildLocationsListing(d);
       }));
+      initiateFilter();
       resizeMap();
     });
   }
@@ -68,7 +85,7 @@
     if (location.description !== null) {
       description = (location.description.substr(0, 140) + "...");
     }
-    var listing = ("<li class=\"location-listing\">\n                    <p class=\"name\">" + location.name + "</p>\n                    <p class=\"description\">" + description + "</p>\n                    <button class=\"add-location-button\", data-id=" + location._id + ">\n                      Add To List\n                    </button>\n                    <p class=\"location-in-quest\", hidden=true>In Quest</p>\n                  </li>");
+    var listing = ("<li class=\"location-listing visible\">\n                    <p class=\"name\">" + location.name + "</p>\n                    <p class=\"description\">" + description + "</p>\n                    <button class=\"add-location-button\", data-id=" + location._id + ">\n                      Add To List\n                    </button>\n                    <p class=\"location-in-quest\", hidden=true>In Quest</p>\n                  </li>");
     $('#quest-locations-listing').append(listing);
   }
   function filterLocations() {

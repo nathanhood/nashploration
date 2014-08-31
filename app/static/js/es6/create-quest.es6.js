@@ -1,5 +1,6 @@
 /* global google:true */
 /* jshint unused: false, undef: false, camelcase: false*/
+/*jshint -W030 */
 
 (function(){
   'use strict';
@@ -29,6 +30,7 @@
     $('#cancel-group-to-quest').click(hideGroupOptions);
     $('#confirm-group-to-quest').click(confirmGroup);
     $('#clear-group-to-quest').click(clearGroupOptions);
+
   }
 
   function submitQuest(){
@@ -50,6 +52,27 @@
     if (questTitle && locations && description) {
       $('form').submit();
     }
+  }
+
+// ================ Filtering =================
+
+  function initiateFilter(){
+    var locations = $('#quest-locations-listing').find('.location-listing');
+
+    $('input[name="search"]').keyup(function(event){
+      if ($(this).val() === '') {
+        locations.removeClass('visible').show().addClass('visible');
+      } else {
+        filter(locations, $(this).val());
+      }
+    });
+  }
+
+  function filter(selector, query){
+    query = $.trim(query).replace(/ /gi, '|');
+    $(selector).each(function(){
+      ($(this).text().search(new RegExp(query, 'i')) < 0) ? $(this).hide().removeClass('visible') : $(this).show().addClass('visible');
+    });
   }
 
 
@@ -91,6 +114,7 @@
         placeMarkers(d.loc, d.name, d.description, d._id);
         buildLocationsListing(d);
       });
+      initiateFilter();
       resizeMap();
     });
   }
@@ -103,7 +127,7 @@
     if (location.description !== null) {
       description = `${location.description.substr(0, 140)}...`;
     }
-    var listing = `<li class="location-listing">
+    var listing = `<li class="location-listing visible">
                     <p class="name">${location.name}</p>
                     <p class="description">${description}</p>
                     <button class="add-location-button", data-id=${location._id}>
