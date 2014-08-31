@@ -4,7 +4,11 @@ var traceur = require('traceur');
 var User = traceur.require(__dirname + '/../models/user.js');
 
 exports.index = (req, res)=>{
-  res.render('home/index', {title: 'Nashploration', registerAndLogin: req.flash('registerAndLogin')});
+  if(res.locals.user){
+    res.redirect('/dashboard');
+  }else{
+    res.render('home/index', {title: 'Nashploration', registerAndLogin: req.flash('registerAndLogin')});
+  }
 };
 
 exports.confirmation = (req, res)=>{

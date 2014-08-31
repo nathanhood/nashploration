@@ -3,8 +3,10 @@ extends ../shared/template
 block content
 
   .content-wrapper
-    h1 Congratulations!
-
-    h3 You have been upgraded to a _______!!!!
-
-    a(href='/users/#{user.userName}') Begin a new quest
+    .class-confirmation-wrapper
+      img(src="#{user.badges[user.badges.length -1].filePath}")
+      h1 Congratulations!
+      h3 You are now a #{user.class}!
+      .border
+      a(href='/dashboard')
+        button Back to Dashboard

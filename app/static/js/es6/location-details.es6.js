@@ -8,7 +8,13 @@
 
   function init(){
     showStreetView();
-    // callWikipediaAPI('tennessee');
+
+    $('body').click(function(event){
+      var target = event.target;
+      var sectionNum = $(target).attr('data') * 1;
+      findSection(sectionNum);
+    });
+
   }
 
 
@@ -39,32 +45,43 @@
 
 
     function wikiTest() {
-    $.getJSON(`http://en.wikipedia.org/w/api.php?action=parse&format=json&page=Tennessee&prop=text|images&callback=?`).done(function(data){
-      // console.log(data);
+    $.getJSON(`http://en.wikipedia.org/w/api.php?action=parse&format=json&page=Battle_of_Nashville&prop=text|images|sections&callback=?`).done(function(data){
       wikipediaHTMLResult(data);
     });
   }
 
 
   function wikipediaHTMLResult (data) {
-
     var readData = $('<div>' + data.parse.text['*'] + '</div>');
+    var sections = data.parse.sections;
 
-    var box = readData.find('.infobox').toArray();
-
-    var info = readData.find('p').toArray();
-    console.log(info);
-    info.forEach(p=>{
-      var $div = $('<div></div>');
-      $div.text(p.textContent);
-      $('#wiki-description').append($div);
-
+    sections.forEach((s, i)=>{
+        var $a = $('<a href="#'+s.anchor+'", data='+s.index+'>'+s.line+'</a><br>');
+        $('#wiki-nav').append($a);
     });
 
+    // var box = readData.find('.infobox').toArray();
 
-    var imageURL = readData.find('img').toArray();
-    imageURL.forEach(i=>{
-      $('#wiki').append('<div><img src="'+ i.src + '"/></div>');
+    var info = readData.find('p').toArray();
+
+      var $div = $('<div></div>');
+      $div.text(info[0].textContent);
+      $('#wiki').append($div);
+
+    // var imageURL = readData.find('img').toArray();
+    // imageURL.forEach(i=>{
+    //   $('#wiki').append('<div><img src="'+ i.src + '"/></div>');
+    // });
+  }
+
+  function findSection(section){
+
+    $.getJSON(`http://en.wikipedia.org/w/api.php?action=parse&format=json&page=Battle_of_Nashville&prop=text&section=${section}&callback=?`).done(function(data){
+      var text = data.parse.text['*']; //.replace(/<(?:.|\n)*?>/gm, '')
+      var readData = $('<div>' + text + '</div>');
+      $('#wiki-description').empty();
+      $('#wiki-description').append(readData);
+
     });
 
   }

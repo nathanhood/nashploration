@@ -110,10 +110,10 @@
           $('input[name="name"]').val('');
           $('input[name="email"]').val('');
           toggleAddMember();
-          var confirmation = ("<p>" + inviteeName + " was successfully invited!</p>");
-          $('.messages').append(confirmation);
+          var confirmation = ("<p class=\"email-invite-message\">" + inviteeName + " was successfully invited!</p>");
+          $('.email-invite-messages').append(confirmation);
           setTimeout(function() {
-            $('.messages p').fadeOut('slow');
+            $('.email-invite-messages p').fadeOut('slow');
           }, 3000);
         })
       });

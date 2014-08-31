@@ -3,10 +3,17 @@ extends ../shared/template
 block content
 
   .content-wrapper
-    h1 Congratulations!
-
-    h3 You completed the quest and have earned ___ points!
-
-    h3 You have also been upgraded to a _______!!!!
-
-    a(href='/users/#{user.userName}') Begin a new quest
+    .class-quest-confirmation-wrapper
+      img(src="#{user.badges[user.badges.length -1].filePath}")
+      img(src="#{user.badges[user.badges.length -1].filePath}")
+      h1 Congratulations!
+      h3 You completed the quest:
+      h3.quest-confirmation-name #{quest.name}
+      h3.quest-bonus-points earning #{quest.checkIns.length * 3} bonus points!
+      h3 &
+      h3 You are now a #{user.class}!
+      .border
+      a(href='/dashboard')
+        button Back to Dashboard
+      a(href='/users/#{user.userName}')
+        button Begin Another Quest

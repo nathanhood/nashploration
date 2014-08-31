@@ -1,6 +1,12 @@
 extends ../shared/template
 
 block content
+  br
+  br
+  br
+  br
+  br
+  br
   h3= location.name
   p= location.description
   #street-view
@@ -15,8 +21,9 @@ block content
   br
   br
   br
-  #wiki-description
   #wiki
+  #wiki-nav
+  #wiki-description
     div(id='coords', data-lat='#{location.loc[1]}', data-long='#{location.loc[0]}')
 
 block scripts
