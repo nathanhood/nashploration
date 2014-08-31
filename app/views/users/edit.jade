@@ -13,6 +13,7 @@ block content
       .edit-profil-pic-wrapper
         img(src='#{profileOwner.photo.filePath}')
         form.edit-photo(action='/users/edit/photo/#{profileOwner._id}', method='POST', enctype='multipart/form-data')
+          p.label Profile Picture
           input(type='file', name='photo')
           button Submit
         .clear

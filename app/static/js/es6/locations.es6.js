@@ -127,9 +127,7 @@
   var markers = []; // made markers global for deletion
   var coordinates = []; // made coordinates global so the map can be resized each time its filtered
   var defaultMarker = {
-    url: 'img/assets/pins/pin-orange.svg',
-    // scaledSize: new google.maps.Size(60,31)
-    
+    url: 'img/assets/pins/pin-orange.png',
   };
   function placeMarkers(coords, locName, locDesc){
     var latLng = new google.maps.LatLng(coords[1], coords[0]);
@@ -148,8 +146,7 @@
   }
 
   var checkInMarker = {
-      url: '/img/assets/pins/pin-blue.svg',
-      scaledSize: new google.maps.Size(60,31)
+      url: '/img/assets/pins/pin-blue.png',
     };
 
   var checkInMarkers = [];
@@ -170,8 +167,7 @@
   }
 
   var questIcon = {
-      url: '/img/assets/pins/pin-blue-orange.svg',
-      scaledSize: new google.maps.Size(90,46)
+      url: '/img/assets/pins/pin-blue-orange.png',
     };
 
   var questMarkers = [];
