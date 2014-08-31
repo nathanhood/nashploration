@@ -996,7 +996,7 @@ a.edit-profile:hover {
         text-align: left;
       }
     }
-    
+
     a.show-more {
       display:block;
     }
@@ -1912,6 +1912,84 @@ textarea.group-description-input {
 }
 
 
+/* ================================= CLASS QUEST CONFIRMATION CSS ====================== */
+
+.class-quest-confirmation-wrapper {
+  text-align: center;
+  img {
+    // max-width: 250px;
+    width: 45%;
+    margin: 0 2%;
+    height: auto;
+  }
+
+  h1 {
+    font-size: 3em;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  h3 {
+    font-size: 1.8em;
+  }
+
+  h3.quest-confirmation-name {
+    font-weight: bold;
+    margin-top: 10px;
+  }
+
+  h3.quest-bonus-points {
+    font-size: 1.5em;
+    margin-top: 10px;
+    margin-bottom: 15px;
+  }
+
+  button {
+    cursor: pointer;
+  }
+}
+
+@media screen and (min-width: 360px) and (max-width: 600px) {
+  .class-quest-confirmation-wrapper {
+    h1 {
+      font-size: 2.5em;
+    }
+
+    h3 {
+      font-size: 1.3em;
+    }
+
+    h3.quest-bonus-points {
+      font-size: 1em;
+      margin-top: 20px;
+    }
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .class-quest-confirmation-wrapper {
+    padding-bottom: 30px;
+
+    img {
+      max-width: 220px;
+    }
+
+    h1 {
+      font-size: 2em;
+    }
+
+    h3 {
+      font-size: 1.1em;
+    }
+
+    h3.quest-bonus-points {
+      font-size: .9em;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+  }
+}
+
 
 
 
@@ -2056,7 +2134,7 @@ header#landing-header {
       color: @offwhite;
       padding: 10px 0 0 0;
     }
-    
+
     button {
       margin: 0 10px;
     }
@@ -2088,7 +2166,7 @@ header#landing-header {
     max-width: 550px;
     margin: 20px auto;
     font-size: 1.4em;
-    letter-spacing: 3px;  
+    letter-spacing: 3px;
     line-height: 1.2;
   }
 
@@ -2213,7 +2291,7 @@ header#landing-header {
 
   h2 {
     font-size: 1.4em;
-    letter-spacing: 3px;  
+    letter-spacing: 3px;
     margin: 0 0 15px 0;
   }
 
