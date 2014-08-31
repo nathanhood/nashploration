@@ -7,12 +7,49 @@
   $(document).ready(init);
 
   function init(){
+    findWindowSize();
     fetchLocations();
     $('#map-filter select').on('change', filterLocations);
     $('body').on('click', '.info-window', showStreetView);
     fadeConfirmMessage();
     // findLocation();
     $('.checkin-button').click(submitCheckInListForm);
+  }
+
+  var defaultMarker;
+  var checkInMarker;
+  var questIcon;
+
+  function findWindowSize(){
+    var height = $(window).height();
+    var width = $(window).width();
+
+    sizeMarkers(height, width);
+  }
+
+  function sizeMarkers(h, w) {
+    var width = 80;
+    var height = 40;
+    if(w < 321){
+      height = 30;
+      width = 21;
+    }
+
+    defaultMarker = {
+    url: 'img/assets/pins/pin-orange.svg',
+    scaledSize: new google.maps.Size(width, height)
+
+  };
+
+    checkInMarker = {
+      url: '/img/assets/pins/pin-blue.svg',
+      scaledSize: new google.maps.Size(width,height)
+    };
+
+    questIcon = {
+      url: '/img/assets/pins/pin-blue-orange.svg',
+      scaledSize: new google.maps.Size(width,height)
+    };
   }
 
   function submitCheckInListForm(event){
@@ -126,11 +163,6 @@
 //====adds all historical markers to the map: Richmond
   var markers = []; // made markers global for deletion
   var coordinates = []; // made coordinates global so the map can be resized each time its filtered
-  var defaultMarker = {
-    url: 'img/assets/pins/pin-orange.svg',
-    // scaledSize: new google.maps.Size(60,31)
-    
-  };
   function placeMarkers(coords, locName, locDesc){
     var latLng = new google.maps.LatLng(coords[1], coords[0]);
       coordinates.push(latLng);
@@ -146,11 +178,6 @@
       infoWindows(locName, latLng, locDesc); //passing in coords because latLng is now a google Marker Object..coords is used to set the data of the infowindow "Show More" link
 
   }
-
-  var checkInMarker = {
-      url: '/img/assets/pins/pin-blue.svg',
-      scaledSize: new google.maps.Size(60,31)
-    };
 
   var checkInMarkers = [];
   function placeCheckInMarkers(coords, locName, locDesc){
@@ -168,11 +195,6 @@
       infoWindows(locName, latLng, locDesc); //passing in coords because latLng is now a google Marker Object..coords is used to set the data of the infowindow "Show More" link
 
   }
-
-  var questIcon = {
-      url: '/img/assets/pins/pin-blue-orange.svg',
-      scaledSize: new google.maps.Size(90,46)
-    };
 
   var questMarkers = [];
   function placeQuestMarkers(coords, locName, locDesc){
@@ -324,11 +346,6 @@ function checkCloseLocs(pos){
     $('.checkin-form input').val(nearbyIds);
   });
 }
-
-var checkInIcon = {
-    url: '/img/pin-dot.svg',
-    scaledSize: new google.maps.Size(40,40)
-  };
 
 //==== changes the icons for the markers that are within range of checkin: Richmond
 var closeMarkers = [];

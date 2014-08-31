@@ -2,11 +2,40 @@
   'use strict';
   $(document).ready(init);
   function init() {
+    findWindowSize();
     fetchLocations();
     $('#map-filter select').on('change', filterLocations);
     $('body').on('click', '.info-window', showStreetView);
     fadeConfirmMessage();
     $('.checkin-button').click(submitCheckInListForm);
+  }
+  var defaultMarker;
+  var checkInMarker;
+  var questIcon;
+  function findWindowSize() {
+    var height = $(window).height();
+    var width = $(window).width();
+    sizeMarkers(height, width);
+  }
+  function sizeMarkers(h, w) {
+    var width = 80;
+    var height = 40;
+    if (w < 321) {
+      height = 30;
+      width = 21;
+    }
+    defaultMarker = {
+      url: 'img/assets/pins/pin-orange.svg',
+      scaledSize: new google.maps.Size(width, height)
+    };
+    checkInMarker = {
+      url: '/img/assets/pins/pin-blue.svg',
+      scaledSize: new google.maps.Size(width, height)
+    };
+    questIcon = {
+      url: '/img/assets/pins/pin-blue-orange.svg',
+      scaledSize: new google.maps.Size(width, height)
+    };
   }
   function submitCheckInListForm(event) {
     $('form.checkin-form').submit();
@@ -100,7 +129,6 @@
   }
   var markers = [];
   var coordinates = [];
-  var defaultMarker = {url: 'img/assets/pins/pin-orange.svg'};
   function placeMarkers(coords, locName, locDesc) {
     var latLng = new google.maps.LatLng(coords[1], coords[0]);
     coordinates.push(latLng);
@@ -113,10 +141,6 @@
     allMarkers.push(latLng);
     infoWindows(locName, latLng, locDesc);
   }
-  var checkInMarker = {
-    url: '/img/assets/pins/pin-blue.svg',
-    scaledSize: new google.maps.Size(60, 31)
-  };
   var checkInMarkers = [];
   function placeCheckInMarkers(coords, locName, locDesc) {
     var latLng = new google.maps.LatLng(coords[1], coords[0]);
@@ -130,10 +154,6 @@
     allMarkers.push(latLng);
     infoWindows(locName, latLng, locDesc);
   }
-  var questIcon = {
-    url: '/img/assets/pins/pin-blue-orange.svg',
-    scaledSize: new google.maps.Size(90, 46)
-  };
   var questMarkers = [];
   function placeQuestMarkers(coords, locName, locDesc) {
     var latLng = new google.maps.LatLng(coords[1], coords[0]);
@@ -207,10 +227,6 @@
       $('.checkin-form input').val(nearbyIds);
     });
   }
-  var checkInIcon = {
-    url: '/img/pin-dot.svg',
-    scaledSize: new google.maps.Size(40, 40)
-  };
   var closeMarkers = [];
   function addCheckInMarkers(coords) {
     allMarkers.forEach((function(m) {
