@@ -50,6 +50,7 @@ input, textarea {
   display:none !important;
 }
 
+
 a.active-button, a.active-button:hover {
   background: @base-color !important;
   color: @offwhite !important;
@@ -1177,7 +1178,7 @@ a.edit-profile:hover {
 
 }
 
-/* ======================================== QUEST LIST CSS ======================================== */
+/* ======================================== QUEST VIEW CSS ======================================== */
 
 .quest-list-content-wrapper {
   h2 {
@@ -1273,9 +1274,33 @@ a.edit-profile:hover {
     }
 
   }
+
+  .completed-quests-wrapper {
+    p {
+      margin: 20px 0 0 0;
+    }
+
+    img {
+      float:left;
+      width: 75px;
+      height: auto;
+    }
+  }
 }
 
-/* ======================================== QUEST VIEW CSS ======================================== */
+@media screen and (max-width: 400px){
+  .quest-list-content-wrapper {
+    
+    .quest-list-show-links-wrapper {
+
+      a.quest-list-show-link {
+        font-size: .75em;
+      }
+    }
+  }
+}
+
+/* ======================================== QUEST SHOW CSS ======================================== */
 
 .quest-show-content-wrapper {
   h1 {
