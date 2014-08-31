@@ -31,7 +31,7 @@ block content
               a.quest-edit(href='/quests/edit/#{quest._id}') edit
 
       if (myQuests !== null)
-        .joined-quests-wrapper
+        .joined-quests-wrapper(hidden)
           each quest in myQuests
             .quest-entry
               h3
@@ -39,11 +39,12 @@ block content
               p created by #{quest.creator.userName}
 
       if (completedQuests !== null)
-        .completed-quests-wrapper
+        .completed-quests-wrapper(hidden)
           each quest in completedQuests
             .quest-entry
               h3
                 a(href='/quests/show/#{quest._id}')=quest.name
+                  img(src='#{quest.photo.filePath}')
               p created by #{quest.creator.userName}
 
 block scripts

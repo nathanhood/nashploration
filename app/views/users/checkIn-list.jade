@@ -12,19 +12,19 @@ block content
           each location in locations
             if (user.isInActiveQuest(location._id, quest))
               li.active-quest-checkin
-                h3= location.name
-                p *This location is in your active quest
+                .location-wrapper
+                  h3= location.name
+                  p *This location is in your active quest
+                  a.show-more(href='/locations/show/#{location._id}') show more
                 a(href='/checkIn/#{location._id}')
-                  button check in
-                a(href='/locations/show/#{location._id}')
-                  button show more
+                  button Check In
             else
               li
-                h3= location.name
+                .location-wrapper
+                  h3= location.name
+                  a.show-more(href='/locations/show/#{location._id}') show more
                 a(href='/checkIn/#{location._id}')
-                  button check in
-                a(href='/locations/show/#{location._id}')
-                  button show more
+                  button Check In
 
       else
         h3 There are no locations nearby. Keep trecking!

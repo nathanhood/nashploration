@@ -10,6 +10,12 @@
     $('a.quest-menu-button').click(showQuestMenu);
     $('a.submit-logout').click(submitLogoutForm);
     $('a.back-button').click(goBack);
+
+    $('a#log-in-main, a#already-login').click(showLoginForm);
+  }
+
+  function showLoginForm(){
+    $('.login-wrapper').slideToggle();
   }
 
   function goBack(){
