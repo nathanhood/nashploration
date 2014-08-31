@@ -43,9 +43,10 @@ block content
           each quest in completedQuests
             .quest-entry
               h3
-                a(href='/quests/show/#{quest._id}')=quest.name
+                a(href='/quests/show/#{quest._id}')
                   img(src='#{quest.photo.filePath}')
-              p created by #{quest.creator.userName}
+                  p.inline= quest.name
+              p.right created by #{quest.creator.userName}
 
 block scripts
   script(src='/js/es5/view-quests.js')
