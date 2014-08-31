@@ -1455,6 +1455,10 @@ textarea.group-description-input {
     padding-left: 75px;
     list-style: none;
     height: 110px;
+
+    p.label {
+      margin-bottom: 0;
+    }
   }
 
   ol li.leader-listing:before {
@@ -1624,9 +1628,131 @@ textarea.group-description-input {
 }
 
 
+/* ===================================== CLASS CONFIRMATION CSS ========================== */
+
+.class-confirmation-wrapper {
+  text-align: center;
+  img {
+    max-width: 250px;
+    height: auto;
+  }
+
+  h1 {
+    font-size: 4.5em;
+    font-weight: bold;
+  }
+
+  h3 {
+    font-size: 2.7em;
+  }
+
+  button {
+    cursor: pointer;
+  }
+}
+
+@media screen and (min-width: 360px) and (max-width: 550px) {
+  .class-confirmation-wrapper {
+    h1 {
+      font-size: 3em;
+    }
+
+    h3 {
+      font-size: 1.8em;
+    }
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .class-confirmation-wrapper {
+    img {
+      max-width: 220px;
+    }
+
+    h1 {
+      font-size: 2.3em;
+    }
+
+    h3 {
+      font-size: 1.4em;
+    }
+  }
+}
 
 
+/* ================================ QUEST CONFIRMATION CSS ============================== */
 
+.quest-confirmation-wrapper {
+  text-align: center;
+  img {
+    max-width: 250px;
+    height: auto;
+  }
+
+  h1 {
+    font-size: 4em;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  h3 {
+    font-size: 2.2em;
+  }
+
+  h3.quest-confirmation-name {
+    font-weight: bold;
+    margin-top: 10px;
+  }
+
+  h3.quest-bonus-points {
+    font-size: 1.8em;
+    margin-top: 20px;
+  }
+
+  button {
+    cursor: pointer;
+  }
+}
+
+@media screen and (min-width: 360px) and (max-width: 550px) {
+  .quest-confirmation-wrapper {
+    h1 {
+      font-size: 3em;
+    }
+
+    h3 {
+      font-size: 1.8em;
+    }
+
+    h3.quest-bonus-points {
+      font-size: 1.5em;
+      margin-top: 20px;
+    }
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .quest-confirmation-wrapper {
+    padding-bottom: 30px;
+
+    img {
+      max-width: 220px;
+    }
+
+    h1 {
+      font-size: 2.3em;
+    }
+
+    h3 {
+      font-size: 1.4em;
+    }
+
+    h3.quest-bonus-points {
+      font-size: 1.2em;
+      margin-top: 20px;
+    }
+  }
+}
 
 
 
