@@ -40,13 +40,10 @@ exports.register = (req, res)=>{
   var form = new multiparty.Form();
 
   form.parse(req, (err, fields, files)=>{
-
-    var photoObj = files.photo[0];
     var userName = fields.userName[0].split(' ').map(w=>w.trim()).map(w=>w.toLowerCase()).join('');
     Group.findByGroupCode(fields.groupCode[0], group=>{
       User.register(fields, userName, (u)=>{
         if (u) {
-          u.photo = u.processPhoto(photoObj);
           if (!group) {
             u.save(()=>{
               res.locals.user = u;

@@ -22,7 +22,7 @@ class User{
     this.badges = [{name: 'Couch Potato', filePath: '/img/assets/badges/couch_potato.png'}]; // Object IDs
     this.class = 'Couch Potato';
     this.groups = []; // Object IDs
-    this.photo = {fileName: null}; // add photo object from processPhoto
+    this.photo = {filePath: '/img/assets/placeholder.png', fileName: null}; // add photo object from processPhoto
     this.checkIns = []; // Location IDs
     this.createdGroups = []; //Object IDs
     this.createdQuests = [];
