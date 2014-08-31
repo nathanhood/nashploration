@@ -7,6 +7,8 @@
     $('body').on('click', '.info-window', showStreetView);
     fadeConfirmMessage();
     $('.checkin-button').click(submitCheckInListForm);
+    $('.notification-icon').click(showNotification);
+    $('a#dismiss').click(hideNotification);
   }
   function submitCheckInListForm(event) {
     $('form.checkin-form').submit();
@@ -222,7 +224,7 @@
         description = 'There is no description for this site.';
       }
       if (w.content.match(windowName)) {
-        var content = '<div class="pop-up">' + '<h3 class="pop-up-title">' + windowName + '</h3>' + '<p class="pop-up-p">' + description + '</p>' + '<a href="/locations/' + siteURL + '", class="info-window pop-up-link">Show More</a>' + '<a href="/checkIn/' + id + '", class="checkin-button"> <button>Check In</button></a>' + '</div>';
+        var content = '<div class="pop-up">' + '<h3 class="pop-up-title">' + windowName + '</h3>' + '<p class="pop-up-p">' + description + '</p>' + '<a href="/locations/' + siteURL + '", class="info-window pop-up-link">Show More</a>' + '<a href="/checkIn/' + id + '", class="checkin-button pop-up-link">Check In</a>' + '</div>';
         w.setContent(content);
       }
     }));
@@ -256,7 +258,13 @@
   }
   function fadeConfirmMessage() {
     setTimeout(function() {
-      $('.messages').fadeOut('slow');
+      $('.home-messages').fadeOut('slow');
     }, 4000);
+  }
+  function showNotification() {
+    $('.notification-wrapper').fadeToggle();
+  }
+  function hideNotification() {
+    $('.notification-wrapper').fadeOut();
   }
 })();

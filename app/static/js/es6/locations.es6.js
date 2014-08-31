@@ -13,6 +13,9 @@
     fadeConfirmMessage();
     // findLocation();
     $('.checkin-button').click(submitCheckInListForm);
+
+    $('.notification-icon').click(showNotification);
+    $('a#dismiss').click(hideNotification);
   }
 
   function submitCheckInListForm(event){
@@ -352,7 +355,7 @@ function addCheckInButton(windowName, description, id){
       '<h3 class="pop-up-title">'+windowName+'</h3>'+
       '<p class="pop-up-p">'+description+'</p>'+
       '<a href="/locations/'+siteURL+'", class="info-window pop-up-link">Show More</a>'+ //id is the locations mongo id
-      '<a href="/checkIn/'+id+'", class="checkin-button"> <button>Check In</button></a>'+'</div>'; //onclick="'+checkIn()+'"
+      '<a href="/checkIn/'+id+'", class="checkin-button pop-up-link">Check In</a>'+'</div>'; //onclick="'+checkIn()+'"
 
       w.setContent(content);
     }
@@ -384,8 +387,16 @@ $.ajax({url:url, type:type, dataType:dataType, data:data, success:success});
 
 function fadeConfirmMessage(){
   setTimeout(function(){
-    $('.messages').fadeOut('slow');
+    $('.home-messages').fadeOut('slow');
   }, 4000);
+}
+
+function showNotification(){
+  $('.notification-wrapper').fadeToggle();
+}
+
+function hideNotification(){
+  $('.notification-wrapper').fadeOut();
 }
 
 })();
