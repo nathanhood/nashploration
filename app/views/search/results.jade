@@ -18,7 +18,7 @@ block content
             a.result-name(href='/quests/show/#{quest.id}')
               img(src='#{quest.photo.filePath}')
               h2.inline= quest.name
-            a.view-result(href='/quests/show/#{quest.id}') View
+            a.view-quest(href='/quests/show/#{quest.id}') View
           .clear
           .border
     .locations-results-wrapper
@@ -27,7 +27,7 @@ block content
       if(results.locations.length > 0)
         each location in results.locations
           a.result-name(href='/locations/#{location.name}')= location.name
-          a.view-result(href='/locations/#{location.name}') View
+          a.view-location(href='/locations/#{location.name}') View
           .border
     .users-results-wrapper
       p.label Users

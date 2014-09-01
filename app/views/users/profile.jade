@@ -55,6 +55,16 @@ block content
       a(href="/users/leaders")
         h4 Leaders
         img(src="/img/assets/link-placeholder.png")
+    .border
+    .active-quest
+      if(!profileOwner.activeQuest.questId)
+        p You currently don't have an active quest.
+        a(href='/quests/view') Click here to view your quests.
+      else
+        p.label Active Quest
+        .clear
+        a.active-quest-name(href='/quests/show/#{profileOwner.activeQuest.questId}')= activeQuest.name
+
     .quest-group-menu-buttons
       a.quest-menu-button.active-button(href="#") Quests
       a.group-menu-button(href="#") Groups
@@ -65,7 +75,7 @@ block content
         li
           a(href='/quests/new') Build a Quest
         li
-          a(href='/quests/view') View Quests
+          a(href='/quests/view') View My Quests
       ul.group-menu
         li.join-group-form(hidden)
           form(action='/groups/join-group', method='POST')

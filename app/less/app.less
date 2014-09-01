@@ -72,11 +72,12 @@ button {
   font-family: "adobe-garamond-pro", serif;
   margin: 5px 5px 0 0 ;
   font-size: 1em;
+  cursor: pointer;
 }
 
 button:hover {
   background-color: darken(@base-complement, 10%);
-  cursor: hand;
+  cursor: pointer;
 }
 
 body {
@@ -765,7 +766,7 @@ a.edit-profile:hover {
 }
 
 .quest-group-menu-buttons {
-  padding: 20px 0 5px 0;
+  padding: 25px 0 5px 0;
 
   a {
     width: 50%;
@@ -833,6 +834,29 @@ a.edit-profile:hover {
         box-shadow: inset 0px 0px 10px darken(@offwhite, 5%);
       }
     }
+  }
+}
+
+.active-quest {
+  text-align: center;
+
+  p.label {
+    font-size: .9em;
+  }
+
+  p {
+    font-size: 1.2em;
+  }
+
+  a.active-quest-name {
+    font-weight: bold;
+    color:@base-color;
+    font-size: 1.5em;
+  }
+
+  a.active-quest-name:hover {
+    text-decoration: underline;
+    color: lighten(@base-color, 10%);
   }
 }
 
@@ -1355,6 +1379,11 @@ a.edit-profile:hover {
       height: auto;
     }
   }
+}
+
+.find-more-quests {
+  padding: 10px 0 0 0;
+  text-align: center;
 }
 
 @media screen and (max-width: 400px){
@@ -1914,9 +1943,6 @@ textarea.group-description-input {
     font-size: 2.7em;
   }
 
-  button {
-    cursor: pointer;
-  }
 }
 
 @media screen and (min-width: 360px) and (max-width: 550px) {
@@ -1977,9 +2003,6 @@ textarea.group-description-input {
     margin-top: 20px;
   }
 
-  button {
-    cursor: pointer;
-  }
 }
 
 @media screen and (min-width: 360px) and (max-width: 550px) {
@@ -2055,9 +2078,6 @@ textarea.group-description-input {
     margin-bottom: 15px;
   }
 
-  button {
-    cursor: pointer;
-  }
 }
 
 @media screen and (min-width: 360px) and (max-width: 600px) {
@@ -2163,7 +2183,7 @@ a.result-name:hover {
 }
 
 
-a.view-result {
+a.view-quest, a.view-location {
   display:inline-block;
   float:right;
   margin: 10px 0 0 0;
@@ -2173,9 +2193,13 @@ a.view-result {
   color:#fff;
 }
 
-a.view-result:hover {
+a.view-quest:hover, a.view-location:hover {
   background: darken(@base-complement, 10%);
   color:#fff;
+}
+
+a.view-location {
+  margin: -5px 0 0 0;
 }
 
 
@@ -2228,7 +2252,6 @@ a.view-result:hover {
     button {
       float: right;
       padding: 7px 10px;
-      cursor: pointer;
     }
   }
 
@@ -2637,7 +2660,6 @@ header#landing-header {
     button:hover {
       background:@offwhite;
       color:@base-color;
-      cursor: pointer;
       .transition;
     }
   }

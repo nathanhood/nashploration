@@ -15,12 +15,16 @@ block content
 
     .quest-list-content-wrapper 
 
+      .find-more-quests
+        a(href='/quests')
+          button Find more quests.
+
+      .border
       .quest-list-show-links-wrapper
         a.quest-list-show-link#created(href="#") CREATED
         a.quest-list-show-link#joined(href="#") JOINED
         a.quest-list-show-link#completed(href="#") COMPLETED
-
-
+      
       if (createdQuests !== null)
         .created-quests-wrapper#active-list
           each quest in createdQuests
