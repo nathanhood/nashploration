@@ -14,8 +14,9 @@ block content
       ul
         if (groups.length > 0)
           each group in groups
-            li= group.name
-              a(href='/groups/show/#{group._id}') view
+            li
+              p.group-name.inline= group.name
+              a.group-view(href='/groups/show/#{group._id}') View
         else
           li
             p You have not joined any groups.

@@ -44,7 +44,7 @@
 
 
 
-    function wikiTest() {
+  function wikiTest() {
     $.getJSON(`http://en.wikipedia.org/w/api.php?action=parse&format=json&page=Battle_of_Nashville&prop=text|images|sections&callback=?`).done(function(data){
       wikipediaHTMLResult(data);
     });
@@ -56,7 +56,7 @@
     var sections = data.parse.sections;
 
     sections.forEach((s, i)=>{
-        var $a = $('<a href="#'+s.anchor+'", data='+s.index+'>'+s.line+'</a><br>');
+        var $a = $('<a href="#'+s.anchor+'", data='+s.index+'>'+s.line+'</a>');
         $('#wiki-nav').append($a);
     });
 
@@ -81,6 +81,9 @@
       var readData = $('<div>' + text + '</div>');
       $('#wiki-description').empty();
       $('#wiki-description').append(readData);
+      $('html, body').animate({
+        scrollTop: $('#wiki-description').offset().top
+      }, 500);
 
     });
 
