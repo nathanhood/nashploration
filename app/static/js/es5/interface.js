@@ -4,6 +4,7 @@
   $(document).ready(init);
 
   function init() {
+    // $('input.main-search-input').hide();
     $('a.show-searchbar').click(showSearchbar);
     $('ul.group-menu').hide();
     $('a.group-menu-button').click(showGroupMenu);
@@ -25,6 +26,7 @@
 
   // FUNCTIONS FOR TEMPLATE PAGE ======================================================
   function showSearchbar(){
+    // $('input.main-search-input').show();
     $('input.main-search-input').toggleClass('show-searchbar-input');
     $('a.show-searchbar').toggleClass('small-magnifying-glass');
   }
