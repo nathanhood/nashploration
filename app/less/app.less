@@ -157,7 +157,7 @@ body {
   }
 }
 
-.messages, .error-message, p.email-invite-message {
+.messages, .error-message, p.email-invite-message, .group-confirmation-container {
   padding: 15px;
   background: @base-complement;
   color:#fff;
@@ -1171,6 +1171,10 @@ a.edit-profile:hover {
   z-index:5;
 }
 
+#quest-groups-list li {
+  line-height: 1.3em;
+}
+
 #create-quest-map {
   margin: 20px 0 0 0;
   width: 100%;
@@ -1663,6 +1667,65 @@ textarea.group-description-input {
   input {
     width: 285px;
     margin: 20px 10px 10px 0;
+  }
+}
+
+
+/* ==================================== SHOW GROUP ====================================== */
+
+.show-group-wrapper {
+  padding-top: 20px;
+
+  .group-name {
+    font-size: 1.8em;
+    text-align: center;
+    width: 100%;
+  }
+
+  .group-description {
+    display: block;
+    font-size: 1.2em;
+    width: 100%;
+  }
+
+  .group-member-photo {
+    display: inline-block;
+    float: left;
+    height: 90px;
+    width: 90px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0px 0px 5px @base-color;
+  }
+
+  .group-member-photo:hover {
+    opacity: .8;
+  }
+
+  li {
+    margin: 5px 0;
+    height: 90px;
+  }
+
+  .group-member-info {
+    display: inline-block;
+    // float: right;
+    margin-left: 25px;
+
+    p.label {
+      font-size: .6em;
+      margin-bottom: 0;
+    }
+
+    h3 {
+      font-size: 1.5em;
+    }
+  }
+
+  .border {
+    clear: both;
   }
 }
 

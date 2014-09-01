@@ -100,7 +100,7 @@ exports.login = (req, res)=>{
           });
         } else {
           req.flash('registerAndLogin', 'No account exists with those credentials');
-          res.redirect('/');
+          res.redirect(`/confirmation/${req.body.groupCode}`);
         }
       });
     });

@@ -14,7 +14,7 @@ exports.index = (req, res)=>{
 exports.confirmation = (req, res)=>{
   if (req.params.groupCode) {
     var groupCode = req.params.groupCode;
-    res.render('home/confirmation', {title: 'Nashploration', code:groupCode});
+    res.render('home/confirmation', {title: 'Nashploration', code:groupCode, registerAndLogin: req.flash('registerAndLogin')});
   }
 };
 
