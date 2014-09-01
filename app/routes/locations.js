@@ -22,7 +22,7 @@ exports.index = (req, res)=>{ //this renders the dashboard
 exports.getLocations = (req, res)=>{
   var locationsObj = {};
 
-  if(res.locals.user.checkIns.length > 1 && res.locals.user.activeQuest.questId !== null){
+  if(res.locals.user.checkIns.length >= 1 && res.locals.user.activeQuest.questId !== null){
     Location.findAll(locations=>{
       Location.findAllCheckInIds(res.locals.user.checkIns, allCheckIns=>{
         Quest.findById(res.locals.user.activeQuest.questId, (err, quest)=>{
