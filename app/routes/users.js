@@ -285,5 +285,7 @@ exports.fetchCheckins = (req, res)=>{
 };
 
 exports.showBadges = (req, res)=>{
-  res.render('users/badges', {title: 'Nashploration'});
+  User.findByUserName(req.params.userName, (user)=>{
+    res.render('users/badges', {title: 'Nashploration', profileOwner: user});
+  });
 };
