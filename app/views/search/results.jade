@@ -16,10 +16,8 @@ block content
         each quest in results.questNames
           .quest-entry-wrapper
             a.result-name(href='/quests/show/#{quest.id}')
-              img(src='#{quest.photo.filePath}')
               h2.inline= quest.name
             a.view-quest(href='/quests/show/#{quest.id}') View
-          .clear
           .border
     .locations-results-wrapper
       p.label Locations
@@ -34,7 +32,14 @@ block content
       .border
       if(results.userNames.length > 0)
         each user in results.userNames
-          h2= user.userName
+          .user-entry-wrapper
+            a(href="/users/#{user.userName}")
+              .profile-pic(style="background-image: url(#{user.photo.filePath})")
+            a(href="/users/#{user.userName}")
+              h2= user.userName
+            a.view-user(href='/users/#{user.userName}') View
+          .clear
+          .border
 
 block scripts
   script(src='/js/es5/search-results.js')

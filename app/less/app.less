@@ -1109,12 +1109,15 @@ a.edit-profile:hover {
 
     a.show-more {
       display:block;
+      padding: 10px;
     }
 
     li a {
       display:block;
       button {
         float:none;
+        width: 75%;
+        padding: 10px;
       }
     }
   }
@@ -2153,19 +2156,14 @@ textarea.group-description-input {
 }
 
 a.result-name {
+  display:inline-block;
   color:@base-color;
+  width: 75%;
 
   h2 {
-    padding: 15px;
     font-weight:bold;
     font-size: 1.2em;
-  }
-
-  img {
-    width: 50px;
-    height: 50px;
-    margin: 0 15px 0 0;
-    float:left;
+    display:inline-block;
   }
 }
 
@@ -2175,7 +2173,7 @@ a.result-name:hover {
 }
 
 
-a.view-quest, a.view-location {
+a.view-quest, a.view-location, a.view-user {
   display:inline-block;
   float:right;
   margin: 10px 0 0 0;
@@ -2185,13 +2183,51 @@ a.view-quest, a.view-location {
   color:#fff;
 }
 
-a.view-quest:hover, a.view-location:hover {
+a.view-quest:hover, a.view-location:hover, a.view-user  {
   background: darken(@base-complement, 10%);
   color:#fff;
 }
 
+a.view-quest {
+  margin-top: 0;
+}
+
 a.view-location {
   margin: -5px 0 0 0;
+}
+
+.locations-results-wrapper {
+  a.result-name {
+    display:inline-block;
+    width: 75%;
+  }
+}
+
+.users-results-wrapper {
+
+  .user-entry-wrapper {
+    .profile-pic {
+      width: 50px;
+      height: 50px;
+      background-size: cover;
+      background-position: center;
+      background-color: #fff;
+      display:inline-block;
+      border-radius: 50%;
+      border: 2px solid @offwhite;
+      box-shadow: 0px 0px 5px darken(@dark-base, 10%);
+      float:left;
+      margin: 0 20px 0 0;
+    }
+
+    h2 {
+      display:inline-block;
+      float:left;
+      margin: 10px 0 0 0;
+      font-size: 1.5em;
+      color:@base-color;
+    }
+  }
 }
 
 
