@@ -2,11 +2,37 @@
   'use strict';
   $(document).ready(init);
   function init() {
+    sizeMarkers();
     fetchLocations();
     $('#map-filter select').on('change', filterLocations);
     $('body').on('click', '.info-window', showStreetView);
     fadeConfirmMessage();
     $('.checkin-button').click(submitCheckInListForm);
+    $('.notification-icon').click(showNotification);
+    $('a#dismiss').click(hideNotification);
+  }
+  var defaultMarker;
+  var checkInMarker;
+  var questIcon;
+  function sizeMarkers() {
+    var width = 25;
+    var height = 39;
+    defaultMarker = {
+      url: 'img/assets/pins/pin-orange.png',
+      scaledSize: new google.maps.Size(width, height),
+      flatten: true,
+      optimized: true
+    };
+    checkInMarker = {
+      url: '/img/assets/pins/pin-blue.png',
+      scaledSize: new google.maps.Size(width, height),
+      optimized: true
+    };
+    questIcon = {
+      url: '/img/assets/pins/pin-blue-orange.png',
+      scaledSize: new google.maps.Size(width, height),
+      optimized: true
+    };
   }
   function submitCheckInListForm(event) {
     $('form.checkin-form').submit();
@@ -100,7 +126,6 @@
   }
   var markers = [];
   var coordinates = [];
-  var defaultMarker = {url: 'img/assets/pins/pin-orange.png'};
   function placeMarkers(coords, locName, locDesc) {
     var latLng = new google.maps.LatLng(coords[1], coords[0]);
     coordinates.push(latLng);
@@ -113,7 +138,6 @@
     allMarkers.push(latLng);
     infoWindows(locName, latLng, locDesc);
   }
-  var checkInMarker = {url: '/img/assets/pins/pin-blue.png'};
   var checkInMarkers = [];
   function placeCheckInMarkers(coords, locName, locDesc) {
     var latLng = new google.maps.LatLng(coords[1], coords[0]);
@@ -127,7 +151,6 @@
     allMarkers.push(latLng);
     infoWindows(locName, latLng, locDesc);
   }
-  var questIcon = {url: '/img/assets/pins/pin-blue-orange.png'};
   var questMarkers = [];
   function placeQuestMarkers(coords, locName, locDesc) {
     var latLng = new google.maps.LatLng(coords[1], coords[0]);
@@ -201,10 +224,6 @@
       $('.checkin-form input').val(nearbyIds);
     });
   }
-  var checkInIcon = {
-    url: '/img/pin-dot.svg',
-    scaledSize: new google.maps.Size(40, 40)
-  };
   var closeMarkers = [];
   function addCheckInMarkers(coords) {
     allMarkers.forEach((function(m) {
@@ -222,7 +241,7 @@
         description = 'There is no description for this site.';
       }
       if (w.content.match(windowName)) {
-        var content = '<div class="pop-up">' + '<h3 class="pop-up-title">' + windowName + '</h3>' + '<p class="pop-up-p">' + description + '</p>' + '<a href="/locations/' + siteURL + '", class="info-window pop-up-link">Show More</a>' + '<a href="/checkIn/' + id + '", class="checkin-button"> <button>Check In</button></a>' + '</div>';
+        var content = '<div class="pop-up">' + '<h3 class="pop-up-title">' + windowName + '</h3>' + '<p class="pop-up-p">' + description + '</p>' + '<a href="/locations/' + siteURL + '", class="info-window pop-up-link">Show More</a>' + '<a href="/checkIn/' + id + '", class="checkin-button pop-up-link">Check In</a>' + '</div>';
         w.setContent(content);
       }
     }));
@@ -258,5 +277,11 @@
     setTimeout(function() {
       $('.home-messages').fadeOut('slow');
     }, 4000);
+  }
+  function showNotification() {
+    $('.notification-wrapper').fadeToggle();
+  }
+  function hideNotification() {
+    $('.notification-wrapper').fadeOut();
   }
 })();

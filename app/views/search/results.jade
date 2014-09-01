@@ -14,15 +14,21 @@ block content
       .border
       if(results.questNames.length > 0)
         each quest in results.questNames
-          h2= quest.name
+          .quest-entry-wrapper
+            a.result-name(href='/quests/show/#{quest.id}')
+              img(src='#{quest.photo.filePath}')
+              h2.inline= quest.name
+            a.view-quest(href='/quests/show/#{quest.id}') View
+          .clear
+          .border
     .locations-results-wrapper
       p.label Locations
       .border
       if(results.locations.length > 0)
         each location in results.locations
-          br
-          a(href='/locations/#{location.name}')= location.name
-          br
+          a.result-name(href='/locations/#{location.name}')= location.name
+          a.view-location(href='/locations/#{location.name}') View
+          .border
     .users-results-wrapper
       p.label Users
       .border

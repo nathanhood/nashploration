@@ -17,8 +17,10 @@ exports.index = (req, res)=>{
 
 exports.profile = (req, res)=>{
   User.findByUserName(req.params.userName, user=>{
-    if (user) {
+    Quest.findById(res.locals.user.activeQuest.questId, (err, quest) => {
+      if (user) {
         res.render('users/profile', {title: 'Nashploration', profileOwner: user,
+        activeQuest: quest,
         unknownProfile: req.flash('unknownProfile'),
         groupConfirmation: req.flash('groupConfirmation'),
         joinedGroup: req.flash('joinedGroup'),
@@ -29,10 +31,11 @@ exports.profile = (req, res)=>{
         alreadyInMyQuests: req.flash('alreadyInMyQuests')
         });
 
-    } else {
-      req.flash('unknownProfile', `There is no one with the username ${req.params.userName}.`);
-      res.redirect(`/users/${res.locals.user.userName}`);
-    }
+      } else {
+        req.flash('unknownProfile', `There is no one with the username ${req.params.userName}.`);
+        res.redirect(`/users/${res.locals.user.userName}`);
+      }
+    });
   });
 };
 

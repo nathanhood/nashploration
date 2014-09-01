@@ -72,11 +72,12 @@ button {
   font-family: "adobe-garamond-pro", serif;
   margin: 5px 5px 0 0 ;
   font-size: 1em;
+  cursor: pointer;
 }
 
 button:hover {
   background-color: darken(@base-complement, 10%);
-  cursor: hand;
+  cursor: pointer;
 }
 
 body {
@@ -220,6 +221,7 @@ p.label.headline {
   height: 100px;
   background-size: cover;
   background-position: center;
+  background-color: #fff;
   display:inline-block;
   border-radius: 50%;
   border: 2px solid @offwhite;
@@ -519,6 +521,7 @@ header#floating-header {
         background-size:cover;
         background-position: center;
         display:inline-block;
+        background-color: #fff;
         width: 50px;
         height: 50px;
         border-radius: 50%;
@@ -575,7 +578,53 @@ a.pop-up-link {
   background: @base-complement;
   border-radius: 2px;
   color:#fff;
-  margin: 5px 0;
+  margin: 5px 5px 10px 0;
+}
+
+.notification-icon {
+  width: 45px;
+  height: 45px;
+  background-size: cover;
+  background-position: center;
+  background-image: url(/img/assets/notification-icon.png);
+  position:absolute;
+  top: 130px;
+  right: 20px;
+  z-index: 100;
+}
+
+@media screen and (max-width: 400px){
+  .notification-icon {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.notification-wrapper {
+  position:absolute;
+  right: 20px;
+  top: 170px;
+  width: 280px;
+  padding: 15px 15px 20px 15px;
+  margin: 5px 0 0 0;
+  z-index: 100;
+  background-color: #fff;
+  border-radius: 2px;
+  border: 1px solid #000;
+  color: @base-color;
+  font-size: .9em;
+
+  p {
+    margin: 0 0 15px 0;
+  }
+
+  a {
+    background-color:@base-complement;
+    padding: 5px 10px;
+    border-radius: 2px;
+    margin: 0 5px 0 0;
+    color:#fff;
+  }
 }
 
 @media screen and (min-width: 700px){
@@ -666,6 +715,7 @@ a.edit-profile:hover {
     margin: 25px auto 0 auto;
     border: 2px solid #fff;
     border-radius: 50%;
+    background-color: #fff;
     box-shadow: 0px 0px 5px @base-color;
     background-size: cover;
     background-position: center;
@@ -716,7 +766,7 @@ a.edit-profile:hover {
 }
 
 .quest-group-menu-buttons {
-  padding: 20px 0 5px 0;
+  padding: 25px 0 5px 0;
 
   a {
     width: 50%;
@@ -787,6 +837,41 @@ a.edit-profile:hover {
   }
 }
 
+.active-quest {
+  text-align: center;
+
+  p.label {
+    font-size: .9em;
+  }
+
+  p {
+    font-size: 1.2em;
+  }
+
+  a {
+    display:block;
+    font-weight:bold;
+    color:@base-color;
+    font-size: 1.2em;
+    margin: 10px;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  a.active-quest-name {
+    font-weight: bold;
+    color:@base-color;
+    font-size: 1.5em;
+  }
+
+  a.active-quest-name:hover {
+    text-decoration: underline;
+    color: lighten(@base-color, 10%);
+  }
+}
+
 @media screen and (min-width: 475px){
   .profile-info-left {
     .profile-pic {
@@ -810,33 +895,34 @@ a.edit-profile:hover {
   .edit-profil-pic-wrapper {
     text-align:center;
 
-    img {
+    .profile-pic {
       width: 110px;
       height: 110px;
-      margin: 0 auto;
       border: 2px solid #fff;
       border-radius: 50%;
       box-shadow: 0px 0px 5px @base-color;
+      background-color: #fff;
       background-size: cover;
       background-position: center;
-      margin: 20px 0 5px 0;
+      margin: 10px auto;
     }
 
     form.edit-photo {
       display:inline-block;
       input {
         width: 185px;
+        margin: 0 5px 0 0;
       }
 
       button {
-        margin: 5px;
+        margin: 0;
       }
     }
   }
 
   input {
     margin: 0 0 5px 0;
-    width: 70%;
+    width: 60%;
   }
 
   button {
@@ -846,7 +932,8 @@ a.edit-profile:hover {
 
   a.submit-edits {
     display:block;
-    width: 300px;
+    width: 90%;
+    max-width: 300px;
     text-align:center;
     padding: 10px 20px;
     border: 1px solid @base-color;
@@ -1304,6 +1391,11 @@ a.edit-profile:hover {
       height: auto;
     }
   }
+}
+
+.find-more-quests {
+  padding: 10px 0 0 0;
+  text-align: center;
 }
 
 @media screen and (max-width: 400px){
@@ -1943,9 +2035,6 @@ textarea.group-description-input {
     font-size: 2.7em;
   }
 
-  button {
-    cursor: pointer;
-  }
 }
 
 @media screen and (min-width: 360px) and (max-width: 550px) {
@@ -2006,9 +2095,6 @@ textarea.group-description-input {
     margin-top: 20px;
   }
 
-  button {
-    cursor: pointer;
-  }
 }
 
 @media screen and (min-width: 360px) and (max-width: 550px) {
@@ -2084,9 +2170,6 @@ textarea.group-description-input {
     margin-bottom: 15px;
   }
 
-  button {
-    cursor: pointer;
-  }
 }
 
 @media screen and (min-width: 360px) and (max-width: 600px) {
@@ -2164,6 +2247,64 @@ textarea.group-description-input {
     }
   }
 
+.quests-results-wrapper {
+
+
+}
+
+a.result-name {
+  color:@base-color;
+
+  h2 {
+    padding: 15px;
+    font-weight:bold;
+    font-size: 1.2em;
+  }
+
+  img {
+    width: 50px;
+    height: 50px;
+    margin: 0 15px 0 0;
+    float:left;
+  }
+}
+
+a.result-name:hover {
+  text-decoration: underline;
+  color:lighten(@base-color, 10%);
+}
+
+
+a.view-quest, a.view-location {
+  display:inline-block;
+  float:right;
+  margin: 10px 0 0 0;
+  padding: 7px 10px 5px 10px;
+  border-radius: 2px;
+  background: @base-complement;
+  color:#fff;
+}
+
+a.view-quest:hover, a.view-location:hover {
+  background: darken(@base-complement, 10%);
+  color:#fff;
+}
+
+a.view-location {
+  margin: -5px 0 0 0;
+}
+
+
+@media screen and (max-width: 400px){
+    
+  .results-links-wrapper {
+
+    a.results-link {
+      font-size: .75em;
+    }
+  }
+}
+
 
 
 /* =================================== FIND QUEST CSS ============================== */
@@ -2192,6 +2333,7 @@ textarea.group-description-input {
   h2.quest-name {
     font-size: 1.6em;
     display: inline;
+    font-weight:bold;
   }
 
   .quest-description {
@@ -2203,7 +2345,6 @@ textarea.group-description-input {
     button {
       float: right;
       padding: 7px 10px;
-      cursor: pointer;
     }
   }
 
@@ -2612,7 +2753,6 @@ header#landing-header {
     button:hover {
       background:@offwhite;
       color:@base-color;
-      cursor: pointer;
       .transition;
     }
   }
