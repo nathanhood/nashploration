@@ -24,12 +24,13 @@ block content
           input(type='checkbox', name='isPrivate', value='true')
         .border
         .group-quest-options
-          if(groups)
+          if(groups.length > 0)
             p.label Add Groups:
             each group in groups
               label(for='#{group._id}')= group.name
               input(type="checkbox", id='#{group._id}', class='group-to-quest', value='#{group.name}')
           else
+            p.label Add Groups:
             h3 All your groups are a part of this quest
         .border
         button.submit-quest-changes Save Changes
