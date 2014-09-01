@@ -33,7 +33,9 @@ block content
 
     .profile-wrapper
       .profile-info-left
-        .profile-pic(style='background-image: url("#{profileOwner.photo.filePath}")')
+        a(href="/users/edit/#{profileOwner._id}")
+          .profile-pic(style='background-image: url("#{profileOwner.photo.filePath}")')
+            p.edit-photo CHANGE PHOTO
       .profile-info-right
         span Username:
         h3= profileOwner.userName

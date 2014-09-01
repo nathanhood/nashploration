@@ -19,6 +19,7 @@ html
           .nav-profile-pic(style='background-image: url("#{user.photo.filePath}")')
           p.nav-name= user.nickName
           p.nav-class= user.class
+          p.nav-points #{user.points} Points
           ul.main-nav
             li
               a(href="/dashboard") Home

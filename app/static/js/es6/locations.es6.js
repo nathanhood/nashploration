@@ -173,6 +173,7 @@
 //====adds all historical markers to the map: Richmond
   var markers = []; // made markers global for deletion
   var coordinates = []; // made coordinates global so the map can be resized each time its filtered
+
   function placeMarkers(coords, locName, locDesc){
     var latLng = new google.maps.LatLng(coords[1], coords[0]);
       coordinates.push(latLng);
@@ -188,6 +189,7 @@
       infoWindows(locName, latLng, locDesc); //passing in coords because latLng is now a google Marker Object..coords is used to set the data of the infowindow "Show More" link
 
   }
+
 
   var checkInMarkers = [];
   function placeCheckInMarkers(coords, locName, locDesc){
@@ -205,6 +207,7 @@
       infoWindows(locName, latLng, locDesc); //passing in coords because latLng is now a google Marker Object..coords is used to set the data of the infowindow "Show More" link
 
   }
+
 
   var questMarkers = [];
   function placeQuestMarkers(coords, locName, locDesc){
@@ -417,7 +420,7 @@ $.ajax({url:url, type:type, dataType:dataType, data:data, success:success});
 
 function fadeConfirmMessage(){
   setTimeout(function(){
-    $('.messages').fadeOut('slow');
+    $('.home-messages').fadeOut('slow');
   }, 4000);
 }
 

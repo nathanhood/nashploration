@@ -156,7 +156,7 @@ body {
   }
 }
 
-.messages, .error-message {
+.messages, .error-message, p.email-invite-message {
   padding: 15px;
   background: @base-complement;
   color:#fff;
@@ -233,8 +233,14 @@ p.nav-name {
 }
 p.nav-class {
   font-size: 1.25em;
-  margin: 0 0 20px 0;
+  margin: 0 0 10px 0;
   color: lighten(@light-base, 10%);
+}
+
+p.nav-points {
+  margin: 0 0 15px 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
 ul.main-nav {
@@ -317,7 +323,7 @@ img.nav-logo-icon {
 
 @media screen and (max-height: 550px){
   .nav-wrapper {
-    height: 500px;
+    height: 470px;
   }
 }
 
@@ -663,6 +669,13 @@ a.edit-profile:hover {
     box-shadow: 0px 0px 5px @base-color;
     background-size: cover;
     background-position: center;
+
+    p.edit-photo {
+      padding-top: 25px;
+      font-size: .9em;
+      color: #fff;
+      text-shadow: 0px 0px 5px #555;
+    }
   }
 }
 
@@ -780,6 +793,11 @@ a.edit-profile:hover {
       margin: 0 auto 0 auto;
       width: 130px;
       height: 130px;
+
+      p.edit-photo {
+      padding-top: 50px;
+      font-size: 1em;
+    }
     }
   }
 }
@@ -1290,7 +1308,7 @@ a.edit-profile:hover {
 
 @media screen and (max-width: 400px){
   .quest-list-content-wrapper {
-    
+
     .quest-list-show-links-wrapper {
 
       a.quest-list-show-link {
@@ -1303,20 +1321,100 @@ a.edit-profile:hover {
 /* ======================================== QUEST SHOW CSS ======================================== */
 
 .quest-show-content-wrapper {
-  h1 {
-    font-size: 1.5em;
-    color:@base-color;
-    font-weight:bold;
+  .quest-header-wrapper {
+    display: block;
     margin: 10px 0;
+    height: 90px;
+
+    h1 {
+      font-size: 2em;
+      color:@base-color;
+      font-weight:bold;
+      margin: 28px 20px;
+      display: inline-block;
+      width: 75%;
+    }
+
+    img {
+      float: left;
+      width: auto;
+      height: 90px;
+      display: inline-block;
+    }
   }
 
   li {
     padding: 15px 0;
   }
 
-  // .completed-quests-wrapper, .joined-quests-wrapper {
-  //   display:none;
-  // }
+  .quest-description {
+    font-size: 1.2em;
+  }
+
+  .quest-destinations-container {
+    h2 {
+      font-size: 1.35em;
+    }
+
+    .quest-destinations .quest-destination {
+      .quest-details, .quest-address {
+        line-height: 1.3em;
+      }
+
+      h3 {
+        font-weight: bold;
+      }
+
+      p.label {
+        font-size: .5em;
+      }
+    }
+  }
+}
+
+#quest-map-canvas {
+  width: 100%;
+  height: 300px;
+}
+
+@media screen and (min-width: 450px) and (max-width: 590px) {
+  .quest-show-content-wrapper {
+    .quest-header-wrapper {
+      height: 80px;
+
+      h1 {
+        width: 60%;
+      }
+
+      img {
+        width: auto;
+        height: 80px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .quest-show-content-wrapper {
+    button {
+      font-size: .8em;
+    }
+
+    .quest-header-wrapper {
+      height: 70px;
+
+      h1 {
+        font-size: 1.4em;
+        width: 60%;
+        margin: 22px 10px;
+      }
+
+      img {
+        width: auto;
+        height: 70px;
+      }
+    }
+  }
 }
 
 /* ======================================== QUEST EDIT CSS ======================================== */
@@ -1475,6 +1573,8 @@ textarea.group-description-input {
     margin: 20px 10px 10px 0;
   }
 }
+
+
 
 /* ======================================== CONFIRMATION CSS ======================================== */
 
@@ -2030,7 +2130,44 @@ textarea.group-description-input {
   }
 }
 
+
+/* ================================= SEARCH RESULTS CSS ==================================== */
+
+.results-links-wrapper {
+    padding: 15px 0 25px 0;
+    text-align: center;
+
+    a.results-link {
+      display:inline-block;
+      width: 33%;
+      color:@base-color;
+      border: 1px solid @base-color;
+      padding: 12px 10px 10px 10px;
+      text-align: center;
+    }
+
+    a.results-link:first-child {
+      border-top-left-radius: 3px;
+      border-bottom-left-radius: 3px;
+      border-right:none;
+    }
+
+    a.results-link:last-child {
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+      border-left:none;
+    }
+
+    a.results-link:hover {
+      background: darken(@offwhite, 5%);
+      color: @base-color;
+    }
+  }
+
+
+
 /* =================================== FIND QUEST CSS ============================== */
+
 .find-quest-wrapper {
   margin-top: 20px;
 
