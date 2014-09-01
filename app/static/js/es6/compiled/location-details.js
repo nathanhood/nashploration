@@ -33,7 +33,7 @@
     var readData = $('<div>' + data.parse.text[$traceurRuntime.toProperty('*')] + '</div>');
     var sections = data.parse.sections;
     sections.forEach((function(s, i) {
-      var $a = $('<a href="#' + s.anchor + '", data=' + s.index + '>' + s.line + '</a><br>');
+      var $a = $('<a href="#' + s.anchor + '", data=' + s.index + '>' + s.line + '</a>');
       $('#wiki-nav').append($a);
     }));
     var info = readData.find('p').toArray();
@@ -47,6 +47,7 @@
       var readData = $('<div>' + text + '</div>');
       $('#wiki-description').empty();
       $('#wiki-description').append(readData);
+      $('html, body').animate({scrollTop: $('#wiki-description').offset().top}, 500);
     });
   }
 })();
