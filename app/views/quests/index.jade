@@ -13,12 +13,15 @@ block content
           each quest in quests
             .quest-listing-wrapper
               li
-                .quest-image-wrapper(style="background-image: url(#{quest.photo.filePath})")
-                .quest-information-wrapper
-                  h2.quest-name= quest.name
+                .quest-image-link
+                  .quest-image-wrapper(style="background-image: url(#{quest.photo.filePath})")
                   a.quest-link(href='/quests/show/#{quest._id}')
                     button view
+                .quest-information-wrapper
+                  a(href='/quests/show/#{quest._id}')
+                    h2.quest-name= quest.name
                   p.quest-description= quest.description
+              .clear
               .border
 
 block scripts
