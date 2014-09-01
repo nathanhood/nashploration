@@ -10,6 +10,7 @@
     $('.checkin-button').click(submitCheckInListForm);
     $('.notification-icon').click(showNotification);
     $('a#dismiss').click(hideNotification);
+    $('.geolocation-control').click(toggleGeolocation);
   }
   var defaultMarker;
   var checkInMarker;
@@ -56,11 +57,6 @@
         }));
       }
       resizeMap();
-      var clusterOptions = {
-        gridSize: 40,
-        maxZoom: 20
-      };
-      var newCluster = new MarkerClusterer(map, markers, clusterOptions);
     });
   }
   function removeAllDups(data) {
@@ -224,9 +220,58 @@
     strokeColor: 'darkgreen',
     scale: 5
   };
+  var geoLocationStatus = true;
+  function toggleGeolocation() {
+    if (geoLocationStatus === true) {
+      geoLocationStatus = false;
+      $('.geolocation-control').html('Find Me');
+    } else {
+      geoLocationStatus = true;
+      $('.geolocation-control').html('Stop');
+      findLocation();
+    }
+  }
+  var pos;
+  function findLocation() {
+    if (geoLocationStatus) {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+          var marker = new google.maps.Marker({
+            map: map,
+            position: pos,
+            icon: currLocMarker
+          });
+          map.setCenter(pos);
+          map.setZoom(16);
+          checkCloseLocs(pos);
+        }, function() {
+          handleNoGeolocation(true);
+        });
+      } else {
+        handleNoGeolocation(false);
+      }
+    }
+  }
+  function handleNoGeolocation(errorFlag) {
+    var content;
+    if (errorFlag) {
+      content = 'Error: The Geolocation service failed.';
+    } else {
+      content = 'Error: Your browser doesn\'t support geolocation.';
+    }
+    var options = {
+      map: map,
+      position: new google.maps.LatLng(36.1667, -86.7833),
+      content: content
+    };
+    var infowindow = new google.maps.InfoWindow(options);
+    map.setCenter(options.position);
+  }
   var currentLat;
   var currentLong;
   function checkCloseLocs(pos) {
+    console.log(pos);
     currentLat = pos.k;
     currentLong = pos.B;
     if (closeMarkers.length) {
@@ -241,6 +286,9 @@
       }));
       $('.checkin-form input').val(nearbyIds);
     });
+    window.setInterval(function() {
+      findLocation();
+    }, 5000);
   }
   var closeMarkers = [];
   function addCheckInMarkers(coords) {

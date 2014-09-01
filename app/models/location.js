@@ -48,7 +48,7 @@ class Location{
       var allLocations = [];
       for (var i = 0; i < markers.length; i++) {
         if (markers[i].mapped_location) {
-          var name = markers[i].title.replace(/[0-9-]/g, '');
+          var name = markers[i].title.replace(/[0-9-(),]/g, '');
           var locArray = [];
               locArray[0] = markers[i].mapped_location.longitude * 1;
               locArray[1] = markers[i].mapped_location.latitude * 1;
@@ -64,11 +64,7 @@ class Location{
               if(allLocations.length){
                 allLocations.forEach(a=>{
                   if(a.loc[0] === newLocation.loc[0] || a.loc[1] === newLocation.loc[1]){
-                    console.log(a);
-                    console.log(newLocation);
-                    console.log(newLocation.loc[0]);
                     newLocation.loc[0] = (newLocation.loc[0] - 0.00005);
-                    console.log(newLocation.loc[0]);
                   }
                 });
               }
