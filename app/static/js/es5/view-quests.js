@@ -6,6 +6,7 @@
   $(document).ready(init);
 
   function init(){
+    fadeMessages();
     $('a#created').addClass('active-button');
     $('.created-quests-wrapper').show();
     $('.joined-quests-wrapper').hide();
@@ -30,6 +31,12 @@
     });
   }
 
-  
+  function fadeMessages(){
+    setTimeout(function(){
+      $('.messages').fadeOut('slow');
+    }, 4000);
+  }
+
+
 
 })();
