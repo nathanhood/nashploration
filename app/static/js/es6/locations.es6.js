@@ -64,15 +64,15 @@
         });
       }
 
+      data.all.forEach(a=>{
+        placeMarkers(a.loc, a.name, a.description);
+      });
+
       if(data.checkIns){
         data.checkIns.forEach(c=>{
           placeCheckInMarkers(c.loc, c.name, c.description);
         });
       }
-
-      data.all.forEach(a=>{
-        placeMarkers(a.loc, a.name, a.description);
-      });
 
       resizeMap();
     });
@@ -120,6 +120,15 @@
           resizeMap();
         });
         break;
+      case 'Active Quest':
+        $.ajax('/getActiveQuestLocations').done(function(data){
+          clearMap();
+          data.forEach(d=>{
+            placeQuestMarkers(d.loc, d.name, d.description);
+          });
+          resizeMap();
+        });
+        break;
     }
   }
 
@@ -132,6 +141,10 @@
 
     for (var j = 0; j < questMarkers.length; j++){
       questMarkers[j].setMap(map);
+    }
+
+    for (var l = 0; l < checkInMarkers.length; l++){
+      checkInMarkers[l].setMap(map);
     }
   }
 
@@ -194,6 +207,7 @@
   var questMarkers = [];
   function placeQuestMarkers(coords, locName, locDesc){
     var latLng = new google.maps.LatLng(coords[1], coords[0]);
+    coordinates.push(latLng);
 
       latLng = new google.maps.Marker({
         position: latLng,

@@ -24,7 +24,10 @@ block content
   #map-filter
     select
       option Filter
-      option -------
+      option ------------
+      if(user.activeQuest.questId)
+        option Active Quest
+        option ------------
       option All
       option Civil War Sites
       option Andrew Jackson
