@@ -110,7 +110,7 @@ body {
 .content-wrapper {
   width: 90%;
   margin: 0 auto;
-  padding: 70px 0 0 0;
+  padding: 70px 0 50px 0;
   max-width: 600px;
 }
 
@@ -428,15 +428,16 @@ header#floating-header {
       max-width: 500px;
       text-align:right;
 
-      input[type='text']{
+      input.main-search-input[type='text']{
         position: absolute;
         top: 0px;
         right: 0;
         width: 0%;
+        height: 0;
         opacity: 0;
-        padding: 13px;
         margin: -4px 10px 0 0;
         border:none;
+        padding: 0;
         border-radius: 2px;
         background-color: #44331c;
         color:#fff;
@@ -445,6 +446,8 @@ header#floating-header {
 
       input[type='text'].show-searchbar-input {
         opacity: 1;
+        padding: 13px;
+        height:inherit;
         width:80%;
       }
     }
@@ -797,7 +800,7 @@ a.edit-profile:hover {
 }
 
 .quest-group-menus {
-  padding-top: 20px;
+  padding: 20px 0 30px 0;
   ul {
     text-align: center;
     border-top: 1px solid darken(@offwhite, 20%);
@@ -1091,6 +1094,7 @@ a.edit-profile:hover {
 @media screen and (max-width: 450px){
 
   .nearby-checkin-list {
+    text-align:center;
 
     .location-wrapper {
       display:block;
@@ -1105,40 +1109,19 @@ a.edit-profile:hover {
 
     a.show-more {
       display:block;
+      padding: 10px;
     }
 
     li a {
+      display:block;
       button {
-        margin-top: -15px;
+        float:none;
+        width: 75%;
+        padding: 10px;
       }
     }
   }
 }
-
-// @media screen and (max-width: 680px){
-//   .nearby-checkin-list {
-//     li h3 {
-//       font-size: 1em;
-//       display: block;
-//       text-align: left;
-//     }
-
-//     li {
-//      padding: 20px 0;
-//     }
-
-//     li a {
-//       button {
-//         float: none;
-//       }
-//     }
-
-//     li.active-quest-checkin p {
-//       display: block;
-//       margin-bottom: 15px;
-//     }
-//   }
-// }
 
 
 /* ====================================== BADGES CSS =============================================== */
@@ -2253,19 +2236,14 @@ textarea.group-description-input {
 }
 
 a.result-name {
+  display:inline-block;
   color:@base-color;
+  width: 75%;
 
   h2 {
-    padding: 15px;
     font-weight:bold;
     font-size: 1.2em;
-  }
-
-  img {
-    width: 50px;
-    height: 50px;
-    margin: 0 15px 0 0;
-    float:left;
+    display:inline-block;
   }
 }
 
@@ -2275,7 +2253,7 @@ a.result-name:hover {
 }
 
 
-a.view-quest, a.view-location {
+a.view-quest, a.view-location, a.view-user {
   display:inline-block;
   float:right;
   margin: 10px 0 0 0;
@@ -2285,13 +2263,51 @@ a.view-quest, a.view-location {
   color:#fff;
 }
 
-a.view-quest:hover, a.view-location:hover {
+a.view-quest:hover, a.view-location:hover, a.view-user  {
   background: darken(@base-complement, 10%);
   color:#fff;
 }
 
+a.view-quest {
+  margin-top: 0;
+}
+
 a.view-location {
   margin: -5px 0 0 0;
+}
+
+.locations-results-wrapper {
+  a.result-name {
+    display:inline-block;
+    width: 75%;
+  }
+}
+
+.users-results-wrapper {
+
+  .user-entry-wrapper {
+    .profile-pic {
+      width: 50px;
+      height: 50px;
+      background-size: cover;
+      background-position: center;
+      background-color: #fff;
+      display:inline-block;
+      border-radius: 50%;
+      border: 2px solid @offwhite;
+      box-shadow: 0px 0px 5px darken(@dark-base, 10%);
+      float:left;
+      margin: 0 20px 0 0;
+    }
+
+    h2 {
+      display:inline-block;
+      float:left;
+      margin: 10px 0 0 0;
+      font-size: 1.5em;
+      color:@base-color;
+    }
+  }
 }
 
 
