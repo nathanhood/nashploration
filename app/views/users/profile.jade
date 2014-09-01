@@ -26,10 +26,9 @@ block content
       .messages
         p= addedToMyQuests
 
-    .group-confirmation-container
-      if (groupConfirmation.length > 0)
-        .messages
-          p= groupConfirmation
+    if (groupConfirmation.length > 0)
+      .group-confirmation-container
+        p= groupConfirmation
 
     .profile-wrapper
       .profile-info-left

@@ -157,7 +157,7 @@ body {
   }
 }
 
-.messages, .error-message, p.email-invite-message {
+.messages, .error-message, p.email-invite-message, .group-confirmation-container {
   padding: 15px;
   background: @base-complement;
   color:#fff;
@@ -874,6 +874,26 @@ a.edit-profile:hover {
   }
 }
 
+@media screen and (max-width: 370px) {
+  .active-quest {
+    a.active-quest-name {
+      font-size: 1.1em;
+    }
+
+    a {
+      font-size: 1em;
+    }
+
+    p.label {
+      font-size: .7em;
+    }
+
+    p {
+      font-size: .95em;
+    }
+  }
+}
+
 @media screen and (min-width: 475px){
   .profile-info-left {
     .profile-pic {
@@ -1151,6 +1171,10 @@ a.edit-profile:hover {
   top: 425px;
   left: 80px;
   z-index:5;
+}
+
+#quest-groups-list li {
+  line-height: 1.3em;
 }
 
 #create-quest-map {
@@ -1506,6 +1530,43 @@ a.edit-profile:hover {
     height: auto;
     margin: 10px 0 0 0;
   }
+
+  .group-quest-options {
+    p.label {
+      display: block;
+      font-size: .7em;
+    }
+
+    label {
+      font-size: 1.1em;
+    }
+  }
+
+  .quest-destinations-container {
+    margin-bottom: 15px;
+
+    h2 {
+      font-size: 1.35em;
+    }
+
+    li {
+      padding: 15px 0;
+    }
+
+    .quest-destinations .quest-destination {
+      .quest-details, .quest-address {
+        line-height: 1.3em;
+      }
+
+      h3 {
+        font-weight: bold;
+      }
+
+      p.label {
+        font-size: .5em;
+      }
+    }
+  }
 }
 
 /* ======================================== CREATE GROUP CSS ======================================== */
@@ -1645,6 +1706,65 @@ textarea.group-description-input {
   input {
     width: 285px;
     margin: 20px 10px 10px 0;
+  }
+}
+
+
+/* ==================================== SHOW GROUP ====================================== */
+
+.show-group-wrapper {
+  padding-top: 20px;
+
+  .group-name {
+    font-size: 1.8em;
+    text-align: center;
+    width: 100%;
+  }
+
+  .group-description {
+    display: block;
+    font-size: 1.2em;
+    width: 100%;
+  }
+
+  .group-member-photo {
+    display: inline-block;
+    float: left;
+    height: 90px;
+    width: 90px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0px 0px 5px @base-color;
+  }
+
+  .group-member-photo:hover {
+    opacity: .8;
+  }
+
+  li {
+    margin: 5px 0;
+    height: 90px;
+  }
+
+  .group-member-info {
+    display: inline-block;
+    // float: right;
+    margin-left: 25px;
+
+    p.label {
+      font-size: .6em;
+      margin-bottom: 0;
+    }
+
+    h3 {
+      font-size: 1.5em;
+    }
+  }
+
+  .border {
+    clear: both;
   }
 }
 

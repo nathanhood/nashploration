@@ -2,22 +2,29 @@ extends ../shared/template
 
 block content
 
-  .messages
-    if (joinGroupConfirm)
-      p= joinGroupConfirm
+  .content-wrapper
+    if (joinGroupConfirm.length > 0)
+      .messages
+        p= joinGroupConfirm
 
-  h1.group-name(data-id='#{group._id}')= group.name
-  p= group.description
-
-  h2 Group Members
-  if (members)
-    ul
-      each member in members
-        li
-          img.profile-picture(src=member.photo.filePath)
-          span Nickname:
-          h3= member.nickName
-          span Username:
-          h3= member.userName
-  else
-    p There are no group members
+    .show-group-wrapper
+      h1.group-name(data-id='#{group._id}')= group.name
+      .border
+      p.label DESCRIPTION:
+      p.group-description= group.description
+      .border
+      p.label GROUP MEMBERS:
+      if (members)
+        ul
+          each member in members
+            li
+              a(href='/users/#{member.userName}')
+                .group-member-photo(style='background-image: url("#{member.photo.filePath}")')
+              .group-member-info
+                p.label Nickname:
+                h3= member.nickName
+                p.label Username:
+                h3= member.userName
+            .border
+      else
+        p There are no group members
