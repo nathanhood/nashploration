@@ -15,8 +15,8 @@
   var checkInMarker;
   var questIcon;
   function sizeMarkers() {
-    var width = 30;
-    var height = 30;
+    var width = 25;
+    var height = 39;
     defaultMarker = {
       url: 'img/assets/pins/pin-orange.png',
       scaledSize: new google.maps.Size(width, height),
