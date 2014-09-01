@@ -62,10 +62,12 @@
   function createQuestList(questLocations){
     questLocations.forEach(location=>{
       var destination = `<li class='quest-destination'>
-                        <h3>${location.name}</h3>
-                        <p><b>Address</b>: ${location.address}<p>
-                        <p><b>Description</b>: ${location.description}</p>
-                      </li>`;
+                          <h3>${location.name}</h3>
+                          <p class="label">Address:</p>
+                          <p class="quest-address">${location.address}<p>
+                          <p class="label">Details:</p>
+                          <p class="quest-details">${location.description}</p>
+                        </li>`;
       $('.quest-destinations').append(destination);
     });
   }
