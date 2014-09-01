@@ -2296,7 +2296,7 @@ a.view-location {
 
 
 @media screen and (max-width: 400px){
-    
+
   .results-links-wrapper {
 
     a.results-link {
@@ -2332,26 +2332,36 @@ a.view-location {
 
   h2.quest-name {
     font-size: 1.6em;
-    display: inline;
+    display: block;
     font-weight:bold;
   }
 
   .quest-description {
     margin-top: 5px;
-    width: 75%;
+    line-height: 1.3em;
+    display: block;
+    font-size: .9em;
   }
 
   a.quest-link {
     button {
       float: right;
       padding: 7px 10px;
+      margin-top: 20px;
     }
   }
 
   .quest-information-wrapper {
-    width: 75%;
+    width: 60%;
     display: inline-block;
     margin: 15px 0 0 15px;
+    a {
+      color: @base-color;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
   }
 
   .quest-image-wrapper {
@@ -2377,6 +2387,48 @@ a.view-location {
 }
 
 
+@media screen and (max-width: 460px) {
+  .available-quests-list {
+    .quest-listing-wrapper li {
+      min-height: 60px;
+    }
+
+    .quest-information-wrapper {
+      width: 65%;
+      margin-left: 10px;
+      margin-top: 10px;
+      float: left;
+    }
+
+    .quest-image-link {
+      min-width: 60px;
+      display: inline-block;
+      float: left;
+    }
+
+    a.quest-link {
+      display: none;
+      button {
+        float: none;
+      }
+    }
+
+    .quest-image-wrapper {
+      height: 60px;
+      width: 60px;
+      display: block;
+      float: none;
+    }
+
+    h2.quest-name {
+      font-size: 1.2em;
+    }
+
+    .quest-description {
+      font-size: .8em;
+    }
+  }
+}
 
 
 /* ======================================== OLD CSS ======================================== */
