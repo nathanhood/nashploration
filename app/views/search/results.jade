@@ -15,9 +15,9 @@ block content
       if(results.questNames.length > 0)
         each quest in results.questNames
           .quest-entry-wrapper
-            a.result-name(href='/quests/show/#{quest.id}')
+            a.result-name(href='/quests/show/#{quest._id}')
               h2.inline= quest.name
-            a.view-quest(href='/quests/show/#{quest.id}') View
+            a.view-quest(href='/quests/show/#{quest._id}') View
           .border
     .locations-results-wrapper
       p.label Locations
