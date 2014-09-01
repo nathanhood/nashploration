@@ -73,8 +73,9 @@
           placeCheckInMarkers(c.loc, c.name, c.description);
         });
       }
-
       resizeMap();
+      var clusterOptions = {gridSize: 40, maxZoom: 20};
+      var newCluster = new MarkerClusterer(map, markers, clusterOptions);
     });
   }
 
@@ -166,6 +167,7 @@
       google.maps.event.addListener(map, 'click', function(event) { //TODO remove this after testing...this simulates the current location coordinates
          checkCloseLocs(event.latLng);
       });
+
   }
 
 //====adds all historical markers to the map: Richmond
@@ -252,6 +254,7 @@
         });
         siteName.open(map, windowLoc);
     });
+
   }
 
 //===== pulls up for the street view when show more is click in an info window: Richmond

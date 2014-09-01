@@ -54,6 +54,11 @@
         }));
       }
       resizeMap();
+      var clusterOptions = {
+        gridSize: 40,
+        maxZoom: 20
+      };
+      var newCluster = new MarkerClusterer(map, markers, clusterOptions);
     });
   }
   function removeAllDups(data) {
