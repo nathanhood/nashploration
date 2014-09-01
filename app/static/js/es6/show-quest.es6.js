@@ -53,8 +53,10 @@
     questLocations.forEach(location=>{
       var destination = `<li class='quest-destination'>
                         <h3>${location.name}</h3>
-                        <p><b>Address</b>: ${location.address}<p>
-                        <p><b>Description</b>: ${location.description}</p>
+                        <p class="label">Address:</p>
+                        <p class="quest-address">${location.address}<p>
+                        <p class="label">Details:</p>
+                        <p class="quest-details">${location.description}</p>
                       </li>`;
       $('.quest-destinations').append(destination);
     });
@@ -144,9 +146,9 @@
       locDesc = 'There is no description for this site.';
     }
 
-    var content = '<h3>' + siteName + '</h3>'+
-    '<p>' + locDesc + '</p>'+
-    '<a href="/locations/'+siteURL+'", class="info-window">Show More</a>';
+    var content = '<div class="pop-up-window"><h3 class="pop-up-title">' + siteName + '</h3>'+
+    '<p class="pop-up-description">' + locDesc + '</p>'+
+    '<a href="/locations/'+siteURL+'", class="info-window pop-up-link">Show More</a></div>';
       siteName = new google.maps.InfoWindow();
       siteName.setContent(content);
       allInfoWindows.push(siteName); //since all windows have diff variable names, they are pushed into an array so they can be closed on the opening of another window

@@ -1308,7 +1308,7 @@ a.edit-profile:hover {
 
 @media screen and (max-width: 400px){
   .quest-list-content-wrapper {
-    
+
     .quest-list-show-links-wrapper {
 
       a.quest-list-show-link {
@@ -1321,20 +1321,100 @@ a.edit-profile:hover {
 /* ======================================== QUEST SHOW CSS ======================================== */
 
 .quest-show-content-wrapper {
-  h1 {
-    font-size: 1.5em;
-    color:@base-color;
-    font-weight:bold;
+  .quest-header-wrapper {
+    display: block;
     margin: 10px 0;
+    height: 90px;
+
+    h1 {
+      font-size: 2em;
+      color:@base-color;
+      font-weight:bold;
+      margin: 28px 20px;
+      display: inline-block;
+      width: 75%;
+    }
+
+    img {
+      float: left;
+      width: auto;
+      height: 90px;
+      display: inline-block;
+    }
   }
 
   li {
     padding: 15px 0;
   }
 
-  // .completed-quests-wrapper, .joined-quests-wrapper {
-  //   display:none;
-  // }
+  .quest-description {
+    font-size: 1.2em;
+  }
+
+  .quest-destinations-container {
+    h2 {
+      font-size: 1.35em;
+    }
+
+    .quest-destinations .quest-destination {
+      .quest-details, .quest-address {
+        line-height: 1.3em;
+      }
+
+      h3 {
+        font-weight: bold;
+      }
+
+      p.label {
+        font-size: .5em;
+      }
+    }
+  }
+}
+
+#quest-map-canvas {
+  width: 100%;
+  height: 300px;
+}
+
+@media screen and (min-width: 450px) and (max-width: 590px) {
+  .quest-show-content-wrapper {
+    .quest-header-wrapper {
+      height: 80px;
+
+      h1 {
+        width: 60%;
+      }
+
+      img {
+        width: auto;
+        height: 80px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .quest-show-content-wrapper {
+    button {
+      font-size: .8em;
+    }
+
+    .quest-header-wrapper {
+      height: 70px;
+
+      h1 {
+        font-size: 1.4em;
+        width: 60%;
+        margin: 22px 10px;
+      }
+
+      img {
+        width: auto;
+        height: 70px;
+      }
+    }
+  }
 }
 
 /* ======================================== QUEST EDIT CSS ======================================== */
