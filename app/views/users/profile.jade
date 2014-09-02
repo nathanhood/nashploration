@@ -32,10 +32,15 @@ block content
 
     .profile-wrapper
       .profile-info-left
-        a(href="/users/edit/#{profileOwner._id}")
+        
+        if(user.isOwner(profileOwner._id))
+          a(href="/users/edit/#{profileOwner._id}")
+            .profile-pic(style='background-image: url("#{profileOwner.photo.filePath}")')
+              if(profileOwner.photo.fileName === null)
+                p.edit-photo CHANGE PHOTO
+        else
           .profile-pic(style='background-image: url("#{profileOwner.photo.filePath}")')
-            if(profileOwner.photo.fileName === null)
-              p.edit-photo CHANGE PHOTO
+
       .profile-info-right
         span Username:
         h3= profileOwner.userName
@@ -54,40 +59,42 @@ block content
       a(href="/users/leaders")
         h4 Leaders
         img(src="/img/assets/link-placeholder.png")
-    .border
-    .active-quest
-      if(!profileOwner.activeQuest.questId)
-        p You currently don't have an active quest.
-        a(href='/quests/view') Click here to view your quests.
-      else
-        p.label Active Quest
-        .clear
-        a.active-quest-name(href='/quests/show/#{profileOwner.activeQuest.questId}')= activeQuest.name
+    
+    if(user.isOwner(profileOwner._id))
+      .border
+      .active-quest
+        if(!profileOwner.activeQuest.questId)
+          p You currently don't have an active quest.
+          a(href='/quests/view') Click here to view your quests.
+        else
+          p.label Active Quest
+          .clear
+          a.active-quest-name(href='/quests/show/#{profileOwner.activeQuest.questId}')= activeQuest.name
 
-    .quest-group-menu-buttons
-      a.quest-menu-button.active-button(href="#") Quests
-      a.group-menu-button(href="#") Groups
-    .quest-group-menus
-      ul.quest-menu
-        li
-          a(href='/quests') Find a Quest
-        li
-          a(href='/quests/new') Build a Quest
-        li
-          a(href='/quests/view') View My Quests
-      ul.group-menu
-        li.join-group-form(hidden)
-          form(action='/groups/join-group', method='POST')
-            input.group-code(type='text', name='groupCode', placeholder='Enter Group Code Here')
-            button Join Group
-        li
-          a.join-group-link(href='#') Join a Group
-        li
-          a(href='/groups/new') Create a Group
-        li
-          a(href='/groups/view') Manage Groups
-      if(user.isOwner(profileOwner._id))
-        a.edit-profile(href="/users/edit/#{profileOwner._id}") EDIT PROFILE
+      .quest-group-menu-buttons
+        a.quest-menu-button.active-button(href="#") Quests
+        a.group-menu-button(href="#") Groups
+      .quest-group-menus
+        ul.quest-menu
+          li
+            a(href='/quests') Find a Quest
+          li
+            a(href='/quests/new') Build a Quest
+          li
+            a(href='/quests/view') View My Quests
+        ul.group-menu
+          li.join-group-form(hidden)
+            form(action='/groups/join-group', method='POST')
+              input.group-code(type='text', name='groupCode', placeholder='Enter Group Code Here')
+              button Join Group
+          li
+            a.join-group-link(href='#') Join a Group
+          li
+            a(href='/groups/new') Create a Group
+          li
+            a(href='/groups/view') Manage Groups
+        if(user.isOwner(profileOwner._id))
+          a.edit-profile(href="/users/edit/#{profileOwner._id}") EDIT PROFILE
 
 block scripts
   script(src='/js/es6/compiled/profile.js')

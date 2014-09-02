@@ -6,6 +6,6 @@ block content
     mixin back('Your Badges')
 
     ul.badge-list
-      each badge in user.badges
+      each badge in profileOwner.badges
         li
           img(src="#{badge.filePath}")
