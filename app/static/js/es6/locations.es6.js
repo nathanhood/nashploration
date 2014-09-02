@@ -16,7 +16,7 @@
 
     $('.notification-icon').click(showNotification);
     $('a#dismiss').click(hideNotification);
-    $('.geolocation-control').click(toggleGeolocation);
+    $('#geolocation-control').click(toggleGeolocation);
   }
 
   var defaultMarker;
@@ -295,10 +295,10 @@
   function toggleGeolocation(){
     if(geoLocationStatus === true){
       geoLocationStatus = false;
-      $('.geolocation-control').html('Find Me');
+      $('#geolocation-control').html('Find Me');
     }else{
       geoLocationStatus = true;
-      $('.geolocation-control').html('Stop');
+      $('#geolocation-control').html('Stop');
       findLocation();
     }
   }
@@ -351,7 +351,6 @@ function handleNoGeolocation(errorFlag) {
 var currentLat;
 var currentLong;
 function checkCloseLocs(pos){
-  console.log(pos);
   // currentLat= pos.k;
   // currentLong = pos.A; google is messing with us
   currentLat= pos.k;

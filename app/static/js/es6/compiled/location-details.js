@@ -25,7 +25,7 @@
     wikiTest();
   }
   function wikiTest() {
-    $.getJSON("http://en.wikipedia.org/w/api.php?action=parse&format=json&page=Battle_of_Nashville&prop=text|images|sections&callback=?").done(function(data) {
+    $.getJSON("http://en.wikipedia.org/w/api.php?action=parse&format=json&page=Tennessee&prop=text|images|sections&callback=?").done(function(data) {
       wikipediaHTMLResult(data);
     });
   }
@@ -42,7 +42,7 @@
     $('#wiki').append($div);
   }
   function findSection(section) {
-    $.getJSON(("http://en.wikipedia.org/w/api.php?action=parse&format=json&page=Battle_of_Nashville&prop=text&section=" + section + "&callback=?")).done(function(data) {
+    $.getJSON(("http://en.wikipedia.org/w/api.php?action=parse&format=json&page=Tennessee&prop=text&section=" + section + "&callback=?")).done(function(data) {
       var text = data.parse.text[$traceurRuntime.toProperty('*')];
       var readData = $('<div>' + text + '</div>');
       $('#wiki-description').empty();

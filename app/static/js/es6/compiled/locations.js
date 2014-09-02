@@ -10,7 +10,7 @@
     $('.checkin-button').click(submitCheckInListForm);
     $('.notification-icon').click(showNotification);
     $('a#dismiss').click(hideNotification);
-    $('.geolocation-control').click(toggleGeolocation);
+    $('#geolocation-control').click(toggleGeolocation);
   }
   var defaultMarker;
   var checkInMarker;
@@ -224,10 +224,10 @@
   function toggleGeolocation() {
     if (geoLocationStatus === true) {
       geoLocationStatus = false;
-      $('.geolocation-control').html('Find Me');
+      $('#geolocation-control').html('Find Me');
     } else {
       geoLocationStatus = true;
-      $('.geolocation-control').html('Stop');
+      $('#geolocation-control').html('Stop');
       findLocation();
     }
   }
@@ -271,7 +271,6 @@
   var currentLat;
   var currentLong;
   function checkCloseLocs(pos) {
-    console.log(pos);
     currentLat = pos.k;
     currentLong = pos.B;
     if (closeMarkers.length) {
