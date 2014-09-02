@@ -12,11 +12,11 @@
     $('#map-filter select').on('change', filterLocations);
     $('body').on('click', '.info-window', showStreetView);
     fadeConfirmMessage();
-    // findLocation();
     $('.checkin-button').click(submitCheckInListForm);
 
     $('.notification-icon').click(showNotification);
     $('a#dismiss').click(hideNotification);
+    $('.geolocation-control').click(toggleGeolocation);
   }
 
   var defaultMarker;
@@ -77,8 +77,7 @@
         });
       }
       resizeMap();
-      var clusterOptions = {gridSize: 40, maxZoom: 20};
-      var newCluster = new MarkerClusterer(map, markers, clusterOptions);
+
     });
   }
 
@@ -291,60 +290,68 @@
     strokeColor: 'darkgreen',
     scale: 5
   };
-//========Used to find users current location: Richmond
-// var pos;
-//   function findLocation(){
-//   if(navigator.geolocation) {
-//     navigator.geolocation.getCurrentPosition(function(position) {
-//        pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-//       var marker = new google.maps.Marker({
-//         map: map,
-//         position: pos,
-//         icon: currLocMarker
-//       });
-//
-//       map.setCenter(pos);
-//       checkCloseLocs(pos);
-//     }, function() {
-//       handleNoGeolocation(true);
-//     });
-//   } else {
-//     // Browser doesn't support Geolocation
-//     handleNoGeolocation(false);
-//   }
-//
-// }
-//
-// function handleNoGeolocation(errorFlag) {
-//   var content;
-//   if (errorFlag) {
-//      content = 'Error: The Geolocation service failed.';
-//   } else {
-//      content = 'Error: Your browser doesn\'t support geolocation.';
-//   }
-//
-//   var options = {
-//     map: map,
-//     position: new google.maps.LatLng(60, 105),
-//     content: content
-//   };
-//
-//   var infowindow = new google.maps.InfoWindow(options);
-//   map.setCenter(options.position);
-// }
 
-//TODO change timed function to findLocation()
-//   window.setInterval(function(){
-//   checkCloseLocs(pos);
-// }, 10000);
+  var geoLocationStatus = true;
+  function toggleGeolocation(){
+    if(geoLocationStatus === true){
+      geoLocationStatus = false;
+      $('.geolocation-control').html('Find Me');
+    }else{
+      geoLocationStatus = true;
+      $('.geolocation-control').html('Stop');
+      findLocation();
+    }
+  }
 
-//TODO pass in pos once mongo geo spatial is working
-//sends an ajax call to find all of the locations that the user is within a close enough range to check into: Richmond
+// ========Used to find users current location: Richmond
+  var pos;
+  function findLocation(){
+    if(geoLocationStatus){
+      if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+           pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+          var marker = new google.maps.Marker({
+            map: map,
+            position: pos,
+            icon: currLocMarker
+          });
+
+          map.setCenter(pos);
+          map.setZoom(16);
+          checkCloseLocs(pos);
+        }, function() {
+          handleNoGeolocation(true);
+        });
+      } else {
+        // Browser doesn't support Geolocation
+        handleNoGeolocation(false);
+      }
+    }
+}
+
+function handleNoGeolocation(errorFlag) {
+  var content;
+  if (errorFlag) {
+     content = 'Error: The Geolocation service failed.';
+  } else {
+     content = 'Error: Your browser doesn\'t support geolocation.';
+  }
+
+  var options = {
+    map: map,
+    position:  new google.maps.LatLng(36.1667, -86.7833),
+    content: content
+  };
+
+  var infowindow = new google.maps.InfoWindow(options);
+  map.setCenter(options.position);
+}
 
 //checks for nearby locations and resets markers on previous nearby locations that are no long in range: Richmond
 var currentLat;
 var currentLong;
 function checkCloseLocs(pos){
+  console.log(pos);
   // currentLat= pos.k;
   // currentLong = pos.A; google is messing with us
   currentLat= pos.k;
@@ -363,6 +370,11 @@ function checkCloseLocs(pos){
     });
     $('.checkin-form input').val(nearbyIds);
   });
+  //TODO change timed function to findLocation()
+  //sends an ajax call to find all of the locations that the user is within a close enough range to check into: Richmond
+  window.setInterval(function(){
+    findLocation();
+  }, 5000);
 }
 
 //==== changes the icons for the markers that are within range of checkin: Richmond
