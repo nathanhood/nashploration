@@ -39,12 +39,12 @@
 
     var streetView = new google.maps.StreetViewPanorama(
       document.getElementById('street-view'), panoOptions);
-      wikiTest();
+      wikiAPICall();
   }
 
 
 
-  function wikiTest() {
+  function wikiAPICall() {
     $.getJSON(`http://en.wikipedia.org/w/api.php?action=parse&format=json&page=Tennessee&prop=text|images|sections&callback=?`).done(function(data){
       wikipediaHTMLResult(data);
     });
@@ -59,8 +59,6 @@
         var $a = $('<a href="#'+s.anchor+'", data='+s.index+'>'+s.line+'</a>');
         $('#wiki-nav').append($a);
     });
-
-    // var box = readData.find('.infobox').toArray();
 
     var info = readData.find('p').toArray();
 
@@ -77,7 +75,7 @@
   function findSection(section){
 
     $.getJSON(`http://en.wikipedia.org/w/api.php?action=parse&format=json&page=Tennessee&prop=text&section=${section}&callback=?`).done(function(data){
-      var text = data.parse.text['*']; 
+      var text = data.parse.text['*'];
       var readData = $('<div>' + text + '</div>');
       $('#wiki-description').empty();
       $('#wiki-description').append(readData);
