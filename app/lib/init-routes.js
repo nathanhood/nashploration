@@ -50,7 +50,7 @@ function load(app, fn){
 
   app.get('/getCloseLocs/:lat/:long', dbg, locations.findCloseLocs); //ajax call for finding locations around users current location
   app.get('/resetCloseLocations/:closeLocations', dbg, locations.resetLocations);
-
+  app.get('/fetchWikiInfo/:locationName', dbg, locations.findWikiInfo);
 
   app.all('*', users.bounce);
 

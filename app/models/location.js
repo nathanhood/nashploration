@@ -245,6 +245,12 @@ class Location{
     });
   }
 
+  static findWikiInfo(locName, fn){
+    wikiLinks.findOne({name: { $regex: locName, $options: 'i'} }, (err, wikiInfo)=>{
+      fn(wikiInfo);
+    });
+  }
+
 }//end of Class
 
 function findCloseLocs(locName, fn){

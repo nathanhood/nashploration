@@ -181,5 +181,10 @@ exports.addLinks = (req, res)=>{
   Location.findAndAddLinks(linksLength=>{
     res.send(`Added informational data to ${linksLength} records.`);
   });
+};
 
+exports.findWikiInfo = (req, res)=>{
+  Location.findWikiInfo(req.params.locationName, info=>{
+    res.send(info);
+  });
 };

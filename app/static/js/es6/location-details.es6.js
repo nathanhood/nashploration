@@ -7,13 +7,13 @@
   $(document).ready(init);
 
   function init(){
-    showStreetView();
+    fetchLocationInfo();
 
-    $('body').click(function(event){
-      var target = event.target;
-      var sectionNum = $(target).attr('data') * 1;
-      findSection(sectionNum);
-    });
+    // $('body').click(function(event){
+    //   var target = event.target;
+    //   var sectionNum = $(target).attr('data') * 1;
+    //   findSection(sectionNum);
+    // });
 
   }
 
@@ -39,42 +39,50 @@
 
     var streetView = new google.maps.StreetViewPanorama(
       document.getElementById('street-view'), panoOptions);
-      wikiAPICall();
   }
 
+  function fetchLocationInfo(){
+    var name = $('#coords').data('name');
 
-
-  function wikiAPICall() {
-    $.getJSON(`http://en.wikipedia.org/w/api.php?action=parse&format=json&page=Tennessee&prop=text|images|sections&callback=?`).done(function(data){
-      wikipediaHTMLResult(data);
+    $.ajax('/fetchWikiInfo/'+ name).done(function(info){
+      if(info.wikiParams){
+        wikiAPICall(info.wikiParams);
+      } else {
+        console.log('No Info');
+      }
     });
   }
 
 
-  function wikipediaHTMLResult (data) {
+  function wikiAPICall(params) {
+    $.getJSON(`http://en.wikipedia.org/w/api.php?action=parse&format=json&page=${params}&prop=text|images|sections&callback=?`).done(function(data){
+      wikipediaHTMLResult(data, params);
+    });
+  }
+
+
+  function wikipediaHTMLResult (data, params) {
     var readData = $('<div>' + data.parse.text['*'] + '</div>');
     var sections = data.parse.sections;
 
     sections.forEach((s, i)=>{
-        var $a = $('<a href="#'+s.anchor+'", data='+s.index+'>'+s.line+'</a>');
+        var $a = $('<a href="#'+s.anchor+'", data-section='+s.index+' data-params='+ params +'>'+s.line+'</a>');
         $('#wiki-nav').append($a);
     });
-
-    var info = readData.find('p').toArray();
-
+ 
+      var info = readData.find('p').toArray(); //apends the first wikipedia paragraph to the page
       var $div = $('<div></div>');
       $div.text(info[0].textContent);
       $('#wiki').append($div);
 
-    // var imageURL = readData.find('img').toArray();
-    // imageURL.forEach(i=>{
-    //   $('#wiki').append('<div><img src="'+ i.src + '"/></div>');
-    // });
+    $('body').on('click', 'a', findSection);
   }
 
-  function findSection(section){
-
-    $.getJSON(`http://en.wikipedia.org/w/api.php?action=parse&format=json&page=Tennessee&prop=text&section=${section}&callback=?`).done(function(data){
+  function findSection(){
+    var params = $(this).data('params');
+    var section = $(this).data('section') * 1;
+    $.getJSON(`http://en.wikipedia.org/w/api.php?action=parse&format=json&page=${params}&prop=text&section=${section}&callback=?`).done(function(data){
+      console.log(data);
       var text = data.parse.text['*'];
       var readData = $('<div>' + text + '</div>');
       $('#wiki-description').empty();
@@ -84,6 +92,10 @@
       }, 500);
 
     });
+  }
+
+  function ajax(url, type, data={}, success=r=>console.log(r), dataType='html'){
+    $.ajax({url:url, type:type, dataType:dataType, data:data, success:success});
   }
 
 })();

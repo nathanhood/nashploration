@@ -84,7 +84,7 @@
    {
     "name" : "BELMONT MANSION",
     "wikiURL" : "http://en.wikipedia.org/wiki/Belmont_Mansion_(Tennessee)",
-    "wikiURL" : "Belmont_Mansion_(Tennessee)",
+    "wikiParams" : "Belmont_Mansion_(Tennessee)",
     "otherResources" : [
       "http://belmontmansion.com/",
       "https://www.google.com/search?q=Belmont+Mansion&safe=off&espv=2&tbm=isch&tbo=u&source=univ&sa=X&ei=G6EHVILMO87NggS7joCYDA&ved=0CFkQsAQ&biw=958&bih=1083"
