@@ -100,12 +100,14 @@
 //===========filtering map :Nathan
   function filterLocations() {
     var filter = $('#map-filter').find('option:selected').text();
+    var params;
     switch(filter) {
       case 'All':
         fetchLocations();
         break;
       case 'Civil War Sites':
-        $.ajax('/getCivilWarLocations').done(function(data){
+        params = 'Civil War Sites';
+        $.ajax('/getFilteredLocations/'+ params).done(function(data){
           clearMap();
           data.forEach(d=>{
             placeMarkers(d.loc, d.name, d.description, d._id);
@@ -114,7 +116,38 @@
         });
         break;
       case 'Andrew Jackson':
-        $.ajax('/getAndrewJacksonLocations').done(function(data){
+        params = 'Andrew Jackson';
+        $.ajax('/getFilteredLocations/'+ params).done(function(data){
+          clearMap();
+          data.forEach(d=>{
+            placeMarkers(d.loc, d.name, d.description, d._id);
+          });
+          resizeMap();
+        });
+        break;
+      case 'Schools':
+        params = 'School';
+        $.ajax('/getFilteredLocations/'+ params).done(function(data){
+          clearMap();
+          data.forEach(d=>{
+            placeMarkers(d.loc, d.name, d.description, d._id);
+          });
+          resizeMap();
+        });
+        break;
+      case 'Cemeteries':
+        params = 'Cemetery';
+        $.ajax('/getFilteredLocations/'+ params).done(function(data){
+          clearMap();
+          data.forEach(d=>{
+            placeMarkers(d.loc, d.name, d.description, d._id);
+          });
+          resizeMap();
+        });
+        break;
+      case 'Churches':
+        params = 'Church';
+        $.ajax('/getFilteredLocations/'+ params).done(function(data){
           clearMap();
           data.forEach(d=>{
             placeMarkers(d.loc, d.name, d.description, d._id);
@@ -169,7 +202,7 @@
          checkCloseLocs(event.latLng);
       });
 
-     findLocation();
+     // findLocation();
   }
 
 //====adds all historical markers to the map: Richmond

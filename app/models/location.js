@@ -82,14 +82,14 @@ class Location{
     });
   }
 
-  static filterCivilWarLocations(fn) {
-    locations.find({isCivilWar: 'X'}).toArray((err, loc)=>{
-      fn(loc);
-    });
-  }
+  static findFilteredResults(params, fn){
+    var query = {description: { $regex: params, $options: 'i'}};
 
-  static filterAndrewJacksonLocations(fn) {
-    locations.find({ description: { $regex: 'Andrew Jackson', $options: 'i' } }).toArray((err, loc)=>{
+    if(params === 'Civil War Sites'){
+      query = {isCivilWar: 'X'};
+    }
+
+    locations.find(query).toArray((err, loc)=>{
       fn(loc);
     });
   }

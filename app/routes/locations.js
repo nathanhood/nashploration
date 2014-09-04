@@ -96,14 +96,8 @@ exports.getAllLocations = (req, res)=>{
   });
 };
 
-exports.getCivilWarLocations = (req, res)=>{
-  Location.filterCivilWarLocations((locations)=>{
-    res.send(locations);
-  });
-};
-
-exports.getAndrewJacksonLocations = (req, res)=>{
-  Location.filterAndrewJacksonLocations((locations)=>{
+exports.getUserFilteredLocations = (req, res)=>{
+  Location.findFilteredResults(req.params.params, locations=>{
     res.send(locations);
   });
 };
