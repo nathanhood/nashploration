@@ -42,13 +42,12 @@ function load(app, fn){
   app.get('/getCivilWarLocations', dbg, locations.getCivilWarLocations); //ajax call to get locations from db
   app.get('/getAndrewJacksonLocations', dbg, locations.getAndrewJacksonLocations);
   app.post('/addHistory', dbg, locations.addHistory);
-  app.post('/wikiLinks', dbg, locations.addLinks); //adds imported media wiki links to their respective locations
+  app.post('/wikiLinks', dbg, locations.addLinks); //adds imported media wiki links to their respective locations...not currently used in production
 
   app.get('/locations/show/:locationId', dbg, locations.locationDetailsById);
   app.get('/getQuestLocations/:questId', dbg, locations.getQuestLocations);
 
   app.get('/getCloseLocs/:lat/:long', dbg, locations.findCloseLocs); //ajax call for finding locations around users current location
-  app.get('/resetCloseLocations/:closeLocations', dbg, locations.resetLocations);
   app.get('/fetchWikiInfo/:locationName', dbg, locations.findWikiInfo);
 
   app.all('*', users.bounce);

@@ -124,14 +124,6 @@ exports.findCloseLocs = (req, res)=>{
   });
 };
 
-exports.resetLocations = (req, res)=>{
-  var closeLocs = req.params.closeLocations.split(',');
-    Location.resetCloseLocations(closeLocs, locations=>{
-      res.send(locations);
-    });
-};
-
-
 exports.getActiveQuestLocations = (req, res)=>{
   Quest.findById(res.locals.user.activeQuest.questId, (err, quest)=>{
     if(quest.checkIns.length === res.locals.user.activeQuest.questLocs.length){
@@ -167,7 +159,8 @@ exports.getQuestLocations = (req, res)=>{
   });
 };
 
-exports.addLinks = (req, res)=>{
+//used for matching wikilinks to locations and saving it with the location...not currently used in production 
+exports.addLinks = (req, res)=>{   
   Location.findAndAddLinks(linksLength=>{
     res.send(`Added informational data to ${linksLength} records.`);
   });

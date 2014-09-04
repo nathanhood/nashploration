@@ -121,12 +121,6 @@ class Location{
       });
   }
 
-  static resetCloseLocations(locNames, fn){
-    async.map(locNames, findCloseLocs, (e, locs)=>{
-      fn(locs);
-    });
-  }
-
   static findActiveQuestLocations(questLocs, userLocs,  fn){
     userLocs.forEach(q=>{
       questLocs.push(q);
@@ -239,18 +233,12 @@ class Location{
   }
 
   static findWikiInfo(locName, fn){
-    wikiLinks.findOne({name: { $regex: locName, $options: 'i'} }, (err, wikiInfo)=>{
+    wikiLinks.findOne({name: locName }, (err, wikiInfo)=>{
       fn(wikiInfo);
     });
   }
 
 }//end of Class
-
-function findCloseLocs(locName, fn){
-  locations.findOne({name: {$regex: locName, $options: 'i'}}, (err, location)=>{
-    fn(null, location);
-  });
-}
 
 function findQuestLocsById(locId, fn){
   Base.findById(locId, locations, Location, fn);
