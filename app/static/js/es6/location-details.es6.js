@@ -49,6 +49,8 @@
         wikiAPICall(info.wikiParams);
       } else {
         console.log('No Info');
+        //TODO handle locations without wiki URLS
+        //TODO append other resources to page
       }
     });
   }

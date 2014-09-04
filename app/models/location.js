@@ -110,13 +110,6 @@ class Location{
     Base.findById(id, locations, Location, fn);
   }
 
-  static findCoordinates(locName, fn){
-    var name = locName.location.toUpperCase().split('-').join(' ').toString();
-    locations.findOne({name: {$regex: name, $options: 'i'} }, (err, location)=>{
-      fn(location);
-    });
-  }
-
   static radialSearch(coords, fn){
     var lat = coords.lat * 1;
     var long = coords.long * 1;

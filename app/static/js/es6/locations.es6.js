@@ -13,10 +13,9 @@
     $('body').on('click', '.info-window', showStreetView);
     fadeConfirmMessage();
     $('.checkin-button').click(submitCheckInListForm);
-
     $('.notification-icon').click(showNotification);
     $('a#dismiss').click(hideNotification);
-    $('#geolocation-control').click(toggleGeolocation);
+    $('#geolocation-control').click(setMapOnLoc);
   }
 
   var defaultMarker;
@@ -63,17 +62,17 @@
 
       if(data.quest){
         data.quest.forEach(q=>{
-          placeQuestMarkers(q.loc, q.name, q.description);
+          placeQuestMarkers(q.loc, q.name, q.description, q._id);
         });
       }
 
       data.all.forEach(a=>{
-        placeMarkers(a.loc, a.name, a.description);
+        placeMarkers(a.loc, a.name, a.description, a._id);
       });
 
       if(data.checkIns){
         data.checkIns.forEach(c=>{
-          placeCheckInMarkers(c.loc, c.name, c.description);
+          placeCheckInMarkers(c.loc, c.name, c.description, c._id);
         });
       }
       resizeMap();
@@ -109,7 +108,7 @@
         $.ajax('/getCivilWarLocations').done(function(data){
           clearMap();
           data.forEach(d=>{
-            placeMarkers(d.loc, d.name, d.description);
+            placeMarkers(d.loc, d.name, d.description, d._id);
           });
           resizeMap();
         });
@@ -118,7 +117,7 @@
         $.ajax('/getAndrewJacksonLocations').done(function(data){
           clearMap();
           data.forEach(d=>{
-            placeMarkers(d.loc, d.name, d.description);
+            placeMarkers(d.loc, d.name, d.description, d._id);
           });
           resizeMap();
         });
@@ -127,7 +126,7 @@
         $.ajax('/getActiveQuestLocations').done(function(data){
           clearMap();
           data.forEach(d=>{
-            placeQuestMarkers(d.loc, d.name, d.description);
+            placeQuestMarkers(d.loc, d.name, d.description, d._id);
           });
           resizeMap();
         });
@@ -170,13 +169,14 @@
          checkCloseLocs(event.latLng);
       });
 
+     findLocation();
   }
 
 //====adds all historical markers to the map: Richmond
   var markers = []; // made markers global for deletion
   var coordinates = []; // made coordinates global so the map can be resized each time its filtered
 
-  function placeMarkers(coords, locName, locDesc){
+  function placeMarkers(coords, locName, locDesc, id){
     var latLng = new google.maps.LatLng(coords[1], coords[0]);
       coordinates.push(latLng);
 
@@ -188,13 +188,13 @@
 
       markers.push(latLng);
       allMarkers.push(latLng);
-      infoWindows(locName, latLng, locDesc); //passing in coords because latLng is now a google Marker Object..coords is used to set the data of the infowindow "Show More" link
+      infoWindows(locName, latLng, locDesc, id); //passing in coords because latLng is now a google Marker Object..coords is used to set the data of the infowindow "Show More" link
 
   }
 
 
   var checkInMarkers = [];
-  function placeCheckInMarkers(coords, locName, locDesc){
+  function placeCheckInMarkers(coords, locName, locDesc, id){
     var latLng = new google.maps.LatLng(coords[1], coords[0]);
       coordinates.push(latLng);
 
@@ -206,13 +206,13 @@
 
       checkInMarkers.push(latLng);
       allMarkers.push(latLng);
-      infoWindows(locName, latLng, locDesc); //passing in coords because latLng is now a google Marker Object..coords is used to set the data of the infowindow "Show More" link
+      infoWindows(locName, latLng, locDesc, id); //passing in coords because latLng is now a google Marker Object..coords is used to set the data of the infowindow "Show More" link
 
   }
 
 
   var questMarkers = [];
-  function placeQuestMarkers(coords, locName, locDesc){
+  function placeQuestMarkers(coords, locName, locDesc, id){
     var latLng = new google.maps.LatLng(coords[1], coords[0]);
     coordinates.push(latLng);
 
@@ -224,7 +224,7 @@
 
       questMarkers.push(latLng);
       allMarkers.push(latLng);
-      infoWindows(locName, latLng, locDesc);
+      infoWindows(locName, latLng, locDesc, id);
   }
 
 //======resizes the map to to just fit the available markers: Richmond
@@ -240,15 +240,14 @@
 //====sets and opens infowindows: Richmond
   // var infowindow; //set to global so that only one infowindow can be open at a time -- close them using forEach in google listener function below
   var allInfoWindows = [];
-  function infoWindows(siteName, windowLoc, locDesc){
-    var siteURL = siteName.toLowerCase().split(' ').join('-');
+  function infoWindows(siteName, windowLoc, locDesc, id){
     if(locDesc === null){
       locDesc = 'There is no description for this site.';
     }
 
     var content = '<div class="pop-up-window"><h3 class="pop-up-title">' + siteName + '</h3>'+
     '<p class="pop-up-description">' + locDesc + '</p>'+
-    '<a href="/locations/'+siteURL+'", class="info-window pop-up-link">Show More</a></div>';
+    '<a href="/locations/show/'+id+'", class="info-window pop-up-link">Show More</a></div>';
       siteName = new google.maps.InfoWindow();
       siteName.setContent(content);
       allInfoWindows.push(siteName); //since all windows have diff variable names, they are pushed into an array so they can be closed on the opening of another window
@@ -291,43 +290,34 @@
     scale: 5
   };
 
-  var geoLocationStatus = true;
-  function toggleGeolocation(){
-    if(geoLocationStatus === true){
-      geoLocationStatus = false;
-      $('#geolocation-control').html('Find Me');
-    }else{
-      geoLocationStatus = true;
-      $('#geolocation-control').html('Stop');
-      findLocation();
-    }
+  function setMapOnLoc(){
+    findLocation();
+    map.setCenter(pos);
+    map.setZoom(16);
   }
 
 // ========Used to find users current location: Richmond
   var pos;
   function findLocation(){
-    if(geoLocationStatus){
-      if(navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-           pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-          var marker = new google.maps.Marker({
-            map: map,
-            position: pos,
-            icon: currLocMarker
-          });
+    if(navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+         pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
-          map.setCenter(pos);
-          map.setZoom(16);
-          checkCloseLocs(pos);
-        }, function() {
-          handleNoGeolocation(true);
+        var marker = new google.maps.Marker({
+          map: map,
+          position: pos,
+          icon: currLocMarker
         });
-      } else {
-        // Browser doesn't support Geolocation
-        handleNoGeolocation(false);
-      }
+
+        checkCloseLocs(pos);
+      }, function() {
+        handleNoGeolocation(true);
+      });
+    } else {
+      // Browser doesn't support Geolocation
+      handleNoGeolocation(false);
     }
-}
+  }
 
 function handleNoGeolocation(errorFlag) {
   var content;

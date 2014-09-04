@@ -45,7 +45,6 @@ function load(app, fn){
   app.post('/wikiLinks', dbg, locations.addLinks); //adds imported media wiki links to their respective locations
 
   app.get('/locations/show/:locationId', dbg, locations.locationDetailsById);
-  app.get('/locations/:location', dbg, locations.locationDetails);
   app.get('/getQuestLocations/:questId', dbg, locations.getQuestLocations);
 
   app.get('/getCloseLocs/:lat/:long', dbg, locations.findCloseLocs); //ajax call for finding locations around users current location

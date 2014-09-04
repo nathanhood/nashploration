@@ -118,16 +118,6 @@ exports.locationDetailsById = (req, res)=>{
   });
 };
 
-exports.locationDetails = (req, res)=>{
-  Location.findCoordinates(req.params, location=>{
-    User.findManyCheckInCommentsById(location.checkIns, users=>{
-      User.matchUserToComment(users, location.checkIns, comments=>{
-        res.render('locations/detail', {title: `${location.name}`, location: location, comments: comments});
-      });
-    });
-  });
-};
-
 exports.findCloseLocs = (req, res)=>{
   Location.radialSearch(req.params, locations=>{
     res.send(locations);
