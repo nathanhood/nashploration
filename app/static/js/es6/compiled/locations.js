@@ -268,11 +268,15 @@
     }
   }
   var pos;
+  var userLocMarker;
   function findLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
         pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-        var marker = new google.maps.Marker({
+        if (userLocMarker) {
+          userLocMarker.setMap(null);
+        }
+        userLocMarker = new google.maps.Marker({
           map: map,
           position: pos,
           icon: currLocMarker
