@@ -4,6 +4,7 @@
 'use strict';
 
 var locations = global.nss.db.collection('locations');
+var wikiLinks = global.nss.db.collection('wikilinks');
 var traceur = require('traceur');
 var Base = traceur.require(__dirname + '/../models/base.js');
 var needle = require('needle');
@@ -24,6 +25,7 @@ class Location{
     this.infoEdits = []; // {text: , userId: }
     this.checkIns = []; // {userId: , coordinates: , comment: }
     this.isCivilWar = obj.isCivilWar;
+    this.wiki = {name: '', wikiURL: null, wikiParams: null, otherResources: []};
     locations.save(this, ()=>{});
   }
 
@@ -231,21 +233,20 @@ class Location{
     });
     fn(allCheckins);
   }
-  //
-  // if(u._id.equals(c.userId)){
-  //   var daysFromComment = (Math.abs(new Date() - c.date) / 86400000).toFixed(0); //milliseconds in a day
-  //     if(daysFromComment < 1){
-  //       daysFromComment = 'Today';
-  //     }else if(daysFromComment === 1){
-  //       daysFromComment = '1 day ago';
-  //     }else{
-  //       daysFromComment = `${daysFromComment} days ago`;
-  //     }
-  //   var userComment = {userName: u.userName, userPhoto: u.photo.filePath, comment: c.comment, daysFromComment: daysFromComment };
-  //   allComments.push(userComment);
-  // }
+  
+  static findAndAddLinks(fn){
+    wikiLinks.find({}).toArray((err, links)=>{
+      links.forEach(l=>{
+       locations.update({ name: { $regex: l.name, $options: 'i'} }, { $set: { wiki: l } } , (err, res)=>{
+          console.log(res);
+        });
+      });
+        fn(links.length);
+    });
+  }
 
 }//end of Class
+
 function findCloseLocs(locName, fn){
   locations.findOne({name: {$regex: locName, $options: 'i'}}, (err, location)=>{
     fn(null, location);

@@ -176,3 +176,10 @@ exports.getQuestLocations = (req, res)=>{
     });
   });
 };
+
+exports.addLinks = (req, res)=>{
+  Location.findAndAddLinks(linksLength=>{
+    res.send(`Added informational data to ${linksLength} records.`);
+  });
+
+};

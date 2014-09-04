@@ -22,9 +22,9 @@
       enableCloseButton: false
     };
     var streetView = new google.maps.StreetViewPanorama(document.getElementById('street-view'), panoOptions);
-    wikiTest();
+    wikiAPICall();
   }
-  function wikiTest() {
+  function wikiAPICall() {
     $.getJSON("http://en.wikipedia.org/w/api.php?action=parse&format=json&page=Tennessee&prop=text|images|sections&callback=?").done(function(data) {
       wikipediaHTMLResult(data);
     });

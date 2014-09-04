@@ -42,6 +42,7 @@ function load(app, fn){
   app.get('/getCivilWarLocations', dbg, locations.getCivilWarLocations); //ajax call to get locations from db
   app.get('/getAndrewJacksonLocations', dbg, locations.getAndrewJacksonLocations);
   app.post('/addHistory', dbg, locations.addHistory);
+  app.post('/wikiLinks', dbg, locations.addLinks); //adds imported media wiki links to their respective locations
 
   app.get('/locations/show/:locationId', dbg, locations.locationDetailsById);
   app.get('/locations/:location', dbg, locations.locationDetails);
