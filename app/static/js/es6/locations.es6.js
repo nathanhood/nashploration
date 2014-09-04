@@ -15,7 +15,6 @@
     $('.checkin-button').click(submitCheckInListForm);
     $('.notification-icon').click(showNotification);
     $('a#dismiss').click(hideNotification);
-    $('#geolocation-control').click(setMapOnLoc);
   }
 
   var defaultMarker;
@@ -75,8 +74,8 @@
           placeCheckInMarkers(c.loc, c.name, c.description, c._id);
         });
       }
-      resizeMap();
-
+      
+      map.setZoom(13);
     });
   }
 
@@ -198,11 +197,17 @@
     };
       map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-      google.maps.event.addListener(map, 'click', function(event) { //TODO remove this after testing...this simulates the current location coordinates
-         checkCloseLocs(event.latLng);
-      });
+    google.maps.event.addListener(map, 'click', function(event) { //TODO remove this after testing...this simulates the current location coordinates
+       checkCloseLocs(event.latLng);
+       setMapGeo(false);
+    });
 
-     // findLocation();
+    google.maps.event.addListener(map, 'dragend', function(event) {
+       setMapGeo(false);
+    });
+
+    $('#geolocation-control').click(setMapGeo);
+
   }
 
 //====adds all historical markers to the map: Richmond
@@ -323,10 +328,18 @@
     scale: 5
   };
 
-  function setMapOnLoc(){
-    findLocation();
-    map.setCenter(pos);
-    map.setZoom(16);
+//either a jquery click event object is passed in from the click handler turning geolocation on or a boolean 
+//from the google drag/click event listeners which turns it off
+  var timer;
+  function setMapGeo(geoBool){
+    if(typeof geoBool === 'object'){ 
+      findLocation();
+      timer = setInterval(function(){
+        findLocation();
+      }, 5000);
+    } else{
+      clearInterval(timer);
+    }
   }
 
 // ========Used to find users current location: Richmond
@@ -341,6 +354,9 @@
           position: pos,
           icon: currLocMarker
         });
+
+        map.setCenter(pos);
+        map.setZoom(16);
 
         checkCloseLocs(pos);
       }, function() {
@@ -392,11 +408,6 @@ function checkCloseLocs(pos){
     });
     $('.checkin-form input').val(nearbyIds);
   });
-  //TODO change timed function to findLocation()
-  //sends an ajax call to find all of the locations that the user is within a close enough range to check into: Richmond
-  window.setInterval(function(){
-    findLocation();
-  }, 5000);
 }
 
 //==== changes the icons for the markers that are within range of checkin: Richmond

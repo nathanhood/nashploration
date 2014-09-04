@@ -10,7 +10,6 @@
     $('.checkin-button').click(submitCheckInListForm);
     $('.notification-icon').click(showNotification);
     $('a#dismiss').click(hideNotification);
-    $('#geolocation-control').click(setMapOnLoc);
   }
   var defaultMarker;
   var checkInMarker;
@@ -56,7 +55,7 @@
           placeCheckInMarkers(c.loc, c.name, c.description, c._id);
         }));
       }
-      resizeMap();
+      map.setZoom(13);
     });
   }
   function removeAllDups(data) {
@@ -168,7 +167,12 @@
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
     google.maps.event.addListener(map, 'click', function(event) {
       checkCloseLocs(event.latLng);
+      setMapGeo(false);
     });
+    google.maps.event.addListener(map, 'dragend', function(event) {
+      setMapGeo(false);
+    });
+    $('#geolocation-control').click(setMapGeo);
   }
   var markers = [];
   var coordinates = [];
@@ -252,10 +256,16 @@
     strokeColor: 'darkgreen',
     scale: 5
   };
-  function setMapOnLoc() {
-    findLocation();
-    map.setCenter(pos);
-    map.setZoom(16);
+  var timer;
+  function setMapGeo(geoBool) {
+    if ((typeof geoBool === 'undefined' ? 'undefined' : $traceurRuntime.typeof(geoBool)) === 'object') {
+      findLocation();
+      timer = setInterval(function() {
+        findLocation();
+      }, 5000);
+    } else {
+      clearInterval(timer);
+    }
   }
   var pos;
   function findLocation() {
@@ -267,6 +277,8 @@
           position: pos,
           icon: currLocMarker
         });
+        map.setCenter(pos);
+        map.setZoom(16);
         checkCloseLocs(pos);
       }, function() {
         handleNoGeolocation(true);
@@ -307,9 +319,6 @@
       }));
       $('.checkin-form input').val(nearbyIds);
     });
-    window.setInterval(function() {
-      findLocation();
-    }, 5000);
   }
   var closeMarkers = [];
   function addCheckInMarkers(coords) {
