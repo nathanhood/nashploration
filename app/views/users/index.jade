@@ -7,7 +7,7 @@ block content
 
   if(!user.activeQuest.questId)
     .notification-icon
-  //- button#geolocation-control Find Me
+
   .notification-wrapper(hidden)
     p You currently don't have an active quest.
     a(href='/quests/view') Find a quest to activate.
@@ -15,6 +15,8 @@ block content
 
   include ../locations/index.jade
 
+  a#geolocation-control(href="#")
+    .fa.fa-location-arrow
   .map-bottom-container
     form.checkin-form(action='/checkIn/view-nearby', method='GET')
       input.hidden(type='text', name='nearbyCheckIns', hidden)
