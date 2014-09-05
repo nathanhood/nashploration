@@ -15,7 +15,6 @@
       $('#other-resources-link').append($menuLink);
       info.otherResources.forEach((function(i) {
         var $a = $('<a href=' + i + '>' + i + '</a><br>');
-        console.log($a);
         $($div).append($a);
       }));
       $('#other-resources-link').on('click', function(event) {
