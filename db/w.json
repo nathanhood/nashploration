@@ -36,12 +36,11 @@
     "wikiURL" : "http://en.wikipedia.org/wiki/Battle_of_Nashville",
     "wikiParams" : "Battle_of_Nashville",
     "otherResources" : [
-      "http://www.bonps.org/shys-hill/",
+      "http://www.bonps.org/shys-hill",
       "http://www.civilwar.org/battlefields/nashville.html",
       "http://www.historynet.com/battle-of-nashville",
       "https://www.youtube.com/watch?v=EovcQx2f9Gw",
-      "http://www.nashville.gov/Historical-Commission/Services/Historical-Markers/Military-Sites.aspx",
-      "https://www.google.com/search?q=EAST+NASHVILLE+FIRE&safe=off&espv=2&tbm=isch&tbo=u&source=univ&sa=X&ei=E6AHVKGRBdKNNsnIgZAI&ved=0CIMBELAE&biw=958&bih=1083#q=Battle+of+Nashville+Shy's+Hill&safe=off&tbm=isch"
+      "http://www.nashville.gov/Historical-Commission/Services/Historical-Markers/Military-Sites.aspx"
     ]
   },
 
@@ -65,8 +64,7 @@
       "http://www.civilwar.org/battlefields/nashville.html",
       "http://www.historynet.com/battle-of-nashville",
       "https://www.youtube.com/watch?v=EovcQx2f9Gw",
-      "http://www.nashville.gov/Historical-Commission/Services/Historical-Markers/Military-Sites.aspx",
-      "https://www.google.com/search?q=EAST+NASHVILLE+FIRE&safe=off&espv=2&tbm=isch&tbo=u&source=univ&sa=X&ei=E6AHVKGRBdKNNsnIgZAI&ved=0CIMBELAE&biw=958&bih=1083#q=Battle+of+Nashville+Stewarts+Line&safe=off&tbm=isch"
+      "http://www.nashville.gov/Historical-Commission/Services/Historical-Markers/Military-Sites.aspx"
     ]
   },
 
@@ -88,6 +86,537 @@
     "otherResources" : [
       "http://belmontmansion.com/",
       "https://www.google.com/search?q=Belmont+Mansion&safe=off&espv=2&tbm=isch&tbo=u&source=univ&sa=X&ei=G6EHVILMO87NggS7joCYDA&ved=0CFkQsAQ&biw=958&bih=1083"
+    ]
+  },
+
+  {
+    "name" : "THE NASHVILLE RACE COURSE",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    "http://tennesseeencyclopedia.net/entry.php?rec=653"
+    ]
+  },
+
+  {
+    "name" : "HOLY TRINITY EPISCOPAL CHURCH",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Holy_Trinity_Church_(Nashville)",
+    "wikiParams" : "Holy_Trinity_Church_(Nashville)",
+    "otherResources" : [
+    "http://chtnashville.com/"
+    ]
+  },
+
+  {
+    "name" : "TWO RIVERS MANSION",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Two_Rivers_Mansion_(Nashville,_Tennessee)",
+    "wikiParams" : "Two_Rivers_Mansion_(Nashville,_Tennessee)",
+    "otherResources" : [
+      "http://www.friendsoftworiversmansion.org/",
+      "https://www.google.com/search?q=TWO+RIVERS+MANSION&safe=off&es_sm=119&source=lnms&tbm=isch&sa=X&ei=brsIVPWkCM_ygwSV_oKQDA&ved=0CAoQ_AUoAw&biw=718&bih=783"
+    ]
+  },
+
+  {
+    "name" : "NASHVILLE’S FIRST PUBLIC SCHOOL",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Hume-Fogg_High_School",
+    "wikiParams" : "Hume-Fogg_High_Schoo",
+    "otherResources" : [
+    "http://www.humefogghs.mnps.org/Page471.aspx"
+    ]
+  },
+
+  {
+    "name" : "MRS. JOHN DONELSON",
+    "wikiURL" : "http://en.wikipedia.org/wiki/John_Donelson",
+    "wikiParams" : "John_Donelson",
+    "otherResources" : [
+    "http://www.tn.gov/tsla/founding_docs/33635_Transcript.pdf",
+    "http://tennesseeencyclopedia.net/entry.php?rec=390",
+    "https://www.google.com/search?q=Col.+John+Donelson&safe=off&es_sm=119&biw=718&bih=783&source=lnms&tbm=isch&sa=X&ei=ULwIVJ2dJI2MNo36gcAO&ved=0CAYQ_AUoAQ",
+    "http://www.findagrave.com/cgi-bin/fg.cgi?page=gr&GRid=6639237"
+    ]
+  },
+
+  {
+    "name" : "NASHVILLE CENTENNIAL",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Centennial_Park_(Nashville)",
+    "wikiParams" : "Centennial_Park_(Nashville)",
+    "otherResources" : [
+    "http://www.nashville.gov/Parks-and-Recreation/Parks/Centennial-Park.aspx",
+    "https://www.google.com/search?q=NASHVILLE+CENTENNIAL+park&safe=off&espv=2&biw=718&bih=783&source=lnms&tbm=isch&sa=X&ei=-7wIVPa6B4yWgwSA14HIAQ&ved=0CAcQ_AUoAg"
+    ]
+  },
+
+  {
+    "name" : "POWDERGRINDING WHEELS",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    "http://www.civilwarshades.org/making-music/civil-war-commemoration-at-the-tennessee-centennial/",
+    "http://www.geocaching.com/geocache/GC2B63T_black-powder-and-its-history-in-nashville?guid=e5871846-dab5-44c4-a00e-4d55f36fbbb9"
+    ]
+  },
+
+  {
+    "name" : "CHICKASAW TREATY",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Chickasaw",
+    "wikiParams" : "Chickasaw",
+    "otherResources" : [
+    "http://digital.library.okstate.edu/kappler/vol2/treaties/chi0356.htm",
+    "http://avalon.law.yale.edu/19th_century/nt003.asp",
+    "http://www.nativehistoryassociation.org/chickasaw_treaty.php",
+    "http://books.google.com/books?id=W1BQxwXAs6AC&pg=PR46&lpg=PR46&dq=CHICKASAW+TREATY+nashville&source=bl&ots=ke5JqTaZUT&sig=fDjmS1wX_EjEikYEu2Q50z5tnt0&hl=en&sa=X&ei=Fb4IVKGhI8u7ggSdvIGAAw&ved=0CDcQ6AEwAw#v=onepage&q=CHICKASAW%20TREATY%20nashville&f=false"
+    ]
+  },
+
+  {
+    "name" : "JOHNSON'S STATION",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    "http://www.hmdb.org/marker.asp?marker=53362",
+    "http://www.rootsweb.ancestry.com/~tnsumner/early31.htm"
+    ]
+  },
+
+  {
+    "name" : "MEHARRY MEDICAL COLLEGE",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Meharry_Medical_College",
+    "wikiParams" : "Meharry_Medical_College",
+    "otherResources" : [
+    "http://www.mmc.edu/",
+    "http://www.mmc.edu/about/"
+    ]
+  },
+
+  {
+    "name" : "RYMAN AUDITORIUM",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Ryman_Auditorium",
+    "wikiParams" : "Ryman_Auditorium",
+    "otherResources" : [
+    "http://ryman.com/history",
+    "http://rymanauditorium.wordpress.com/category/history",
+    "http://www.cbn.com/tv/1432705908001",
+    "https://www.google.com/search?q=RYMAN+AUDITORIUM+history&safe=off&es_sm=119&biw=718&bih=783&source=lnms&tbm=isch&sa=X&ei=FL8IVOrpF9WVgwSmkIDoDA&ved=0CAYQ_AUoAQ"
+    ]
+  },
+
+  {
+    "name" : "GLENDALE PARK",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    "http://www.defunctparks.com/parks/TN/GlendalePark/glendale.htm",
+    "http://www.oakhilltn.us/history.html",
+    "https://www.google.com/search?q=GLENDALE+PARK+nashville&safe=off&espv=2&biw=718&bih=783&tbm=isch&source=lnms&sa=X&ei=hb8IVOu6DIquggSm14H4DA&ved=0CAgQ_AUoAw"
+    ]
+  },
+
+  {
+    "name" : "CUMBERLAND PARK",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    "http://www.nashvilledowntown.com/go/cumberland-park",
+    "http://www.nashville.gov/Parks-and-Recreation/Water-Activities/Spraygrounds.aspx"
+    ]
+  },
+
+  {
+    "name" : "TRANSFER STATION SITE",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    ]
+  },
+
+  {
+    "name" : "MARATHON MOTOR CAR",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Marathon_Motor_Works",
+    "wikiParams" : "Marathon_Motor_Works",
+    "otherResources" : [
+    "http://www.pbase.com/deadelvis/marathon",
+    "http://tennesseeencyclopedia.net/entry.php?rec=832",
+    "https://www.flickr.com/photos/sminor/7930118270/",
+    "http://www.earlyamericanautomobiles.com/americanautomobiles11.htm"
+    ]
+  },
+
+  {
+    "name" : "GRANNY WHITE GRAVE",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    "http://www.brentwoodhomepage.com/history-lesson-the-real-granny-white-pike-still-exists--cms-14351#.VAjBdGRdX1g",
+    "http://www.findagrave.com/cgi-bin/fg.cgi?page=gr&GRid=7932743",
+    "http://www.historicnashvilleinc.org/history/prehistoric_pioneerm"
+    ]
+  },
+
+  {
+    "name" : "MADISON COLLEGE",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    ]
+  },
+
+  {
+    "name" : "FIRST AIRFIELD",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Nashville_International_Airport",
+    "wikiParams" : "Nashville_International_Airport",
+    "otherResources" : [
+    "http://www.library.nashville.org/research/res_nash_history_timeline.asp"
+    ]
+  },
+
+  {
+    "name" : "BLACKWOOD FIELD",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    "http://www.airfields-freeman.com/TN/Airfields_TN_C.html",
+    "http://en.wikipedia.org/wiki/105th_Airlift_Squadron"
+    ]
+  },
+
+  {
+    "name" : "MCCONNELL FIELD",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    "http://nashville.contentdm.oclc.org/cdm/ref/collection/nr/id/4988",
+    "http://www.118wg.ang.af.mil/resources/factsheets/factsheet_print.asp?fsID=10984&page=1"
+    ]
+  },
+
+  {
+    "name" : "HILLSBORO TOLL GATE No.",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    "http://books.google.com/books?id=ax-ilaOIP0QC&pg=PA63&lpg=PA63&dq=HILLSBORO+TOLL+GATE+history&source=bl&ots=Qm3Es_szON&sig=rmJ2c9SfAwLcqClZlEUtrsLQiRw&hl=en&sa=X&ei=s8QIVJ6-EdirggS5hYCgDw&ved=0CFMQ6AEwBg#v=onepage&q=HILLSBORO%20TOLL%20GATE%20history&f=false"
+    ]
+  },
+
+  {
+    "name" : "WILLIAM WALKER",
+    "wikiURL" : "http://en.wikipedia.org/wiki/William_Walker_(filibuster)",
+    "wikiParams" : "William_Walker_(filibuster)",
+    "otherResources" : [
+    "http://www.sfmuseum.org/hist1/walker.html",
+    "http://www.gilderlehrman.org/history-by-era/jackson-lincoln/essays/filibuster-king-strange-career-william-walker-most-dangerous-i",
+    "http://www.historynet.com/william-walker-king-of-the-19th-century-filibusters.htm"
+    ]
+  },
+
+  {
+    "name" : "NASHVILLE FIRE DEPARTMENT",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Nashville_Fire_Department",
+    "wikiParams" : "Nashville_Fire_Department",
+    "otherResources" : [
+    "http://www.nashville.gov/Fire-Department/History.aspx"
+    ]
+  },
+
+  {
+    "name" : "BATTLE OF NASHVILLE Peach Orchard Hill",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Battle_of_Nashville",
+    "wikiParams" : "Battle_of_Nashville",
+    "otherResources" : [
+    "http://www.tcwpa.org/the-civil-war-in-davidson-county",
+    "http://www.geocaching.com/geocache/GC13WWN_peach-orchard-hill?guid=c1b67f91-55d0-412c-ac87-f5e6e5907520",
+     "http://www.bonps.org/shys-hill/",
+      "http://www.civilwar.org/battlefields/nashville.html",
+      "http://www.historynet.com/battle-of-nashville",
+      "https://www.youtube.com/watch?v=EovcQx2f9Gw",
+      "http://www.nashville.gov/Historical-Commission/Services/Historical-Markers/Military-Sites.aspx"
+    ]
+  },
+
+  {
+    "name" : "JOHN TROTWOOD MOORE",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    "http://tennesseeencyclopedia.net/entry.php?rec=940",
+    "http://www.tennessee.gov/tsla/history/manuscripts/findingaids/178.pdf"
+    ]
+  },
+
+  {
+    "name" : "SITE OF ORIGINAL GAS WORKS",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    ]
+  },
+
+  {
+    "name" : "JAMES CARROLL NAPIER",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    "http://www.blackpast.org/aah/napier-james-carroll-1845-1940",
+    "http://www.fofweb.com/History/MainPrintPage.asp?iPin=AABLE0107&DataType=AFHC&WinType=Free",
+    "http://nashvillehistory.blogspot.com/2013/07/nashville-facts-1779-2013_17.html"
+    ]
+  },
+
+  {
+    "name" : "FIRST STEAM LOCOMOTIVE",
+    "wikiURL" : "http://en.wikipedia.org/wiki/History_of_the_steam_engine",
+    "wikiParams" : "History_of_the_steam_engine",
+    "otherResources" : [
+    "http://www.tvrail.com/"
+    ]
+  },
+
+  {
+    "name" : "Wallace University School",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    "http://tennesseeencyclopedia.net/entry.php?rec=1458"
+    ]
+  },
+
+  {
+    "name" : "TIMOTHY DEMONBREUN",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Timothy_Demonbreun",
+    "wikiParams" : "Timothy_Demonbreun",
+    "otherResources" : [
+    "http://timothydemonbreunsociety.com/Timothy_s_Story.html"
+    ]
+  },
+
+  {
+    "name" : "BELLE VUE",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    ]
+  },
+
+  {
+    "name" : "HYDE’S FERRY TURNPIKE",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    "http://cheathamcountytn.gov/discover/history/brief.html",
+    "http://www.nashville.gov/Historical-Commission/Services/Historical-Markers/Nashville-Sites.aspx"
+    ]
+  },
+
+  {
+    "name" : "SAINT CECILIA ACADEMY",
+    "wikiURL" : "http://en.wikipedia.org/wiki/St._Cecilia_Academy_(Nashville,_Tennessee)",
+    "wikiParams" : "St._Cecilia_Academy_(Nashville,_Tennessee)",
+    "otherResources" : [
+    "http://www.stcecilia.edu/"
+    ]
+  },
+
+  {
+    "name" : "NASHVILLE GENERAL HOSPITAL",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    "http://nashvillegeneral.org/"
+    ]
+  },
+
+  {
+    "name" : "NEILL S. BROWN",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Neill_S._Brown",
+    "wikiParams" : "Neill_S._Brown",
+    "otherResources" : [
+    "http://tennesseeencyclopedia.net/entry.php?rec=148",
+    "http://www.tn.gov/tsla/history/govpapers/findingaids/gp15.pdf",
+    "http://moscow.usembassy.gov/neill_brown.html"
+    ]
+  },
+
+  {
+    "name" : "EIGHTH AVENUE SOUTH RESERVOIR",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    "http://digital.library.nashville.org/cdm/search/searchterm/Reservoir"
+    ]
+  },
+
+  {
+    "name" : "VAUXHALL GARDEN SITE",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    "http://historicnashville.wordpress.com/2009/07/02/the-vauxhall/"
+    ]
+  },
+
+  {
+    "name" : "MAJOR WILBUR FISK FOSTER",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    "http://en.wikipedia.org/wiki/Foster_%26_Creighton"
+    ]
+  },
+
+  {
+    "name" : "FREDERICK STUMP",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    "http://www.findagrave.com/cgi-bin/fg.cgi?page=gr&GRid=43081691"
+    ]
+  },
+
+  {
+    "name" : "MONTGOMERY BELL ACADEMY",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Montgomery_Bell_Academy",
+    "wikiParams" : "Montgomery_Bell_Academy",
+    "otherResources" : [
+    "http://www.montgomerybell.edu/page",
+    "http://tennesseeencyclopedia.net/entry.php?rec=932"
+    ]
+  },
+
+  {
+    "name" : "WOODBINE",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
     ]
   }
 ]

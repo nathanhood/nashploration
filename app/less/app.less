@@ -1153,7 +1153,7 @@ a.edit-profile:hover {
     margin: 20px 0 10px 0;
   }
 
-  #wiki-nav {
+  #wiki-nav, #other-resources-link {
     padding: 10px 0 0 0;
     a {
       display:block;
@@ -1176,6 +1176,16 @@ a.edit-profile:hover {
       text-decoration: none;
       pointer-events: none;
       cursor: default;
+    }
+  }
+
+  #other-resources-text {
+    a {
+      color:lighten(@base-color, 10%);
+      text-decoration: underline;
+      font-weight: bold;
+      text-decoration: none;
+      display: inline;
     }
   }
 }

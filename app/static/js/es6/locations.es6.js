@@ -10,7 +10,6 @@
     sizeMarkers();
     fetchLocations();
     $('#map-filter select').on('change', filterLocations);
-    $('body').on('click', '.info-window', showStreetView);
     fadeConfirmMessage();
     $('.checkin-button').click(submitCheckInListForm);
     $('.notification-icon').click(showNotification);
@@ -75,7 +74,7 @@
         });
       }
       
-      map.setZoom(13);
+      map.setZoom(12);
     });
   }
 
@@ -197,16 +196,16 @@
     };
       map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-    google.maps.event.addListener(map, 'click', function(event) { //TODO remove this after testing...this simulates the current location coordinates
-       checkCloseLocs(event.latLng);
-       setMapGeo(false);
-    });
+      google.maps.event.addListener(map, 'click', function(event) { //TODO remove this after testing...this simulates the current location coordinates
+         checkCloseLocs(event.latLng);
+         setMapGeo(false);
+      });
 
-    google.maps.event.addListener(map, 'dragend', function(event) {
-       setMapGeo(false);
-    });
+      google.maps.event.addListener(map, 'dragend', function(event) {
+         setMapGeo(false);
+      });
 
-    $('#geolocation-control').click(setMapGeo);
+      $('#geolocation-control').click(setMapGeo);
 
   }
 
@@ -299,34 +298,6 @@
 
   }
 
-//===== pulls up for the street view when show more is click in an info window: Richmond
-  function showStreetView (){
-    var lat = $(this).attr('data-lat'); //grabs the coordinate data which is stored in the show more link of each infowindow
-    var long = $(this).attr('data-long');
-    var streetLatLng = new google.maps.LatLng(lat, long);
-
-    var panoOptions = {
-      position: streetLatLng,
-      addressControlOptions: {
-        position: google.maps.ControlPosition.BOTTOM_CENTER
-      },
-      linksControl: false,
-      panControl: false,
-      zoomControlOptions: {
-        style: google.maps.ZoomControlStyle.SMALL
-      },
-      enableCloseButton: false
-    };
-
-    var streetView = new google.maps.StreetViewPanorama(
-      document.getElementById('street-view'), panoOptions);
-  }
-
-  var currLocMarker = {
-    path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
-    strokeColor: 'darkgreen',
-    scale: 5
-  };
 
 //either a jquery click event object is passed in from the click handler turning geolocation on or a boolean 
 //from the google drag/click event listeners which turns it off
@@ -352,7 +323,7 @@
        if(userLocMarker){
          userLocMarker.setMap(null);
        } 
-       
+
         userLocMarker = new google.maps.Marker({
           map: map,
           position: pos,
@@ -425,6 +396,7 @@ function addCheckInMarkers(coords){
       }
     });
 }
+
 //==== adds "Check In" buttons to info windows that are within range of checkin: Richmond
 var closeLocations = [];
 function addCheckInButton(windowName, description, id){
@@ -444,8 +416,6 @@ function addCheckInButton(windowName, description, id){
 
       w.setContent(content);
     }
-
-
   });
   closeLocations.push(windowName);
 }
@@ -455,8 +425,6 @@ function toggleBounce (m) {
      google.maps.event.addListener(m, 'click', function () {
        m.setAnimation(null);
     });
-
-
 }
 
 function resetMarkers(){

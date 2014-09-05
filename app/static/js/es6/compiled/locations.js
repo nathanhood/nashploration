@@ -5,7 +5,6 @@
     sizeMarkers();
     fetchLocations();
     $('#map-filter select').on('change', filterLocations);
-    $('body').on('click', '.info-window', showStreetView);
     fadeConfirmMessage();
     $('.checkin-button').click(submitCheckInListForm);
     $('.notification-icon').click(showNotification);
@@ -55,7 +54,7 @@
           placeCheckInMarkers(c.loc, c.name, c.description, c._id);
         }));
       }
-      map.setZoom(13);
+      map.setZoom(12);
     });
   }
   function removeAllDups(data) {
@@ -237,25 +236,6 @@
       siteName.open(map, windowLoc);
     });
   }
-  function showStreetView() {
-    var lat = $(this).attr('data-lat');
-    var long = $(this).attr('data-long');
-    var streetLatLng = new google.maps.LatLng(lat, long);
-    var panoOptions = {
-      position: streetLatLng,
-      addressControlOptions: {position: google.maps.ControlPosition.BOTTOM_CENTER},
-      linksControl: false,
-      panControl: false,
-      zoomControlOptions: {style: google.maps.ZoomControlStyle.SMALL},
-      enableCloseButton: false
-    };
-    var streetView = new google.maps.StreetViewPanorama(document.getElementById('street-view'), panoOptions);
-  }
-  var currLocMarker = {
-    path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
-    strokeColor: 'darkgreen',
-    scale: 5
-  };
   var timer;
   function setMapGeo(geoBool) {
     if ((typeof geoBool === 'undefined' ? 'undefined' : $traceurRuntime.typeof(geoBool)) === 'object') {

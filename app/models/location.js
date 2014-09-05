@@ -45,12 +45,11 @@ class Location{
 
   static addHistory(fn){
     needle.get('http://data.nashville.gov/resource/vk65-u7my.json', function(error, response, body) {
-
       var markers = body;
       var allLocations = [];
       for (var i = 0; i < markers.length; i++) {
         if (markers[i].mapped_location) {
-          var name = markers[i].title.replace(/[0-9-(),]/g, '');
+          var name = markers[i].title.replace(/[0-9-(),]/g, '').replace(/(\r\n|\n|\r)/gm,' ');
           var locArray = [];
               locArray[0] = markers[i].mapped_location.longitude * 1;
               locArray[1] = markers[i].mapped_location.latitude * 1;

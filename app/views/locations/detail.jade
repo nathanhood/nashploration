@@ -18,8 +18,10 @@ block content
       .border
       #wiki
       #wiki-nav
+      a(href='#')#other-resources-link
       #wiki-description
+      #other-resources-text
         div(id='coords', data-lat='#{location.loc[1]}', data-long='#{location.loc[0]}', data-name='#{location.name}')
-
+   
 block scripts
   script(src='/js/es6/compiled/location-details.js')
