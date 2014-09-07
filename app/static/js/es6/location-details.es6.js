@@ -7,78 +7,72 @@
   $(document).ready(init);
 
   function init(){
-    showStreetView();
-
-    $('body').click(function(event){
-      var target = event.target;
-      var sectionNum = $(target).attr('data') * 1;
-      findSection(sectionNum);
-    });
-
+    fetchLocationInfo();
   }
 
 
-//===== pulls up for the street view when show more is click in an info window: Richmond
-  function showStreetView (){
-    var lat = $('#coords').attr('data-lat'); //grabs the coordinate data which is stored in the show more link of each infowindow
-    var long = $('#coords').attr('data-long');
-    var streetLatLng = new google.maps.LatLng(lat, long);
+  function fetchLocationInfo(){
+    var name = $('#coords').data('name');
 
-    var panoOptions = {
-      position: streetLatLng,
-      addressControlOptions: {
-        position: google.maps.ControlPosition.BOTTOM_CENTER
-      },
-      linksControl: false,
-      panControl: false,
-      zoomControlOptions: {
-        style: google.maps.ZoomControlStyle.SMALL
-      },
-      enableCloseButton: false
-    };
+    $.ajax('/fetchWikiInfo/'+ name).done(function(info){
+      if(info.wikiParams){
+        wikiAPICall(info.wikiParams);
+      }
 
-    var streetView = new google.maps.StreetViewPanorama(
-      document.getElementById('street-view'), panoOptions);
-      wikiTest();
-  }
+      var $div = $('<div></div>');
+      var $menuLink = $('<a>Other Learning Resouces</a>');
+      $('#other-resources-link').append($menuLink);
+      info.otherResources.forEach(i=>{
+        var $a = $('<a href='+i+'>'+i+'</a><br>');
+        $($div).append($a);
+      });
 
-
-
-  function wikiTest() {
-    $.getJSON(`http://en.wikipedia.org/w/api.php?action=parse&format=json&page=Battle_of_Nashville&prop=text|images|sections&callback=?`).done(function(data){
-      wikipediaHTMLResult(data);
+       $('#other-resources-link').on('click', function(event){
+          $('#wiki-description').empty();
+          $('#other-resources-text').append($div);
+          // $('html, body').animate({
+          //   scrollTop: $('#other-resources-text').offset().top
+          //  }, 500);
+        console.log('in func');
+          event.preventDefault();
+        });
     });
   }
 
 
-  function wikipediaHTMLResult (data) {
+  function wikiAPICall(params) {
+    $.getJSON(`http://en.wikipedia.org/w/api.php?action=parse&format=json&page=${params}&prop=text|images|sections&callback=?`).done(function(data){
+      wikipediaHTMLResult(data, params);
+    });
+  }
+
+
+  function wikipediaHTMLResult (data, params) {
     var readData = $('<div>' + data.parse.text['*'] + '</div>');
     var sections = data.parse.sections;
 
     sections.forEach((s, i)=>{
-        var $a = $('<a href="#'+s.anchor+'", data='+s.index+'>'+s.line+'</a>');
+      if(s.anchor !== 'External_links'){
+        var $a = $('<a id="wiki-section" href="#'+s.anchor+'", data-section='+s.index+' data-params='+ params +'>'+s.line+'</a>');
         $('#wiki-nav').append($a);
+      }
     });
-
-    // var box = readData.find('.infobox').toArray();
-
-    var info = readData.find('p').toArray();
-
+ 
+      var info = readData.find('p').toArray(); //apends the first wikipedia paragraph to the page
       var $div = $('<div></div>');
       $div.text(info[0].textContent);
       $('#wiki').append($div);
 
-    // var imageURL = readData.find('img').toArray();
-    // imageURL.forEach(i=>{
-    //   $('#wiki').append('<div><img src="'+ i.src + '"/></div>');
-    // });
+    $('body').on('click', 'a#wiki-section', findSection);
   }
 
-  function findSection(section){
-
-    $.getJSON(`http://en.wikipedia.org/w/api.php?action=parse&format=json&page=Battle_of_Nashville&prop=text&section=${section}&callback=?`).done(function(data){
-      var text = data.parse.text['*']; //.replace(/<(?:.|\n)*?>/gm, '')
+  function findSection(){
+    var params = $(this).data('params');
+    var section = $(this).data('section') * 1;
+    $.getJSON(`http://en.wikipedia.org/w/api.php?action=parse&format=json&page=${params}&prop=text&section=${section}&callback=?`).done(function(data){
+      var text = data.parse.text['*'];
       var readData = $('<div>' + text + '</div>');
+      $('#other-resources-text').empty();
       $('#wiki-description').empty();
       $('#wiki-description').append(readData);
       $('html, body').animate({
@@ -86,7 +80,10 @@
       }, 500);
 
     });
+  }
 
+  function ajax(url, type, data={}, success=r=>console.log(r), dataType='html'){
+    $.ajax({url:url, type:type, dataType:dataType, data:data, success:success});
   }
 
 })();

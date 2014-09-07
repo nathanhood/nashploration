@@ -96,14 +96,8 @@ exports.getAllLocations = (req, res)=>{
   });
 };
 
-exports.getCivilWarLocations = (req, res)=>{
-  Location.filterCivilWarLocations((locations)=>{
-    res.send(locations);
-  });
-};
-
-exports.getAndrewJacksonLocations = (req, res)=>{
-  Location.filterAndrewJacksonLocations((locations)=>{
+exports.getUserFilteredLocations = (req, res)=>{
+  Location.findFilteredResults(req.params.params, locations=>{
     res.send(locations);
   });
 };
@@ -118,29 +112,11 @@ exports.locationDetailsById = (req, res)=>{
   });
 };
 
-exports.locationDetails = (req, res)=>{
-  Location.findCoordinates(req.params, location=>{
-    User.findManyCheckInCommentsById(location.checkIns, users=>{
-      User.matchUserToComment(users, location.checkIns, comments=>{
-        res.render('locations/detail', {title: `${location.name}`, location: location, comments: comments});
-      });
-    });
-  });
-};
-
 exports.findCloseLocs = (req, res)=>{
   Location.radialSearch(req.params, locations=>{
     res.send(locations);
   });
 };
-
-exports.resetLocations = (req, res)=>{
-  var closeLocs = req.params.closeLocations.split(',');
-    Location.resetCloseLocations(closeLocs, locations=>{
-      res.send(locations);
-    });
-};
-
 
 exports.getActiveQuestLocations = (req, res)=>{
   Quest.findById(res.locals.user.activeQuest.questId, (err, quest)=>{
@@ -174,5 +150,18 @@ exports.getQuestLocations = (req, res)=>{
         res.send(checkInObj);
       }
     });
+  });
+};
+
+//used for matching wikilinks to locations and saving it with the location...not currently used in production 
+exports.addLinks = (req, res)=>{   
+  Location.findAndAddLinks(linksLength=>{
+    res.send(`Added informational data to ${linksLength} records.`);
+  });
+};
+
+exports.findWikiInfo = (req, res)=>{
+  Location.findWikiInfo(req.params.locationName, info=>{
+    res.send(info);
   });
 };

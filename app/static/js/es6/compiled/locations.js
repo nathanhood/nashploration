@@ -5,12 +5,10 @@
     sizeMarkers();
     fetchLocations();
     $('#map-filter select').on('change', filterLocations);
-    $('body').on('click', '.info-window', showStreetView);
     fadeConfirmMessage();
     $('.checkin-button').click(submitCheckInListForm);
     $('.notification-icon').click(showNotification);
     $('a#dismiss').click(hideNotification);
-    $('.geolocation-control').click(toggleGeolocation);
   }
   var defaultMarker;
   var checkInMarker;
@@ -45,18 +43,18 @@
       initMap();
       if (data.quest) {
         data.quest.forEach((function(q) {
-          placeQuestMarkers(q.loc, q.name, q.description);
+          placeQuestMarkers(q.loc, q.name, q.description, q._id);
         }));
       }
       data.all.forEach((function(a) {
-        placeMarkers(a.loc, a.name, a.description);
+        placeMarkers(a.loc, a.name, a.description, a._id);
       }));
       if (data.checkIns) {
         data.checkIns.forEach((function(c) {
-          placeCheckInMarkers(c.loc, c.name, c.description);
+          placeCheckInMarkers(c.loc, c.name, c.description, c._id);
         }));
       }
-      resizeMap();
+      map.setZoom(12);
     });
   }
   function removeAllDups(data) {
@@ -77,24 +75,57 @@
   }
   function filterLocations() {
     var filter = $('#map-filter').find('option:selected').text();
+    var params;
     switch (filter) {
       case 'All':
         fetchLocations();
         break;
       case 'Civil War Sites':
-        $.ajax('/getCivilWarLocations').done(function(data) {
+        params = 'Civil War Sites';
+        $.ajax('/getFilteredLocations/' + params).done(function(data) {
           clearMap();
           data.forEach((function(d) {
-            placeMarkers(d.loc, d.name, d.description);
+            placeMarkers(d.loc, d.name, d.description, d._id);
           }));
           resizeMap();
         });
         break;
       case 'Andrew Jackson':
-        $.ajax('/getAndrewJacksonLocations').done(function(data) {
+        params = 'Andrew Jackson';
+        $.ajax('/getFilteredLocations/' + params).done(function(data) {
           clearMap();
           data.forEach((function(d) {
-            placeMarkers(d.loc, d.name, d.description);
+            placeMarkers(d.loc, d.name, d.description, d._id);
+          }));
+          resizeMap();
+        });
+        break;
+      case 'Schools':
+        params = 'School';
+        $.ajax('/getFilteredLocations/' + params).done(function(data) {
+          clearMap();
+          data.forEach((function(d) {
+            placeMarkers(d.loc, d.name, d.description, d._id);
+          }));
+          resizeMap();
+        });
+        break;
+      case 'Cemeteries':
+        params = 'Cemetery';
+        $.ajax('/getFilteredLocations/' + params).done(function(data) {
+          clearMap();
+          data.forEach((function(d) {
+            placeMarkers(d.loc, d.name, d.description, d._id);
+          }));
+          resizeMap();
+        });
+        break;
+      case 'Churches':
+        params = 'Church';
+        $.ajax('/getFilteredLocations/' + params).done(function(data) {
+          clearMap();
+          data.forEach((function(d) {
+            placeMarkers(d.loc, d.name, d.description, d._id);
           }));
           resizeMap();
         });
@@ -103,7 +134,7 @@
         $.ajax('/getActiveQuestLocations').done(function(data) {
           clearMap();
           data.forEach((function(d) {
-            placeQuestMarkers(d.loc, d.name, d.description);
+            placeQuestMarkers(d.loc, d.name, d.description, d._id);
           }));
           resizeMap();
         });
@@ -135,11 +166,16 @@
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
     google.maps.event.addListener(map, 'click', function(event) {
       checkCloseLocs(event.latLng);
+      setMapGeo(false);
     });
+    google.maps.event.addListener(map, 'dragend', function(event) {
+      setMapGeo(false);
+    });
+    $('#geolocation-control').click(setMapGeo);
   }
   var markers = [];
   var coordinates = [];
-  function placeMarkers(coords, locName, locDesc) {
+  function placeMarkers(coords, locName, locDesc, id) {
     var latLng = new google.maps.LatLng(coords[1], coords[0]);
     coordinates.push(latLng);
     latLng = new google.maps.Marker({
@@ -149,10 +185,10 @@
     });
     markers.push(latLng);
     allMarkers.push(latLng);
-    infoWindows(locName, latLng, locDesc);
+    infoWindows(locName, latLng, locDesc, id);
   }
   var checkInMarkers = [];
-  function placeCheckInMarkers(coords, locName, locDesc) {
+  function placeCheckInMarkers(coords, locName, locDesc, id) {
     var latLng = new google.maps.LatLng(coords[1], coords[0]);
     coordinates.push(latLng);
     latLng = new google.maps.Marker({
@@ -162,10 +198,10 @@
     });
     checkInMarkers.push(latLng);
     allMarkers.push(latLng);
-    infoWindows(locName, latLng, locDesc);
+    infoWindows(locName, latLng, locDesc, id);
   }
   var questMarkers = [];
-  function placeQuestMarkers(coords, locName, locDesc) {
+  function placeQuestMarkers(coords, locName, locDesc, id) {
     var latLng = new google.maps.LatLng(coords[1], coords[0]);
     coordinates.push(latLng);
     latLng = new google.maps.Marker({
@@ -175,7 +211,7 @@
     });
     questMarkers.push(latLng);
     allMarkers.push(latLng);
-    infoWindows(locName, latLng, locDesc);
+    infoWindows(locName, latLng, locDesc, id);
   }
   function resizeMap() {
     var latlngbounds = new google.maps.LatLngBounds();
@@ -185,12 +221,11 @@
     map.fitBounds(latlngbounds);
   }
   var allInfoWindows = [];
-  function infoWindows(siteName, windowLoc, locDesc) {
-    var siteURL = siteName.toLowerCase().split(' ').join('-');
+  function infoWindows(siteName, windowLoc, locDesc, id) {
     if (locDesc === null) {
       locDesc = 'There is no description for this site.';
     }
-    var content = '<div class="pop-up-window"><h3 class="pop-up-title">' + siteName + '</h3>' + '<p class="pop-up-description">' + locDesc + '</p>' + '<a href="/locations/' + siteURL + '", class="info-window pop-up-link">Show More</a></div>';
+    var content = '<div class="pop-up-window"><h3 class="pop-up-title">' + siteName + '</h3>' + '<p class="pop-up-description">' + locDesc + '</p>' + '<a href="/locations/show/' + id + '", class="info-window pop-up-link">Show More</a></div>';
     siteName = new google.maps.InfoWindow();
     siteName.setContent(content);
     allInfoWindows.push(siteName);
@@ -201,56 +236,39 @@
       siteName.open(map, windowLoc);
     });
   }
-  function showStreetView() {
-    var lat = $(this).attr('data-lat');
-    var long = $(this).attr('data-long');
-    var streetLatLng = new google.maps.LatLng(lat, long);
-    var panoOptions = {
-      position: streetLatLng,
-      addressControlOptions: {position: google.maps.ControlPosition.BOTTOM_CENTER},
-      linksControl: false,
-      panControl: false,
-      zoomControlOptions: {style: google.maps.ZoomControlStyle.SMALL},
-      enableCloseButton: false
-    };
-    var streetView = new google.maps.StreetViewPanorama(document.getElementById('street-view'), panoOptions);
-  }
-  var currLocMarker = {
-    path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
-    strokeColor: 'darkgreen',
-    scale: 5
-  };
-  var geoLocationStatus = true;
-  function toggleGeolocation() {
-    if (geoLocationStatus === true) {
-      geoLocationStatus = false;
-      $('.geolocation-control').html('Find Me');
-    } else {
-      geoLocationStatus = true;
-      $('.geolocation-control').html('Stop');
+  var timer;
+  function setMapGeo(geoBool) {
+    if ((typeof geoBool === 'undefined' ? 'undefined' : $traceurRuntime.typeof(geoBool)) === 'object') {
       findLocation();
+      timer = setInterval(function() {
+        findLocation();
+      }, 5000);
+    } else {
+      clearInterval(timer);
     }
   }
   var pos;
+  var userLocMarker;
   function findLocation() {
-    if (geoLocationStatus) {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-          var marker = new google.maps.Marker({
-            map: map,
-            position: pos,
-            icon: currLocMarker
-          });
-          map.setCenter(pos);
-          map.setZoom(16);
-          checkCloseLocs(pos);
-        }, function() {
-          handleNoGeolocation(true);
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        if (userLocMarker) {
+          userLocMarker.setMap(null);
+        }
+        userLocMarker = new google.maps.Marker({
+          map: map,
+          position: pos,
+          icon: currLocMarker
         });
-      } else {
-        handleNoGeolocation(false);
-      }
+        map.setCenter(pos);
+        map.setZoom(16);
+        checkCloseLocs(pos);
+      }, function() {
+        handleNoGeolocation(true);
+      });
+    } else {
+      handleNoGeolocation(false);
     }
   }
   function handleNoGeolocation(errorFlag) {
@@ -271,7 +289,6 @@
   var currentLat;
   var currentLong;
   function checkCloseLocs(pos) {
-    console.log(pos);
     currentLat = pos.k;
     currentLong = pos.B;
     if (closeMarkers.length) {
@@ -286,9 +303,6 @@
       }));
       $('.checkin-form input').val(nearbyIds);
     });
-    window.setInterval(function() {
-      findLocation();
-    }, 5000);
   }
   var closeMarkers = [];
   function addCheckInMarkers(coords) {
