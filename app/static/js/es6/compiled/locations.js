@@ -247,6 +247,11 @@
       clearInterval(timer);
     }
   }
+  var currLocMarker = {
+    path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+    strokeColor: 'darkgreen',
+    scale: 5
+  };
   var pos;
   var userLocMarker;
   function findLocation() {
