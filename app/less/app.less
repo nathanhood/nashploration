@@ -596,10 +596,31 @@ a.pop-up-link {
   z-index: 100;
 }
 
+a#geolocation-control {
+  position:absolute;
+  z-index: 1007;
+  right: 10px;
+  bottom: 90px;
+  fon-size: 1.2em;
+  padding: 10px;
+  background-color: @base-complement;
+  color:#fff;
+  border-radius: 2px;
+  border: 2px solid @base-color;
+}
+
 @media screen and (max-width: 400px){
   .notification-icon {
     width: 30px;
     height: 30px;
+  }
+}
+
+@media screen and (min-width: 450px) {
+  a#geolocation-control {
+    right: 20px;
+    bottom: 25px;
+    padding: 16px;
   }
 }
 
