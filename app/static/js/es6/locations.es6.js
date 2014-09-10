@@ -313,6 +313,12 @@
     }
   }
 
+  var currLocMarker = {
+     path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+     strokeColor: 'darkgreen',
+     scale: 5
+  };
+
 // ========Used to find users current location: Richmond
   var pos;
   var userLocMarker;

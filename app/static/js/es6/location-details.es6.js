@@ -20,7 +20,7 @@
       }
 
       var $div = $('<div></div>');
-      var $menuLink = $('<a>Other Learning Resouces</a>');
+      var $menuLink = $('<a>Other Learning Resources</a>');
       $('#other-resources-link').append($menuLink);
       info.otherResources.forEach(i=>{
         var $a = $('<a href='+i+'>'+i+'</a><br>');
@@ -30,10 +30,7 @@
        $('#other-resources-link').on('click', function(event){
           $('#wiki-description').empty();
           $('#other-resources-text').append($div);
-          // $('html, body').animate({
-          //   scrollTop: $('#other-resources-text').offset().top
-          //  }, 500);
-        console.log('in func');
+
           event.preventDefault();
         });
     });
@@ -50,10 +47,10 @@
   function wikipediaHTMLResult (data, params) {
     var readData = $('<div>' + data.parse.text['*'] + '</div>');
     var sections = data.parse.sections;
-
+    var $a;
     sections.forEach((s, i)=>{
-      if(s.anchor !== 'External_links'){
-        var $a = $('<a id="wiki-section" href="#'+s.anchor+'", data-section='+s.index+' data-params='+ params +'>'+s.line+'</a>');
+      if(s.anchor !== 'References' && s.anchor !== 'External_links'){
+        $a = $('<a class="wiki-section" href="#'+s.anchor+'", data-section='+s.index+' data-params='+ params +'>'+s.line+'</a>');
         $('#wiki-nav').append($a);
       }
     });
@@ -63,7 +60,7 @@
       $div.text(info[0].textContent);
       $('#wiki').append($div);
 
-    $('body').on('click', 'a#wiki-section', findSection);
+    $('body').on('click', 'a.wiki-section', findSection);
   }
 
   function findSection(){

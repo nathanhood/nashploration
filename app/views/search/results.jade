@@ -24,8 +24,8 @@ block content
       .border
       if(results.locations.length > 0)
         each location in results.locations
-          a.result-name(href='/locations/#{location.name}')= location.name
-          a.view-location(href='/locations/#{location.name}') View
+          a.result-name(href='/locations/show/#{location._id}')= location.name
+          a.view-location(href='/locations/show/#{location._id}') View
           .border
     .users-results-wrapper
       p.label Users
