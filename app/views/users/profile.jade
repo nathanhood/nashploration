@@ -52,13 +52,13 @@ block content
     .links
       a(href="/users/#{profileOwner.userName}/checkins")
         h4 Check-Ins
-        img(src="/img/assets/link-placeholder.png")
+        img(src="/img/assets/checkin_icon.png")
       a(href="/users/#{profileOwner.userName}/badges")
         h4 Badges
         img(src="#{profileOwner.badges[profileOwner.badges.length -1].filePath}")
       a(href="/users/leaders")
         h4 Leaders
-        img(src="/img/assets/link-placeholder.png")
+        img(src="/img/assets/leaderboard_icon.png")
     
     if(user.isOwner(profileOwner._id))
       .border
