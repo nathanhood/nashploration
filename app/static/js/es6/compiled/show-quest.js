@@ -35,7 +35,7 @@
   var allMarkers = [];
   function createQuestList(questLocations) {
     questLocations.forEach((function(location) {
-      var destination = ("<li class='quest-destination'>\n                        <h3>" + location.name + "</h3>\n                        <p><b>Address</b>: " + location.address + "<p>\n                        <p><b>Description</b>: " + location.description + "</p>\n                      </li>");
+      var destination = ("<li class='quest-destination'>\n                        <h3>" + location.name + "</h3>\n                        <p class=\"label\">Address:</p>\n                        <p class=\"quest-address\">" + location.address + "<p>\n                        <p class=\"label\">Details:</p>\n                        <p class=\"quest-details\">" + location.description + "</p>\n                      </li>");
       $('.quest-destinations').append(destination);
     }));
   }
@@ -97,7 +97,7 @@
     if (locDesc === null) {
       locDesc = 'There is no description for this site.';
     }
-    var content = '<h3>' + siteName + '</h3>' + '<p>' + locDesc + '</p>' + '<a href="/locations/' + siteURL + '", class="info-window">Show More</a>';
+    var content = '<div class="pop-up-window"><h3 class="pop-up-title">' + siteName + '</h3>' + '<p class="pop-up-description">' + locDesc + '</p>' + '<a href="/locations/' + siteURL + '", class="info-window pop-up-link">Show More</a></div>';
     siteName = new google.maps.InfoWindow();
     siteName.setContent(content);
     allInfoWindows.push(siteName);

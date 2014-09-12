@@ -5,6 +5,8 @@ block content
   .content-wrapper
     mixin back('Edit Group')
 
+    .email-invite-messages
+
     if (deleteGroupError.length > 0)
       .messages
         p= deleteGroupError
@@ -14,40 +16,56 @@ block content
       input(type='text', name='groupName', value='#{group.name}', hidden)
     button.delete-group Delete Group
 
+    .border
     if (user.isOwner(group.owner))
-      .group-name-container
-        h1.group-name(data-id='#{group._id}')= group.name
-        button.edit-group-name edit
+      .group-name-wrapper
+        p.label GROUP NAME
+        .clear
+        .group-name-container
+          h1.group-name(data-id='#{group._id}')= group.name
+      button.edit-group-name edit
+      .clear
       .group-name-edit-container(hidden)
         input.group-name-input(type='text', value='#{group.name}')
         button.cancel-name cancel
         button.submit-group-name submit
 
-      .group-description-container
-        p.group-description= group.description
-        button.edit-group-description edit
+      .border
+      .group-description-wrapper
+        p.label GROUP DESCRIPTION
+        .group-description-container
+          p.group-description= group.description
+      button.edit-group-description edit
+      .clear
       .group-description-edit-container(hidden)
-        input.group-description-input(type='text', value='#{group.description}')
+        textarea.group-description-input #{group.description}
         button.cancel-description cancel
         button.submit-group-description submit
 
+      .border
       button.add-member-button + Add a Member
       .add-member-info(hidden)
         input(type='email', name='email', placeholder='Email')
         input(type='text', name='name', placeholder='Name')
+        .clear
         button.send-member-invite Send Invitation
 
-      h2 Group Members
+      .border
+      h2.title Group Members
       if (members)
         ul
           each member in members
-            li
-              img.profile-picture(src=member.photo.filePath)
-              span Nickname:
-              h3= member.nickName
-              span Username:
-              h3.member-username= member.userName
+            li.group-member
+              .member-info-wrapper
+                .profile-picture(style="background-image: url(#{member.photo.filePath})")
+                .member-name
+                  p.label Nickname:
+                  h3= member.nickName
+                  p.label Username:
+                  h3.member-username= member.userName
               button.remove-group-member(data-id='#{member._id}') Remove From Group
+            .clear
+            .border
       else
         p There are no group members
 

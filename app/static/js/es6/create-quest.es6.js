@@ -1,5 +1,6 @@
 /* global google:true */
 /* jshint unused: false, undef: false, camelcase: false*/
+/*jshint -W030 */
 
 (function(){
   'use strict';
@@ -9,7 +10,7 @@
   function init(){
     fetchLocations();
 
-    $('#map-filter select').on('change', filterLocations);
+    $('#create-quest-map-filter select').on('change', filterLocations);
     $('#view-quest-map').click(toggleMapAndList);
     $('#view-quest-list').click(toggleMapAndList);
     $('#add-location').click(viewAddLocationsToQuest);
@@ -29,6 +30,7 @@
     $('#cancel-group-to-quest').click(hideGroupOptions);
     $('#confirm-group-to-quest').click(confirmGroup);
     $('#clear-group-to-quest').click(clearGroupOptions);
+
   }
 
   function submitQuest(){
@@ -50,6 +52,27 @@
     if (questTitle && locations && description) {
       $('form').submit();
     }
+  }
+
+// ================ Filtering =================
+
+  function initiateFilter(){
+    var locations = $('#quest-locations-listing').find('.location-listing');
+
+    $('input[name="search"]').keyup(function(event){
+      if ($(this).val() === '') {
+        locations.removeClass('visible').show().addClass('visible');
+      } else {
+        filter(locations, $(this).val());
+      }
+    });
+  }
+
+  function filter(selector, query){
+    query = $.trim(query).replace(/ /gi, '|');
+    $(selector).each(function(){
+      ($(this).text().search(new RegExp(query, 'i')) < 0) ? $(this).hide().removeClass('visible') : $(this).show().addClass('visible');
+    });
   }
 
 
@@ -87,11 +110,11 @@
   function fetchLocations() {
     $.ajax('/getAllLocations').done(function(data){
       initMap();
-
-      data.all.forEach(d=>{
+      data.forEach(d=>{
         placeMarkers(d.loc, d.name, d.description, d._id);
         buildLocationsListing(d);
       });
+      initiateFilter();
       resizeMap();
     });
   }
@@ -104,7 +127,7 @@
     if (location.description !== null) {
       description = `${location.description.substr(0, 140)}...`;
     }
-    var listing = `<li class="location-listing">
+    var listing = `<li class="location-listing visible">
                     <p class="name">${location.name}</p>
                     <p class="description">${description}</p>
                     <button class="add-location-button", data-id=${location._id}>
@@ -117,12 +140,12 @@
 
 //===========filtering map :Nathan
   function filterLocations() {
-    var filter = $('#map-filter').find('option:selected').text();
+    var filter = $('#create-quest-map-filter').find('option:selected').text();
     switch(filter) {
       case 'All':
         $.ajax('/getAllLocations').done(function(data){
           clearMap();
-          data.all.forEach(d=>{
+          data.forEach(d=>{
             placeMarkers(d.loc, d.name, d.description, d._id);
           });
           resizeMap();
@@ -237,6 +260,7 @@
       $('#quest-list').fadeOut(function(){
         $('.empty-quest-notification').remove();
         $('#create-quest-map').fadeIn();
+        $('#create-quest-map-filter').fadeIn();
       });
 
       $('#cancel-group-to-quest').hide();
@@ -251,6 +275,7 @@
 
     function showQuestAndGroups(){
       if ($('#quest-locations-listing').css('display') === 'none') {
+        $('#create-quest-map-filter').fadeOut();
         $('#create-quest-map').fadeOut(function(){
           $('#quest-list').fadeIn();
         });
@@ -353,9 +378,11 @@
     if (button === 'view-quest-map') {
       list.fadeOut(function(){
         map.fadeIn();
+        $('#create-quest-map-filter').fadeIn();
       });
       $('#view-quest-list').show();
     } else if (button === 'view-quest-list'){
+      $('#create-quest-map-filter').fadeOut();
       map.fadeOut(function(){
         list.fadeIn();
       });

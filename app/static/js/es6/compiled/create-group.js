@@ -44,6 +44,7 @@
       $('#new-group-form').children('input[name="emails"]').val(emails);
       nameForm.val('');
       emailForm.val('');
+      $('ul.added-members').append(("<li>\n                                        <p><span class=\"label\">Name:</span> " + name + "</p>\n                                        <p><span class=\"label\">Email:</span> " + email + "</p>\n                                     </li>"));
       $('#total-group-members').text(("Members: " + names.length));
     }
   }

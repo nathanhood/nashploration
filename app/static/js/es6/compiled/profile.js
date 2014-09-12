@@ -17,7 +17,8 @@
       $('.join-group-form form').submit();
     }
   }
-  function toggleGroupCodeForm() {
+  function toggleGroupCodeForm(event) {
+    event.preventDefault();
     $('.join-group-form').slideToggle();
   }
   function fadeConfirmMessage() {

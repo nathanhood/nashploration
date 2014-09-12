@@ -57,20 +57,20 @@
 
   function toggleGroupDescription(){
     if ($(this).hasClass('edit-group-description')) {
-      $('.group-description-container').hide();
+      $('.group-description-container, button.edit-group-description').hide();
       $('.group-description-edit-container').show();
     } else if ($(this).hasClass('cancel-description')) {
-      $('.group-description-container').show();
+      $('.group-description-container, button.edit-group-description').show();
       $('.group-description-edit-container').hide();
     }
   }
 
   function toggleGroupName(){
     if ($(this).hasClass('edit-group-name')) {
-      $('.group-name-container').hide();
+      $('.group-name-container, button.edit-group-name').hide();
       $('.group-name-edit-container').show();
     } else if ($(this).hasClass('cancel-name')) {
-      $('.group-name-container').show();
+      $('.group-name-container, button.edit-group-name').show();
       $('.group-name-edit-container').hide();
     }
   }
@@ -125,11 +125,11 @@
           $('input[name="email"]').val('');
           toggleAddMember();
 
-          var confirmation = `<p>${inviteeName} was successfully invited!</p>`;
-          $('.messages').append(confirmation);
+          var confirmation = `<p class="email-invite-message">${inviteeName} was successfully invited!</p>`;
+          $('.email-invite-messages').append(confirmation);
 
           setTimeout(function(){
-            $('.messages p').fadeOut('slow');
+            $('.email-invite-messages p').fadeOut('slow');
           }, 3000);
         }
       });

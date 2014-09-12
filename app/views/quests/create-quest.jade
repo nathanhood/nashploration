@@ -12,7 +12,7 @@ block content
 
       form.create-quest(action='/quests/create', method='POST', enctype='multipart/form-data')
         input#quest-title(type='text', name='name', placeholder='Quest Name Here')
-        textarea#quest-description(type='text', name='description', placeholder='Quest Description Here')
+        textarea#quest-description(type='text', name='description', placeholder='Quest Description Here', maxlength='140')
         .left
           if(groups.length > 0)
             input(type='checkbox', name='isPrivate', value='true')
@@ -52,8 +52,16 @@ block content
         ul
 
       ol#quest-locations-listing(hidden=true)
+        input(type='text', name='search', placeholder='Filter by Keyword')
 
   #create-quest-map
+  //- #create-quest-map-filter
+  //-   select
+  //-     option Filter
+  //-     option -------
+  //-     option All
+  //-     option Civil War Sites
+  //-     option Andrew Jackson
 
 block scripts
   script(src='/js/es6/compiled/create-quest.js')

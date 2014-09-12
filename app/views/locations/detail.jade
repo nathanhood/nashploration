@@ -1,23 +1,27 @@
 extends ../shared/template
 
 block content
-  h3= location.name
-  p= location.description
-  #street-view
+  .content-wrapper
+    mixin back('Location Details')
 
-  if(comments)
-    each comment in comments
-      p= comment.userName
-      p Posted #{comment.daysFromComment}
-      p= comment.comment
-      img(src='#{comment.userPhoto}')
-  br
-  br
-  br
-  br
-  #wiki-description
-  #wiki
-    div(id='coords', data-lat='#{location.loc[1]}', data-long='#{location.loc[0]}')
+    .location-details-wrapper
+      h3.location-name= location.name
+      p= location.description
 
+      if(comments)
+        each comment in comments
+          p= comment.userName
+          p Posted #{comment.daysFromComment}
+          p= comment.comment
+          img(src='#{comment.userPhoto}')
+      
+      .border
+      #wiki
+      #wiki-nav
+      a(href='#')#other-resources-link
+      #wiki-description
+      #other-resources-text
+        div(id='coords', data-lat='#{location.loc[1]}', data-long='#{location.loc[0]}', data-name='#{location.name}')
+   
 block scripts
   script(src='/js/es6/compiled/location-details.js')

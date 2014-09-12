@@ -1,28 +1,45 @@
 extends ../shared/template
 
 block content
-  br
-  br
-  br
-  br
-  br
-  br
-  h2 Public Quests
-  br
-  if(results.questNames.length > 0)
-    each quest in results.questNames
-      h2= quest.name
-  br
-  h2 Locations
-  br
-  if(results.locations.length > 0)
-    each location in results.locations
-      br
-      a(href='/locations/#{location.name}')= location.name
-      br
-  br
-  h2 Users
-  br
-  if(results.userNames.length > 0)
-    each user in results.userNames
-      h2= user.userName
+  .content-wrapper
+    mixin back('Search Results')
+    
+    .results-links-wrapper
+        a.results-link#quests(href="#") QUESTS
+        a.results-link#locations(href="#") LOCATIONS
+        a.results-link#users(href="#") USERS
+
+    .quests-results-wrapper#active-list
+      p.label Public Quests
+      .border
+      if(results.questNames.length > 0)
+        each quest in results.questNames
+          .quest-entry-wrapper
+            a.result-name(href='/quests/show/#{quest._id}')
+              h2.inline= quest.name
+            a.view-quest(href='/quests/show/#{quest._id}') View
+          .border
+    .locations-results-wrapper
+      p.label Locations
+      .border
+      if(results.locations.length > 0)
+        each location in results.locations
+          a.result-name(href='/locations/show/#{location._id}')= location.name
+          a.view-location(href='/locations/show/#{location._id}') View
+          .border
+    .users-results-wrapper
+      p.label Users
+      .border
+      if(results.userNames.length > 0)
+        each user in results.userNames
+          .user-entry-wrapper
+            a(href="/users/#{user.userName}")
+              .profile-pic(style="background-image: url(#{user.photo.filePath})")
+            a(href="/users/#{user.userName}")
+              h2= user.userName
+            a.view-user(href='/users/#{user.userName}') View
+          .clear
+          .border
+
+block scripts
+  script(src='/js/es5/search-results.js')

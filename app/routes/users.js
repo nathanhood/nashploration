@@ -17,8 +17,10 @@ exports.index = (req, res)=>{
 
 exports.profile = (req, res)=>{
   User.findByUserName(req.params.userName, user=>{
-    if (user) {
+    Quest.findById(res.locals.user.activeQuest.questId, (err, quest) => {
+      if (user) {
         res.render('users/profile', {title: 'Nashploration', profileOwner: user,
+        activeQuest: quest,
         unknownProfile: req.flash('unknownProfile'),
         groupConfirmation: req.flash('groupConfirmation'),
         joinedGroup: req.flash('joinedGroup'),
@@ -29,10 +31,11 @@ exports.profile = (req, res)=>{
         alreadyInMyQuests: req.flash('alreadyInMyQuests')
         });
 
-    } else {
-      req.flash('unknownProfile', `There is no one with the username ${req.params.userName}.`);
-      res.redirect(`/users/${res.locals.user.userName}`);
-    }
+      } else {
+        req.flash('unknownProfile', `There is no one with the username ${req.params.userName}.`);
+        res.redirect(`/users/${res.locals.user.userName}`);
+      }
+    });
   });
 };
 
@@ -40,13 +43,10 @@ exports.register = (req, res)=>{
   var form = new multiparty.Form();
 
   form.parse(req, (err, fields, files)=>{
-
-    var photoObj = files.photo[0];
     var userName = fields.userName[0].split(' ').map(w=>w.trim()).map(w=>w.toLowerCase()).join('');
     Group.findByGroupCode(fields.groupCode[0], group=>{
       User.register(fields, userName, (u)=>{
         if (u) {
-          u.photo = u.processPhoto(photoObj);
           if (!group) {
             u.save(()=>{
               res.locals.user = u;
@@ -100,7 +100,7 @@ exports.login = (req, res)=>{
           });
         } else {
           req.flash('registerAndLogin', 'No account exists with those credentials');
-          res.redirect('/');
+          res.redirect(`/confirmation/${req.body.groupCode}`);
         }
       });
     });
@@ -140,7 +140,9 @@ exports.logout = (req, res)=>{
 
 exports.viewNearbyCheckIns = (req, res)=>{
   Location.findManyById(req.query.nearbyCheckIns, locations=>{
-    res.render('users/checkIn-list', {title: 'Nashploration', locations:locations});
+    Quest.findById(res.locals.user.activeQuest.questId, (err, quest)=>{
+      res.render('users/checkIn-list', {title: 'Nashploration', locations:locations, quest:quest});
+    });
   });
 };
 
@@ -191,15 +193,19 @@ exports.checkIn = (req, res)=>{
 };
 
 exports.getActiveQuestLocations = (req, res)=>{
-  Quest.findById(res.locals.user.activeQuest.questId, (err, quest)=>{
-    if(quest.checkIns.length === res.locals.user.activeQuest.questLocs.length){
-      res.send(null);
-    }else{
-    Location.findActiveQuestLocations(quest.checkIns, res.locals.user.activeQuest.questLocs, (locations)=>{
-      res.send(locations);
+  if(res.locals.user.activeQuest.questLocs.length >= 1){
+    Quest.findById(res.locals.user.activeQuest.questId, (err, quest)=>{
+      Location.findActiveQuestLocations(quest.checkIns, res.locals.user.activeQuest.questLocs, (questLocs)=>{
+        res.send(questLocs);
+      });
     });
-   }
-  });
+  }else if(res.locals.user.activeQuest.questLocs.length < 1){
+    Quest.findById(res.locals.user.activeQuest.questId, (err, quest)=>{
+      Location.findManyById(quest.checkIns, questLocs=>{
+        res.send(questLocs);
+      });
+    });
+  }
 };
 
 exports.addActiveQuest = (req, res)=>{
@@ -275,5 +281,11 @@ exports.fetchCheckins = (req, res)=>{
         });
       });
     });
+  });
+};
+
+exports.showBadges = (req, res)=>{
+  User.findByUserName(req.params.userName, (user)=>{
+    res.render('users/badges', {title: 'Nashploration', profileOwner: user});
   });
 };

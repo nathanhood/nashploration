@@ -5,12 +5,13 @@ html
     meta(charset='utf-8')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     title= title
-    script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyArPvnhx4BUiKnrYG6cyNX-YZL21LruNAQ&sensor=false')
+    script(src='https://maps.googleapis.com/maps/api/js?sensor=false')
     script(type='text/javascript', src='//use.typekit.net/osj8ghm.js')
     script(type='text/javascript').
       try{Typekit.load();}catch(e){}
     link(href='//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css', rel='stylesheet')
     link(href='/less/app.css', rel='stylesheet')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no')
 
   body.cbp-spmenu-push
     nav#cbp-spmenu-s1.cbp-spmenu.cbp-spmenu-vertical.cbp-spmenu-left
@@ -19,6 +20,7 @@ html
           .nav-profile-pic(style='background-image: url("#{user.photo.filePath}")')
           p.nav-name= user.nickName
           p.nav-class= user.class
+          p.nav-points #{user.points} Points
           ul.main-nav
             li
               a(href="/dashboard") Home
@@ -27,7 +29,7 @@ html
             li
               a(href="#") About
             li
-              a(href="#") Settings
+              a(href="/users/edit/#{user._id}") Settings
             li
               form.logout-form(action='/logout', method='POST')
                 a.submit-logout(href="#") Logout
@@ -36,7 +38,7 @@ html
 
         img.nav-logo-icon(src="/img/assets/logo-icon.png")
 
-    header
+    header#floating-header
       a.menu-link#showLeftPush(href='#')
         i.fa.fa-bars
       a.logo-link(href='/dashboard')
@@ -54,9 +56,7 @@ html
     script(src='/js/vendor/lodash-2.4.1.js')
     script(src='/js/vendor/moment-2.6.0.js')
     script(src='/js/vendor/traceur.js')
-    script(src='/socket.io/socket.io.js')
     script(src='/js/es5/interface.js')
     script(src='/js/es6/compiled/main.js')
-    script(src='/js/es6/compiled/sockets.js')
 
     block scripts

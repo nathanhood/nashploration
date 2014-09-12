@@ -1,12 +1,28 @@
 extends ../shared/template
 
 block content
-  br
-  br
-  br
-  br
-  br
-  if(quests)
-    each quest in quests
-      br
-      a(href='/quests/show/#{quest._id}')= quest.name
+
+  .content-wrapper
+    mixin back('Find Quest')
+
+    .find-quest-wrapper
+      input.quest-search(type='text', name='quest-search', placeholder='Filter by Keyword')
+      .border#input-border
+      ul.available-quests-list
+        if(quests)
+          each quest in quests
+            .quest-listing-wrapper
+              li
+                .quest-image-link
+                  .quest-image-wrapper(style="background-image: url(#{quest.photo.filePath})")
+                  a.quest-link(href='/quests/show/#{quest._id}')
+                    button view
+                .quest-information-wrapper
+                  a(href='/quests/show/#{quest._id}')
+                    h2.quest-name= quest.name
+                  p.quest-description= quest.description
+              .clear
+              .border
+
+block scripts
+  script(src='/js/es6/compiled/find-quest.js')

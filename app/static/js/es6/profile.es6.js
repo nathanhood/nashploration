@@ -23,7 +23,8 @@
     }
   }
 
-  function toggleGroupCodeForm(){
+  function toggleGroupCodeForm(event){
+    event.preventDefault();
     $('.join-group-form').slideToggle();
   }
 

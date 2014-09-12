@@ -10,17 +10,18 @@ block content
         p= deleteGroupConfirm
 
     .manage-groups-wrapper
-      h2 Groups
+      h2 Your Groups
       ul
         if (groups.length > 0)
           each group in groups
-            li= group.name
-              a(href='/groups/show/#{group._id}') view
+            li
+              p.group-name.inline= group.name
+              a.group-view(href='/groups/show/#{group._id}') View
         else
           li
-            p You have not joined any groups
-            a(href='#')
-              button Find Groups
+            p You have not joined any groups.
+            p Groups are by invite only.
+            br
 
       h2 Manage Groups You Created
       
@@ -29,7 +30,7 @@ block content
           each group in createdGroups
             li
               p.group-name.inline= group.name
-              a.edit(href='/groups/edit/#{group._id}') edit
+              a.group-edit(href='/groups/edit/#{group._id}') edit
         else
           li
             p You have not created any groups

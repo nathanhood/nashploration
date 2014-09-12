@@ -5,25 +5,42 @@ block content
     .home-messages
       p.home-message= successCheckIn
 
+  if(!user.activeQuest.questId)
+    .notification-icon
+
+  .notification-wrapper(hidden)
+    p You currently don't have an active quest.
+    a(href='/quests/view') Find a quest to activate.
+    a#dismiss(href="#") Dismiss
+
   include ../locations/index.jade
 
+  a#geolocation-control(href="#")
+    .fa.fa-location-arrow
   .map-bottom-container
     form.checkin-form(action='/checkIn/view-nearby', method='GET')
       input.hidden(type='text', name='nearbyCheckIns', hidden)
     a(href='#').checkin-button
     .profile-home-wrapper
       .profile-pic-wrapper
-        img(src="#{user.photo.filePath}")
+        .profile-pic-div(style="background-image:url('#{user.photo.filePath}')")
       .class-name-wrapper
-        p Class:
+        p.label Class:
         p.class-name= user.class
       .class-icon-wrapper
-        img(src="/img/assets/placeholder-class-icon.png")
+        a(href="/users/#{user.userName}/badges")
+          img(src='#{user.badges[user.badges.length -1].filePath}')
 
   #map-filter
     select
       option Filter
-      option -------
+      option ------------
+      if(user.activeQuest.questId)
+        option Active Quest
+        option ------------
       option All
       option Civil War Sites
       option Andrew Jackson
+      option Schools
+      option Cemeteries
+      option Churches

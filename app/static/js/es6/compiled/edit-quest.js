@@ -44,7 +44,7 @@
   var allMarkers = [];
   function createQuestList(questLocations) {
     questLocations.forEach((function(location) {
-      var destination = ("<li class='quest-destination'>\n                        <h3>" + location.name + "</h3>\n                        <p><b>Address</b>: " + location.address + "<p>\n                        <p><b>Description</b>: " + location.description + "</p>\n                      </li>");
+      var destination = ("<li class='quest-destination'>\n                          <h3>" + location.name + "</h3>\n                          <p class=\"label\">Address:</p>\n                          <p class=\"quest-address\">" + location.address + "<p>\n                          <p class=\"label\">Details:</p>\n                          <p class=\"quest-details\">" + location.description + "</p>\n                        </li>");
       $('.quest-destinations').append(destination);
     }));
   }

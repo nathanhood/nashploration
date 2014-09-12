@@ -6,7 +6,7 @@
 @dark-base: #47391f;
 @offwhite: #e3dfd6;
 
-.transition(@duration: 300ms) {
+.transition(@duration: 250ms) {
   -webkit-transition: all @duration ease;
   -moz-transition: all @duration ease;
   -o-transition: all @duration ease;
@@ -42,18 +42,51 @@ input, textarea {
   display:inline-block;
 }
 
+.center {
+  text-align:center;
+}
+
 .hidden {
   display:none !important;
 }
 
+
+a.active-button, a.active-button:hover {
+  background: @base-color !important;
+  color: @offwhite !important;
+}
+
+.active-list {
+  .transition;
+  opacity: 1;
+  display:block;
+}
+
+.inactive-list {
+  .transition;
+  opacity: 0;
+  display:none;
+}
+
+button {
+  font-family: "adobe-garamond-pro", serif;
+  margin: 5px 5px 0 0 ;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: darken(@base-complement, 10%);
+  cursor: pointer;
+}
+
 body {
   background-color: #eee;
-  color: #333;
+  color: @base-color;
   position:relative;
   font-family: "adobe-garamond-pro", serif;
   background-image: url(/img/assets/white-paper-bkg.jpg);
   background-size: 100px auto;
-  color: darken(@dark-base, 10%);
 }
 
 .map-wrapper {
@@ -77,7 +110,7 @@ body {
 .content-wrapper {
   width: 90%;
   margin: 0 auto;
-  padding: 70px 0 0 0;
+  padding: 70px 0 50px 0;
   max-width: 600px;
 }
 
@@ -124,13 +157,42 @@ body {
   }
 }
 
-.messages, .error-message {
+.messages, .error-message, p.email-invite-message, .group-confirmation-container {
   padding: 15px;
   background: @base-complement;
   color:#fff;
   display:block;
   text-align:center;
   font-size: 1.2em;
+}
+
+.messages.landing {
+  padding-top: 80px;
+}
+
+p.label {
+  display:inline-block;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: .75em;
+  margin: 0 0 5px 0;
+}
+
+span.label {
+  display:inline;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: .7em;
+  margin: 0 0 3px 0;
+}
+
+p.label.headline {
+  display:block;
+  text-align:center;
+  font-weight:bold;
+  padding: 10px 0;
+  color:#fff;
+  background: @base-complement;
 }
 
 /* ======================================== NAVIGATION CSS ======================================== */
@@ -159,6 +221,7 @@ body {
   height: 100px;
   background-size: cover;
   background-position: center;
+  background-color: #fff;
   display:inline-block;
   border-radius: 50%;
   border: 2px solid @offwhite;
@@ -172,8 +235,14 @@ p.nav-name {
 }
 p.nav-class {
   font-size: 1.25em;
-  margin: 0 0 20px 0;
+  margin: 0 0 10px 0;
   color: lighten(@light-base, 10%);
+}
+
+p.nav-points {
+  margin: 0 0 15px 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
 ul.main-nav {
@@ -256,7 +325,7 @@ img.nav-logo-icon {
 
 @media screen and (max-height: 550px){
   .nav-wrapper {
-    height: 500px;
+    height: 470px;
   }
 }
 
@@ -283,7 +352,7 @@ img.nav-logo-icon {
 
 /* ======================================== HEADER CSS ======================================== */
 
-header {
+header#floating-header {
   height: 60px;
   width: 100%;
   background-image: url('/img/assets/brown-paper-bkg.jpg');
@@ -359,15 +428,16 @@ header {
       max-width: 500px;
       text-align:right;
 
-      input[type='text']{
+      input.main-search-input[type='text']{
         position: absolute;
         top: 0px;
         right: 0;
         width: 0%;
+        height: 0;
         opacity: 0;
-        padding: 13px;
         margin: -4px 10px 0 0;
         border:none;
+        padding: 0;
         border-radius: 2px;
         background-color: #44331c;
         color:#fff;
@@ -376,6 +446,8 @@ header {
 
       input[type='text'].show-searchbar-input {
         opacity: 1;
+        padding: 13px;
+        height:inherit;
         width:80%;
       }
     }
@@ -386,11 +458,11 @@ header {
   header {
     a.logo-link {
       h1.logo {
-      height: 60px;
-      width: 400px;
-      background-image: url('/img/assets/logo-full.png');
-      background-size: 175px auto;
-    }
+        height: 60px;
+        width: 400px;
+        background-image: url('/img/assets/logo-full.png');
+        background-size: 175px auto;
+      }
     }
   }
 }
@@ -436,7 +508,7 @@ header {
 
   .profile-home-wrapper {
     display:inline-block;
-    width: 230px;
+    width: 240px;
     padding-top: 0px;
 
     .profile-pic-wrapper, .class-name-wrapper, .class-icon-wrapper {
@@ -445,13 +517,16 @@ header {
 
     .profile-pic-wrapper {
       width: 50px;
-      margin: 15px 15px 0 15px;
+      margin: 15px 10px 0 10px;
       float:left;
 
-      img {
+      .profile-pic-div {
+        background-size:cover;
+        background-position: center;
         display:inline-block;
-        width: 100%;
-        height: auto;
+        background-color: #fff;
+        width: 50px;
+        height: 50px;
         border-radius: 50%;
         border: 2px solid #fff;
         box-shadow: 0px 0px 5px @base-color;
@@ -459,15 +534,15 @@ header {
     }
 
     .class-name-wrapper {
-      width: 85px;
+      width: 105px;
       float:left;
-      padding-top: 25px;
+      padding-top: 20px;
       font-family: "adobe-garamond-pro", serif;
 
       p.class-name {
         font-weight: bold;
         color: @base-color;
-        font-size: 1.25em;
+        font-size: 1.15em;
       }
     }
 
@@ -479,17 +554,12 @@ header {
       img {
         width: 100%;
         height: auto;
-        border-radius: 50%;
-        border: 2px solid #fff;
-        box-shadow: 0px 0px 5px @base-color;
       }
     }
   }
 }
 
-.pop-up-window {
-  // background: @base-color;
-}
+
 
 h3.pop-up-title {
   margin: 10px 0;
@@ -511,41 +581,174 @@ a.pop-up-link {
   background: @base-complement;
   border-radius: 2px;
   color:#fff;
-  margin: 5px 0;
+  margin: 5px 5px 10px 0;
 }
 
+.notification-icon {
+  width: 45px;
+  height: 45px;
+  background-size: cover;
+  background-position: center;
+  background-image: url(/img/assets/notification-icon.png);
+  position:absolute;
+  top: 130px;
+  right: 20px;
+  z-index: 100;
+}
+
+a#geolocation-control {
+  position:absolute;
+  z-index: 1007;
+  right: 10px;
+  bottom: 90px;
+  fon-size: 1.2em;
+  padding: 10px;
+  background-color: @base-complement;
+  color:#fff;
+  border-radius: 2px;
+  border: 2px solid @base-color;
+}
+
+@media screen and (max-width: 400px){
+  .notification-icon {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+@media screen and (min-width: 450px) {
+  a#geolocation-control {
+    right: 20px;
+    bottom: 25px;
+    padding: 16px;
+  }
+}
+
+.notification-wrapper {
+  position:absolute;
+  right: 20px;
+  top: 170px;
+  width: 280px;
+  padding: 15px 15px 20px 15px;
+  margin: 5px 0 0 0;
+  z-index: 100;
+  background-color: #fff;
+  border-radius: 2px;
+  border: 1px solid #000;
+  color: @base-color;
+  font-size: .9em;
+
+  p {
+    margin: 0 0 15px 0;
+  }
+
+  a {
+    background-color:@base-complement;
+    padding: 5px 10px;
+    border-radius: 2px;
+    margin: 0 5px 0 0;
+    color:#fff;
+  }
+}
+
+@media screen and (min-width: 700px){
+  .map-bottom-container {
+    max-width: 450px;
+    height: 110px;
+
+    a.checkin-button {
+      width: 25%;
+      max-width: 110px;
+      height: 110px;
+      background-size: 65px auto;
+    }
+
+    .profile-home-wrapper {
+      width: 325px;
+
+      .profile-pic-wrapper {
+        width: 80px;
+
+        .profile-pic-div {
+          width: 80px;
+          height: 80px;
+        }
+      }
+
+      .class-name-wrapper {
+        width: 125px;
+        padding-top: 40px;
+
+        p.class-name {
+          font-size: 1.35em;
+        }
+      }
+
+      .class-icon-wrapper {
+        width: 90px;
+        margin-top: 10px;
+      }
+    }
+  }
+
+  .home-messages {
+    width: 80%;
+    max-width: 400px;
+    bottom: 130px;
+  }
+}
 
 /* ======================================== USER PROFILE CSS ======================================== */
 
 .profile-wrapper {
-    padding: 15px;
-    margin: 0 0 15px 0;
-    border-bottom: 1px solid darken(@offwhite, 20%);
+    padding: 15px 0 0 0;
+    margin: 0 auto;
+    width:90%;
+    max-width: 400px;
+}
+
+a.edit-profile {
+    display:block;
+    text-align:center;
+    width: 200px;
+    margin: 20px auto 50px auto;
+    text-decoration: none;
+    color: lighten(@dark-base, 10%);
+    padding: 10px 20px;
+    border: 1px solid @base-color;
+    border-radius: 2px;
+}
+
+a.edit-profile:hover {
+  border: 1px solid @base-complement;
+  color:#fff;
+  background-color: @base-complement;
 }
 
 .profile-info-left {
   display:inline-block;
-  width: 40%;
-  margin: 0 10px 0 0;
+  width: 50%;
+  margin: 0;
   text-align:center;
   float:left;
 
   .profile-pic {
     width: 80px;
     height: 80px;
-    margin: 0 auto;
+    margin: 25px auto 0 auto;
     border: 2px solid #fff;
     border-radius: 50%;
+    background-color: #fff;
     box-shadow: 0px 0px 5px @base-color;
     background-size: cover;
     background-position: center;
-  }
 
-  a {
-    display:block;
-    margin-top: 20px;
-    text-decoration: none;
-    color: lighten(@dark-base, 10%);
+    p.edit-photo {
+      padding-top: 25px;
+      font-size: .9em;
+      color: #fff;
+      text-shadow: 0px 0px 5px #555;
+    }
   }
 }
 
@@ -579,14 +782,14 @@ a.pop-up-link {
     img {
       width: 70%;
       height: auto;
-      max-width: 90px;
+      max-width: 125px;
       margin: 10px 0 0 0;
     }
   }
 }
 
 .quest-group-menu-buttons {
-  padding: 20px 0 5px 0;
+  padding: 25px 0 5px 0;
 
   a {
     width: 50%;
@@ -604,14 +807,10 @@ a.pop-up-link {
     background: darken(@offwhite, 5%);
   }
 
-  a.active-button {
-    background: @base-color;
-    color: @offwhite;
-  }
-
   a.quest-menu-button {
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
+    border-right:none;
   }
 
   a.group-menu-button {
@@ -621,7 +820,7 @@ a.pop-up-link {
 }
 
 .quest-group-menus {
-  padding-top: 20px;
+  padding: 20px 0 30px 0;
   ul {
     text-align: center;
     border-top: 1px solid darken(@offwhite, 20%);
@@ -661,11 +860,72 @@ a.pop-up-link {
   }
 }
 
-@media screen and (min-width: 600px){
+.active-quest {
+  text-align: center;
+
+  p.label {
+    font-size: .9em;
+  }
+
+  p {
+    font-size: 1.2em;
+  }
+
+  a {
+    display:block;
+    font-weight:bold;
+    color:@base-color;
+    font-size: 1.2em;
+    margin: 10px;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  a.active-quest-name {
+    font-weight: bold;
+    color:@base-color;
+    font-size: 1.5em;
+  }
+
+  a.active-quest-name:hover {
+    text-decoration: underline;
+    color: lighten(@base-color, 10%);
+  }
+}
+
+@media screen and (max-width: 370px) {
+  .active-quest {
+    a.active-quest-name {
+      font-size: 1.1em;
+    }
+
+    a {
+      font-size: 1em;
+    }
+
+    p.label {
+      font-size: .7em;
+    }
+
+    p {
+      font-size: .95em;
+    }
+  }
+}
+
+@media screen and (min-width: 475px){
   .profile-info-left {
     .profile-pic {
-      width: 110px;
-      height: 110px;
+      margin: 0 auto 0 auto;
+      width: 130px;
+      height: 130px;
+
+      p.edit-photo {
+      padding-top: 50px;
+      font-size: 1em;
+    }
     }
   }
 }
@@ -675,34 +935,55 @@ a.pop-up-link {
 .profile-edit-wrapper {
   color:@base-color;
 
-  img {
-    width: 110px;
-    height: 110px;
-    margin: 0 auto;
-    border: 2px solid #fff;
-    border-radius: 50%;
-    box-shadow: 0px 0px 5px @base-color;
-    background-size: cover;
-    background-position: center;
-    margin-top: 20px;
-    float:left;
-  }
+  .edit-profil-pic-wrapper {
+    text-align:center;
 
-  form.edit-photo {
-    display:inline-block;
+    .profile-pic {
+      width: 110px;
+      height: 110px;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      box-shadow: 0px 0px 5px @base-color;
+      background-color: #fff;
+      background-size: cover;
+      background-position: center;
+      margin: 10px auto;
+    }
+
+    form.edit-photo {
+      display:inline-block;
+      input {
+        width: 185px;
+        margin: 0 5px 0 0;
+      }
+
+      button {
+        margin: 0;
+      }
+    }
   }
 
   input {
-    margin: 10px 10px 20px 0;
+    margin: 0 0 5px 0;
+    width: 60%;
+  }
+
+  button {
+    margin-top: 0px;
+    float:right;
   }
 
   a.submit-edits {
-    display:inline-block;
+    display:block;
+    width: 90%;
+    max-width: 300px;
+    text-align:center;
     padding: 10px 20px;
     border: 1px solid @base-color;
     border-radius:2px;
     color:@base-color;
     font-size:1.25em;
+    margin: 0 auto 50px auto;
   }
 
   a.submit-edits:hover {
@@ -742,7 +1023,8 @@ a.pop-up-link {
     button {
       display:block;
       width: 70%;
-      margin: 0 auto;
+      max-width: 300px;
+      margin: 10px auto;
     }
   }
 }
@@ -750,19 +1032,220 @@ a.pop-up-link {
 /* ======================================== ALL CHECK INS CSS ======================================== */
 
 .all-checkins-wrapper {
-  padding: 15px 0 0 0;
+  padding: 0 0 0 0;
+  text-align: left;
 
-  h3 {
+  li {
+    border-bottom: 1px solid darken(@offwhite, 20%);
+    padding: 10px 0;
+  }
+
+  li h3 {
     font-size:1.25em;
     font-weight: bold;
-    color:@base-color;
+    color: @base-color;
     text-align:center;
     line-height: 1.5;
+    display: inline-block;
+  }
+
+  li a {
+    button {
+      float:right;
+      padding: 5px 10px;
+      margin-top: 15px;
+    }
+  }
+
+}
+
+@media screen and (max-width: 650px){
+  .checkins-listing {
+    li h3 {
+      font-size: 1em;
+      display: block;
+      text-align: left;
+    }
+
+    li {
+     padding: 20px 0;
+    }
+
+    li a {
+      button {
+        margin-top: 5px;
+      }
+    }
   }
 }
 
 
+/* ====================================== NEARBY CHECKINS LIST CSS ================================= */
+
+
+.nearby-checkins-wrapper {
+  text-align: left;
+
+  li {
+    border-bottom: 1px solid darken(@offwhite, 20%);
+    padding: 15px 0;
+  }
+
+  li h3 {
+    font-size:1.15em;
+    font-weight: bold;
+    color: @base-color;
+    text-align:left;
+    line-height: 1.5;
+    display: inline;
+    margin: 0 7px 0 0;
+    width: 70%;
+  }
+
+  a.show-more {
+    display:inline;
+    text-decoration: underline;
+    color: lighten(@base-color, 10%)
+  }
+
+  .location-wrapper {
+    width: 75%;
+    display:inline-block;
+  }
+
+  li a {
+    button {
+      float:right;
+      padding: 5px 10px;
+      margin-top: 5px;
+    }
+  }
+
+  li.active-quest-checkin a button {
+    margin-top: -15px;
+  }
+
+  li p {
+    display: inline-block;
+  }
+
+}
+
+@media screen and (max-width: 450px){
+
+  .nearby-checkin-list {
+    text-align:center;
+
+    .location-wrapper {
+      display:block;
+      width: 100%;
+
+      li h3 {
+        font-size: 1em;
+        display: block;
+        text-align: left;
+      }
+    }
+
+    a.show-more {
+      display:block;
+      padding: 10px;
+    }
+
+    li a {
+      display:block;
+      button {
+        float:none;
+        width: 75%;
+        padding: 10px;
+      }
+    }
+  }
+}
+
+
+/* ====================================== LOCATION DETAIL CSS =============================================== */
+
+.location-details-wrapper {
+  line-height: 1.3;
+
+  h3.location-name {
+    font-weight: bold;
+    margin: 20px 0 10px 0;
+  }
+
+  #wiki-nav, #other-resources-link {
+    padding: 10px 0 0 0;
+    a {
+      display:block;
+      color:@base-color;
+      padding: 10px 5px;
+      border-bottom: 1px solid darken(@offwhite, 20%);
+    }
+
+    a:hover {
+      background: darken(@offwhite, 5%);
+    }
+  }
+
+  #wiki-description {
+    padding: 25px 0 0 0;
+    a {
+      color:lighten(@base-color, 10%);
+      text-decoration: underline;
+      // font-weight: bold;
+      text-decoration: none;
+      pointer-events: none;
+      cursor: default;
+    }
+  }
+
+  #other-resources-text {
+    word-wrap:break-word;
+    a {
+      color:lighten(@base-color, 10%);
+      text-decoration: underline;
+      font-weight: bold;
+      text-decoration: none;
+      display: inline;
+    }
+  }
+}
+
+
+/* ====================================== BADGES CSS =============================================== */
+
+
+.badge-list li {
+  display: inline-block;
+  width: 50%;
+  text-align: center;
+  margin: 25px 0 0 0;
+}
+
+@media screen and (max-width: 680px){
+  .badge-list li {
+    width: 100%;
+  }
+}
+
+
+
 /* ======================================== CREATE QUEST CSS ======================================== */
+
+#create-quest-map-filter {
+  position:absolute;
+  padding: 5px;
+  border-radius: 2px;
+  background-color:@base-complement;
+  top: 425px;
+  left: 80px;
+  z-index:5;
+}
+
+#quest-groups-list li {
+  line-height: 1.3em;
+}
 
 #create-quest-map {
   margin: 20px 0 0 0;
@@ -876,7 +1359,7 @@ a.pop-up-link {
 
 }
 
-/* ======================================== QUEST LIST CSS ======================================== */
+/* ======================================== QUEST VIEW CSS ======================================== */
 
 .quest-list-content-wrapper {
   h2 {
@@ -889,14 +1372,50 @@ a.pop-up-link {
       text-transform: uppercase;
   }
 
+  .quest-list-show-links-wrapper {
+    padding: 15px 0;
+    text-align: center;
+
+    a.quest-list-show-link {
+      display:inline-block;
+      width: 33%;
+      color:@base-color;
+      border: 1px solid @base-color;
+      padding: 12px 10px 10px 10px;
+      text-align: center;
+    }
+
+    a.quest-list-show-link:first-child {
+      border-top-left-radius: 3px;
+      border-bottom-left-radius: 3px;
+      border-right:none;
+    }
+
+    a.quest-list-show-link:last-child {
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+      border-left:none;
+    }
+
+    a.quest-list-show-link:hover {
+      background: darken(@offwhite, 5%);
+      color: @base-color;
+    }
+  }
+
   .quest-entry {
-    margin: 10px;
-    padding-bottom: 20px;
+    margin: 15px 0;
+    padding:  0 10px 10px 10px;
     border-bottom: 1px solid darken(@offwhite, 20%);
 
     p {
       display:inline-block;
       margin: 0 10px 0 0;
+    }
+
+    h3 {
+      display:inline-block;
+      width: 75%;
     }
 
     h3:hover {
@@ -909,8 +1428,12 @@ a.pop-up-link {
       text-decoration: none;
       color:@base-color;
       border: 1px solid @base-color;
-      padding: 2px 10px;
+      padding: 8px 10px 6px 10px;
       border-radius: 2px;
+      float:right;
+      font-size: .8em;
+      margin-top: -35px;
+      text-transform: uppercase;
     }
 
     a {
@@ -932,16 +1455,133 @@ a.pop-up-link {
     }
 
   }
+
+  .completed-quests-wrapper {
+    p {
+      margin: 20px 0 0 0;
+    }
+
+    img {
+      float:left;
+      width: 75px;
+      height: auto;
+    }
+  }
+}
+
+.find-more-quests {
+  padding: 10px 0 0 0;
+  text-align: center;
+}
+
+@media screen and (max-width: 400px){
+  .quest-list-content-wrapper {
+
+    .quest-list-show-links-wrapper {
+
+      a.quest-list-show-link {
+        font-size: .75em;
+      }
+    }
+  }
 }
 
 /* ======================================== QUEST SHOW CSS ======================================== */
 
 .quest-show-content-wrapper {
-  h1 {
-    font-size: 1.5em;
-    color:@base-color;
-    font-weight:bold;
+  .quest-header-wrapper {
+    display: block;
     margin: 10px 0;
+    height: 90px;
+
+    h1 {
+      font-size: 2em;
+      color:@base-color;
+      font-weight:bold;
+      margin: 28px 20px;
+      display: inline-block;
+      width: 75%;
+    }
+
+    img {
+      float: left;
+      width: auto;
+      height: 90px;
+      display: inline-block;
+    }
+  }
+
+  li {
+    padding: 15px 0;
+  }
+
+  .quest-description {
+    font-size: 1.2em;
+  }
+
+  .quest-destinations-container {
+    h2 {
+      font-size: 1.35em;
+    }
+
+    .quest-destinations .quest-destination {
+      .quest-details, .quest-address {
+        line-height: 1.3em;
+      }
+
+      h3 {
+        font-weight: bold;
+      }
+
+      p.label {
+        font-size: .5em;
+      }
+    }
+  }
+}
+
+#quest-map-canvas {
+  width: 100%;
+  height: 300px;
+}
+
+@media screen and (min-width: 450px) and (max-width: 590px) {
+  .quest-show-content-wrapper {
+    .quest-header-wrapper {
+      height: 80px;
+
+      h1 {
+        width: 60%;
+      }
+
+      img {
+        width: auto;
+        height: 80px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .quest-show-content-wrapper {
+    button {
+      font-size: .8em;
+    }
+
+    .quest-header-wrapper {
+      height: 70px;
+
+      h1 {
+        font-size: 1.4em;
+        width: 60%;
+        margin: 22px 10px;
+      }
+
+      img {
+        width: auto;
+        height: 70px;
+      }
+    }
   }
 }
 
@@ -960,14 +1600,65 @@ a.pop-up-link {
     height: auto;
     margin: 10px 0 0 0;
   }
+
+  .group-quest-options {
+    p.label {
+      display: block;
+      font-size: .7em;
+    }
+
+    label {
+      font-size: 1.1em;
+    }
+  }
+
+  .quest-destinations-container {
+    margin-bottom: 15px;
+
+    h2 {
+      font-size: 1.35em;
+    }
+
+    li {
+      padding: 15px 0;
+    }
+
+    .quest-destinations .quest-destination {
+      .quest-details, .quest-address {
+        line-height: 1.3em;
+      }
+
+      h3 {
+        font-weight: bold;
+      }
+
+      p.label {
+        font-size: .5em;
+      }
+    }
+  }
 }
 
 /* ======================================== CREATE GROUP CSS ======================================== */
 
 .create-group-wrapper {
-  input {
+  padding: 0 0 50px 0;
+
+  span#total-group-members {
+    font-size: 1.3em;
+  }
+
+  ul.added-members {
+    li {
+      border-bottom: 1px solid darken(@offwhite, 10%);
+      padding: 5px 0;
+      margin: 5px 0;
+    }
+  }
+
+  input, textarea {
     display:block;
-    width: 200px;
+    width: 100%;
     margin: 20px auto 0 auto;
   }
 
@@ -992,34 +1683,1017 @@ a.pop-up-link {
   li {
     padding: 10px;
     margin: 0 0 10px 0;
-    border-bottom: 1px solid darken(@offwhite, 20%)
+    border-bottom: 1px solid darken(@offwhite, 20%);
+    display:block;
   }
 
   p.group-name {
     margin: 10px;
+    font-size: 1.25em;
   }
 
-  a.edit {
+  a.group-edit, a.group-view {
     display:inline-block;
-    padding: 5px 10px;
+    float:right;
+    padding: 6px 10px 5px 10px;
     font-size: .8em;
-    background:@base-complement;
+    color:@base-color;
+    border: 1px solid @base-color;
+    border-radius: 2px;
+    margin: 8px 0 0 0;
+    text-transform: uppercase;
+  }
+
+  a.group-edit:hover, a.group-view:hover {
+    background-color:@base-complement;
+    border: 1px solid @base-complement;
     color:#fff;
-    margin: 0 0 10px 0;
+  }
+
+}
+
+/* ======================================== EDIT GROUPS CSS ======================================== */
+
+button.delete-group {
+  display:block;
+  margin: 15px auto 0px auto;
+  color: lighten(@dark-base, 10%);
+  padding: 10px 20px;
+  border: 1px solid @base-color;
+  border-radius: 2px;
+  background:none;
+  font-size: .9em;
+  text-transform: uppercase;
+  font-family: "adobe-garamond-pro";
+}
+
+button.delete-group:hover {
+  background:@base-complement;
+  border: 1px solid @base-complement;
+  color:#fff;
+}
+
+button.edit-group-name, button.edit-group-description {
+  float:right;
+}
+
+.group-name-wrapper, .group-description-wrapper {
+  display:inline-block;
+  width: 75%;
+  float:left;
+}
+
+.group-name-container {
+  display:inline-block;
+  width: 75%;
+}
+
+h1.group-name {
+  display:block;
+  width: 75%;
+  font-size: 1.25em;
+  font-weight:bold;
+}
+
+input.group-name-input {
+  width: 250px;
+  margin: 0 10px 0 0;
+}
+
+p.group-description {
+  display:inline-block;
+  width: 75%;
+  line-height: 1.3;
+  font-size: .9em;
+}
+
+textarea.group-description-input {
+  width: 100%;
+  min-height: 100px;
+}
+
+.add-member-info {
+  input {
+    width: 285px;
+    margin: 20px 10px 10px 0;
+  }
+}
+
+li.group-member {
+
+  .member-info-wrapper {
+    width:inherit;
+    display:inline-block;
+    float:left;
+
+    .profile-picture {
+      display:inline-block;
+      float: left;
+      width: 65px;
+      height: 65px;
+      background-size: cover;
+      background-position:center;
+      border-radius: 50%;
+      border: 2px solid @offwhite;
+      box-shadow: 0px 0px 5px darken(@dark-base, 10%);
+      margin: 20px 20px 25px 0;
+    }
+
+    .member-name {
+      float:left;
+      p.label {
+        margin-top: 15px;
+      }
+
+      h3 {
+        font-size: 1.1em;
+      }
+    }
+  }
+
+  button.remove-group-member {
+    float:right;
+    font-size: .9em;
+  }
+}
+
+h2.title {
+  font-size: 1.2em;
+  font-weight:bold;
+  margin: 0 0 15px 0;
+}
+
+@media screen and (max-width: 500px){
+  li.group-member {
+    text-align:center;
+    .member-info-wrapper {
+      width: 100%;
+      display:block;
+    }
+
+    button.remove-group-member {
+      float:left;
+      display:block;
+      margin: 15px auto 0 auto;
+    }
+  }
+}
+
+
+/* ==================================== SHOW GROUP ====================================== */
+
+.show-group-wrapper {
+  padding-top: 20px;
+
+  .group-name {
+    font-size: 1.8em;
+    text-align: center;
+    width: 100%;
+  }
+
+  .group-description {
+    display: block;
+    font-size: 1.2em;
+    width: 100%;
+  }
+
+  .group-member-photo {
+    display: inline-block;
+    float: left;
+    height: 90px;
+    width: 90px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0px 0px 5px @base-color;
+  }
+
+  .group-member-photo:hover {
+    opacity: .8;
+  }
+
+  li {
+    margin: 5px 0;
+    height: 90px;
+  }
+
+  .group-member-info {
+    display: inline-block;
+    // float: right;
+    margin-left: 25px;
+
+    p.label {
+      font-size: .6em;
+      margin-bottom: 0;
+    }
+
+    h3 {
+      font-size: 1.5em;
+    }
+  }
+
+  .border {
+    clear: both;
+  }
+}
+
+
+
+/* ======================================== CONFIRMATION CSS ======================================== */
+
+.confirmation-wrapper {
+  width: 90%;
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px 0 0 0;
+
+  h2 {
+    font-size: 1.3em;
+  }
+
+  #register, #login {
+    text-align: left;
+    width: 50%;
+    display:inline-block;
+
+    input {
+      width: 200px;
+    }
+
+    button {
+      font-size: 1em;
+    }
+  }
+
+  #register {float:left;}
+
+  #login {float:right;}
+}
+
+@media screen and (max-width: 550px){
+  .confirmation-wrapper {
+    #register, #login {
+      display:block;
+      float:none;
+      text-align: center;
+      margin: 0 auto;
+      width: 90%;
+
+      input {
+        width: 100%;
+      }
+    }
+
+    #login {
+      margin: 0 auto 25px auto;
+    }
+  }
+}
+
+/* ======================================== FORGOT PASSWORD CSS ======================================== */
+
+.forgot-wrapper {
+  text-align:center;
+
+  h1 {
+    font-size: 1.3em;
+    font-weight:bold;
+    padding: 15px 0;
+    margin: 0 0 15px 0;
+    border-bottom: 1px solid darken(@offwhite, 20%);
+  }
+
+  p  {
+    font-size: .9em;
+    line-height: 1.5;
+  }
+
+  form {
+    margin: 15px 0 0 0;
+
+    input {
+      width: 250px;
+    }
+  }
+}
+
+
+/* ================================== LEADERS CSS ================================== */
+
+.leaders-menu-buttons {
+  padding: 20px 0 5px 0;
+
+  a {
+    width: 50%;
+    display:inline-block;
+    background: ;
+    text-align:center;
+    color: @base-color;
+    padding: 10px;
+    border: 1px solid @base-color;
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  a:hover {
+    background: darken(@offwhite, 5%);
+  }
+
+  a.overall-menu-button {
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-right:none;
+  }
+
+  a.groups-menu-button {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+  }
+}
+
+.show-group-list ul {
+  li {
+    border-bottom: 1px solid darken(@offwhite, 20%);
+    padding: 12px 0;
+    list-style-type: none;
+  }
+
+  .group-leader-name-container {
+    display: inline-block;
+    width: 75%;
+  }
+
+  .group-leader-name-container h3.group-name {
+    font-size:1.25em;
+    font-weight: bold;
+    color: @base-color;
+    text-align:center;
+    line-height: 1.5;
+    display: inline;
+  }
+
+  .group-leader-name-button {
+    display: inline-block;
+    width: 25%;
+    text-align: right;
+  }
+
+  li button.show-group-rankings {
+    display: inline;
+    padding: 8px 13px;
+    margin-top: -1px;
+    background-color: rgba(0, 0, 0, 0);
+    border: 1px solid @base-color;
+    color: @base-color;
+    font-size: .8em;
+    cursor: pointer;
+  }
+
+  li button.show-group-rankings:hover {
+    background: darken(@offwhite, 5%);
+  }
+}
+
+.leaders-lists {
+  margin: 30px 0 0 0;
+
+  ol {
+    counter-reset:li;
+    margin-left: 0;
+    padding-left: 0;
+  }
+
+  ol h2 {
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+
+  ol li.leader-listing {
+    position: relative;
+    margin: 0 0 0 2em;
+    padding-left: 75px;
+    list-style: none;
+    height: 110px;
+
+    p.label {
+      margin-bottom: 0;
+    }
+  }
+
+  ol li.leader-listing:before {
+    content: counter(li);
+    counter-increment: li;
+    position: absolute;
+    top: 25px;
+    left: -1em;
+    border-radius: 3px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width : 2em;
+    /* Some space between the number and the content in browsers that support
+       generated content but not positioning it (Camino 2 is one example) */
+    margin-right: 8px;
+    padding: 15px 10px;
+    color:#fff;
+    background: @base-complement;
+    font-weight: bold;
+    font-size: 2em;
+    text-align: center;
+  }
+
+  li.leader-listing .leader-information-container {
+    display: inline-block;
+    position: relative;
+    margin-left: 20px;
+    top: -10px;
+    width: 220px;
+    overflow: hidden;
+  }
+
+  .leader-points {
+    font-size: 2em;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  .leader-name {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+  }
+
+  li.leader-listing {
+    .leader-image-container {
+      border: 2px solid #fff;
+      box-shadow: 0px 0px 5px @base-color;
+      display: inline-block;
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+      margin: 10px 0;
+      background-position: center;
+      background-size: cover;
+    }
+
+    .leader-badge-container {
+      display: inline-block;
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      background-position: center;
+      background-size: cover;
+    }
+  }
+}
+
+@media screen and (min-width: 550px) and (max-width: 680px) {
+  .leaders-lists {
+
+    ol li.leader-listing {
+      height: 100px;
+      padding-left: 60px;
+
+      .leader-badge-container {
+        width: 100px;
+        height: 100px;
+      }
+
+      .leader-image-container {
+        width: 80px;
+        height: 80px;
+      }
+
+      .leader-information-container {
+        top: 0px;
+        width: 200px;
+        overflow: hidden;
+      }
+    }
+
+    ol li.leader-listing:before {
+      top: 25px;
+      width: 1.7em;
+      font-size: 1.4em;
+      padding: 10px 5px;
+    }
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .leaders-lists {
+
+    ol {
+      h2 {
+        font-size: 1.2em;
+      }
+
+      .border {
+        margin: 7px;
+      }
+    }
+
+    ol li.leader-listing {
+      height: 90px;
+      padding-left: 30px;
+
+      .leader-badge-container {
+        display: none;
+      }
+
+      .leader-image-container {
+        width: 70px;
+        height: 70px;
+      }
+
+      .leader-information-container {
+        width: 125px;
+        top: 0px;
+
+        p.label {
+          margin-bottom: 0;
+          font-size: .6em;
+        }
+
+        .leader-name {
+          margin-bottom: 5px;
+          font-size: 1.3em;
+        }
+
+        .leader-points {
+          font-size: 1.4em;
+        }
+      }
+    }
+
+    ol li.leader-listing:before {
+      top: 20px;
+      width: 1.7em;
+      font-size: 1.4em;
+      padding: 10px 5px;
+    }
+  }
+
+  .show-group-list ul {
+    .group-leader-name-container h3.group-name {
+      font-size: 1em;
+    }
+
+    .group-leader-name-button button.show-group-rankings {
+      padding: 5px 10px;
+    }
+  }
+
+
+}
+
+
+/* ===================================== CLASS CONFIRMATION CSS ========================== */
+
+.class-confirmation-wrapper {
+  text-align: center;
+  img {
+    max-width: 250px;
+    height: auto;
+  }
+
+  h1 {
+    font-size: 4.5em;
+    font-weight: bold;
+  }
+
+  h3 {
+    font-size: 2.7em;
+  }
+
+}
+
+@media screen and (min-width: 360px) and (max-width: 550px) {
+  .class-confirmation-wrapper {
+    h1 {
+      font-size: 3em;
+    }
+
+    h3 {
+      font-size: 1.8em;
+    }
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .class-confirmation-wrapper {
+    img {
+      max-width: 220px;
+    }
+
+    h1 {
+      font-size: 2.3em;
+    }
+
+    h3 {
+      font-size: 1.4em;
+    }
+  }
+}
+
+
+/* ================================ QUEST CONFIRMATION CSS ============================== */
+
+.quest-confirmation-wrapper {
+  text-align: center;
+  img {
+    max-width: 250px;
+    height: auto;
+  }
+
+  h1 {
+    font-size: 4em;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  h3 {
+    font-size: 2.2em;
+  }
+
+  h3.quest-confirmation-name {
+    font-weight: bold;
+    margin-top: 10px;
+  }
+
+  h3.quest-bonus-points {
+    font-size: 1.8em;
+    margin-top: 20px;
+  }
+
+}
+
+@media screen and (min-width: 360px) and (max-width: 550px) {
+  .quest-confirmation-wrapper {
+    h1 {
+      font-size: 3em;
+    }
+
+    h3 {
+      font-size: 1.8em;
+    }
+
+    h3.quest-bonus-points {
+      font-size: 1.5em;
+      margin-top: 20px;
+    }
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .quest-confirmation-wrapper {
+    padding-bottom: 30px;
+
+    img {
+      max-width: 220px;
+    }
+
+    h1 {
+      font-size: 2.3em;
+    }
+
+    h3 {
+      font-size: 1.4em;
+    }
+
+    h3.quest-bonus-points {
+      font-size: 1.2em;
+      margin-top: 20px;
+    }
+  }
+}
+
+
+/* ================================= CLASS QUEST CONFIRMATION CSS ====================== */
+
+.class-quest-confirmation-wrapper {
+  text-align: center;
+  img {
+    // max-width: 250px;
+    width: 45%;
+    margin: 0 2%;
+    height: auto;
+  }
+
+  h1 {
+    font-size: 3em;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  h3 {
+    font-size: 1.8em;
+  }
+
+  h3.quest-confirmation-name {
+    font-weight: bold;
+    margin-top: 10px;
+  }
+
+  h3.quest-bonus-points {
+    font-size: 1.5em;
+    margin-top: 10px;
+    margin-bottom: 15px;
+  }
+
+}
+
+@media screen and (min-width: 360px) and (max-width: 600px) {
+  .class-quest-confirmation-wrapper {
+    h1 {
+      font-size: 2.5em;
+    }
+
+    h3 {
+      font-size: 1.3em;
+    }
+
+    h3.quest-bonus-points {
+      font-size: 1em;
+      margin-top: 20px;
+    }
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .class-quest-confirmation-wrapper {
+    padding-bottom: 30px;
+
+    img {
+      max-width: 220px;
+    }
+
+    h1 {
+      font-size: 2em;
+    }
+
+    h3 {
+      font-size: 1.1em;
+    }
+
+    h3.quest-bonus-points {
+      font-size: .9em;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+
+/* ================================= SEARCH RESULTS CSS ==================================== */
+
+.results-links-wrapper {
+    padding: 15px 0 25px 0;
+    text-align: center;
+
+    a.results-link {
+      display:inline-block;
+      width: 33%;
+      color:@base-color;
+      border: 1px solid @base-color;
+      padding: 12px 10px 10px 10px;
+      text-align: center;
+    }
+
+    a.results-link:first-child {
+      border-top-left-radius: 3px;
+      border-bottom-left-radius: 3px;
+      border-right:none;
+    }
+
+    a.results-link:last-child {
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+      border-left:none;
+    }
+
+    a.results-link:hover {
+      background: darken(@offwhite, 5%);
+      color: @base-color;
+    }
+  }
+
+.quests-results-wrapper {
+
+
+}
+
+a.result-name {
+  display:inline-block;
+  color:@base-color;
+  width: 75%;
+
+  h2 {
+    font-weight:bold;
+    font-size: 1.2em;
+    display:inline-block;
+  }
+}
+
+a.result-name:hover {
+  text-decoration: underline;
+  color:lighten(@base-color, 10%);
+}
+
+
+a.view-quest, a.view-location, a.view-user {
+  display:inline-block;
+  float:right;
+  margin: 10px 0 0 0;
+  padding: 7px 10px 5px 10px;
+  border-radius: 2px;
+  background: @base-complement;
+  color:#fff;
+}
+
+a.view-quest:hover, a.view-location:hover, a.view-user  {
+  background: darken(@base-complement, 10%);
+  color:#fff;
+}
+
+a.view-quest {
+  margin-top: 0;
+}
+
+a.view-location {
+  margin: -5px 0 0 0;
+}
+
+.locations-results-wrapper {
+  a.result-name {
+    display:inline-block;
+    width: 75%;
+  }
+}
+
+.users-results-wrapper {
+
+  .user-entry-wrapper {
+    .profile-pic {
+      width: 50px;
+      height: 50px;
+      background-size: cover;
+      background-position: center;
+      background-color: #fff;
+      display:inline-block;
+      border-radius: 50%;
+      border: 2px solid @offwhite;
+      box-shadow: 0px 0px 5px darken(@dark-base, 10%);
+      float:left;
+      margin: 0 20px 0 0;
+    }
+
+    h2 {
+      display:inline-block;
+      float:left;
+      margin: 10px 0 0 0;
+      font-size: 1.5em;
+      color:@base-color;
+    }
+  }
+}
+
+
+@media screen and (max-width: 400px){
+
+  .results-links-wrapper {
+
+    a.results-link {
+      font-size: .75em;
+    }
+  }
+}
+
+
+
+/* =================================== FIND QUEST CSS ============================== */
+
+.find-quest-wrapper {
+  margin-top: 20px;
+
+  .border#input-border {
+    margin: 15px 0 25px 0;
+    border: 1px solid lighten(@base-color, 5%)
+  }
+}
+
+.quest-search {
+  width: 60%;
+  margin: 0 auto 20px auto;
+  display: block;
+}
+
+.quest-search:focus {
+  border: 1px solid darken(@offwhite, 10%);
+}
+
+.available-quests-list {
+
+  h2.quest-name {
+    font-size: 1.6em;
+    display: block;
+    font-weight:bold;
+  }
+
+  .quest-description {
+    margin-top: 5px;
+    line-height: 1.3em;
+    display: block;
+    font-size: .9em;
+  }
+
+  a.quest-link {
+    button {
+      float: right;
+      padding: 7px 10px;
+      margin-top: 20px;
+    }
+  }
+
+  .quest-information-wrapper {
+    width: 60%;
+    display: inline-block;
+    margin: 15px 0 0 15px;
+    a {
+      color: @base-color;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .quest-image-wrapper {
+    max-width: 80px;
+    width: 25%;
+    height: 80px;
+    border-radius: 50%;
+    background-position: center;
+    background-size: cover;
+    display: inline-block;
+    float: left;
+  }
+
+  li {
+    min-height: 80px;
+    padding-left: 8%;
+  }
+
+  .border {
+    margin: 10px 0;
   }
 
 }
 
 
+@media screen and (max-width: 460px) {
+  .available-quests-list {
+    .quest-listing-wrapper li {
+      min-height: 60px;
+    }
 
+    .quest-information-wrapper {
+      width: 65%;
+      margin-left: 10px;
+      margin-top: 10px;
+      float: left;
+    }
 
+    .quest-image-link {
+      min-width: 60px;
+      display: inline-block;
+      float: left;
+    }
 
+    a.quest-link {
+      display: none;
+      button {
+        float: none;
+      }
+    }
 
+    .quest-image-wrapper {
+      height: 60px;
+      width: 60px;
+      display: block;
+      float: none;
+    }
 
+    h2.quest-name {
+      font-size: 1.2em;
+    }
 
-
-
-
+    .quest-description {
+      font-size: .8em;
+    }
+  }
+}
 
 
 /* ======================================== OLD CSS ======================================== */
@@ -1075,13 +2749,6 @@ a.pop-up-link {
   padding-top: 100px;
 }
 
-#register {
-  float:left;
-}
-
-#login {
-  float:right;
-}
 
 input:focus {
   outline:none;
@@ -1105,6 +2772,402 @@ button {
   width: 400px;
 }
 
+/* ======================================== LANDING PAGE ======================================== */
+
+
+header#landing-header {
+  height: 60px;
+  width: 100%;
+  background-image: url('/img/assets/brown-paper-bkg.jpg');
+  background-size: 100px 100px;
+  box-shadow: 0px 0px 10px 1px #352e1f;
+  color: @offwhite;
+  text-align:center;
+  position:absolute;
+  top: 0px;
+  z-index: 5;
+
+  img.logo-icon {
+    width: 45px;
+    height: auto;
+    display:inline-block;
+    float:left;
+    margin: 8px 0 0 20px;
+  }
+
+  .account-links {
+    display:inline-block;
+    float:right;
+    margin: 22px 20px 0 0;
+
+    a {
+      display:inline-block;
+      padding: 3px 0;
+      color: @offwhite;
+      margin: 0 12px;
+      .transition;
+      text-shadow: 0px 0px 5px darken(@base-color, 20%);
+    }
+
+    a:hover {
+      border-bottom: 2px solid @offwhite;
+      .transition;
+    }
+  }
+}
+
+.login-wrapper {
+  background-image: url('/img/assets/brown-paper-bkg.jpg');
+  background-size: 100px 100px;
+  height: 165px;
+  padding: 80px 0 0 0;
+  text-align: center;
+  display:none;
+
+  #login {
+    width: 75%;
+    margin: 0 auto;
+    max-width: 500px;
+
+    a {
+      display:block;
+      color: @offwhite;
+      padding: 10px 0 0 0;
+    }
+
+    button {
+      margin: 0 10px;
+    }
+  }
+}
+
+.hero-div {
+  text-align: center;
+  width: 100%;
+  background-size:cover;
+  background-position:center;
+  background-image: url(/img/assets/landing-hero-bkg.jpg);
+  padding: 120px 0 70px 0;
+
+  h1.logo {
+    width: 75%;
+    max-width: 500px;
+    text-indent: -9999px;
+    margin: 0 auto 15px auto;
+    height: 100px;
+    background-image: url(/img/assets/logo-full-dark.svg);
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position:center;
+  }
+
+  h2 {
+    width: 80%;
+    max-width: 550px;
+    margin: 20px auto;
+    font-size: 1.4em;
+    letter-spacing: 3px;
+    line-height: 1.2;
+  }
+
+  a.sign-up-main {
+    display:inline-block;
+    font-size:1.3em;
+    padding: 12px 35px 10px 35px;
+    color:@base-color;
+    border: 1px solid @base-color;
+    border-radius: 2px;
+    margin: 0 0 15px 0;
+    .transition;
+  }
+
+  a.sign-up-main:hover {
+    background-color:@base-color;
+    color:@offwhite;
+    .transition;
+  }
+
+  p {
+    margin-right: 10px;
+  }
+
+  a.log-in {
+    color: @base-color;
+  }
+
+  a.log-in:hover {
+    text-decoration: underline;
+  }
+}
+
+.mission-statement {
+  width: 75%;
+  max-width: 650px;
+  margin: 25px auto;
+
+  h3 {
+    font-size: 1.6em;
+    line-height: 1.3;
+    text-align:center;
+  }
+}
+
+.landing-divider {
+  width: 85%;
+  max-width: 700px;
+  margin: 0 auto;
+  height: 45px;
+  background-image: url(/img/assets/landing-divider.png);
+  background-size: 700px auto;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.game-info-wrapper {
+  width: 75%;
+  max-width: 650px;
+  margin: 25px auto;
+
+  .nashplorer-badge-wrapper {
+    width: 25%;
+    display:inline-block;
+    margin: 0 30px 0 0;
+    float: left;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  .game-info-content {
+    width: 65%;
+    display:inline-block;
+    float: right;
+
+    p {
+      margin-top: 20px;
+      font-size:1.1em;
+      line-height: 1.3;
+    }
+  }
+}
+
+.data-info-wrapper {
+  width: 75%;
+  max-width: 650px;
+  margin: 25px auto;
+
+  .data-info-content {
+    width: 65%;
+    display:inline-block;
+    float: left;
+
+    p {
+      margin-top: 20px;
+      font-size:1.1em;
+      line-height: 1.3;
+    }
+  }
+
+  .pins-image-wrapper {
+    width: 25%;
+    display:inline-block;
+    margin: 0 30px 0 0;
+    float: right;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+}
+
+.who-we-are {
+  text-align: center;
+  width: 95%;
+  max-width: 750px;
+  margin: 25px auto;
+
+  h2 {
+    font-size: 1.4em;
+    letter-spacing: 3px;
+    margin: 0 0 15px 0;
+  }
+
+  p {
+    width: 85%;
+    margin: 0 auto;
+    font-size: 1.1em;
+    line-height: 1.3;
+  }
+
+  .profile-pictures {
+    padding: 25px 0 0 0;
+
+    .pic-wrapper {
+      text-align: center;
+      width: 150px;
+      display:inline-block;
+
+      a {
+        color:@base-color;
+        img {
+          width: 80%;
+          border-radius: 50%;
+          border: 2px solid @offwhite;
+          box-shadow: 0px 0px 10px darken(@dark-base, 10%);
+          margin: 10px;
+        }
+
+        p {
+          font-size: .9em;
+        }
+      }
+    }
+  }
+}
+
+.landing-footer {
+  width: 100%;
+  background-image: url('/img/assets/brown-paper-bkg.jpg');
+  background-size: 100px 100px;
+  box-shadow: 0px 0px 10px 1px #352e1f;
+  color: @offwhite;
+  text-align:center;
+  padding: 30px 0 40px 0;
+  margin: 50px 0 0 0;
+
+  p {
+    font-size: 1.1em;
+    letter-spacing: 2px;
+  }
+
+  #register {
+    padding: 10px 0 0 0;
+    input {
+      background:@offwhite;
+      border:none;
+      box-shadow: 0px 0px 5px darken(@base-color, 20%);
+      width: 75%;
+      min-width: 270px;
+      max-width: 400px;
+      margin: 5px;
+      padding: 15px;
+    }
+
+    button {
+      margin: 15px 0 0 0;
+      padding: 7px 30px 5px 30px;
+      background:none;
+      border: 1px solid @offwhite;
+      font-family: "adobe-garamond-pro", sans-serif;
+      font-size: 1.2em;
+      letter-spacing: 2px;
+      .transition;
+    }
+
+    button:hover {
+      background:@offwhite;
+      color:@base-color;
+      .transition;
+    }
+  }
+
+  .footer-logo-icon {
+    img {
+      margin: 30px 0 0 0;
+      width: 60px;
+      height: auto;
+    }
+  }
+
+}
+
+@media screen and (max-width: 500px){
+  .login-wrapper {
+    height: 265px;
+    #login {
+      input {
+        display:block;
+        width: 80%;
+        margin: 10px auto;
+      }
+
+      button {
+        font-size: 1em;
+        width: 150px;
+        margin: 0 0 5px 0;
+      }
+    }
+  }
+
+  .hero-div {
+    padding: 80px 0 40px 0;
+
+    h1.logo {
+      width: 60%;
+      min-width: 250px;
+      height: 75px;
+      margin-bottom: 0;
+    }
+
+    h2 {
+      font-size: .9em;
+      margin: 10px auto;
+    }
+  }
+
+  .mission-statement {
+    h3 {
+      font-size: 1em;
+    }
+  }
+
+  .game-info-wrapper, .data-info-wrapper {
+    width: 85%;
+
+    .nashplorer-badge-wrapper, .pins-image-wrapper {
+      width: 35%;
+      display:block;
+      margin: 0 auto;
+      text-align: center;
+      float:none;
+    }
+
+    .game-info-content, .data-info-content {
+      width: 85%;
+      display:block;
+      float: none;
+      text-align: center;
+      margin: 0 auto;
+
+      p {
+        margin-top: 0;
+        font-size:1em;
+        line-height: 1.3;
+      }
+    }
+
+    .data-info-content p {
+      padding: 20px 0 0 0;
+      border-top: 1px solid darken(@offwhite, 20%)
+    }
+  }
+
+  .who-we-are {
+    p {
+      font-size: 1em;
+    }
+  }
+
+  .landing-footer {
+    p {
+      font-size: .8em;
+    }
+  }
+}
+
 /* ======================================== NATHAN EDITS ======================================== */
 #group-code {
   margin-right: 15px;
@@ -1115,4 +3178,3 @@ button {
   height: auto;
   border-radius: 50%;
 }
-

@@ -4,12 +4,19 @@
   $(document).ready(init);
 
   function init() {
+    // $('input.main-search-input').hide();
     $('a.show-searchbar').click(showSearchbar);
     $('ul.group-menu').hide();
     $('a.group-menu-button').click(showGroupMenu);
     $('a.quest-menu-button').click(showQuestMenu);
     $('a.submit-logout').click(submitLogoutForm);
     $('a.back-button').click(goBack);
+
+    $('a#log-in-main, a#already-login').click(showLoginForm);
+  }
+
+  function showLoginForm(){
+    $('.login-wrapper').slideToggle();
   }
 
   function goBack(){
@@ -19,6 +26,7 @@
 
   // FUNCTIONS FOR TEMPLATE PAGE ======================================================
   function showSearchbar(){
+    // $('input.main-search-input').show();
     $('input.main-search-input').toggleClass('show-searchbar-input');
     $('a.show-searchbar').toggleClass('small-magnifying-glass');
   }
@@ -33,8 +41,8 @@
   	event.preventDefault();
   	$('a.group-menu-button').addClass('active-button');
   	$('a.quest-menu-button').removeClass('active-button');
-		$('ul.quest-menu').fadeOut(function(){
-			$('ul.group-menu').fadeIn();
+		$('ul.quest-menu').fadeOut(250, function(){
+			$('ul.group-menu').fadeIn(250);
 		});
   }
 
@@ -42,8 +50,8 @@
   	event.preventDefault();
   	$('a.quest-menu-button').addClass('active-button');
   	$('a.group-menu-button').removeClass('active-button');
-		$('ul.group-menu').fadeOut(function(){
-			$('ul.quest-menu').fadeIn();
+		$('ul.group-menu').fadeOut(250, function(){
+			$('ul.quest-menu').fadeIn(250);
 		});
   }
 

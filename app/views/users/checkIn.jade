@@ -11,9 +11,9 @@ block content
         p= location.description
 
         form(action='/users/checkin/#{location._id}/?lat=#{location.loc[1]}&lng=#{location.loc[0]}', method='POST')
-         textarea(rows='5', columns='50', name='comment')
+         textarea(rows='5', columns='50', name='comment', placeholder="Leave your comment here.")
          button Check In
-        h1 You are checking into #{location.name}
 
         if(prevCheckInStatus)
-          p You can check into a location multiple times but it will only be counted to your score for leveling up and badges once.
+          .border
+          p.center You can check into a location multiple times but it will only be counted to your score for leveling up and badges once.

@@ -5,10 +5,10 @@ block content
   .content-wrapper
     mixin back('Quest Details')
 
-    .messages
-
     .quest-show-content-wrapper
-      h1.quest-name(data-id='#{quest._id}')= quest.name
+      .quest-header-wrapper
+        img(src="#{quest.photo.filePath}")
+        h1.quest-name(data-id='#{quest._id}')= quest.name
 
       // TODO if (quest.isPublic)
       if (!user.isCompletedQuest(quest._id))
@@ -31,17 +31,15 @@ block content
         form(action='/users/add-quest/#{quest._id}', method='POST')
           button.add-quest Save Voyage Again For Later
       .border
-      p= quest.description
-
-      .quest-progress-container
-        h2 Quest Progress
-        ul.quest-progress
+      p.label Description:
+      p.quest-description= quest.description
+      .border
 
       .quest-destinations-container
-        h2 Quest Path
+        h2 Quest Path:
         ul.quest-destinations
 
-    #quest-map-canvas
+  #quest-map-canvas
 
 block scripts
   script(src='/js/es6/compiled/show-quest.js')
