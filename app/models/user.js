@@ -14,11 +14,11 @@ var Mongo = require('mongodb');
 
 
 class User{
-  constructor(fields, userName, fn){
-    this.email = fields.email[0];
-    this.password = fields.password[0];
-    this.userName = userName;
-    this.nickName = fields.nickName[0];
+  constructor(body, fn){
+    this.email = body.email;
+    this.password = body.password;
+    this.userName = body.userName;
+    this.nickName = body.nickName;
     this.badges = [{name: 'Couch Potato', filePath: '/img/assets/badges/couch_potato.png'}]; // Object IDs
     this.class = 'Couch Potato';
     this.groups = []; // Object IDs
@@ -345,13 +345,13 @@ class User{
     }
   }
 
-  static register(fields, userName, fn){
-    users.findOne({email:fields.email[0]}, (err, u)=>{
-      users.findOne({userName:userName}, (err, u2)=>{
+  static register(body, fn){
+    users.findOne({email:body.email}, (err, u)=>{
+      users.findOne({userName:body.userName}, (err, u2)=>{
         if(u || u2){//if user email or username exists,
           fn(null);
         }else{
-          var user = new User(fields, userName);
+          var user = new User(body);
           user.password = bcrypt.hashSync(user.password, 8); //hashed/encrypted version of password
           user.save(()=>{
             _.create(User.prototype, this);

@@ -55,7 +55,7 @@ block content
   .landing-footer
     p MAKE YOUR ACCOUNT TODAY!
     #register
-      form(method='POST', action='/register', enctype='multipart/form-data')
+      form(method='POST', action='/register')
         input.form-control.username(type='text', name='userName', placeholder='Username (required)', required)
         .clear
         input.form-control.nickname(type='text', name='nickName', placeholder='Nick Name (required)', required)
