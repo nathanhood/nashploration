@@ -31,12 +31,17 @@ describe('User', function(){
 
   describe('.register', function(){
     it('should successfully create a user', function(done){
-      User.register({email:['bob@aol.com'], password:['123456'], nickName:['badass']}, 'ransolo', function(u){
-        expect(u).to.be.ok;
-        expect(u).to.be.an.instanceof(User);
-        expect(u._id).to.be.an.instanceof(Mongo.ObjectID);
-        expect(u.password).to.have.length(60);
-        done();
+      User.register({email:'bob@aol.com', password:'123456', nickName:'badass', userName:'ransolo'}, function(u){
+        User.findById(u._id, function(err, user){
+          expect(user).to.be.ok;
+          expect(user).to.be.an.instanceof(User);
+          expect(user._id).to.be.an.instanceof(Mongo.ObjectID);
+          expect(user.email).to.equal('bob@aol.com');
+          expect(user.nickName).to.equal('badass');
+          expect(user.userName).to.equal('ransolo');
+          expect(user.password).to.have.length(60);
+          done();
+        });
       });
     });
 

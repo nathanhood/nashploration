@@ -40,40 +40,36 @@ exports.profile = (req, res)=>{
 };
 
 exports.register = (req, res)=>{
-  var form = new multiparty.Form();
-
-  form.parse(req, (err, fields, files)=>{
-    var userName = fields.userName[0].split(' ').map(w=>w.trim()).map(w=>w.toLowerCase()).join('');
-    Group.findByGroupCode(fields.groupCode[0], group=>{
-      User.register(fields, userName, (u)=>{
-        if (u) {
-          if (!group) {
-            u.save(()=>{
-              res.locals.user = u;
-              req.session.userId = u._id;
-              res.redirect(`/users/${u.userName}`);
-            });
-          } else {
-            group.joinGroup(u);
-            Quest.findManyById(group.quests, (quests)=>{
-              quests.forEach((quest, i)=>{ Quest.addGroupUser(quests[i], u._id); });
-              async.map(quests, Quest.updateGroupUsers, ()=>{
-                u.save(()=>{
-                  group.save(()=>{
-                    res.locals.user = u;
-                    req.session.userId = u._id;
-                    req.flash('joinedGroup', `You successfully joined the group ${group.name}`);
-                    res.redirect(`/users/${u.userName}`);
-                  });
+  req.body.userName = req.body.userName.split(' ').map(w=>w.trim()).map(w=>w.toLowerCase()).join('');
+  Group.findByGroupCode(req.body.groupCode, group=>{
+    User.register(req.body, (u)=>{
+      if (u) {
+        if (!group) {
+          u.save(()=>{
+            res.locals.user = u;
+            req.session.userId = u._id;
+            res.redirect(`/users/${u.userName}`);
+          });
+        } else {
+          group.joinGroup(u);
+          Quest.findManyById(group.quests, (quests)=>{
+            quests.forEach((quest, i)=>{ Quest.addGroupUser(quests[i], u._id); });
+            async.map(quests, Quest.updateGroupUsers, ()=>{
+              u.save(()=>{
+                group.save(()=>{
+                  res.locals.user = u;
+                  req.session.userId = u._id;
+                  req.flash('joinedGroup', `You successfully joined the group ${group.name}`);
+                  res.redirect(`/users/${u.userName}`);
                 });
               });
             });
-          }
-        } else {
-          req.flash('registerAndLogin', 'That username and/or email already exists. Please try again.');
-          res.redirect('/');
+          });
         }
-      });
+      } else {
+        req.flash('registerAndLogin', 'That username and/or email already exists. Please try again.');
+        res.redirect('/');
+      }
     });
   });
 };
