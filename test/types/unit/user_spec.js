@@ -76,8 +76,11 @@ describe('User', function(){
   describe('.findById', function(){
     it('should find a user', function(done){
       User.register({email:'ann@aol.com', password:'123456', nickName:'Little Orphan', userName:'Annie'}, function(u){
-        User.findById(u._id, function(user){
+        User.findById(u._id, function(err, user){
           expect(u.email).to.equal('ann@aol.com')
+          expect(u.nickName).to.equal('Little Orphan')
+          expect(u.userName).to.equal('Annie')
+
           done();
         });
       });
