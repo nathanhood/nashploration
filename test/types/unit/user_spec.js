@@ -3,27 +3,38 @@
 
 'use strict';
 
-process.env.DBNAME = 'blueprint-test';
+process.env.DBNAME = 'nashploration-test';
 
 var expect = require('chai').expect;
 var Mongo = require('mongodb');
 var traceur = require('traceur');
 var db = traceur.require(__dirname + '/../../helpers/db.js');
-var bob;
 var User;
+var Group;
+
+var bob;
+var jim;
+var group;
 
 describe('User', function(){
   before(function(done){
     db(function(){
       User = traceur.require(__dirname + '/../../../app/models/user.js');
+      Group = traceur.require(__dirname + '/../../../app/models/group.js');
       done();
     });
   });
 
   beforeEach(function(done){
     global.nss.db.collection('users').drop(function(){
-      bob = User.register({email:'bob@aol.com', password:'123456', nickName:'badass', userName:'bobbydee'}, function(u){
-        done();
+      global.nss.db.collection('groups').drop(function(){
+        User.register({email:'bob@aol.com', password:'123456', nickName:'badass', userName:'bobbydee'}, function(user){
+          User.register({email:'jim@aol.com', password:'123456', nickName:'dingus', userName:'jimmyboy'}, function(u){
+            bob = user;
+            jim = u;
+            done();
+          });
+        });
       });
     });
   });
@@ -101,6 +112,56 @@ describe('User', function(){
     it('should not find user - bad email', function(done){
       User.findByUserName('wrongUserName', function(user){
         expect(user).to.be.null;
+        done();
+      });
+    });
+  });
+
+  describe('.findManyById', function(){
+    it('should find many users from array of ids', function(done){
+      var ids = [jim._id, bob._id];
+      User.findManyById(ids, function(users){
+        expect(users.length).to.equal(2);
+        expect(users[0].userName).to.equal('bobbydee');
+        expect(users[1].userName).to.equal('jimmyboy');
+        done();
+      });
+    });
+
+    it('should not find users - no ids', function(done){
+      var ids = [''];
+      User.findManyById(ids, function(users){
+        expect(users.length).to.equal(0);
+        done();
+      });
+    });
+  });
+
+  describe('.findManyUsersByGroup', function(){
+    beforeEach(function(done){
+      group = new Group(bob._id, {title: 'mr. dylan\'s class', description: 'The coolest teacher ever'});
+      group.save(function(){
+        done();
+      });
+    });
+
+    it('should find all the users in group', function(done){
+      group.joinGroup(jim);
+      group.joinGroup(bob);
+      group.save(function(){
+        User.findManyUsersByGroup(group, function(users){
+          expect(users.length).to.equal(2);
+          expect(users[0]).to.be.ok;
+          expect(users[0]).to.be.instanceof(Object);
+          expect(users[0]._id).to.be.instanceof(Mongo.ObjectID);
+          done();
+        });
+      });
+    });
+
+    it('should not find any users - none in group', function(done){
+      User.findManyUsersByGroup(group, function(users){
+        expect(users.length).to.equal(0);
         done();
       });
     });
