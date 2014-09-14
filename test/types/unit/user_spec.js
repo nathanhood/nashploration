@@ -79,16 +79,9 @@ describe('User', function(){
         User.findById(u._id, function(user){
           expect(u.email).to.equal('ann@aol.com')
           done();
-          });
         });
       });
-    //
-    // it('should not find user - bad email', function(done){
-    //   User.findById('wrong@nomail.com', function(user){
-    //     expect(user).to.be.null;
-    //     done();
-    //   });
-    // });
+    });
   });
 
 
