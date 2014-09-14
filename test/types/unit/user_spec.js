@@ -185,4 +185,23 @@ describe('User', function(){
     });
   });
 
+  describe('.updateInfo', function(done){
+    it('should update userName', function(done){
+      bob.updateInfo({userName:'bobber'}, function(user){
+        expect(user).to.be.ok;
+        expect(user.userName).to.equal('bobber');
+        done();
+      });
+    });
+
+    it('should update password', function(done){
+      var oldBob = bob;
+      bob.updateInfo({password: 'aaaaaa'}, function(user){
+        expect(user.password).to.not.equal(oldBob.password);
+        expect(user.password).to.have.length(60);
+        done();
+      });
+    });
+  });
+
 });
