@@ -22,7 +22,7 @@ describe('User', function(){
 
   beforeEach(function(done){
     global.nss.db.collection('users').drop(function(){
-      User.register({email:'bob@aol.com', password:'123456', nickName:'badass', userName:'bobbydee'}, function(u){
+      bob = User.register({email:'bob@aol.com', password:'123456', nickName:'badass', userName:'bobbydee'}, function(u){
         done();
       });
     });
@@ -71,6 +71,24 @@ describe('User', function(){
         done();
       });
     });
+  });
+
+  describe('.findById', function(){
+    it('should find a user', function(done){
+      User.register({email:'ann@aol.com', password:'123456', nickName:'Little Orphan', userName:'Annie'}, function(u){
+        User.findById(u._id, function(user){
+          expect(u.email).to.equal('ann@aol.com')
+          done();
+          });
+        });
+      });
+    //
+    // it('should not find user - bad email', function(done){
+    //   User.findById('wrong@nomail.com', function(user){
+    //     expect(user).to.be.null;
+    //     done();
+    //   });
+    // });
   });
 
 
