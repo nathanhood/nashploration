@@ -167,4 +167,22 @@ describe('User', function(){
     });
   });
 
+  describe('.searchByName', function(done){
+    it('should find a user by userName', function(done){
+      User.searchByName('bob', function(users){
+        expect(users.length).to.equal(1);
+        expect(users[0]).to.be.instanceof(Object);
+        expect(users[0].userName).to.equal('bobbydee');
+        done();
+      });
+    });
+
+    it('should not find a user', function(done){
+      User.searchByName('notauser', function(users){
+        expect(users.length).to.equal(0);
+        done();
+      });
+    });
+  });
+
 });
