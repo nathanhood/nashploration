@@ -84,5 +84,24 @@ describe('User', function(){
     });
   });
 
+  describe('.findByUserName', function(){
+    it('should find a user', function(done){
+      User.findByUserName('bobbydee', function(user){
+        expect(user).to.be.ok;
+        expect(user._id).to.be.an.instanceof(Mongo.ObjectID);
+        expect(user.email).to.equal('bob@aol.com');
+        expect(user.nickName).to.equal('badass');
+        expect(user.password).to.have.length(60);
+        done();
+      });
+    });
+
+    it('should not find user - bad email', function(done){
+      User.findByUserName('wrongUserName', function(user){
+        expect(user).to.be.null;
+        done();
+      });
+    });
+  });
 
 });
