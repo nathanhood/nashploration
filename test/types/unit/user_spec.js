@@ -202,6 +202,26 @@ describe('User', function(){
         done();
       });
     });
+
+    it('should update nickName', function(done){
+      var oldBob = bob;
+      bob.updateInfo({nickName: 'booby'}, function(user){
+        expect(user).to.be.ok;
+        expect(user.nickName).to.equal('booby');
+        expect(user.nickName).to.not.equal(oldBob.nickName);
+        done();
+      });
+    });
+
+    it('should update email', function(done){
+      var oldBob = bob;
+      bob.updateInfo({email: 'bob@me.com'}, function(user){
+        expect(user).to.be.ok;
+        expect(user.email).to.not.equal(oldBob.email);
+        expect(user.email).to.equal('bob@me.com');
+        done();
+      });
+    });
   });
 
 });
