@@ -5,3 +5,6 @@ services:
   - mongodb
 after_script:
   - npm run coveralls
+env:
+  global:
+    secure: "YKR6Bun4jSRaxkh8gr2UYic3C0aXha0JcMVYYMBx3L02rRmVcyTvnti1yCQOF60HxIFzOnplFA+/U6gOj4xrrVFOcc8GsMdbpjN4mlEdMHEBZooF435jRu0s9p+/xaVRdEl5zsTL2AXwUbUixKho/XerbH0UjgzNgNguIArbk="

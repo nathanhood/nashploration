@@ -1,8 +1,8 @@
 {
-  "name": "server-template",
+  "name": "nashploration",
   "repository" : {
     "type" : "git",
-    "url"  : "https://github.com/nss-cohort-2014-04-07/server-template"
+    "url"  : "https://github.com/nathanhood/nashplorer"
   },
   "version": "0.0.1",
   "private": true,
