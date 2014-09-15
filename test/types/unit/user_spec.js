@@ -11,6 +11,7 @@ var traceur = require('traceur');
 var db = traceur.require(__dirname + '/../../helpers/db.js');
 var User;
 var Group;
+var Quest;
 
 var bob;
 var jim;
@@ -21,6 +22,7 @@ describe('User', function(){
     db(function(){
       User = traceur.require(__dirname + '/../../../app/models/user.js');
       Group = traceur.require(__dirname + '/../../../app/models/group.js');
+      Quest = traceur.require(__dirname + '/../../../app/models/quest.js');
       done();
     });
   });
@@ -28,11 +30,13 @@ describe('User', function(){
   beforeEach(function(done){
     global.nss.db.collection('users').drop(function(){
       global.nss.db.collection('groups').drop(function(){
-        User.register({email:'bob@aol.com', password:'123456', nickName:'badass', userName:'bobbydee'}, function(user){
-          User.register({email:'jim@aol.com', password:'123456', nickName:'dingus', userName:'jimmyboy'}, function(u){
-            bob = user;
-            jim = u;
-            done();
+        global.nss.db.collection('quests').drop(function(){
+          User.register({email:'bob@aol.com', password:'123456', nickName:'badass', userName:'bobbydee'}, function(user){
+            User.register({email:'jim@aol.com', password:'123456', nickName:'dingus', userName:'jimmyboy'}, function(u){
+              bob = user;
+              jim = u;
+              done();
+            });
           });
         });
       });
@@ -185,7 +189,7 @@ describe('User', function(){
     });
   });
 
-  describe('.updateInfo', function(done){
+  describe('#updateInfo', function(done){
     it('should update userName', function(done){
       bob.updateInfo({userName:'bobber'}, function(user){
         expect(user).to.be.ok;
@@ -222,6 +226,21 @@ describe('User', function(){
         done();
       });
     });
+  });
+
+  describe('#addQuests', function(done){
+    it('should add the quest object id to user object', function(done){
+      var quest = new Quest(bob._id, ['objectid1232433'], {name:'questLove', description:'some quest'}, [jim._id], null);
+      quest.save(function(){
+        bob.addQuest(quest._id);
+        expect(bob.myQuests[0]).to.equal(quest._id);
+        done();
+      });
+    });
+  });
+
+  describe('#makeActiveQuest', function(done){
+
   });
 
 });
