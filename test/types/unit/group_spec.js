@@ -1,5 +1,6 @@
 /* global describe, it, before, beforeEach */
 /* jshint expr:true */
+/* jshint unused: false */
 
 'use strict';
 
@@ -10,12 +11,12 @@ var Mongo = require('mongodb');
 var traceur = require('traceur');
 var db = traceur.require(__dirname + '/../../helpers/db.js');
 var Group;
-var group1
-var group2
-var group3
-var User
-var bob
-var ann
+var group1;
+var group2;
+var group3;
+var User;
+var bob;
+var ann;
 
 
 describe('Group', function(){

@@ -1,5 +1,6 @@
 /* global describe, it, before, beforeEach */
 /* jshint expr:true */
+/* jshint unused: false */
 
 'use strict';
 
