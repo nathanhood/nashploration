@@ -239,8 +239,13 @@ describe('User', function(){
     });
   });
 
-  describe('#makeActiveQuest', function(done){
-
-  });
+  // describe('#makeActiveQuest', function(done){
+  //   it('should make a quest active', function(done){
+  //     var quest1 = Factory.build('quest');
+  //       console.log('========= QUEST ==========');
+  //       console.log(quest1);
+  //       done();
+  //   });
+  // });
 
 });
