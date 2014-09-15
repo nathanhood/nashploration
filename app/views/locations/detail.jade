@@ -9,11 +9,17 @@ block content
       p= location.description
 
       if(comments)
+        .border
+        p.label Comments
         each comment in comments
-          p= comment.userName
-          p Posted #{comment.daysFromComment}
-          p= comment.comment
-          img(src='#{comment.userPhoto}')
+          .comment-wrapper
+            .comment-profile-picture(style="background-image: url(#{comment.userPhoto})")
+            .comment-content
+              p.comment-username= comment.userName
+              p.comment-date Posted #{comment.daysFromComment}
+              .clear
+              p.comment-body= comment.comment
+            .clear
       
       .border
       #wiki

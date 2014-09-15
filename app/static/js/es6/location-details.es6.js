@@ -40,6 +40,7 @@
   function wikiAPICall(params) {
     $.getJSON(`http://en.wikipedia.org/w/api.php?action=parse&format=json&page=${params}&prop=text|images|sections&callback=?`).done(function(data){
       wikipediaHTMLResult(data, params);
+      console.log(data);
     });
   }
 

@@ -4,7 +4,8 @@ block content
 
   .content-wrapper
     .class-quest-confirmation-wrapper
-      img(src="#{user.badges[user.badges.length -1].filePath}")
+      .quest-frame-wrapper(style='float:none; display:inline-block')
+        .quest-image-wrapper(style="background-image: url(#{quest.photo.filePath})")
       img(src="#{user.badges[user.badges.length -1].filePath}")
       h1 Congratulations!
       h3 You completed the quest:

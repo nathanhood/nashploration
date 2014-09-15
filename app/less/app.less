@@ -1210,6 +1210,72 @@ a.edit-profile:hover {
       display: inline;
     }
   }
+
+  .comment-wrapper {
+    margin: 0 0 20px 0;
+
+    padding: 10px;
+    border-radius: 3px;
+    background-color: darken(@offwhite, 3%);
+
+    .comment-profile-picture {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 2px solid @offwhite;
+      box-shadow: 0px 0px 5px darken(@dark-base, 10%);
+      float:left;
+      background-size:cover;
+      background-position:center;
+      margin: 10px 25px 10px 10px;
+    }
+
+    .comment-content {
+      float:left;
+      width: 75%;
+      padding: 15px 0 0 0;
+
+      p.comment-username {
+        font-weight: bold;
+        font-size: 1.3em;
+        float:left;
+        margin: 0 10px 0 0;
+      }
+
+      p.comment-date {
+        font-size: .75em;
+        color: lighten(@base-color, 15%);
+        float:left;
+        padding: 7px 0 0 0;
+      }
+
+      p.comment-body {
+        font-size: .9em;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 460px){
+  .location-details-wrapper {
+    .comment-wrapper {
+      .comment-profile-picture {
+        width: 40px;
+        height: 40px;
+        box-shadow: 0px 0px 3px darken(@dark-base, 10%);
+        margin: 5px;
+      }
+
+      .comment-content {
+        float:right;
+        width: 75%;
+        padding: 0 0 0 0;
+
+      }
+
+    }
+  }
+
 }
 
 
@@ -1503,9 +1569,10 @@ a.edit-profile:hover {
       font-size: 2em;
       color:@base-color;
       font-weight:bold;
-      margin: 28px 20px;
+      margin: 20px 20px;
       display: inline-block;
       width: 75%;
+      float:left;
     }
 
     img {
@@ -1592,7 +1659,34 @@ a.edit-profile:hover {
 
 /* ======================================== QUEST EDIT CSS ======================================== */
 
+.quest-frame-wrapper {
+    width: 125px;
+    height: 125px;
+    background-image: url(/img/assets/quest-frame.png);
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+    position:relative;
+    float:left;
+
+    .quest-image-wrapper {
+      border-radius: 50%;
+      background-size:cover;
+      background-position: center;
+      position:absolute;
+      width: 73%;
+      height: 73%;
+      overflow: auto;
+      margin: auto;
+      position: absolute;
+      top: 0; left: 0; bottom: 1px; right: 0px;
+      border: 1px solid @base-color;
+      box-shadow: inset 0px 0px 5px darken(@base-color, 10%);
+    }
+  }
+
 .quest-edit-wrapper {
+
   h1.quest-name {
     color:@base-color;
     font-weight: bold;
@@ -2379,11 +2473,22 @@ h2.title {
 
 .class-quest-confirmation-wrapper {
   text-align: center;
+
+  .quest-frame-wrapper {
+    width: 230px;
+    height: 230px;
+    .quest-image-wrapper {
+        border: 2px solid @base-color;
+        top: 0; left: 0; bottom: 2px; right: 1px;
+      }
+  }
+
   img {
     // max-width: 250px;
-    width: 45%;
+    width: 250px;
     margin: 0 2%;
     height: auto;
+    display:inline-block;
   }
 
   h1 {
@@ -2411,6 +2516,16 @@ h2.title {
 
 @media screen and (min-width: 360px) and (max-width: 600px) {
   .class-quest-confirmation-wrapper {
+    .quest-frame-wrapper {
+      width: 150px;
+      height: 150px;
+    }
+
+    img {
+      width: 150px;
+      height: auto;
+    }
+
     h1 {
       font-size: 2.5em;
     }
@@ -2430,8 +2545,14 @@ h2.title {
   .class-quest-confirmation-wrapper {
     padding-bottom: 30px;
 
+    .quest-frame-wrapper {
+      width: 100px;
+      height: 100px;
+    }
+
     img {
-      max-width: 220px;
+      width: 100px;
+      height: auto;
     }
 
     h1 {
@@ -2582,6 +2703,11 @@ a.view-location {
 .find-quest-wrapper {
   margin-top: 20px;
 
+  .quest-frame-wrapper {
+    width: 80px;
+    height: 80px;
+  }
+
   .border#input-border {
     margin: 15px 0 25px 0;
     border: 1px solid lighten(@base-color, 5%)
@@ -2632,17 +2758,6 @@ a.view-location {
     a:hover {
       text-decoration: underline;
     }
-  }
-
-  .quest-image-wrapper {
-    max-width: 80px;
-    width: 25%;
-    height: 80px;
-    border-radius: 50%;
-    background-position: center;
-    background-size: cover;
-    display: inline-block;
-    float: left;
   }
 
   li {
