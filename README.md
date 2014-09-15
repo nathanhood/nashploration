@@ -1,4 +1,7 @@
 # Nashploration
+[![Build Status](https://travis-ci.org/RanSolo/bandPortal.png?branch=master)](https://travis-ci.org/nathanhood/nashploration)
++[![Dependency Status](https://gemnasium.com/RanSolo/bandPortal.png)](https://gemnasium.com/nathanhood/nashploration)
++[![Coverage Status](https://coveralls.io/repos/nathanhood/nashploration/badge.png?branch=master)](https://coveralls.io/r/nathanhood/nashploration?branch=master)
 
 An interactive web application, inviting kids to engage with Nashville's local
 history and community.
