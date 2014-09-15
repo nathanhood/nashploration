@@ -104,7 +104,7 @@
 
 
   var checkInMarker = {
-      url: '/img/checkin-pin.svg',
+      url: '/img/assets/pins/pin-orange.png',
       scaledSize: new google.maps.Size(40,40)
     };
 

@@ -7,7 +7,8 @@ block content
 
     .quest-show-content-wrapper
       .quest-header-wrapper
-        img(src="#{quest.photo.filePath}")
+        .quest-frame-wrapper(style='width: 80px; height: 80px;')
+          .quest-image-wrapper(style="background-image: url(#{quest.photo.filePath})")
         h1.quest-name(data-id='#{quest._id}')= quest.name
 
       // TODO if (quest.isPublic)

@@ -71,8 +71,8 @@
     infoWindows(locName, latLng, locDesc);
   }
   var checkInMarker = {
-    url: '/img/checkin-pin.svg',
-    scaledSize: new google.maps.Size(40, 40)
+    url: '/img/assets/pins/pin-orange.png',
+    scaledSize: new google.maps.Size(100, 100)
   };
   var checkInMarkers = [];
   function placeCheckInMarkers(coords, locName, locDesc) {
