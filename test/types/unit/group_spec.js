@@ -12,6 +12,7 @@ var db = traceur.require(__dirname + '/../../helpers/db.js');
 var Group;
 var group1
 var group2
+var group3
 var User
 var bob
 var ann
@@ -37,9 +38,13 @@ describe('Group', function(){
         group1 = new Group(bob._id, obj1);
         var obj2 = {description:'a buncha older kids nashploring', title:'Mr Jacksons 5th grade class'};
         group2 = new Group(bob._id, obj2);
+        var obj3 = {description:'a buncha other kids nashploring', title:'Mr billybobs 5th grade class'};
+        group3 = new Group(ann._id, obj2);
           group1.save(function(){
             group2.save(function(){
-              done();
+              group3.save(function(){
+                done();
+                });
               });
             });
           });
@@ -50,10 +55,15 @@ describe('Group', function(){
 
     describe('#findAllByOwnerID', function(){
       it('should find all groups by user', function(done){
-        Group.findAllByOwnerId(bob._id, function(records){
-          expect(records).to.have.length(2);
-          expect(records.title).to.equal(group1.title);
+        Group.findAllByOwnerId(bob._id, function(bobsGroups){
+          Group.findAllByOwnerId(ann._id, function(annsGroups){
+          expect(bobsGroups).to.have.length(2);
+          expect(annsGroups).to.have.length(1);
+          expect(bobsGroups[0].title).to.equal(group1.title);
+          expect(bobsGroups[1].title).to.equal(group2.title);
+          expect(annsGroups[0].title).to.equal(group3.title);
           done();
+          });
         });
       });
     });
