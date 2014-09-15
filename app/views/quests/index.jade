@@ -14,7 +14,8 @@ block content
             .quest-listing-wrapper
               li
                 .quest-image-link
-                  .quest-image-wrapper(style="background-image: url(#{quest.photo.filePath})")
+                  .quest-frame-wrapper
+                    .quest-image-wrapper(style="background-image: url(#{quest.photo.filePath})")
                   a.quest-link(href='/quests/show/#{quest._id}')
                     button view
                 .quest-information-wrapper
