@@ -1,0 +1,48 @@
+constructor X
+updateInfo X
+isInActiveQuest
+findCheckins
+isPrevoiusCheckIn
+getActiveQuestId
+updateActiveQuest
+updateCheckIns
+calculateUserScore
+isActiveQuestComplete
+addCompletedQuest
+updateBadgeAndClass
+processPhoto
+save
+isOwner
+removeGroup
+makeActiveQuest 
+addQuest X
+removeQuest
+isInMyQuest
+isCompletedQuest
+isActiveQuest
+resetPassword
+sortUsersByPoints
+findUsersWithoutQuests
+removeGroupFromUserGroup
+removeGroupFromUserCreatedGroups
+updateQuestOnManyUsers 
+register X
+login X
+findManyUsersByGroup X
+findManyById X
+findManyCheckInCommentsById
+findByEmail X
+matchUserToComment
+findById X
+findByUserName X
+FindLeaders
+searchByName X
+findAndReplaceQuestCreators
+generateTemporaryPassword
+sendPasswordResetEmail
+
+
+If the user has no joined quests then the link needs to go to the find quests page and not the view your quests
+
+Add to ReadMe
+	-seed test database with locations through curl -X POST
