@@ -4,7 +4,7 @@
 
 'use strict';
 
-process.env.DBNAME = 'blueprint-test';
+process.env.DBNAME = 'nashploration-test';
 
 var expect = require('chai').expect;
 var Mongo = require('mongodb');
@@ -31,11 +31,7 @@ describe('User', function(){
         location1 = new Location(obj1);
         var obj2 = {name:'your house', address:'the streets', description: 'a brown paper box'};
         location2 = new Location(obj2);
-          location1.save(function(){
-            location2.save(function(){
-            done();
-          });
-        });
+        done();
       });
     });
   });
