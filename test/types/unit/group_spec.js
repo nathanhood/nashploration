@@ -54,19 +54,105 @@ describe('Group', function(){
     });
   });
 
-    describe('#findAllByOwnerID', function(){
-      it('should find all groups by user', function(done){
-        Group.findAllByOwnerId(bob._id, function(bobsGroups){
-          Group.findAllByOwnerId(ann._id, function(annsGroups){
-          expect(bobsGroups).to.have.length(2);
-          expect(annsGroups).to.have.length(1);
-          expect(bobsGroups[0].title).to.equal(group1.title);
-          expect(bobsGroups[1].title).to.equal(group2.title);
-          expect(annsGroups[0].title).to.equal(group3.title);
-          done();
-          });
+  describe('.findAllByOwnerID', function(){
+    it('should find all groups by user', function(done){
+      Group.findAllByOwnerId(bob._id, function(bobsGroups){
+        Group.findAllByOwnerId(ann._id, function(annsGroups){
+        expect(bobsGroups).to.have.length(2);
+        expect(annsGroups).to.have.length(1);
+        expect(bobsGroups[0].title).to.equal(group1.title);
+        expect(bobsGroups[1].title).to.equal(group2.title);
+        expect(annsGroups[0].title).to.equal(group3.title);
+        done();
         });
       });
     });
+  });
+
+  describe('#joinGroup', function(){
+    it('should have a member join a group', function(done){
+      group1.joinGroup(bob);
+      group1.joinGroup(ann);
+      group2.joinGroup(bob);
+      expect(group1.members).to.have.length(2);
+      expect(group2.members).to.have.length(1);
+      done();
+    });
+  });
+
+  // describe('#isInGroup', function(){
+  //   it('should verify a member is not in a group', function(done){
+  //     group1.isInGroup(bob);
+  //   });
+  // });
+
+  describe('.findAll', function(){
+    it('should find all groups', function(done){
+      Group.findAll(function(groups){
+        expect(groups).to.have.length(3);
+        done();
+      });
+    });
+  });
+
+  describe('.findByGroupId', function(){
+    it('should find a group by its id', function(done){
+      Group.findByGroupId(group1._id, function(g1){
+        Group.findByGroupId(group2._id, function(g2){
+          expect(g1.description).to.equal(group1.description);
+          expect(g2.description).to.equal(group2.description);
+          done();
+        });
+      });
+    });
+  });
+
+  describe('.destroyGroup', function(){
+    it('should find and destroy a group by its ID', function(done){
+      Group.destroyGroup(group1._id, function(){
+        Group.findAll(function(groups){
+          expect(groups).to.have.length(2);
+          done();
+        });
+      });
+    });
+  });
+
+  describe('.updateName', function(){
+    it('should update a groups name', function(done){
+      Group.updateName(group2._id, 'bobbydees', function(err, res){
+        Group.findByGroupId(group2._id, function(g2){
+          expect(g2.name).to.equal('bobbydees');
+          done();
+        });
+      });
+    });
+  });
+
+  describe('.updateDescription', function(){
+    it('should update a groups name', function(done){
+      Group.updateDescription(group2._id, 'really big shoooo', function(err, res){
+        Group.findByGroupId(group2._id, function(g2){
+          expect(g2.description).to.equal('really big shoooo');
+          done();
+        });
+      });
+    });
+  });
+
+  // describe('accumulateUsersFromGroups', function(){
+  //   it('should get all members', function(done)
+  //     Group.accumulateUsersFromGroups([])
+  //   });
+  // });
+
+  describe('.groupCode', function(){
+    it('should create a groupCode from  group._id', function(done){
+      var code = Group.groupCode(group2._id);
+      expect(code).to.have.length(5);
+      done();
+    });
+  });
+
 
 });
