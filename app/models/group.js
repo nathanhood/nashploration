@@ -51,14 +51,10 @@ class Group {
     var removed = _.remove(this.members, (member)=>{
       return memberId === member.toString();
     });
+
     return removed;
   }
 
-  static isOwner(userId, fn){
-    groups.find({owner: userId}).toArray((err, owner)=>{
-      fn(owner);
-    });
-  }
 
   static updateQuestOnManyGroups(groupIds, questId, fn){
     if (groupIds) {
