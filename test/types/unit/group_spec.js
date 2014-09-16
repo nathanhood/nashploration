@@ -54,7 +54,7 @@ describe('Group', function(){
     });
   });
 
-  describe('#findAllByOwnerID', function(){
+  describe('.findAllByOwnerID', function(){
     it('should find all groups by user', function(done){
       Group.findAllByOwnerId(bob._id, function(bobsGroups){
         Group.findAllByOwnerId(ann._id, function(annsGroups){
@@ -69,7 +69,7 @@ describe('Group', function(){
     });
   });
 
-  describe('#findAll', function(){
+  describe('.findAll', function(){
     it('should find all groups', function(done){
       Group.findAll(function(groups){
         expect(groups).to.have.length(3);
@@ -77,6 +77,17 @@ describe('Group', function(){
       });
     });
   });
-  
+
+  describe('.findByGroupId', function(){
+    it('should find a group by its id', function(done){
+      Group.findByGroupId(group1._id, function(g1){
+        Group.findByGroupId(group2._id, function(g2){
+          expect(g1.description).to.equal(group1.description);
+          expect(g2.description).to.equal(group2.description);
+          done();
+        });
+      });
+    });
+  });
 
 });
