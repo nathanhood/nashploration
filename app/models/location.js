@@ -26,7 +26,11 @@ class Location{
     this.checkIns = []; // {userId: , coordinates: , comment: }
     this.isCivilWar = obj.isCivilWar;
     this.wiki = {name: '', wikiURL: null, wikiParams: null, otherResources: []};
-    locations.save(this, ()=>{});
+
+    var update = {name: this.name, address: this.address, loc: this.loc, description: this.description, category: this.category, number:this.number, isCivilWar:this.isCivilWar};
+    locations.update({name: this.name}, update, {upsert: true}, (err, res)=>{
+      console.log('success');
+    });
   }
 
   saveComment(comment, coords, userId, fn){

@@ -64,8 +64,12 @@ block content
       .border
       .active-quest
         if(!profileOwner.activeQuest.questId)
-          p You currently don't have an active quest.
-          a(href='/quests/view') Click here to view your quests.
+          if(profileOwner.createdQuests.length)
+            p You currently don't have an active quest.
+            a(href='/quests/view') Click here to view your quests.
+          else
+            p You haven't created any quests.
+            a(href='/quests') Create a quest below or click here to find one.
         else
           p.label Active Quest
           .clear
