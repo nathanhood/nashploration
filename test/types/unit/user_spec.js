@@ -11,7 +11,7 @@ var Mongo = require('mongodb');
 var traceur = require('traceur');
 var db = traceur.require(__dirname + '/../../helpers/db.js');
 var userFactory = traceur.require(__dirname + '/../../helpers/user-factory.js');
-// var _ = require('lodash');
+var _ = require('lodash');
 var User;
 var Group;
 var Quest;
@@ -248,31 +248,31 @@ describe('User', function(){
     });
   });
 
-  // describe('#makeActiveQuest', function(done){
-  //   it('should make a quest active', function(done){
-  //     User.findByEmail('a@a.com', function(user){
-  //       user = _.create(User.prototype, user);
-  //       Quest.findById('5417641b4705ef8abd482111', function(err, quest){
-  //         user.makeActiveQuest(quest._id);
-  //         expect(user.activeQuest.questId).to.equal(quest._id);
-  //         expect(user.activeQuest.questId).to.be.instanceof(Mongo.ObjectID);
-  //         done();
-  //       });
-  //     });
-  //   });
-  //
-  //   it('should make an activeQuest into a startedQuest when second quest is activated', function(done){
-  //     Quest.findById('5417641b4705ef8abd482111', function(err, quest){
-  //       bob.makeActiveQuest(quest._id);
-  //       Quest.findById('5417641b4705ef8abd482112', function(err, quest2){
-  //         bob.makeActiveQuest(quest2._id);
-  //         expect(bob.activeQuest.questId).to.not.equal(quest._id);
-  //         expect(bob.activeQuest.questId).to.equal(quest2._id);
-  //         expect(bob.startedQuests[0].questId).to.equal(quest._id);
-  //         done();
-  //       });
-  //     });
-  //   });
-  // });
+  describe('#makeActiveQuest', function(done){
+    it('should make a quest active', function(done){
+      User.findByEmail('a@a.com', function(user){
+        user = _.create(User.prototype, user);
+        Quest.findById('5417641b4705ef8abd482111', function(err, quest){
+          user.makeActiveQuest(quest._id);
+          expect(user.activeQuest.questId).to.equal(quest._id);
+          expect(user.activeQuest.questId).to.be.instanceof(Mongo.ObjectID);
+          done();
+        });
+      });
+    });
+
+    it('should make an activeQuest into a startedQuest when second quest is activated', function(done){
+      Quest.findById('5417641b4705ef8abd482111', function(err, quest){
+        bob.makeActiveQuest(quest._id);
+        Quest.findById('5417641b4705ef8abd482112', function(err, quest2){
+          bob.makeActiveQuest(quest2._id);
+          expect(bob.activeQuest.questId).to.not.equal(quest._id);
+          expect(bob.activeQuest.questId).to.equal(quest2._id);
+          expect(bob.startedQuests[0].questId).to.equal(quest._id);
+          done();
+        });
+      });
+    });
+  });
 
 });
