@@ -27,7 +27,7 @@ class Location{
     this.isCivilWar = obj.isCivilWar;
     this.wiki = {name: '', wikiURL: null, wikiParams: null, otherResources: []};
 
-    var update = {name: this.name, address: this.address, loc: this.loc, description: this.description, category: this.category, number:this.number, isCivilWar:this.isCivilWar};
+    var update = {name: this.name, address: this.address, loc: this.loc, description: this.description, category: this.category, number:this.number, pov:this.pov, infoEdits:this.infoEdits, checkIns:this.checkIns,  isCivilWar:this.isCivilWar, wiki:this.wiki};
     locations.update({name: this.name}, update, {upsert: true}, (err, res)=>{
       console.log('success');
     });
