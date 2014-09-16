@@ -49,9 +49,9 @@ Group
 =============
 
 #joinGroup X
-#isInGroup
+#isInGroup X
 #save
-#removeMember
+#removeMember X
 .isOwner
 .updateQuestOnManyGroups
 .findByGroupCode
