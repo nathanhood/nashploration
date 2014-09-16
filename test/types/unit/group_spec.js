@@ -54,19 +54,29 @@ describe('Group', function(){
     });
   });
 
-    describe('#findAllByOwnerID', function(){
-      it('should find all groups by user', function(done){
-        Group.findAllByOwnerId(bob._id, function(bobsGroups){
-          Group.findAllByOwnerId(ann._id, function(annsGroups){
-          expect(bobsGroups).to.have.length(2);
-          expect(annsGroups).to.have.length(1);
-          expect(bobsGroups[0].title).to.equal(group1.title);
-          expect(bobsGroups[1].title).to.equal(group2.title);
-          expect(annsGroups[0].title).to.equal(group3.title);
-          done();
-          });
+  describe('#findAllByOwnerID', function(){
+    it('should find all groups by user', function(done){
+      Group.findAllByOwnerId(bob._id, function(bobsGroups){
+        Group.findAllByOwnerId(ann._id, function(annsGroups){
+        expect(bobsGroups).to.have.length(2);
+        expect(annsGroups).to.have.length(1);
+        expect(bobsGroups[0].title).to.equal(group1.title);
+        expect(bobsGroups[1].title).to.equal(group2.title);
+        expect(annsGroups[0].title).to.equal(group3.title);
+        done();
         });
       });
     });
+  });
+
+  describe('#findAll', function(){
+    it('should find all groups', function(done){
+      Group.findAll(function(groups){
+        expect(groups).to.have.length(3);
+        done();
+      });
+    });
+  });
+  
 
 });
