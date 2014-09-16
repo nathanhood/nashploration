@@ -181,12 +181,6 @@ class Quest{
     });
   }
 
-  static findManyByCreatorForSeach(query, questIds, fn){
-    quests.find({creator: questIds, name: { $regex: query, $options: 'i'} }).toArray((err, quests)=>{
-      fn(quests);
-    });
-  }
-
 } //end of class
 
 module.exports = Quest; //exporting Class out
