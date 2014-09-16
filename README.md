@@ -2,11 +2,8 @@
 BADGES
 [![Build Status](https://travis-ci.org/nathanhood/nashploration.svg?branch=master)](https://travis-ci.org/nathanhood/nashploration)
 [![Coverage Status](https://coveralls.io/repos/nathanhood/nashploration/badge.png)](https://coveralls.io/r/nathanhood/nashploration)
-<<<<<<< HEAD
 [![Dependency Status](https://gemnasium.com/nathanhood/bandPortal.png)](https://gemnasium.com/nathanhood/nashploration)
-=======
-[![Dependency Status](https://gemnasium.com/nathanhood/nashploration.png)](https://gemnasium.com/nathanhood/nashploration)
->>>>>>> db4db47310f0d7be6141164c9a8bf8038791c1df
+
 
 
 
