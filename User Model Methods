@@ -14,7 +14,7 @@ processPhoto
 save
 isOwner
 removeGroup
-makeActiveQuest 
+makeActiveQuest X
 addQuest X
 removeQuest
 isInMyQuest
