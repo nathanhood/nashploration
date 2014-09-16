@@ -69,6 +69,23 @@ describe('Group', function(){
     });
   });
 
+  describe('#joinGroup', function(){
+    it('should have a member join a group', function(done){
+      group1.joinGroup(bob);
+      group1.joinGroup(ann);
+      group2.joinGroup(bob);
+      expect(group1.members).to.have.length(2);
+      expect(group2.members).to.have.length(1);
+      done();
+    });
+  });
+
+  // describe('#isInGroup', function(){
+  //   it('should verify a member is not in a group', function(done){
+  //     group1.isInGroup(bob);
+  //   });
+  // });
+
   describe('.findAll', function(){
     it('should find all groups', function(done){
       Group.findAll(function(groups){
@@ -112,6 +129,30 @@ describe('Group', function(){
     });
   });
 
-  
+  describe('.updateDescription', function(){
+    it('should update a groups name', function(done){
+      Group.updateDescription(group2._id, 'really big shoooo', function(err, res){
+        Group.findByGroupId(group2._id, function(g2){
+          expect(g2.description).to.equal('really big shoooo');
+          done();
+        });
+      });
+    });
+  });
+
+  // describe('accumulateUsersFromGroups', function(){
+  //   it('should get all members', function(done)
+  //     Group.accumulateUsersFromGroups([])
+  //   });
+  // });
+
+  describe('.groupCode', function(){
+    it('should create a groupCode from  group._id', function(done){
+      var code = Group.groupCode(group2._id);
+      expect(code).to.have.length(5);
+      done();
+    });
+  });
+
 
 });
