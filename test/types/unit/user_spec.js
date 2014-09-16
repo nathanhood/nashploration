@@ -26,11 +26,7 @@ describe('User', function(){
       User = traceur.require(__dirname + '/../../../app/models/user.js');
       Group = traceur.require(__dirname + '/../../../app/models/group.js');
       Quest = traceur.require(__dirname + '/../../../app/models/quest.js');
-      global.nss.db.collection('quests').drop(function(){
-        cp.execFile(__dirname + '/../../fixtures/before.sh', function(err, stdout, stderr){
-          done();
-        });
-      });
+      done();
     });
   });
 
@@ -43,7 +39,11 @@ describe('User', function(){
               userFactory('user', function(users){
                 bob = user;
                 jim = u;
-                done();
+                global.nss.db.collection('quests').drop(function(){
+                  cp.execFile(__dirname + '/../../fixtures/before.sh', function(err, stdout, stderr){
+                    done();
+                  });
+                });
               });
             });
           });
