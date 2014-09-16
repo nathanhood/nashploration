@@ -44,6 +44,9 @@ describe('Group', function(){
           group1.save(function(){
             group2.save(function(){
               group3.save(function(){
+                group1.joinGroup(bob);
+                group1.joinGroup(ann);
+                group2.joinGroup(bob);
                 done();
                 });
               });
@@ -71,20 +74,33 @@ describe('Group', function(){
 
   describe('#joinGroup', function(){
     it('should have a member join a group', function(done){
-      group1.joinGroup(bob);
-      group1.joinGroup(ann);
-      group2.joinGroup(bob);
       expect(group1.members).to.have.length(2);
       expect(group2.members).to.have.length(1);
       done();
     });
   });
 
-  // describe('#isInGroup', function(){
-  //   it('should verify a member is not in a group', function(done){
-  //     group1.isInGroup(bob);
-  //   });
-  // });
+  describe('#removeMember', function(){
+    it('should remove a member join a group', function(done){
+      group1.removeMember(bob._id.toHexString());
+      expect(group1.members).to.have.length(1);
+      done();
+    });
+  });
+
+  describe('#isInGroup', function(){
+    it('should verify a member is in a group', function(done){
+      group1.isInGroup(ann);
+      expect('exists');
+      group1.isInGroup(bob);
+      expect('exists');
+      done();
+    });
+    it('should verify a member is not in a group',function(){
+      group2.isInGroup(ann);
+      expect(ann._id.toHexString());
+    });
+  });
 
   describe('.findAll', function(){
     it('should find all groups', function(done){
