@@ -1,0 +1,17 @@
+[
+
+{
+  "_id" : ObjectId("5417641b4705ef8abd482111"), "name" : "quest1", "description" : "this is a description for quest 1",
+  "groupUsers" : [ObjectId("5417641b4705ef8abd481111"), ObjectId("5417641b4705ef8abd481112")], "creator" : ObjectId("5417641b4705ef8abd481113"),
+  "checkIns" : [ObjectId("5417742bbc26bb76c69dc5c8"), ObjectId("5417742bbc26bb76c69dc5c9"), ObjectId("5417742bbc26bb76c69dc5ca")],
+  "isPrivate" : false, "photo" : "{ fileName: null, filePath: '/img/assets/quest-placeholder.png', origFileName: null}"
+},
+
+{
+  "_id" : ObjectId("5417641b4705ef8abd482112"), "name" : "quest2", "description" : "this is a description for quest 2",
+  "groupUsers" : [ObjectId("5417641b4705ef8abd481111"), ObjectId("5417641b4705ef8abd481112")], "creator" : ObjectId("5417641b4705ef8abd481113"),
+  "checkIns" : [ObjectId("5417742bbc26bb76c69dc5c8"), ObjectId("5417742bbc26bb76c69dc5c9"), ObjectId("5417742bbc26bb76c69dc5ca")],
+  "isPrivate" : false, "photo" : "{ fileName: null, filePath: '/img/assets/quest-placeholder.png', origFileName: null}"
+}
+
+]

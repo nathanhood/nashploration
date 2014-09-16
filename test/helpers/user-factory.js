@@ -13,6 +13,5 @@ module.exports = (model, fn)=>{
 };
 
 function iterator(record, fn){
-  var obj = new Model(record);
-  obj.save(obj=>fn(null, obj));
+  Model.register(record, obj=>fn(null, obj));
 }

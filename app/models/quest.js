@@ -151,6 +151,12 @@ class Quest{
     Base.findById(id, quests, Quest, fn);
   }
 
+  static findByQuestName(name, fn){
+    quests.findOne({name: name}, (err, quest)=>{
+      fn(quest);
+    });
+  }
+
   static findManyById(questIds, fn){
     quests.find({_id: { $in: questIds } }).toArray((err, quests)=>{
       fn(quests);

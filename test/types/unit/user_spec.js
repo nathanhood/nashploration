@@ -5,10 +5,13 @@
 
 process.env.DBNAME = 'nashploration-test';
 
+var cp = require('child_process');
 var expect = require('chai').expect;
 var Mongo = require('mongodb');
 var traceur = require('traceur');
 var db = traceur.require(__dirname + '/../../helpers/db.js');
+var userFactory = traceur.require(__dirname + '/../../helpers/user-factory.js');
+var _ = require('lodash');
 var User;
 var Group;
 var Quest;
@@ -23,19 +26,25 @@ describe('User', function(){
       User = traceur.require(__dirname + '/../../../app/models/user.js');
       Group = traceur.require(__dirname + '/../../../app/models/group.js');
       Quest = traceur.require(__dirname + '/../../../app/models/quest.js');
-      done();
+      global.nss.db.collection('quests').drop(function(){
+        cp.execFile(__dirname + '/../../fixtures/before.sh', function(err, stdout, stderr){
+          done();
+        });
+      });
     });
   });
 
   beforeEach(function(done){
     global.nss.db.collection('users').drop(function(){
       global.nss.db.collection('groups').drop(function(){
-        global.nss.db.collection('quests').drop(function(){
-          User.register({email:'bob@aol.com', password:'123456', nickName:'badass', userName:'bobbydee'}, function(user){
-            User.register({email:'jim@aol.com', password:'123456', nickName:'dingus', userName:'jimmyboy'}, function(u){
-              bob = user;
-              jim = u;
-              done();
+        User.register({email:'bob@aol.com', password:'123456', nickName:'badass', userName:'bobbydee'}, function(user){
+          User.register({email:'jim@aol.com', password:'123456', nickName:'dingus', userName:'jimmyboy'}, function(u){
+            cp.execFile(__dirname + '/../../fixtures/before.sh', function(err, stdout, stderr){
+              userFactory('user', function(users){
+                bob = user;
+                jim = u;
+                done();
+              });
             });
           });
         });
@@ -239,13 +248,31 @@ describe('User', function(){
     });
   });
 
-  // describe('#makeActiveQuest', function(done){
-  //   it('should make a quest active', function(done){
-  //     var quest1 = Factory.build('quest');
-  //       console.log('========= QUEST ==========');
-  //       console.log(quest1);
-  //       done();
-  //   });
-  // });
+  describe('#makeActiveQuest', function(done){
+    it('should make a quest active', function(done){
+      User.findByEmail('a@a.com', function(user){
+        user = _.create(User.prototype, user);
+        Quest.findById('5417641b4705ef8abd482111', function(err, quest){
+          user.makeActiveQuest(quest._id);
+          expect(user.activeQuest.questId).to.equal(quest._id);
+          expect(user.activeQuest.questId).to.be.instanceof(Mongo.ObjectID);
+          done();
+        });
+      });
+    });
+
+    it('should make an activeQuest into a startedQuest when second quest is activated', function(done){
+      Quest.findById('5417641b4705ef8abd482111', function(err, quest){
+        bob.makeActiveQuest(quest._id);
+        Quest.findById('5417641b4705ef8abd482112', function(err, quest2){
+          bob.makeActiveQuest(quest2._id);
+          expect(bob.activeQuest.questId).to.not.equal(quest._id);
+          expect(bob.activeQuest.questId).to.equal(quest2._id);
+          expect(bob.startedQuests[0].questId).to.equal(quest._id);
+          done();
+        });
+      });
+    });
+  });
 
 });
