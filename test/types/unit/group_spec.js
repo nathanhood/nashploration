@@ -90,4 +90,28 @@ describe('Group', function(){
     });
   });
 
+  describe('.destroyGroup', function(){
+    it('should find and destroy a group by its ID', function(done){
+      Group.destroyGroup(group1._id, function(){
+        Group.findAll(function(groups){
+          expect(groups).to.have.length(2);
+          done();
+        });
+      });
+    });
+  });
+
+  describe('.updateName', function(){
+    it('should update a groups name', function(done){
+      Group.updateName(group2._id, 'bobbydees', function(err, res){
+        Group.findByGroupId(group2._id, function(g2){
+          expect(g2.name).to.equal('bobbydees');
+          done();
+        });
+      });
+    });
+  });
+
+  
+
 });
