@@ -4,9 +4,6 @@ BADGES
 [![Coverage Status](https://coveralls.io/repos/nathanhood/nashploration/badge.png)](https://coveralls.io/r/nathanhood/nashploration)
 [![Dependency Status](https://gemnasium.com/nathanhood/bandPortal.png)](https://gemnasium.com/nathanhood/nashploration)
 
-
-
-
 An interactive web application, inviting kids to engage with Nashville's local
 history and community.
 
