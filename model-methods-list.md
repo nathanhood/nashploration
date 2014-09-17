@@ -58,12 +58,11 @@ Group
 .findAll X
 .findByGroupId X
 .findManyById
-.searchByName
 .destroyGroup X
 .updateName X
 .updateDescription X
 .accuulateUsersFromGroups
-.accumulateGroupIds
+.accumulateGroupIds X
 .groupCode X
 .sendGroupInviation
 .inviteGroupMembers

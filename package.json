@@ -36,7 +36,8 @@
     "needle":          "*",
     "crypto":          "*",
     "mkdirp":          "*",
-    "connect-flash":   "*"
+    "connect-flash":   "*",
+    "chai-things":     "*"
   },
   "devDependencies": {
     "grunt":                "*",
