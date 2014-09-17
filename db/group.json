@@ -1,2 +1,27 @@
-{"name" : "7th Grade Mr. Hood", "groupCode" : "12345", "owner" : ObjectId("53fde86a4011677f38352f85"), "members" : [ObjectId("53fe1fe71b81e1bc49730f6b"), ObjectId("53fe1ff41b81e1bc49730f6c")], "isLocked" : true, "quests" : null, "description" : "This is a brief summary about this example group"}
-{"name" : "10th Grade Nash High", "groupCode" : "56789", "owner" : ObjectId("53fde86a4011677f38352f85"), "members" : [ObjectId("53fe1ff41b81e1bc49730f6c"), ObjectId("53fcf6536ebcb0b511c499ae"), ObjectId("53fe20051b81e1bc49730f6e")], "isLocked" : true, "quests" : null, "description" : "This is a summary for the 10th grade group"}
+[
+
+{
+  "_id" : ObjectId("5417641b4705ef8abd482001"), 
+  "name" : "group1", 
+  "groupCode" : null,
+  "owner" : ObjectId("5417641b4705ef8abd481111"),
+  "members": [],
+  "isLocked": false,
+  "quests": [],
+  "description": "This is the description for group 1"
+
+},
+
+{
+  "_id" : ObjectId("5417641b4705ef8abd482002"), 
+  "name" : "group2", 
+  "groupCode" : null,
+  "owner" : ObjectId("5417641b4705ef8abd481111"),
+  "members": [],
+  "isLocked": false,
+  "quests": [],
+  "description": "This is the description for group 2"
+
+}
+
+]

@@ -51,14 +51,10 @@ class Group {
     var removed = _.remove(this.members, (member)=>{
       return memberId === member.toString();
     });
+
     return removed;
   }
 
-  static isOwner(userId, fn){
-    groups.find({owner: userId}).toArray((err, owner)=>{
-      fn(owner);
-    });
-  }
 
   static updateQuestOnManyGroups(groupIds, questId, fn){
     if (groupIds) {
@@ -111,12 +107,6 @@ class Group {
 
     groups.find({_id: { $in: groupIds } }).toArray((err, groups)=>{
       fn(groups);
-    });
-  }
-
-  static searchByName(query, fn){
-    groups.find({ name: { $regex: query, $options: 'i'} }).toArray((err, results)=>{
-      fn(results);
     });
   }
 
