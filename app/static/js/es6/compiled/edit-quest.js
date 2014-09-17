@@ -72,7 +72,7 @@
   }
   var checkInMarker = {
     url: '/img/assets/pins/pin-orange.png',
-    scaledSize: new google.maps.Size(100, 100)
+    scaledSize: new google.maps.Size(40, 40)
   };
   var checkInMarkers = [];
   function placeCheckInMarkers(coords, locName, locDesc) {
