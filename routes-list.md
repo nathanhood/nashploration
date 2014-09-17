@@ -57,8 +57,8 @@ Quests
 /quests/quest-confirmation X
 /quests/class-confirmation X
 /quests/class-quest-confirmation X
-/quests/show/:questId 
-/quests/edit/:questId
+/quests/show/:questId X
+/quests/edit/:questId X
 /quests/create
 /quests/create-quest-map
 /quests/update/:questId
