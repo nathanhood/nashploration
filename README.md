@@ -25,7 +25,7 @@ history and community.
   - This will create a 'locations' collection in your 'nashploration' db
   - This can be viewed by opening the mongo shell in your terminal or by downloading robomongo (mongodb visual data manager)
 8. Add Wikipedia data for locations to database
-  - In terminal: `mongoimport --db nashploration --collection wiki --file db/wiki.json --jsonArray`
+  - In terminal: `mongoimport --db nashploration --collection wikilinks --file db/wiki.json --jsonArray`
 8. You should now be ready to begin:
   - Kill current node server that is running `ctrl+c`
   - Start server with Mailgun key
