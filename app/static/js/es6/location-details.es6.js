@@ -19,7 +19,7 @@
         wikiAPICall(info.wikiParams);
       }
 
-      if(info.otherResources){
+      if(info.otherResources.length){
         var $div = $('<div></div>');
         var $menuLink = $('<a>Other Learning Resources</a>');
         $('#other-resources-link').append($menuLink);

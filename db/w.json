@@ -968,7 +968,16 @@
   },
 
   {
-    "name" : "",
+    "name" : "GERMANTOWN HISTORIC DISTRICT",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    "http://historicgermantown.org/history/"
+    ]
+  },
+
+  {
+    "name" : "EZELL HOUSE",
     "wikiURL" : null,
     "wikiParams" : null,
     "otherResources" : [
@@ -977,55 +986,53 @@
   },
 
   {
-    "name" : "",
+    "name" : "TOLBERT HOLLOW",
     "wikiURL" : null,
     "wikiParams" : null,
     "otherResources" : [
+    "http://boards.ancestry.com/localities.caribbean.barbados.general/1087.1/mb.ashx"
 
     ]
   },
 
   {
-    "name" : "",
+    "name" : "WEST END HIGH SCHOOL",
     "wikiURL" : null,
     "wikiParams" : null,
     "otherResources" : [
+    "http://www.westendms.mnps.org/Page22522.aspx"
 
     ]
   },
 
   {
-    "name" : "",
+    "name" : "SUNNYSIDE",
     "wikiURL" : null,
     "wikiParams" : null,
     "otherResources" : [
+    "https://www.flickr.com/photos/brent_nashville/97853953/"
 
     ]
   },
 
   {
-    "name" : "",
+    "name" : "THE TEMPLE CEMETERY",
     "wikiURL" : null,
     "wikiParams" : null,
     "otherResources" : [
+    "http://www.templenashville.org/index.php?id=44"
 
     ]
   },
 
   {
-    "name" : "",
-    "wikiURL" : null,
-    "wikiParams" : null,
+    "name" : "RANDALL JARRELL",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Randall_Jarrell",
+    "wikiParams" : "Randall_Jarrell",
     "otherResources" : [
-
-    ]
-  },
-
-  {
-    "name" : "",
-    "wikiURL" : null,
-    "wikiParams" : null,
-    "otherResources" : [
+    "http://www.poets.org/poetsorg/poet/randall-jarrell",
+    "http://www.english.illinois.edu/maps/poets/g_l/jarrell/about.htm",
+    "http://www.poemhunter.com/randall-jarrell/poems/"
 
     ]
   },
