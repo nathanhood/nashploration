@@ -209,8 +209,8 @@ function sendVerificationEmail(message, fn){
                       <p><b>Group Code</b>: ${message.code}</p>
                       <p><b>Group Name</b>: ${message.groupTitle}</p>
                       <p><b>Description</b>: ${message.description}</p>
-                      <p><a href="http://localhost:3000/confirmation/${message.code}">Click to Join Project</a>
-                      or visit <a href="http://localhost:3000/">nashploration.com</a> to learn more!!
+                      <p><a href="http://nashploration.com/confirmation/${message.code}">Click to Join Project</a>
+                      or visit <a href="http://nashploration.com">nashploration.com</a> to learn more!!
                       </p>`);
 }
 

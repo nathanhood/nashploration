@@ -523,7 +523,7 @@ function sendVerificationEmail(message, fn){
                       <p>Your temporary password is: ${message.password}
                       <br>
                       <br>
-                      <a href=http://localhost:3000>click here to login</a>`);
+                      <a href=http://nashploration.com>click here to login</a>`);
 }
 
 
