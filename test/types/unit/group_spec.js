@@ -47,9 +47,6 @@ describe('Group', function(){
           group1.save(function(){
             group2.save(function(){
               group3.save(function(){
-                group1.joinGroup(bob);
-                group1.joinGroup(ann);
-                group2.joinGroup(bob);
                 done();
                 });
               });
