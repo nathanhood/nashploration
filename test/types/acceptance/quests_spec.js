@@ -332,4 +332,45 @@ describe('users', function(){
   });
 
 
+  describe('GET /quests/edit/:questId - show a quest', function(){
+    var cookie;
+
+    beforeEach(function(done){
+      request(app)
+      .post('/login')
+      .send('userName=aa')
+      .send('password=aaaaaa')
+      .end(function(err, res){
+        var cookies = res.headers['set-cookie'];
+        var one = cookies[0].split(';')[0];
+        var two = cookies[1].split(';')[0];
+        cookie = one + '; ' + two;
+        global.nss.db.collection('quests').drop(function(){
+          cp.execFile(__dirname + '/../../fixtures/before.sh', function(err, stdout, stderr){
+            done();
+          });
+        });
+      });
+    });
+
+    it('should successfully load page', function(done){
+      request(app)
+      .get('/quests/edit/5417641b4705ef8abd482111')
+      .set('cookie', cookie)
+      .end(function(err, res){
+        expect(res.status).to.equal(200);
+        done();
+      });
+    });
+
+    it('should not load page - not authorized', function(done){
+      request(app)
+      .get('/quests/edit/5417641b4705ef8abd482111')
+      .end(function(err, res){
+        expect(res.status).to.equal(302);
+        done();
+      });
+    });
+  });
+
 });
