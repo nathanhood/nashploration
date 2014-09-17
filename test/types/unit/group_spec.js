@@ -74,33 +74,20 @@ describe('Group', function(){
 
   describe('#joinGroup', function(){
     it('should have a member join a group', function(done){
+      group1.joinGroup(bob);
+      group1.joinGroup(ann);
+      group2.joinGroup(bob);
       expect(group1.members).to.have.length(2);
       expect(group2.members).to.have.length(1);
       done();
     });
   });
 
-  describe('#removeMember', function(){
-    it('should remove a member join a group', function(done){
-      group1.removeMember(bob._id.toHexString());
-      expect(group1.members).to.have.length(1);
-      done();
-    });
-  });
-
-  describe('#isInGroup', function(){
-    it('should verify a member is in a group', function(done){
-      group1.isInGroup(ann);
-      expect('exists');
-      group1.isInGroup(bob);
-      expect('exists');
-      done();
-    });
-    it('should verify a member is not in a group',function(){
-      group2.isInGroup(ann);
-      expect(ann._id.toHexString());
-    });
-  });
+  // describe('#isInGroup', function(){
+  //   it('should verify a member is not in a group', function(done){
+  //     group1.isInGroup(bob);
+  //   });
+  // });
 
   describe('.findAll', function(){
     it('should find all groups', function(done){
@@ -166,6 +153,31 @@ describe('Group', function(){
     it('should create a groupCode from  group._id', function(done){
       var code = Group.groupCode(group2._id);
       expect(code).to.have.length(5);
+      done();
+    });
+  });
+
+
+  describe('.findByGroupCode', function(){
+    var code;
+    beforeEach(function(done){
+      code = Group.groupCode(group2._id);
+      group1.groupCode = code;
+      group1.save(function(){});
+      done();
+    });
+
+    it('should find a group by it\'s code', function(done){
+      Group.findByGroupCode(code, function(group){
+        expect(group1._id).to.deep.equal(group._id);
+      });
+      done();
+    });
+
+     it('should not find a group by another group\'s code', function(done){
+      Group.findByGroupCode(code, function(group){
+        expect(group2._id).to.not.equal(group._id);
+      });
       done();
     });
   });

@@ -52,9 +52,8 @@ Group
 #isInGroup X
 #save
 #removeMember X
-.isOwner
 .updateQuestOnManyGroups
-.findByGroupCode
+.findByGroupCode X
 .findAllByOwnerId X
 .findAll X
 .findByGroupId X
