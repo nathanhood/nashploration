@@ -10,7 +10,7 @@ var expect = require('chai').expect;
 var Mongo = require('mongodb');
 var traceur = require('traceur');
 var db = traceur.require(__dirname + '/../../helpers/db.js');
-var Quest
+var Quest;
 var Group;
 var group1;
 var group2;
