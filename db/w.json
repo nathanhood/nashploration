@@ -855,10 +855,115 @@
   },
 
   {
-    "name" : "",
+    "name" : "SAINT THOMAS HOSPITAL",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Saint_Thomas_-_West_Hospital",
+    "wikiParams" : "Saint_Thomas_-_West_Hospital",
+    "otherResources" : [
+    "https://www.sths.com/west/Pages/default.aspx"
+    ]
+  },
+
+  {
+    "name" : "JULIA MCCLUNG GREEN ",
     "wikiURL" : null,
     "wikiParams" : null,
     "otherResources" : [
+    "http://en.wikipedia.org/wiki/Julia_Green_Elementary_School",
+    "http://en.wikipedia.org/wiki/Alexander_Little_Page_Green#Personal_life"
+    ]
+  },
+
+  {
+    "name" : "WOODMONT ESTATES",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    ]
+  },
+
+  {
+    "name" : "DUNCAN COLLEGE PREPARTORY  SCHOOL FOR BOYS",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    "http://www.brentwoodacademy.com/page.cfm?p=3017"
+    ]
+  },
+
+  {
+    "name" : "HOUSTON’S LAW OFFICE",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Sam_Houston",
+    "wikiParams" : "Sam_Houston",
+    "otherResources" : [
+    "http://samhoustonmemorialmuseum.com/history/"
+    ]
+  },
+
+  {
+    "name" : "MOUNT PISGAH COMMUNITY",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "GRASSMERE",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "WARD’S SEMINARY",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Ward%E2%80%93Belmont_College",
+    "wikiParams" : "Ward%E2%80%93Belmont_College",
+    "otherResources" : [
+    "http://nashville.contentdm.oclc.org/cdm/ref/collection/nr/id/2256"
+
+    ]
+  },
+
+  {
+    "name" : "OLD HICKORY TRIANGLE",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "THE HARPETH HALL SCHOOL",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Harpeth_Hall_School",
+    "wikiParams" : "Harpeth_Hall_School",
+    "otherResources" : [
+    "https://www.harpethhall.org/"
+
+    ]
+  },
+
+  {
+    "name" : "TANGLEWOOD HISTORIC DISTRICT",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    "http://www.nashville.gov/Historical-Commission/Services/Preservation-Permits/Districts-and-Design-Guidelines/Tanglewood.aspx"
+
+    ]
+  },
+
+  {
+    "name" : "TOLBERT FANNING ",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Tolbert_Fanning",
+    "wikiParams" : "Tolbert_Fanning",
+    "otherResources" : [
+    "http://www.therestorationmovement.com/fanning,tolbert.htm",
+    "http://www.acu.edu/sponsored/restoration_quarterly/archives/1950s/vol_1_no_1_contents/holton.html"
+
     ]
   },
 
@@ -867,6 +972,7 @@
     "wikiURL" : null,
     "wikiParams" : null,
     "otherResources" : [
+
     ]
   },
 
@@ -875,6 +981,7 @@
     "wikiURL" : null,
     "wikiParams" : null,
     "otherResources" : [
+
     ]
   },
 
@@ -883,6 +990,7 @@
     "wikiURL" : null,
     "wikiParams" : null,
     "otherResources" : [
+
     ]
   },
 
@@ -891,6 +999,637 @@
     "wikiURL" : null,
     "wikiParams" : null,
     "otherResources" : [
+
     ]
-  }
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
+
+  {
+    "name" : "",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+
+    ]
+  },
 ]
