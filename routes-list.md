@@ -36,14 +36,14 @@ Check in
 
 Users
 =====
-/dashboard
+/dashboard X
 /users/leaders X
 /users/edit/:userId X
-/users/:userName
+/users/:userName X
 /users/:userName/checkins X
 /users/:userName/badges X
 /users/edit/photo/:userId
-/users/edit/:userId
+/users/edit/:userId X
 /users/checkin/:locationId
 /users/add-active-quest/:questId
 /users/add-quest/:questId
