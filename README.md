@@ -8,8 +8,6 @@ history and community.
 
 ### Accounts needed for development
 - Mailgun (http://www.mailgun.com/)
-<!-- - Google Map API key (https://developers.google.com/maps/signup) -->
-
 
 ## Installation
 1. Install MongoDB (http://docs.mongodb.org/manual/installation/)
