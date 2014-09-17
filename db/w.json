@@ -493,7 +493,48 @@
   },
 
   {
-    "name" : "",
+    "name" : "DEVON FARM",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    "http://www.jstor.org/discover/10.2307/42623513?uid=3739912&uid=2&uid=4&uid=3739256&sid=21104698378573",
+    "http://books.google.com/books?id=Fh11WlwYe9wC&pg=PA106&lpg=PA106&dq=DEVON+FARM+john+davis&source=bl&ots=nC6tad0dsb&sig=MlD2_ojnY--zc2p4xUTgvQQrwuQ&hl=en&sa=X&ei=aP4YVJnzLsnIgwTd2oLQBg&ved=0CFIQ6AEwCA#v=onepage&q=DEVON%20FARM%20john%20davis&f=false"
+    ]
+  },
+
+  {
+    "name" : "SITE OF WATERWORKS PLANT",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    "http://www.nashville.gov/Water-Services/About-Us/History.aspx"
+    ]
+  },
+
+  {
+    "name" : "FORT NEGLEY SITE",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Fort_Negley",
+    "wikiParams" : "Fort_Negley",
+    "otherResources" : [
+    "http://www.nashville.gov/Parks-and-Recreation/Historic-Sites/Fort-Negley.aspx",
+    "http://www.nashville.gov/Parks-and-Recreation/Historic-Sites/Fort-Negley/History.aspx"
+    ]
+  },
+
+  {
+    "name" : "BATTLE OF NASHVILLE Federal Main Line",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Battle_of_Nashville",
+    "wikiParams" : "Battle_of_Nashville",
+    "otherResources" : [
+      "http://www.civilwar.org/battlefields/nashville.html",
+      "http://www.historynet.com/battle-of-nashville",
+      "https://www.youtube.com/watch?v=EovcQx2f9Gw",
+      "http://www.nashville.gov/Historical-Commission/Services/Historical-Markers/Military-Sites.aspx"
+    ]
+  },
+
+  {
+    "name" : "NASHVILLE YMCA",
     "wikiURL" : null,
     "wikiParams" : null,
     "otherResources" : [
@@ -501,7 +542,55 @@
   },
 
   {
-    "name" : "",
+    "name" : "NASHVILLE  ACADEMY OF MEDICINE",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    "http://www.nashvillemedicine.org/home.html"
+    ]
+  },
+
+  {
+    "name" : "ADOLPHUS HEIMAN",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Adolphus_Heiman",
+    "wikiParams" : "Adolphus_Heiman",
+    "otherResources" : [
+    "http://tennesseeencyclopedia.net/entry.php?rec=619",
+    "http://www.thenashvillecitycemetery.org/heiman-cemetery-stonework.htm",
+    "http://www.jstor.org/discover/10.2307/42625962?uid=3739912&uid=2&uid=4&uid=3739256&sid=21104698378573"
+    ]
+  },
+
+  {
+    "name" : "GENERAL THOMAS OVERTON ",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Thomas_Overton",
+    "wikiParams" : "Thomas_Overton",
+    "otherResources" : [
+    "http://www.findagrave.com/cgi-bin/fg.cgi?page=gr&GRid=11384394"
+    ]
+  },
+
+  {
+    "name" : "TENNESSEE STATE UNIVERSITY",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Tennessee_State_University",
+    "wikiParams" : "Tennessee_State_University",
+    "otherResources" : [
+    "http://www.tnstate.edu/"
+    ]
+  },
+
+  {
+    "name" : "CORNELIA FORT AIRPORT",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Cornelia_Fort_Airpark",
+    "wikiParams" : "Cornelia_Fort_Airpark",
+    "otherResources" : [
+    "http://www.airfields-freeman.com/TN/Airfields_TN_C.html"
+    
+    ]
+  },
+
+  {
+    "name" : "WAVERLY PLACE",
     "wikiURL" : null,
     "wikiParams" : null,
     "otherResources" : [
@@ -509,7 +598,35 @@
   },
 
   {
-    "name" : "",
+    "name" : "DISCIPLES OF CHRIST HISTORICAL SOCIETY",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Disciples_of_Christ_Historical_Society",
+    "wikiParams" : "Disciples_of_Christ_Historical_Society",
+    "otherResources" : [
+    "http://www.discipleshistory.org/"
+    ]
+  },
+
+  {
+    "name" : "MANSKER’S FIRST FORT",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Mansker's_Station",
+    "wikiParams" : "Mansker's_Station",
+    "otherResources" : [
+    "http://www.historicnashvilleinc.org/history/prehistoric_pioneerm"
+    ]
+  },
+
+  {
+    "name" : "CLOVER BOTTOM MANSION",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Clover_Bottom_Mansion",
+    "wikiParams" : "Clover_Bottom_Mansion",
+    "otherResources" : [
+    "http://www.tn.gov/environment/history/docs/clover_bottom_history.pdf",
+    "http://www.tnvacation.com/civil-war/place/2081/clover-bottom-mansion/"
+    ]
+  },
+
+  {
+    "name" : "UNITED NATIONS VISIT TO NASHVILLE",
     "wikiURL" : null,
     "wikiParams" : null,
     "otherResources" : [
@@ -517,7 +634,32 @@
   },
 
   {
-    "name" : "",
+    "name" : "EDMONDSON HOME SITE",
+    "wikiURL" : "http://en.wikipedia.org/wiki/William_Edmondson",
+    "wikiParams" : "William_Edmondson",
+    "otherResources" : [
+    ]
+  },
+
+  {
+    "name" : "ASSUMPTION CHURCH",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Church_of_the_Assumption_(Nashville,_Tennessee)",
+    "wikiParams" : "Church_of_the_Assumption_(Nashville,_Tennessee)",
+    "otherResources" : [
+    "http://www.assumptionchurchnashville.org/"
+    ]
+  },
+
+  {
+    "name" : "CARDINAL STRITCH",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Samuel_Stritch",
+    "wikiParams" : "Samuel_Stritch",
+    "otherResources" : [
+    ]
+  },
+
+  {
+    "name" : "WESTERN HARMONY",
     "wikiURL" : null,
     "wikiParams" : null,
     "otherResources" : [
@@ -525,7 +667,18 @@
   },
 
   {
-    "name" : "",
+    "name" : "CUSTOMS HOUSE",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    "http://www.nashvillewebreview.com/automat/nashville/government_buildings/federal/federal1.html",
+    "http://www.nashvilledowntown.com/go/us-customs-house",
+    "http://www.nashville.gov/Historical-Commission/Services/Preservation-Permits/Districts-and-Design-Guidelines/Individual-Historic-Landmarks.aspx"
+    ]
+  },
+
+  {
+    "name" : "FALL SCHOOL",
     "wikiURL" : null,
     "wikiParams" : null,
     "otherResources" : [
@@ -533,7 +686,25 @@
   },
 
   {
-    "name" : "",
+    "name" : "PERCY WARNER PARK",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Warner_Parks",
+    "wikiParams" : "Warner_Parks",
+    "otherResources" : [
+    "http://www.nashville.gov/Parks-and-Recreation/Parks/Warner-Parks.aspx"
+    ]
+  },
+
+  {
+    "name" : "EDWIN WARNER PARK ",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Warner_Parks",
+    "wikiParams" : "Warner_Parks",
+    "otherResources" : [
+    "http://www.nashville.gov/Parks-and-Recreation/Parks/Warner-Parks.aspx"
+    ]
+  },
+
+  {
+    "name" : "OGLESBY COMMUNITY HOUSE",
     "wikiURL" : null,
     "wikiParams" : null,
     "otherResources" : [
@@ -541,10 +712,107 @@
   },
 
   {
-    "name" : "",
+    "name" : "BLACK CHURCHES OF CAPITOL HILL",
     "wikiURL" : null,
     "wikiParams" : null,
     "otherResources" : [
+    "http://www.firstbaptistcapitolhill.org/",
+    "http://tennesseeencyclopedia.net/entry.php?rec=1596"
+    ]
+  },
+
+  {
+    "name" : "VINE STREET TEMPLE",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Congregation_Ohabai_Sholom_(Nashville,_Tennessee)",
+    "wikiParams" : "Congregation_Ohabai_Sholom_(Nashville,_Tennessee)",
+    "otherResources" : [
+    ]
+  },
+
+  {
+    "name" : "LUKE LEA HEIGHTS",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Luke_Lea_(1879%E2%80%931945)",
+    "wikiParams" : "Luke_Lea_(1879%E2%80%931945)",
+    "otherResources" : [
+    "http://tennesseeencyclopedia.net/entry.php?rec=773"
+    ]
+  },
+
+  {
+    "name" : "NASHVILLE SITINS",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Nashville_sit-ins",
+    "wikiParams" : "Nashville_sit-ins",
+    "otherResources" : [
+    "http://crdl.usg.edu/events/sit_ins_nashville_tn/",
+    "http://nvdatabase.swarthmore.edu/content/nashville-students-sit-us-civil-rights-1960"
+    ]
+  },
+
+  {
+    "name" : "TENNESSEE ORNITHOLOGICAL SOCIETY",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Tennessee_Ornithological_Society",
+    "wikiParams" : "Tennessee_Ornithological_Society",
+    "otherResources" : [
+    "http://www.tnbirds.org/"
+    ]
+  },
+
+  {
+    "name" : "BATTLE OF NASHVILLE CONFEDERATE LINE",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Battle_of_Nashville",
+    "wikiParams" : "Battle_of_Nashville",
+    "otherResources" : [
+      "http://www.civilwar.org/battlefields/nashville.html",
+      "http://www.historynet.com/battle-of-nashville",
+      "https://www.youtube.com/watch?v=EovcQx2f9Gw",
+      "http://www.nashville.gov/Historical-Commission/Services/Historical-Markers/Military-Sites.aspx"
+    ]
+  },
+
+  {
+    "name" : "UNIVERSITY SCHOOL OF NASHVILLE",
+    "wikiURL" : "http://en.wikipedia.org/wiki/University_School_of_Nashville",
+    "wikiParams" : "University_School_of_NashvilleST. PATRICK CATHOLIC CHURCH",
+    "otherResources" : [
+    "http://www.usn.org/page"
+    ]
+  },
+
+  {
+    "name" : "ST. PATRICK CATHOLIC CHURCH",
+    "wikiURL" : "http://en.wikipedia.org/wiki/St._Patrick's_Catholic_Church_and_Rectory",
+    "wikiParams" : "St._Patrick's_Catholic_Church_and_Rectory",
+    "otherResources" : [
+    "http://www.stpatricksnashville.org/"
+    ]
+  },
+
+  {
+    "name" : "CAPTAIN RYMAN’S HOME",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    "http://ryman.com/history/captain-tom-ryman",
+    "http://www.findagrave.com/cgi-bin/fg.cgi?page=gr&GRid=8010205"
+    ]
+  },
+
+  {
+    "name" : "MILL CREEK BAPTIST CHURCH AND GRAVEYARD",
+    "wikiURL" : null,
+    "wikiParams" : null,
+    "otherResources" : [
+    "http://www.findagrave.com/cgi-bin/fg.cgi?page=cr&CRid=1990219",
+    "https://sites.google.com/site/fomcbcg/"
+    ]
+  },
+
+  {
+    "name" : "CHRIST CHURCH CATHEDRAL",
+    "wikiURL" : "http://en.wikipedia.org/wiki/Christ_Church_Cathedral_(Nashville,_Tennessee)",
+    "wikiParams" : "Christ_Church_Cathedral_(Nashville,_Tennessee)",
+    "otherResources" : [
+    "http://www.christcathedral.org/"
     ]
   },
 
