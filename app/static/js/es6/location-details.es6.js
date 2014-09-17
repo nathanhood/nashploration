@@ -19,20 +19,22 @@
         wikiAPICall(info.wikiParams);
       }
 
-      var $div = $('<div></div>');
-      var $menuLink = $('<a>Other Learning Resources</a>');
-      $('#other-resources-link').append($menuLink);
-      info.otherResources.forEach(i=>{
-        var $a = $('<a href='+i+'>'+i+'</a><br>');
-        $($div).append($a);
-      });
-
-       $('#other-resources-link').on('click', function(event){
-          $('#wiki-description').empty();
-          $('#other-resources-text').append($div);
-
-          event.preventDefault();
+      if(info.otherResources){
+        var $div = $('<div></div>');
+        var $menuLink = $('<a>Other Learning Resources</a>');
+        $('#other-resources-link').append($menuLink);
+        info.otherResources.forEach(i=>{
+          var $a = $('<a href='+i+'>'+i+'</a><br>');
+          $($div).append($a);
         });
+
+         $('#other-resources-link').on('click', function(event){
+            $('#wiki-description').empty();
+            $('#other-resources-text').append($div);
+
+            event.preventDefault();
+          });
+      }
     });
   }
 
@@ -40,7 +42,6 @@
   function wikiAPICall(params) {
     $.getJSON(`http://en.wikipedia.org/w/api.php?action=parse&format=json&page=${params}&prop=text|images|sections&callback=?`).done(function(data){
       wikipediaHTMLResult(data, params);
-      console.log(data);
     });
   }
 
