@@ -171,6 +171,9 @@
     google.maps.event.addListener(map, 'dragend', function(event) {
       setMapGeo(false);
     });
+    google.maps.event.addListener(map, 'zoom_changed', function(event) {
+      setMapGeo(false);
+    });
     $('#geolocation-control').click(setMapGeo);
   }
   var markers = [];
@@ -326,7 +329,7 @@
         description = 'There is no description for this site.';
       }
       if (w.content.match(windowName)) {
-        var content = '<div class="pop-up">' + '<h3 class="pop-up-title">' + windowName + '</h3>' + '<p class="pop-up-p">' + description + '</p>' + '<a href="/locations/' + siteURL + '", class="info-window pop-up-link">Show More</a>' + '<a href="/checkIn/' + id + '", class="checkin-button pop-up-link">Check In</a>' + '</div>';
+        var content = '<div class="pop-up">' + '<h3 class="pop-up-title">' + windowName + '</h3>' + '<p class="pop-up-p">' + description + '</p>' + '<a href="/locations/show/' + id + '", class="info-window pop-up-link">Show More</a>' + '<a href="/checkIn/' + id + '", class="checkin-button pop-up-link">Check In</a>' + '</div>';
         w.setContent(content);
       }
     }));
