@@ -7,6 +7,9 @@
 process.env.DBNAME = 'group-test';
 
 var expect = require('chai').expect;
+var chai = require('chai');
+chai.should();
+chai.use(require('chai-things'));
 var Mongo = require('mongodb');
 var traceur = require('traceur');
 var db = traceur.require(__dirname + '/../../helpers/db.js');
@@ -181,6 +184,22 @@ describe('Group', function(){
       done();
     });
   });
+
+  describe('.accumulateGroupIds', function(){
+    var groupArray = [];
+
+    it('should take an array of group objs and accumulate their ids into one array', function(done){
+      groupArray.push(group1);
+      groupArray.push(group2);
+      var groupIds = Group.accumulateGroupIds(groupArray);
+
+      expect(groupIds).to.have.length(2);
+      (groupIds).should.contain.something.that.equals(group2._id);
+      (groupIds).should.contain.something.that.equals(group1._id);
+      done();
+    });
+  });
+
 
 
 });
