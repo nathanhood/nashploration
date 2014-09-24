@@ -205,6 +205,11 @@
          setMapGeo(false);
       });
 
+      
+      google.maps.event.addListener(map, 'zoom_changed', function(event) {
+         setMapGeo(false);
+      });
+
       $('#geolocation-control').click(setMapGeo);
 
   }
@@ -417,7 +422,7 @@ function addCheckInButton(windowName, description, id){
       var content = '<div class="pop-up">'+
       '<h3 class="pop-up-title">'+windowName+'</h3>'+
       '<p class="pop-up-p">'+description+'</p>'+
-      '<a href="/locations/'+siteURL+'", class="info-window pop-up-link">Show More</a>'+ //id is the locations mongo id
+      '<a href="/locations/show/'+id+'", class="info-window pop-up-link">Show More</a>'+ //id is the locations mongo id
       '<a href="/checkIn/'+id+'", class="checkin-button pop-up-link">Check In</a>'+'</div>'; //onclick="'+checkIn()+'"
 
       w.setContent(content);

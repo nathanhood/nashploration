@@ -10,18 +10,20 @@
       if (info.wikiParams) {
         wikiAPICall(info.wikiParams);
       }
-      var $div = $('<div></div>');
-      var $menuLink = $('<a>Other Learning Resources</a>');
-      $('#other-resources-link').append($menuLink);
-      info.otherResources.forEach((function(i) {
-        var $a = $('<a href=' + i + '>' + i + '</a><br>');
-        $($div).append($a);
-      }));
-      $('#other-resources-link').on('click', function(event) {
-        $('#wiki-description').empty();
-        $('#other-resources-text').append($div);
-        event.preventDefault();
-      });
+      if (info.otherResources.length) {
+        var $div = $('<div></div>');
+        var $menuLink = $('<a>Other Learning Resources</a>');
+        $('#other-resources-link').append($menuLink);
+        info.otherResources.forEach((function(i) {
+          var $a = $('<a href=' + i + '>' + i + '</a><br>');
+          $($div).append($a);
+        }));
+        $('#other-resources-link').on('click', function(event) {
+          $('#wiki-description').empty();
+          $('#other-resources-text').append($div);
+          event.preventDefault();
+        });
+      }
     });
   }
   function wikiAPICall(params) {

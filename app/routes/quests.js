@@ -83,7 +83,7 @@ exports.view = (req, res)=>{
 exports.show = (req, res)=>{
   Quest.findById(req.params.questId, (err, quest)=>{
     User.findById(quest.creator, (err, user)=>{
-      res.render('quests/show', {title: 'Nashploration', user:user, quest:quest});
+      res.render('quests/show', {title: 'Nashploration', creator:user, quest:quest});
     });
   });
 };
