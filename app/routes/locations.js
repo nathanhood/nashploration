@@ -161,6 +161,7 @@ exports.addLinks = (req, res)=>{
 };
 
 exports.findWikiInfo = (req, res)=>{
+  console.log(req.params.locationName);
   Location.findWikiInfo(req.params.locationName, info=>{
     res.send(info);
   });

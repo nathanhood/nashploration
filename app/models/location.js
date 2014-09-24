@@ -236,7 +236,7 @@ class Location{
   }
 
   static findWikiInfo(locName, fn){
-    wikiLinks.findOne({name: locName }, (err, wikiInfo)=>{
+    wikiLinks.findOne({name: { $regex: locName, $options: 'i' } }, (err, wikiInfo)=>{
       fn(wikiInfo);
     });
   }
