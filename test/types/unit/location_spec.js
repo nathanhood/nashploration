@@ -37,7 +37,7 @@ describe('User', function(){
   });
 
   describe('findAll', function(){
-    it('should find all locations', function(done){
+    it('should find all locations', function(){
       Location.findAll(function(records){
         expect(records.length).to.equal(2);
         expect(records[0].name).to.equal(location1.name);
@@ -46,7 +46,6 @@ describe('User', function(){
         expect(records[0].address).to.equal(location1.address);
         expect(records[0].description).to.equal(location1.description);
         expect(records[1].description).to.equal(location2.description);
-        done();
       });
     });
   });
